@@ -83,14 +83,14 @@ export default function Checkout() {
       const orderId = orderRes.orderId;
 
       // ✅ Step 2: create Razorpay order
-      const res = await fetch("http://127.0.0.1:5050/create-razorpay-order", {
+      const res = await fetch("https://ecommerce-backend-bkm1.onrender.com/create-razorpay-order", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
           amount: Number(total),
-          orderId, // ✅ send DB orderId
+          orderId,
         }),
       });
 
@@ -117,13 +117,13 @@ export default function Checkout() {
 
         handler: async function (response) {
           try {
-            const verifyRes = await fetch("http://127.0.0.1:5050/verify-payment", {
+            const verifyRes = await fetch("https://ecommerce-backend-bkm1.onrender.com/verify-payment", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
               },
               body: JSON.stringify({
-                razorpay_order_id: razorpayOrder.id, // ✅ FIXED
+                razorpay_order_id: razorpayOrder.id,
                 razorpay_payment_id: response.razorpay_payment_id,
                 razorpay_signature: response.razorpay_signature,
                 orderId,
