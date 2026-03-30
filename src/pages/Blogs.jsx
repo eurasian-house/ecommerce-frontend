@@ -3,7 +3,7 @@ import React from 'react';
 const Blogs = () => {
   // Sample data to make the page look realistic
   const blogPosts = [
-    { id: 1, title: 'Getting Started with React', excerpt: 'Learn the basics of components and hooks.' },
+    { id: 1, title: 'Getting Started with Reactsss', excerpt: 'Learn the basics of components and hooks.' },
     { id: 2, title: 'Bootstrap Tips', excerpt: 'How to use utility classes for rapid UI development.' },
     { id: 3, title: 'Modern Web Design', excerpt: 'Exploring the latest trends in 2026.' }
   ];
