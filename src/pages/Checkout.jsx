@@ -3,6 +3,7 @@ import { supabase } from "../lib/supabase";
 import { createOrder } from "../utils/createOrder";
 import { useCart } from "../context/CartContext";
 import { useNavigate } from "react-router-dom";
+// console.log("API:", import.meta.env.VITE_API_URL);
 
 export default function Checkout() {
   const { cart, clearCart } = useCart();
@@ -83,7 +84,7 @@ export default function Checkout() {
       const orderId = orderRes.orderId;
 
       // ✅ Step 2: create Razorpay order
-      const res = await fetch("https://ecommerce-backend-bkm1.onrender.com/create-razorpay-order", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/create-razorpay-order`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -117,7 +118,7 @@ export default function Checkout() {
 
         handler: async function (response) {
           try {
-            const verifyRes = await fetch("https://ecommerce-backend-bkm1.onrender.com/verify-payment", {
+            const verifyRes = await fetch(`${import.meta.env.VITE_API_URL}/verify-payment`, {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
