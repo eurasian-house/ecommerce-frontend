@@ -2,6 +2,8 @@ import { useEffect, useState, useRef } from "react";
 import { supabase } from "../lib/supabase";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useCart } from "../context/CartContext";
+import { applyActiveFilter } from '../utils/productQueries'
+// import { useLocation } from "react-router-dom";
 
 export default function ProductList({ colorFilter }) { // ✅ receive prop
   const [products, setProducts] = useState([]);
@@ -9,15 +11,27 @@ export default function ProductList({ colorFilter }) { // ✅ receive prop
   const [selectedImages, setSelectedImages] = useState({});
 
   const [search, setSearch] = useState("");
-  const [category, setCategory] = useState("");
-  const [sort, setSort] = useState("");
-  const [budget, setBudget] = useState("");
+  // const [category, setCategory] = useState("");
+  const location = useLocation();
+  const [category, setCategory] = useState(
+    location.state?.autoCategory || ""
+  );
+  const [sort, setSort] = useState(
+    location.state?.autoSort || ""
+  );
+  const [budget, setBudget] = useState(
+    location.state?.autoBudget || ""
+  );
+  const autoQuality = location.state?.autoQuality;
+  const autoShapes = location.state?.autoShapes;
+
+
+
   const [discount, setDiscount] = useState("");
   // From CArt
   const { addToCart } = useCart();
 
   const navigate = useNavigate();
-  const location = useLocation();
   const hasCountedViews = useRef(false);
 
   useEffect(() => {
@@ -37,12 +51,17 @@ export default function ProductList({ colorFilter }) { // ✅ receive prop
 
   useEffect(() => {
     applyFilters();
-  }, [products, search, category, sort, budget, discount, colorFilter]); // ✅ include color
+  }, [products, search, category, sort, budget, discount, colorFilter, autoShapes, autoQuality]); // ✅ include color
 
   const fetchProducts = async () => {
-    const { data } = await supabase
+    let query = supabase
       .from("products")
       .select(`*, product_colors (*), product_sizes (*)`);
+
+    // ✅ ADD THIS
+    query = applyActiveFilter(query);
+
+    const { data } = await query;
 
     setProducts(data);
     setFiltered(data);
@@ -77,6 +96,23 @@ export default function ProductList({ colorFilter }) { // ✅ receive prop
       );
     }
 
+    if (autoShapes?.length > 0) {
+      data = data.filter((p) =>
+        autoShapes.some(
+          (shape) =>
+            p.shape?.toLowerCase() === shape.toLowerCase()
+        )
+      );
+    }
+
+    if (autoQuality) {
+      data = data.filter(
+        (p) =>
+          p.quality?.toLowerCase() ===
+          autoQuality.toLowerCase()
+      );
+    }
+
     if (discount) {
       data = data.filter(
         (p) => p.discount_percent >= Number(discount)
@@ -97,11 +133,11 @@ export default function ProductList({ colorFilter }) { // ✅ receive prop
       data = data.filter((p) => {
         const price = p.selling_price;
 
-        if (budget === "1") return price < 10000;
-        if (budget === "2") return price >= 10000 && price < 20000;
-        if (budget === "3") return price >= 20000 && price < 50000;
-        if (budget === "4") return price >= 50000 && price < 100000;
-        if (budget === "5") return price >= 100000;
+        if (budget === "1") return price < 299;
+        if (budget === "2") return price >= 299 && price < 499;
+        if (budget === "3") return price >= 499 && price < 999;
+        if (budget === "4") return price >= 999 && price < 1499;
+        if (budget === "5") return price >= 1499;
 
         return true;
       });
@@ -116,7 +152,14 @@ export default function ProductList({ colorFilter }) { // ✅ receive prop
       if (sort === "high") data.sort((a, b) => b.selling_price - a.selling_price);
     }
 
-    setFiltered(data);
+    setFiltered(prev => {
+      const prevString = JSON.stringify(prev);
+      const newString = JSON.stringify(data);
+
+      if (prevString === newString) return prev;
+
+      return data;
+    });
   };
 
   const uniqueCategories = [...new Set(products.map((p) => p.main_category))];
@@ -183,11 +226,11 @@ export default function ProductList({ colorFilter }) { // ✅ receive prop
               onChange={(e) => setBudget(e.target.value)}
             >
               <option value="">Budget</option>
-              <option value="1">Below 10,000</option>
-              <option value="2">10,000 - 20,000</option>
-              <option value="3">20,000 - 50,000</option>
-              <option value="4">50,000 - 100,000</option>
-              <option value="5">Above 100,000</option>
+              <option value="1">Below $299</option>
+              <option value="2">$299 - $499</option>
+              <option value="3">$499 - $999</option>
+              <option value="4">$999 - $1,499</option>
+              <option value="5">Above $1,499</option>
             </select>
           </div>
 
@@ -204,16 +247,20 @@ export default function ProductList({ colorFilter }) { // ✅ receive prop
           filtered.map((p) => (
             <div
               key={p.id}
-              className="col-6 col-md-4 col-lg-3 mb-4"
+              className="col-12 col-sm-6 col-md-4 col-lg-3 mb-4"
               onClick={() => handleProductClick(p.id)}
               style={{ cursor: "pointer" }}
             >
-              <div className="card h-100">
+              <div className="card h-100 border-0 shadow-sm overflow-hidden">
 
                 <img
                   src={selectedImages[p.id]}
                   className="card-img-top"
-                  style={{ height: "180px", objectFit: "contain" }}
+                  style={{
+                    width: "100%",
+                    aspectRatio: "1 / 1",
+                    objectFit: "cover",
+                  }}
                 />
 
                 <div className="card-body">
@@ -222,12 +269,25 @@ export default function ProductList({ colorFilter }) { // ✅ receive prop
                     {p.main_category}
                   </p>
 
-                  <h6 className="mb-2">{p.title}</h6>
+                  <h6
+                    className="fw-semibold mb-3"
+                    style={{
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      display: "-webkit-box",
+                      WebkitBoxOrient: "vertical",
+                      WebkitLineClamp: 2,
+                      lineHeight: "1.4",
+                      height: "3em",
+                    }}
+                  >
+                    {p.title}
+                  </h6>
 
                   <div className="d-flex align-items-center gap-2">
-                    <span className="fw-bold">₹{p.selling_price}</span>
+                    <span className="fw-bold">${p.selling_price}</span>
                     <span className="text-muted text-decoration-line-through small">
-                      ₹{p.mrp}
+                      ${p.mrp}
                     </span>
                   </div>
 
@@ -235,22 +295,25 @@ export default function ProductList({ colorFilter }) { // ✅ receive prop
                     {p.discount_percent}% OFF
                   </span>
 
-                  <div className="d-flex gap-2 mt-3">
-                    {p.product_colors?.map((c) => (
+                  <div className="d-flex gap-2 mt-4 mb-4 flex-wrap">
+                    {p.product_colors?.slice(0, 5).map((c) => (
                       <div
                         key={c.id}
                         onClick={(e) =>
                           handleColorClick(e, p.id, c.color_image)
                         }
+                        title={c.color_name}
                         style={{
-                          width: 18,
-                          height: 18,
+                          width: 34,
+                          height: 34,
                           borderRadius: "50%",
-                          backgroundColor: c.color_name.toLowerCase(),
+                          backgroundColor: c.color_name?.toLowerCase(),
+                          cursor: "pointer",
+                          boxShadow: "0 1px 3px rgba(0,0,0,.15)",
                           border:
                             selectedImages[p.id] === c.color_image
-                              ? "2px solid black"
-                              : "1px solid #ccc",
+                              ? "3px solid black"
+                              : "2px solid #cfcfcf",
                         }}
                       />
                     ))}
@@ -258,7 +321,22 @@ export default function ProductList({ colorFilter }) { // ✅ receive prop
 
                   <div className="mt-3 d-grid gap-2">
                     <button
-                      onClick={(e) => e.stopPropagation()}
+                      onClick={(e) => {
+                        e.stopPropagation();
+
+                        const firstColor = p.product_colors?.[0];
+                        const firstSize = p.product_sizes?.[0];
+
+                        addToCart({
+                          ...p,
+                          selectedColor: firstColor,
+                          selectedSize: firstSize,
+                          price: p.selling_price,
+                          quantity: 1,
+                        });
+
+                        navigate("/cart");
+                      }}
                       className="btn btn-outline-dark btn-sm"
                     >
                       Buy it now

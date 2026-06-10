@@ -3,21 +3,25 @@ import { supabase } from "../lib/supabase";
 import { createOrder } from "../utils/createOrder";
 import { useCart } from "../context/CartContext";
 import { useNavigate } from "react-router-dom";
-// console.log("API:", import.meta.env.VITE_API_URL);
 
 export default function Checkout() {
+  console.log("NEW BUILD LOADED");
   const { cart, clearCart } = useCart();
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
 
-  const [address, setAddress] = useState({
-    fullName: "",
+
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    address: "",
     city: "",
+    state: "",
+    country: "",
     pincode: "",
   });
-
-  const [phone, setPhone] = useState("");
 
   useEffect(() => {
     const loadUserData = async () => {
@@ -32,18 +36,22 @@ export default function Checkout() {
 
       const { data } = await supabase
         .from("profiles")
-        .select("full_name, city, pincode, phone")
+        .select("full_name, city, pincode, phone, address, state, country")
         .eq("id", user.id)
         .single();
 
       if (data) {
-        setAddress({
-          fullName: data.full_name || "",
+
+        setForm({
+          name: data.full_name || "",
+          email: user.email || "",
+          phone: data.phone || "",
+          address: data.address || "",
           city: data.city || "",
+          state: data.state || "",
+          country: data.country || "",
           pincode: data.pincode || "",
         });
-
-        setPhone(data.phone || "");
       }
     };
 
@@ -51,7 +59,7 @@ export default function Checkout() {
   }, []);
 
   const total = cart.reduce(
-    (sum, item) => sum + item.price * item.quantity,
+    (sum, item) => sum + (item.price || item.selling_price) * item.quantity,
     0
   );
 
@@ -64,7 +72,15 @@ export default function Checkout() {
   }
 
   const handlePlaceOrder = async () => {
-    if (!address.fullName || !address.city || !address.pincode || !phone) {
+    if (
+      !form.name ||
+      !form.phone ||
+      !form.address ||
+      !form.city ||
+      !form.state ||
+      !form.country ||
+      !form.pincode
+    ) {
       alert("Please fill all details");
       return;
     }
@@ -73,7 +89,7 @@ export default function Checkout() {
 
     try {
       // ✅ Step 1: create DB order
-      const orderRes = await createOrder(cart, address, phone);
+      const orderRes = await createOrder(cart, form);
 
       if (!orderRes.success) {
         alert("Order creation failed");
@@ -111,7 +127,7 @@ export default function Checkout() {
 
       // ✅ Step 3: open Razorpay
       const options = {
-        key: "rzp_test_SVl3kWM1svimZk",
+        key: import.meta.env.VITE_RAZORPAY_KEY,
         amount: razorpayOrder.amount,
         currency: "INR",
         order_id: razorpayOrder.id,
@@ -150,8 +166,9 @@ export default function Checkout() {
         },
 
         prefill: {
-          name: address.fullName,
-          contact: phone,
+          name: form.name,
+          contact: form.phone,
+          email: form.email,
         },
 
         theme: {
@@ -182,41 +199,47 @@ export default function Checkout() {
 
       <h5>Shipping Details</h5>
 
-      <input
-        className="form-control mb-3"
-        placeholder="Full Name"
-        value={address.fullName}
-        onChange={(e) =>
-          setAddress({ ...address, fullName: e.target.value })
-        }
+      <input className="form-control mb-3" placeholder="Full Name"
+        value={form.name}
+        onChange={(e) => setForm({ ...form, name: e.target.value })}
       />
 
-      <input
-        className="form-control mb-3"
-        placeholder="City"
-        value={address.city}
-        onChange={(e) =>
-          setAddress({ ...address, city: e.target.value })
-        }
+      <input className="form-control mb-3" placeholder="Email"
+        value={form.email}
+        onChange={(e) => setForm({ ...form, email: e.target.value })}
       />
 
-      <input
-        className="form-control mb-3"
-        placeholder="Pincode"
-        value={address.pincode}
-        onChange={(e) =>
-          setAddress({ ...address, pincode: e.target.value })
-        }
+      <input className="form-control mb-3" placeholder="Phone"
+        value={form.phone}
+        onChange={(e) => setForm({ ...form, phone: e.target.value })}
       />
 
-      <input
-        className="form-control mb-3"
-        placeholder="Phone"
-        value={phone}
-        onChange={(e) => setPhone(e.target.value)}
+      <input className="form-control mb-3" placeholder="Address"
+        value={form.address}
+        onChange={(e) => setForm({ ...form, address: e.target.value })}
       />
 
-      <h5 className="mt-4">Total: ₹{total}</h5>
+      <input className="form-control mb-3" placeholder="City"
+        value={form.city}
+        onChange={(e) => setForm({ ...form, city: e.target.value })}
+      />
+
+      <input className="form-control mb-3" placeholder="State"
+        value={form.state}
+        onChange={(e) => setForm({ ...form, state: e.target.value })}
+      />
+
+      <input className="form-control mb-3" placeholder="Country"
+        value={form.country}
+        onChange={(e) => setForm({ ...form, country: e.target.value })}
+      />
+
+      <input className="form-control mb-3" placeholder="Pincode"
+        value={form.pincode}
+        onChange={(e) => setForm({ ...form, pincode: e.target.value })}
+      />
+
+      <h5 className="mt-4">Total: ${total}</h5>
 
       <button
         className="btn btn-dark w-100 mt-3"

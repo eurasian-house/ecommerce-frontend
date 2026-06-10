@@ -13,36 +13,64 @@ import Discount from "../components/Discount";
 import Colors from "../components/Colors";
 import ProductCard from "../components/ProductCard";
 import Inspiration from "../components/Inspiration";
+import { applyActiveFilter } from "../utils/productQueries";
 
 export default function Products() {
   const [products, setProducts] = useState([]);
   const [colorFilter, setColorFilter] = useState("");
+  const [selectedImages, setSelectedImages] = useState({});
   const navigate = useNavigate();
+
+  // pagination
+  const [page, setPage] = useState(1);
+  const limit = 10;
+  const [total, setTotal] = useState(0);
+  const totalPages = Math.ceil(total / limit);
 
   useEffect(() => {
     fetchProducts();
-  }, []);
+  }, [page]);
 
   const fetchProducts = async () => {
-    const { data, error } = await supabase
+    const from = (page - 1) * limit;
+    const to = from + limit - 1;
+
+    let query = supabase
       .from("products")
       .select(`
-        *,
-        product_colors (*),
-        product_sizes (*)
-      `);
+      *,
+      product_colors (*),
+      product_sizes (*)
+    `, { count: "exact" })
+      .order("created_at", { ascending: false });
+
+    query = applyActiveFilter(query); // ✅ active only
+
+    // const { data, error } = await query.range(from, to);
+    const { data, count, error } = await query
+      .range(from, to);
 
     if (error) return alert(error.message);
 
-    setProducts(data);
+    setProducts(data || []);
+    setTotal(count || 0);
+
+    const imgs = {};
+
+    (data || []).forEach((p) => {
+      imgs[p.id] = p.thumbnail;
+    });
+
+    setSelectedImages(imgs);
   };
 
   const handleCarouselClick = (value) => {
     navigate(`/products?discount=${value}`);
   };
 
+
   return (
-    <div className="container mt-4">
+    <div className="container-fluid px-0">
       <Category />
       <HeroCarousel onSlideClick={handleCarouselClick} />
       <Discount />
@@ -67,9 +95,32 @@ export default function Products() {
             <ProductCard
               key={p.id}
               product={p}
+              selectedImage={selectedImages[p.id]}
               onClick={() => navigate(`/products/${p.id}`)}
+              onColorClick={(id, img) =>
+                setSelectedImages((prev) => ({
+                  ...prev,
+                  [id]: img,
+                }))
+              }
             />
           ))}
+      </div>
+      <div className="d-flex justify-content-center mt-3 gap-2">
+        <button
+          className="btn btn-outline-dark btn-sm"
+          onClick={() => setPage((p) => Math.max(p - 1, 1))}
+        >
+          Prev
+        </button>
+
+        <button
+          className="btn btn-dark btn-sm"
+          disabled={page >= totalPages}
+          onClick={() => setPage((p) => p + 1)}
+        >
+          Next
+        </button>
       </div>
 
       {/* EXTRA SECTIONS */}

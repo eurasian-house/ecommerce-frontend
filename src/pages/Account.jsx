@@ -1,187 +1,3 @@
-// import { useEffect, useState } from "react";
-// import { useNavigate } from "react-router-dom";
-// import { supabase } from "../lib/supabase";
-
-// export default function Account() {
-//   const navigate = useNavigate();
-
-//   const [user, setUser] = useState(null);
-//   const [loading, setLoading] = useState(true);
-//   const [saving, setSaving] = useState(false);
-//   const [success, setSuccess] = useState("");
-
-//   const [form, setForm] = useState({
-//     full_name: "",
-//     email: "",
-//     phone: "",
-//     address: "",
-//     city: "",
-//     state: "",
-//     pincode: "",
-//   });
-
-//   useEffect(() => {
-//     const getUser = async () => {
-//       const { data } = await supabase.auth.getUser();
-
-//       if (!data?.user) {
-//         navigate("/login");
-//         return;
-//       }
-
-//       setUser(data.user);
-//       setForm((prev) => ({ ...prev, email: data.user.email }));
-
-//       const { data: profile } = await supabase
-//         .from("profiles")
-//         .select("*")
-//         .eq("id", data.user.id)
-//         .single();
-
-//       if (profile) {
-//         setForm({
-//           full_name: profile.full_name || "",
-//           email: data.user.email,
-//           phone: profile.phone || "",
-//           address: profile.address || "",
-//           city: profile.city || "",
-//           state: profile.state || "",
-//           pincode: profile.pincode || "",
-//         });
-//       }
-
-//       setLoading(false);
-//     };
-
-//     getUser();
-//   }, [navigate]);
-
-//   const handleChange = (e) => {
-//     setForm({ ...form, [e.target.name]: e.target.value });
-//   };
-
-//   const handleSave = async () => {
-//     setSaving(true);
-//     setSuccess("");
-
-//     const { error } = await supabase.from("profiles").upsert({
-//       id: user.id,
-//       full_name: form.full_name,
-//       phone: form.phone,
-//       address: form.address,
-//       city: form.city,
-//       state: form.state,
-//       pincode: form.pincode,
-//     });
-
-//     if (!error) {
-//       setSuccess("Profile updated successfully");
-//     }
-
-//     setSaving(false);
-//   };
-
-//   if (loading) {
-//     return <div className="text-center mt-5">Loading...</div>;
-//   }
-
-//   return (
-//     <div className="container mt-5" style={{ maxWidth: "600px" }}>
-//       <h3 className="mb-4">Account Profile</h3>
-
-//       <div className="mb-3">
-//         <label className="form-label">Full Name</label>
-//         <input
-//           type="text"
-//           className="form-control"
-//           name="full_name"
-//           value={form.full_name}
-//           onChange={handleChange}
-//         />
-//       </div>
-
-//       <div className="mb-3">
-//         <label className="form-label">Email</label>
-//         <input
-//           type="email"
-//           className="form-control"
-//           value={form.email}
-//           disabled
-//         />
-//       </div>
-
-//       <div className="mb-3">
-//         <label className="form-label">Phone</label>
-//         <input
-//           type="text"
-//           className="form-control"
-//           name="phone"
-//           value={form.phone}
-//           onChange={handleChange}
-//         />
-//       </div>
-
-//       <div className="mb-3">
-//         <label className="form-label">Address</label>
-//         <textarea
-//           className="form-control"
-//           name="address"
-//           value={form.address}
-//           onChange={handleChange}
-//         />
-//       </div>
-
-//       <div className="row">
-//         <div className="col-md-6 mb-3">
-//           <label className="form-label">City</label>
-//           <input
-//             type="text"
-//             className="form-control"
-//             name="city"
-//             value={form.city}
-//             onChange={handleChange}
-//           />
-//         </div>
-
-//         <div className="col-md-6 mb-3">
-//           <label className="form-label">State</label>
-//           <input
-//             type="text"
-//             className="form-control"
-//             name="state"
-//             value={form.state}
-//             onChange={handleChange}
-//           />
-//         </div>
-//       </div>
-
-//       <div className="mb-3">
-//         <label className="form-label">Pincode</label>
-//         <input
-//           type="text"
-//           className="form-control"
-//           name="pincode"
-//           value={form.pincode}
-//           onChange={handleChange}
-//         />
-//       </div>
-
-//       <button
-//         className="btn btn-primary w-100"
-//         onClick={handleSave}
-//         disabled={saving}
-//       >
-//         {saving ? "Saving..." : "Save Changes"}
-//       </button>
-
-//       {success && (
-//         <div className="alert alert-success mt-3">{success}</div>
-//       )}
-//     </div>
-//   );
-// }
-
-
 import { useEffect, useState } from "react";
 import { supabase } from "../lib/supabase";
 
@@ -242,6 +58,9 @@ export default function Account() {
           phone: profile.phone,
           city: profile.city,
           pincode: profile.pincode,
+          address: profile.address,
+          state: profile.state,
+          country: profile.country,
         })
         .eq("id", profile.id);
 
@@ -312,12 +131,33 @@ export default function Account() {
               onChange={(e) => handleChange("phone", e.target.value)}
             />
 
+            <label>Address</label>
+            <input
+              className="form-control mb-2"
+              value={profile?.address || ""}
+              disabled={!editMode}
+              onChange={(e) => handleChange("address", e.target.value)}
+            />
             <label>City</label>
             <input
               className="form-control mb-2"
               value={profile?.city || ""}
               disabled={!editMode}
               onChange={(e) => handleChange("city", e.target.value)}
+            />
+            <label>State</label>
+            <input
+              className="form-control mb-2"
+              value={profile?.state || ""}
+              disabled={!editMode}
+              onChange={(e) => handleChange("state", e.target.value)}
+            />
+            <label>Country</label>
+            <input
+              className="form-control mb-2"
+              value={profile?.country || ""}
+              disabled={!editMode}
+              onChange={(e) => handleChange("country", e.target.value)}
             />
 
             <label>Pincode</label>
@@ -342,13 +182,31 @@ export default function Account() {
                 <div key={order.id} className="card p-3 shadow-sm">
 
                   <div className="d-flex justify-content-between">
-                    <strong>Order ID: {order.id}</strong>
+                    <small className="text-muted">
+                      Order #{order.id.slice(0, 8)}
+                    </small>
 
                     <span
                       className="badge"
                       style={{
                         backgroundColor:
-                          order.status === "paid" ? "green" : "orange",
+                          order.status === "paid"
+                            ? "#198754"
+                            : order.status === "shipped"
+                              ? "#ffc107"
+                              : order.status === "delivered"
+                                ? "#198754"
+                                : "#dc3545",
+
+                        color:
+                          order.status === "shipped"
+                            ? "#000"
+                            : "#fff",
+
+                        border:
+                          order.status === "delivered"
+                            ? "2px solid #0f5132"
+                            : "none",
                       }}
                     >
                       {order.status || "pending"}
@@ -360,7 +218,7 @@ export default function Account() {
                   </p>
 
                   <p className="mb-1">
-                    <strong>Amount:</strong> ₹{order.total_amount}
+                    <strong>Amount:</strong> ${order.total_amount}
                   </p>
 
                   <p className="mb-0">

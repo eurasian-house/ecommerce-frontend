@@ -1,151 +1,3 @@
-// import { NavLink, useNavigate } from "react-router-dom";
-// import { useState } from "react";
-// import { useCart } from "../../context/CartContext";
-// import NavbarProfile from "../NavbarProfile"; // adjust path
-
-// // ✅ ADD
-// import { useAuth } from "../../context/AuthContext";
-// import { logout } from "../../lib/auth";
-
-
-// export default function Navbar() {
-//   const [search, setSearch] = useState("");
-//   const navigate = useNavigate();
-//   const { cart } = useCart();
-
-//   // ✅ ADD
-//   const { user } = useAuth();
-
-//   const handleSearch = (e) => {
-//     e.preventDefault();
-//     if (search.trim()) {
-//       navigate(`/products?search=${search}`);
-//     }
-//   };
-
-//   const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-
-//   // ✅ ADD
-//   const handleUserClick = async () => {
-//     if (!user) {
-//       navigate("/login");
-//     } else {
-//       await logout();
-//       navigate("/");
-//     }
-//   };
-
-//   return (
-//     <nav className="navbar navbar-expand-lg bg-white border-bottom sticky-top">
-//       <div className="container-fluid px-4">
-
-//         <NavLink className="navbar-brand" to="/">
-//           <img
-//             src="/logo.png"
-//             alt="Logo"
-//             style={{ height: "40px", objectFit: "contain" }}
-//           />
-//         </NavLink>
-
-//         <button
-//           className="navbar-toggler"
-//           type="button"
-//           data-bs-toggle="collapse"
-//           data-bs-target="#navbarContent"
-//         >
-//           <span className="navbar-toggler-icon"></span>
-//         </button>
-
-//         <div className="collapse navbar-collapse" id="navbarContent">
-
-//           <ul className="navbar-nav mx-auto mb-2 mb-lg-0">
-//             <li className="nav-item">
-//               <NavLink to="/" className="nav-link">Home</NavLink>
-//             </li>
-
-//             <li className="nav-item">
-//               <NavLink to="/products" className="nav-link">Products</NavLink>
-//             </li>
-
-//             <li className="nav-item">
-//               <NavLink to="/blogs" className="nav-link">Blogs</NavLink>
-//             </li>
-
-//             <li className="nav-item">
-//               <NavLink to="/us" className="nav-link">About Us</NavLink>
-//             </li>
-
-//             <li className="nav-item">
-//               <NavLink to="/contact" className="nav-link">Contact Us</NavLink>
-//             </li>
-//           </ul>
-
-//           <div className="d-flex align-items-center gap-3">
-
-//             <form onSubmit={handleSearch} className="d-flex">
-//               <input
-//                 type="text"
-//                 className="form-control"
-//                 placeholder="Search..."
-//                 value={search}
-//                 onChange={(e) => setSearch(e.target.value)}
-//                 style={{ width: "200px" }}
-//               />
-//             </form>
-
-
-//             <div className="d-flex align-items-center">
-//               {/* existing cart icon */}
-//               <button className="btn btn-light">
-//                 {/* <i className="bi bi-cart"></i> */}
-//               </button>
-
-//               {/* ✅ ADD THIS */}
-//               <NavbarProfile />
-//             </div>
-
-//             {/* CART */}
-//             <div
-//               style={{ position: "relative", cursor: "pointer" }}
-//               onClick={() => navigate("/cart")}
-//             >
-//               <i className="bi bi-cart fs-5"></i>
-
-//               {totalItems > 0 && (
-//                 <span
-//                   style={{
-//                     position: "absolute",
-//                     top: "-6px",
-//                     right: "-10px",
-//                     background: "black",
-//                     color: "white",
-//                     fontSize: "10px",
-//                     borderRadius: "50%",
-//                     padding: "3px 6px",
-//                   }}
-//                 >
-//                   {totalItems}
-//                 </span>
-//               )}
-//             </div>
-
-//             {/* USER */}
-//             <i
-//               className={`bi ${user ? "bi-box-arrow-right" : "bi-person"} fs-5`}
-//               style={{ cursor: "pointer" }}
-//               onClick={handleUserClick}
-//               title={user ? "Logout" : "Login"}
-//             ></i>
-
-//           </div>
-//         </div>
-//       </div>
-//     </nav>
-//   );
-// }
-
-
-
 
 import { NavLink, useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -154,10 +6,11 @@ import NavbarProfile from "../NavbarProfile";
 
 // ✅ ADD
 import { useAuth } from "../../context/AuthContext";
-import { logout } from "../../lib/auth";
+import { Collapse } from "bootstrap";
 
 export default function Navbar() {
   const [search, setSearch] = useState("");
+  const [navOpen, setNavOpen] = useState(false);
   const navigate = useNavigate();
   const { cart } = useCart();
 
@@ -170,120 +23,158 @@ export default function Navbar() {
     }
   };
 
-  const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-
-  const handleUserClick = async () => {
-    if (!user) {
-      navigate("/login");
-    } else {
-      await logout();
-      navigate("/");
-    }
+  const closeNavbar = () => {
+    setNavOpen(false);
   };
+
+  const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
     <nav className="navbar navbar-expand-lg bg-white border-bottom sticky-top">
-      <div className="container-fluid px-4">
+      <div className="container-fluid px-2 px-md-4 d-flex align-items-center">
 
         <NavLink className="navbar-brand" to="/">
           <img
             src="/logo.png"
             alt="Logo"
-            style={{ height: "40px", objectFit: "contain" }}
+            style={{ height: "clamp(45px,6vw,60px)", objectFit: "contain" }}
           />
         </NavLink>
 
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarContent"
+        {/*  Hamburger  */}
+        <div
+          className={`collapse navbar-collapse order-3 w-100 mt-3 mt-lg-0 order-lg-0 ${navOpen ? "show" : ""}`}
+          id="navbarContent"
         >
-          <span className="navbar-toggler-icon"></span>
-        </button>
 
-        <div className="collapse navbar-collapse" id="navbarContent">
-
-          <ul className="navbar-nav mx-auto mb-2 mb-lg-0">
+          <ul className="navbar-nav mx-auto mb-3 mb-lg-0 text-center text-lg-start">
             <li className="nav-item">
-              <NavLink to="/" className="nav-link">Home</NavLink>
+              <NavLink to="/" onClick={closeNavbar} className={({ isActive }) => `nav-link ${isActive ? "text-primary fw-semibold" : "text-dark"}`}>Home</NavLink>
             </li>
 
             <li className="nav-item">
-              <NavLink to="/products" className="nav-link">Products</NavLink>
+              <NavLink to="/products" onClick={closeNavbar} className={({ isActive }) => `nav-link ${isActive ? "text-primary fw-semibold" : "text-dark"}`}>Products</NavLink>
             </li>
 
             <li className="nav-item">
-              <NavLink to="/blogs" className="nav-link">Blogs</NavLink>
+              <NavLink to="/blogs" onClick={closeNavbar} className={({ isActive }) => `nav-link ${isActive ? "text-primary fw-semibold" : "text-dark"}`}>Blogs</NavLink>
             </li>
 
             <li className="nav-item">
-              <NavLink to="/us" className="nav-link">About Us</NavLink>
+              <NavLink to="/us" onClick={closeNavbar} className={({ isActive }) => `nav-link ${isActive ? "text-primary fw-semibold" : "text-dark"}`}>About Us</NavLink>
             </li>
 
             <li className="nav-item">
-              <NavLink to="/contact" className="nav-link">Contact Us</NavLink>
+              <NavLink to="/contact" onClick={closeNavbar} className={({ isActive }) => `nav-link ${isActive ? "text-primary fw-semibold" : "text-dark"}`}>Contact Us</NavLink>
             </li>
           </ul>
+        </div>
 
-          <div className="d-flex align-items-center gap-3">
+        {/* Search+User+Cart */}
 
-            <form onSubmit={handleSearch} className="d-flex">
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Search..."
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                style={{ width: "200px" }}
-              />
-            </form>
+        <div className="d-flex align-items-center gap-2 ms-auto flex-grow-1 order-1 order-lg-0">
 
-            <div className="d-flex align-items-center">
-              <button className="btn btn-light"></button>
+          <form
+            onSubmit={handleSearch}
+            className="d-flex align-items-center flex-grow-1"
+            style={{
+              border: "1px solid #2f2933",
+              borderRadius: "50px",
+              overflow: "hidden",
+              width: "clamp(220px, 30vw, 700px)",
+              background: "#f5f4f2",
+              height: "45px",
+              // flex: 1,
+              minWidth: 0,
+            }}
+          >
+            <input
+              type="text"
+              className="form-control border-0 shadow-none"
+              placeholder="Search for the Products"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              style={{
+                background: "transparent",
+                padding: "10px 18px",
+                fontSize: "clamp(.9rem,2vw,1.1rem)"
+              }}
+            />
 
-              {/* ✅ PASS USER */}
+            <button
+              type="submit"
+              className="border-0 d-flex align-items-center justify-content-center fw-bold"
+              style={{
+                width: "40px",
+                height: "40px",
+                minWidth: "40px",
+                minHeight: "40px",
+                borderRadius: "50%",
+                background: "#0d6efd",
+                margin: "3px",
+                color: "white",
+                fontSize: "1.8rem",
+                fontWeight: "900",
+                padding: 0,
+                flexShrink: 0,
+                aspectRatio: "1 / 1",
+              }}
+            >
+              <i className="bi bi-search fs-6 fw-bold" style={{ WebkitTextStroke: "2px white", textStroke: "2px white" }}></i>
+            </button>
+          </form>
+
+          <div className="d-flex align-items-center flex-shrink-0 position-relative">
+
+            {/* ✅ PASS USER */}
+            <div style={{ zIndex: 1055 }}>
               <NavbarProfile user={user} />
             </div>
-
-            {/* CART */}
-            <div
-              style={{ position: "relative", cursor: "pointer" }}
-              onClick={() => navigate("/cart")}
-            >
-              <i className="bi bi-cart fs-5"></i>
-
-              {totalItems > 0 && (
-                <span
-                  style={{
-                    position: "absolute",
-                    top: "-6px",
-                    right: "-10px",
-                    background: "black",
-                    color: "white",
-                    fontSize: "10px",
-                    borderRadius: "50%",
-                    padding: "3px 6px",
-                  }}
-                >
-                  {totalItems}
-                </span>
-              )}
-            </div>
-
-            {/* ❌ REMOVE THIS USER ICON BLOCK COMPLETELY */}
-            {/* DELETE BELOW */}
-            {/* 
-            <i
-              className={`bi ${user ? "bi-box-arrow-right" : "bi-person"} fs-5`}
-              style={{ cursor: "pointer" }}
-              onClick={handleUserClick}
-              title={user ? "Logout" : "Login"}
-            ></i>
-            */}
-
           </div>
+
+          {/* CART */}
+          <div
+            className="flex-shrink-0"
+            style={{ position: "relative", cursor: "pointer" }}
+            onClick={() => navigate("/cart")}
+          >
+            <i className="bi bi-cart fs-5"></i>
+
+            {totalItems > 0 && (
+              <span
+                style={{
+                  position: "absolute",
+                  top: "-6px",
+                  right: "-8px",
+                  background: "black",
+                  color: "white",
+                  fontSize: "10px",
+                  borderRadius: "50%",
+                  width: "20px",
+                  height: "20px",
+                  minWidth: "20px",
+                  minHeight: "20px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  flexShrink: 0
+                }}
+              >
+                {totalItems}
+              </span>
+            )}
+          </div>
+
+          <button
+            className="navbar-toggler ms-2 flex-shrink-0 order-2"
+            type="button"
+            onClick={() => setNavOpen(!navOpen)}
+            aria-label="Toggle navigation"
+          >
+            <span className="navbar-toggler-icon"></span>
+          </button>
         </div>
+
       </div>
     </nav>
   );

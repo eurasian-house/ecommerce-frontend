@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const priceUnderStyles = {
     overlay: {
@@ -11,6 +12,11 @@ const priceUnderStyles = {
 };
 
 const PriceUnder = () => {
+
+
+
+    const navigate = useNavigate();
+
     // ✅ FIXED IMAGE PATHS (NO process.env)
     const images = {
         leftLarge: "/priceunder/left_large_easter.jpg",
@@ -26,7 +32,17 @@ const PriceUnder = () => {
 
                 {/* LEFT */}
                 <div className="col-lg-6">
-                    <div className="card border-0 position-relative h-100 overflow-hidden">
+                    <div
+                        className="card border-0 position-relative h-100 overflow-hidden"
+                        style={{ cursor: "pointer" }}
+                        onClick={() =>
+                            navigate("/products", {
+                                state: {
+                                    autoSort: "new"
+                                }
+                            })
+                        }
+                    >
                         <img
                             src={images.leftLarge}
                             className="card-img h-100"
@@ -40,7 +56,7 @@ const PriceUnder = () => {
                             <div style={priceUnderStyles.textShadow}>
                                 <span className="badge bg-danger mb-2">New</span>
                                 <h3 className="fw-bold">
-                                    SMÖRFISK – a festive Easter collection
+                                    What's new!
                                 </h3>
                             </div>
                         </div>
@@ -53,19 +69,30 @@ const PriceUnder = () => {
 
                         {/* TOP MIDDLE */}
                         <div className="col-6">
-                            <div className="card border-0 position-relative h-100 overflow-hidden">
+                            <div
+                                className="card border-0 position-relative h-100 overflow-hidden"
+                                style={{ cursor: "pointer" }}
+                                onClick={() =>
+                                    navigate("/products", {
+                                        state: {
+                                            autoBudget: "1"
+                                        }
+                                    })
+                                }
+                            >
                                 <img
                                     src={images.orangeWhatsNew}
                                     className="card-img h-100"
                                     style={{ objectFit: "cover" }}
                                     alt=""
                                 />
+
                                 <div
                                     className="card-img-overlay d-flex align-items-end text-white p-3"
                                     style={priceUnderStyles.overlay}
                                 >
                                     <h6 style={priceUnderStyles.textShadow}>
-                                        What's new
+                                        Under $299
                                     </h6>
                                 </div>
                             </div>
@@ -73,19 +100,30 @@ const PriceUnder = () => {
 
                         {/* TOP RIGHT */}
                         <div className="col-6">
-                            <div className="card border-0 position-relative h-100 overflow-hidden">
+                            <div
+                                className="card border-0 position-relative h-100 overflow-hidden"
+                                style={{ cursor: "pointer" }}
+                                onClick={() =>
+                                    navigate("/products", {
+                                        state: {
+                                            autoShapes: ["Round", "Oval"]
+                                        }
+                                    })
+                                }
+                            >
                                 <img
                                     src={images.topRightAdventure}
                                     className="card-img h-100"
                                     style={{ objectFit: "cover" }}
                                     alt=""
                                 />
+
                                 <div
                                     className="card-img-overlay d-flex align-items-end text-white p-3"
                                     style={priceUnderStyles.overlay}
                                 >
                                     <h6 style={priceUnderStyles.textShadow}>
-                                        Adventure collection
+                                        Round or Oval Rugs
                                     </h6>
                                 </div>
                             </div>
@@ -93,19 +131,30 @@ const PriceUnder = () => {
 
                         {/* MIDDLE */}
                         <div className="col-6">
-                            <div className="card border-0 position-relative h-100 overflow-hidden">
+                            <div
+                                className="card border-0 position-relative h-100 overflow-hidden"
+                                style={{ cursor: "pointer" }}
+                                onClick={() =>
+                                    navigate("/products", {
+                                        state: {
+                                            autoShapes: ["Irregular"]
+                                        }
+                                    })
+                                }
+                            >
                                 <img
                                     src={images.middleRightPlant}
                                     className="card-img h-100"
                                     style={{ objectFit: "cover" }}
                                     alt=""
                                 />
+
                                 <div
                                     className="card-img-overlay d-flex align-items-end text-white p-3"
                                     style={priceUnderStyles.overlay}
                                 >
                                     <h6 style={priceUnderStyles.textShadow}>
-                                        Plants & flowers
+                                        Irregular Shape
                                     </h6>
                                 </div>
                             </div>
@@ -113,19 +162,30 @@ const PriceUnder = () => {
 
                         {/* BOTTOM */}
                         <div className="col-6">
-                            <div className="card border-0 position-relative h-100 overflow-hidden">
+                            <div
+                                className="card border-0 position-relative h-100 overflow-hidden"
+                                style={{ cursor: "pointer" }}
+                                onClick={() =>
+                                    navigate("/products", {
+                                        state: {
+                                            autoQuality: "Premium"
+                                        }
+                                    })
+                                }
+                            >
                                 <img
                                     src={images.bottomRightRoom}
                                     className="card-img h-100"
                                     style={{ objectFit: "cover" }}
                                     alt=""
                                 />
+
                                 <div
                                     className="card-img-overlay d-flex align-items-end text-white p-3"
                                     style={priceUnderStyles.overlay}
                                 >
                                     <h6 style={priceUnderStyles.textShadow}>
-                                        Kids room
+                                        Only Premium Carpets
                                     </h6>
                                 </div>
                             </div>

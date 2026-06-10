@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { supabase } from "../lib/supabase";
 import { useNavigate } from "react-router-dom";
+import { applyActiveFilter } from '../utils/productQueries'
 
 export default function Inspiration() {
     const [products, setProducts] = useState([]);
@@ -9,6 +10,7 @@ export default function Inspiration() {
     const [visibleCount, setVisibleCount] = useState(6);
 
     const navigate = useNavigate();
+    const isMobile = window.innerWidth < 576;
 
     useEffect(() => {
         fetchProducts();
@@ -19,7 +21,15 @@ export default function Inspiration() {
     }, [products, activeTab]);
 
     const fetchProducts = async () => {
-        const { data } = await supabase.from("products").select("*");
+        let query = supabase
+            .from("products")
+            .select("*");
+
+        // ✅ ADD THIS
+        query = applyActiveFilter(query);
+
+        const { data } = await query;
+
         setProducts(data || []);
         setFiltered(data || []);
     };
@@ -64,6 +74,11 @@ export default function Inspiration() {
 
     return (
         <div className="container mt-4">
+            <div className="text-center mb-3">
+                <span className="badge rounded-pill bg-primary bg-opacity-10 text-primary px-4 py-2 fw-bold text-uppercase tracking-wider">
+                    Choose by Amenities
+                </span>
+            </div>
 
             {/* TABS */}
             <div className="d-flex gap-4 mb-4 flex-wrap">
@@ -84,13 +99,18 @@ export default function Inspiration() {
             </div>
 
             {/* MASONRY */}
-            <div style={{ columnCount: 4, columnGap: "16px" }}>
+            <div
+                style={{
+                    columns: "220px",
+                    columnGap: "16px",
+                }}
+            >
                 {filtered.slice(0, visibleCount).map((p) => (
                     <div
                         key={p.id}
                         style={{
                             breakInside: "avoid",
-                            marginBottom: "16px",
+                            marginBottom: isMobile ? "12px" : "16px",
                             cursor: "pointer",
                         }}
                         onClick={() => handleClick(p.id)}

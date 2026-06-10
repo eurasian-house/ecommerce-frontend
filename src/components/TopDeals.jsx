@@ -11,25 +11,28 @@ export default function TopDeals() {
     }, []);
 
     const fetchTopDeals = async () => {
-        const oneWeekAgo = new Date();
-        oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
-
         const { data, error } = await supabase
             .from("products")
             .select("*")
-            .gte("created_at", oneWeekAgo.toISOString())
             .order("clicks", { ascending: false })
             .limit(10);
 
-        if (error) return;
+        if (error) {
+            console.log(error);
+            return;
+        }
 
-        setProducts(data);
+        console.log(data); // debug
+        setProducts(data || []);
     };
 
     return (
         <div className="mb-4">
-            <h4 className="fw-bold mb-3">Today's best deals</h4>
-
+            <div className="text-center mb-3">
+        <span className="badge rounded-pill bg-primary bg-opacity-10 text-primary px-4 py-2 fw-bold text-uppercase tracking-wider">
+          Today's best Deal...
+        </span>
+      </div>
             {/* 🔥 SAME STYLE AS COLOR FILTER */}
             <div className="d-flex overflow-auto gap-3 pb-2">
                 {products.map((p) => (
@@ -43,7 +46,11 @@ export default function TopDeals() {
                             <img
                                 src={p.thumbnail}
                                 className="card-img-top"
-                                style={{ height: "180px", objectFit: "contain" }}
+                                style={{
+                                    height: "220px",
+                                    objectFit: "cover",
+                                    width: "100%"
+                                }}
                             />
 
                             <div className="card-body">
@@ -51,12 +58,25 @@ export default function TopDeals() {
                                     {p.main_category}
                                 </p>
 
-                                <h6 className="mb-2">{p.title}</h6>
+                                <h6
+                                    className="mb-2"
+                                    style={{
+                                        display: "-webkit-box",
+                                        WebkitBoxOrient: "vertical",
+                                        WebkitLineClamp: 3,
+                                        overflow: "hidden",
+                                        lineHeight: "1.4",
+                                        height: "4.2em",   // 3 lines × 1.4
+                                        wordBreak: "break-word"
+                                    }}
+                                >
+                                    {p.title}
+                                </h6>
 
                                 <div className="d-flex align-items-center gap-2">
-                                    <span className="fw-bold">₹{p.selling_price}</span>
+                                    <span className="fw-bold">${p.selling_price}</span>
                                     <span className="text-muted text-decoration-line-through small">
-                                        ₹{p.mrp}
+                                        ${p.mrp}
                                     </span>
                                 </div>
 

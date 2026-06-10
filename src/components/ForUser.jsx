@@ -1,6 +1,12 @@
 import React from 'react';
+import { useNavigate } from "react-router-dom";
 
 const ForUser = () => {
+
+
+
+  const navigate = useNavigate();
+
   return (
     <div className="container-fluid min-vh-100 d-flex align-items-center justify-content-center bg-light border-top border-bottom">
       <div className="container py-5">
@@ -44,7 +50,9 @@ const ForUser = () => {
 
             {/* Call to Action */}
             <div className="mt-5 pt-4">
-              <button className="btn btn-dark btn-lg px-5 py-3 rounded-pill shadow-lg hover-lift">
+              <button className="btn btn-dark btn-lg px-5 py-3 rounded-pill shadow-lg hover-lift"
+                onClick={() => navigate("/products")}
+                >
                 Experience the Difference
               </button>
             </div>

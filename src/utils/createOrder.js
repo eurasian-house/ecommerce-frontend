@@ -1,6 +1,6 @@
 import { supabase } from "../lib/supabase";
 
-export async function createOrder(cartItems, address, phone) {
+export async function createOrder(cartItems, customerData) {
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -9,29 +9,31 @@ export async function createOrder(cartItems, address, phone) {
     return { success: false, error: "User not logged in" };
   }
 
+  console.log("Cart Items Received:", cartItems);
+
   const totalAmount = cartItems.reduce(
     (sum, item) => sum + item.price * item.quantity,
     0
   );
 
-  // ✅ Create order with status = pending
+  // Create Order
   const { data: order, error: orderError } = await supabase
     .from("orders")
     .insert([
       {
         user_id: user.id,
         total_amount: totalAmount,
-        address,
-        phone,
-        status: "pending", // ✅ IMPORTANT
+        address: customerData.address,
+        phone: customerData.phone,
+        status: "pending",
       },
     ])
     .select()
     .single();
 
   if (orderError) {
-    console.error(orderError);
-    return { success: false };
+    console.error("Order Error:", orderError);
+    return { success: false, error: orderError.message };
   }
 
   const items = cartItems.map((item) => ({
@@ -39,16 +41,57 @@ export async function createOrder(cartItems, address, phone) {
     product_id: item.id,
     quantity: item.quantity,
     price: item.price,
+
+    // Future scalable IDs
+    size_id: item.selectedSize?.id || null,
+    color_id: item.selectedColor?.id || null,
+
+    // Snapshot text values
+    size:
+      item.selectedSize?.size ||
+      item.selectedSize ||
+      item.size ||
+      null,
+
+    color:
+      item.selectedColor?.color_name ||
+      item.selectedColor?.color ||
+      item.color?.color_name ||
+      item.color ||
+      null,
+
+    color_image:
+      item.selectedColor?.color_image ||
+      item.color?.color_image ||
+      null,
+
+    // Customer data snapshot
+    customer_name: customerData.name,
+    phone: customerData.phone,
+    email: customerData.email,
+    pincode: customerData.pincode,
+    address: customerData.address,
+    city: customerData.city,
+    state: customerData.state,
+    country: customerData.country,
   }));
+
+  console.log(
+    "Items going into order_items:",
+    JSON.stringify(items, null, 2)
+  );
 
   const { error: itemsError } = await supabase
     .from("order_items")
     .insert(items);
 
   if (itemsError) {
-    console.error(itemsError);
-    return { success: false };
+    console.error("Items Insert Error:", itemsError);
+    return { success: false, error: itemsError.message };
   }
 
-  return { success: true, orderId: order.id };
+  return {
+    success: true,
+    orderId: order.id,
+  };
 }

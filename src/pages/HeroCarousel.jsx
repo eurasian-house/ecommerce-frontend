@@ -41,6 +41,7 @@ const slides = [
 export default function HeroCarousel({ onSlideClick }) {
     const [current, setCurrent] = useState(0);
     const duration = 3500;
+    const isMobile = window.innerWidth < 576;
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -59,13 +60,14 @@ export default function HeroCarousel({ onSlideClick }) {
         );
     };
 
+
     return (
         <div className="mb-4 position-relative overflow-hidden">
 
             {/* SLIDE */}
             <div
                 style={{
-                    height: "600px",
+                    height: isMobile ? "220px" : "600px",
                     overflow: "hidden",
                     cursor: "pointer",
                     position: "relative"
@@ -88,15 +90,22 @@ export default function HeroCarousel({ onSlideClick }) {
                     style={{
                         background: "rgba(0,0,0,0.4)",
                         color: "white",
-                        paddingLeft: "60px",
+                        paddingLeft: isMobile ? "20px" : "60px",
                     }}
                 >
-                    <h2 className="fw-bold">{slides[current].title}</h2>
-                    <p>{slides[current].subtitle}</p>
+                    <h2
+                        className="fw-bold"
+                        style={{ fontSize: isMobile ? "1.5rem" : "2rem" }}
+                    >
+                        {slides[current].title}
+                    </h2>
+                    <p style={{ fontSize: isMobile ? "0.9rem" : "1rem" }}>
+                        {slides[current].subtitle}
+                    </p>
 
                     <button
                         className="btn btn-light btn-sm mt-2"
-                        style={{ width: "140px" }}
+                        style={{ width: isMobile ? "100px" : "140px" }}
                         onClick={(e) => {
                             e.stopPropagation();
                             onSlideClick(slides[current].discount);
@@ -109,14 +118,16 @@ export default function HeroCarousel({ onSlideClick }) {
 
             {/* ARROWS */}
             <button
-                className="btn btn-dark position-absolute top-50 start-0 translate-middle-y"
+                className={`btn btn-dark position-absolute top-50 start-0 translate-middle-y ${isMobile ? "btn-sm" : ""
+                    }`}
                 onClick={prevSlide}
             >
                 ‹
             </button>
 
             <button
-                className="btn btn-dark position-absolute top-50 end-0 translate-middle-y"
+                className={`btn btn-dark position-absolute top-50 end-0 translate-middle-y ${isMobile ? "btn-sm" : ""
+                    }`}
                 onClick={nextSlide}
             >
                 ›

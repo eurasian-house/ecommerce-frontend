@@ -29,6 +29,13 @@ export default function ProductDetail() {
   }, [id]);
 
   useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  }, [id]);
+
+  useEffect(() => {
     if (!hasIncremented.current) {
       incrementClick();
       hasIncremented.current = true;
@@ -44,6 +51,16 @@ export default function ProductDetail() {
       });
     }
   }, [product]);
+
+  // Auto compression while image deleivery function
+  const optimizeUrl = (url) => {
+    if (!url.includes("/upload/")) return url;
+
+    return url.replace(
+      "/upload/",
+      "/upload/f_auto,q_auto,w_auto/"
+    );
+  };
 
   const incrementClick = async () => {
     await supabase.rpc("increment_clicks", { row_id: id });
@@ -97,19 +114,25 @@ export default function ProductDetail() {
   if (!product) return <div className="container mt-4">Loading...</div>;
 
   return (
-    <div className="container mt-4">
+    <div className="container-fluid px-0 mt-3">
 
-      <div className="card p-4">
-        <div className="d-flex gap-4">
+      <div className="card border-0 rounded-0 rounded-md-3 p-2 p-md-4">
+        <div className="d-flex flex-column flex-lg-row gap-4">
 
-          <div style={{ flex: 1 }}>
-            <div className="d-flex gap-3">
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <div className="d-flex flex-column-reverse flex-md-row gap-3">
 
-              <div className="d-flex flex-column gap-2" style={{ maxHeight: "400px", overflowY: "auto" }}>
+              <div className="d-flex flex-row flex-md-column gap-2" style={{
+                maxHeight: "400px",
+                overflowY: "auto",
+                overflowX: "auto",
+                maxWidth: "100%"
+              }}>
                 {images.map((img, i) => (
                   <img
                     key={i}
-                    src={img}
+                    // src={img}
+                    src={optimizeUrl(img)}
                     onClick={() => setSelectedImage(img)}
                     style={{
                       width: "70px",
@@ -123,24 +146,47 @@ export default function ProductDetail() {
               </div>
 
               <div style={{ flex: 1, position: "relative", textAlign: "center" }}>
-                <button onClick={prevImage} style={{ position: "absolute", left: 0, top: "45%" }}>◀</button>
+                <button
+                  onClick={prevImage}
+                  style={{
+                    position: "absolute",
+                    left: "5px",
+                    top: "45%",
+                    zIndex: 2
+                  }}
+                ></button>
 
-                <img src={selectedImage} style={{ width: "100%", maxHeight: "400px", objectFit: "contain" }} />
+                <img src={optimizeUrl(selectedImage)} style={{ width: "100%", maxHeight: "400px", objectFit: "contain" }} />
 
-                <button onClick={nextImage} style={{ position: "absolute", right: 0, top: "45%" }}>▶</button>
+                <button
+                  onClick={prevImage}
+                  style={{
+                    position: "absolute",
+                    right: "5px",
+                    top: "45%",
+                    zIndex: 2
+                  }}
+                ></button>
               </div>
 
             </div>
           </div>
 
-          <div style={{ flex: 1 }}>
+          <div style={{ flex: 1, minWidth: 0 }}>
 
             <p className="text-muted mb-1">{product.main_category}</p>
-            <h2>{product.title}</h2>
+            <h2
+              style={{
+                wordBreak: "break-word",
+                fontSize: "clamp(1.6rem,5vw,2rem)"
+              }}
+            >
+              {product.title}
+            </h2>
 
-            <div className="d-flex gap-3 align-items-center mt-2">
-              <h4>₹{displayPrice.selling}</h4>
-              <span className="text-decoration-line-through text-muted">₹{displayPrice.mrp}</span>
+            <div className="d-flex flex-wrap gap-2 align-items-center mt-2">
+              <h4>${displayPrice.selling}</h4>
+              <span className="text-decoration-line-through text-muted">${displayPrice.mrp}</span>
               <span className="badge bg-dark">{displayPrice.discount}% OFF</span>
             </div>
 
@@ -156,11 +202,11 @@ export default function ProductDetail() {
             {/* COLORS */}
             <div className="mt-3">
               <strong>Colors:</strong>
-              <div className="d-flex gap-2 mt-2">
+              <div className="d-flex gap-2 mt-2 flex-wrap">
                 {product.product_colors?.map((c, i) => (
                   <img
                     key={i}
-                    src={c.color_image}
+                    src={optimizeUrl(c.color_image)}
                     onClick={() => {
                       setSelectedImage(c.color_image);
                       setSelectedColor(c);
@@ -180,7 +226,7 @@ export default function ProductDetail() {
             {/* SIZES */}
             <div className="mt-3">
               <strong>Sizes:</strong>
-              <div className="d-flex gap-2 mt-2 overflow-auto">
+              <div className="d-flex gap-2 mt-2 overflow-auto pb-2">
                 {product.product_sizes?.map((s, i) => (
                   <button
                     key={i}
@@ -216,9 +262,9 @@ export default function ProductDetail() {
             <p>Material: {product.materials}</p>
 
             {/* BUTTONS */}
-            <div className="mt-4 d-flex gap-3">
+            <div className="mt-4 d-flex flex-column flex-sm-row gap-3">
               <button
-                className="btn btn-dark w-50"
+                className="btn btn-dark w-100"
                 disabled={!isSelectionValid}
                 onClick={() => {
                   if (!isSelectionValid) return;
@@ -229,7 +275,7 @@ export default function ProductDetail() {
               </button>
 
               <button
-                className="btn btn-outline-dark w-50"
+                className="btn btn-outline-dark w-100"
                 disabled={!isSelectionValid}
                 onClick={() => {
                   if (!isSelectionValid) return;
@@ -257,48 +303,55 @@ export default function ProductDetail() {
         <h5 className="text-muted text-center">Related Products</h5>
         <h2 className="text-center mb-4">Explore Related Products</h2>
 
-        <div className="d-flex gap-3 overflow-auto">
+        <div className="row g-3">
 
           {related.map((p) => (
             <div
               key={p.id}
-              onClick={() => navigate(`/products/${p.id}`)} // ✅ added
-              style={{
-                minWidth: "220px",
-                border: "1px solid #eee",
-                borderRadius: "10px",
-                padding: "10px",
-                cursor: "pointer" // ✅ added
-              }}
+              className="col-12 col-sm-6 col-md-4 col-lg-3"
+              onClick={() => navigate(`/products/${p.id}`)}
             >
-
-              <img
-                src={p.thumbnail}
+              <div
                 style={{
-                  width: "100%",
-                  height: "180px",
-                  objectFit: "cover",
-                  borderRadius: "10px"
+                  border: "1px solid #eee",
+                  borderRadius: "10px",
+                  padding: "10px",
+                  cursor: "pointer",
+                  aspectRatio: "9 / 14",
+                  display: "flex",
+                  flexDirection: "column",
+                  overflow: "hidden"
                 }}
-              />
+              >
 
-              <p className="text-muted mt-2 mb-1" style={{ fontSize: "12px" }}>
-                {p.main_category}
-              </p>
+                <img
+                  src={optimizeUrl(p.thumbnail)}
+                  style={{
+                    width: "100%",
+                    aspectRatio: "1 / 1",
+                    objectFit: "cover",
+                    borderRadius: "10px"
+                  }}
+                />
 
-              <h6>{p.title}</h6>
+                <p className="text-muted mt-2 mb-1" style={{ fontSize: "12px" }}>
+                  {p.main_category}
+                </p>
 
-              <div className="d-flex gap-2 align-items-center">
-                <span>₹{p.selling_price}</span>
-                <span style={{
-                  textDecoration: "line-through",
-                  fontSize: "12px",
-                  color: "#888"
-                }}>
-                  ₹{p.mrp}
-                </span>
+                <h6>{p.title}</h6>
+
+                <div className="d-flex gap-2 align-items-center">
+                  <span>${p.selling_price}</span>
+                  <span style={{
+                    textDecoration: "line-through",
+                    fontSize: "12px",
+                    color: "#888"
+                  }}>
+                    ${p.mrp}
+                  </span>
+                </div>
+
               </div>
-
             </div>
           ))}
 

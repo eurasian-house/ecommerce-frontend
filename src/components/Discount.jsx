@@ -7,6 +7,11 @@ export default function Discount() {
 
   return (
     <div className="mb-4">
+      <div className="text-center mb-3">
+        <span className="badge rounded-pill bg-primary bg-opacity-10 text-primary px-4 py-2 fw-bold text-uppercase tracking-wider">
+          Choose by offers!
+        </span>
+      </div>
       <div className="d-flex overflow-auto gap-3 pb-2">
         {DISCOUNTS.map((d) => (
           <div

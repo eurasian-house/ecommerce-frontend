@@ -32,8 +32,10 @@ export default function Login() {
     <div className="container mt-5" style={{ maxWidth: "400px" }}>
       <h3 className="mb-3">Login</h3>
 
+
       <form onSubmit={handleSubmit}>
         <input
+          type="email"
           className="form-control mb-3"
           placeholder="Email"
           value={form.email}
@@ -53,11 +55,23 @@ export default function Login() {
         />
 
         <button className="btn btn-dark w-100">Login</button>
+
+        <div className="text-center mt-2">
+          <button
+            type="button"
+            className="btn btn-link p-0"
+            onClick={() => navigate("/forgot-password")}
+          >
+            Forgot Password?
+          </button>
+        </div>
+
         <div className="text-center mt-3">
           <span>Don't have an account? </span>
           <button
+            type="button"
             className="btn btn-link p-0"
-            onClick={() => window.location.href = "/signup"}
+            onClick={() => navigate("/signup")}
           >
             Sign up
           </button>
