@@ -2,9 +2,10 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
 import { supabase } from "../lib/supabase";
 import { useCart } from "../context/CartContext";
+import SEO from "../components/SEO";
 
 export default function ProductDetail() {
-  const { id } = useParams();
+  const { slug } = useParams();
   const navigate = useNavigate(); // ✅ added
 
   const [product, setProduct] = useState(null);
@@ -22,25 +23,16 @@ export default function ProductDetail() {
   // From Cart
   const { addToCart } = useCart();
 
-  const hasIncremented = useRef(false);
-
   useEffect(() => {
     fetchProduct();
-  }, [id]);
+  }, [slug]);
 
   useEffect(() => {
     window.scrollTo({
       top: 0,
       behavior: "smooth"
     });
-  }, [id]);
-
-  useEffect(() => {
-    if (!hasIncremented.current) {
-      incrementClick();
-      hasIncremented.current = true;
-    }
-  }, []);
+  }, [slug]);
 
   useEffect(() => {
     if (product) {
@@ -62,18 +54,21 @@ export default function ProductDetail() {
     );
   };
 
-  const incrementClick = async () => {
-    await supabase.rpc("increment_clicks", { row_id: id });
+  const incrementClick = async (productId) => {
+    await supabase.rpc("increment_clicks", {
+      row_id: productId,
+    });
   };
 
   const fetchProduct = async () => {
     const { data } = await supabase
       .from("products")
       .select(`*, product_colors (*), product_sizes (*)`)
-      .eq("id", id)
+      .eq("slug", slug)
       .single();
 
     if (data) {
+      await incrementClick(data.id);
       const allImages = [
         data.thumbnail,
         ...(data.images || []),
@@ -111,253 +106,286 @@ export default function ProductDetail() {
 
   const isSelectionValid = selectedSize && selectedColor;
 
+  const productSchema = product && {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: product.title,
+    description: product.description,
+    image: [product.thumbnail],
+    sku: product.product_sizes?.[0]?.sku || "",
+    brand: {
+      "@type": "Brand",
+      name: "Eurasian House",
+    },
+    offers: {
+      "@type": "Offer",
+      priceCurrency: "USD",
+      price: displayPrice.selling,
+      availability:
+        "https://schema.org/InStock",
+      url: `https://eurasianrugs.com/products/${product.slug}`,
+    },
+  };
   if (!product) return <div className="container mt-4">Loading...</div>;
+  console.log(productSchema);
 
   return (
-    <div className="container-fluid px-0 mt-3">
+    <>  <SEO
+      title={`${product.title} | Eurasian House`}
+      description={
+        product.description?.substring(0, 160) ||
+        `${product.title} at Eurasian House`
+      }
+      canonical={`https://eurasianrugs.com/products/${product.slug}`}
+      image={product.thumbnail}
+      type="product"
+      schema={productSchema}
+    />
+      <div className="container-fluid px-0 mt-3">
 
-      <div className="card border-0 rounded-0 rounded-md-3 p-2 p-md-4">
-        <div className="d-flex flex-column flex-lg-row gap-4">
+        <div className="card border-0 rounded-0 rounded-md-3 p-2 p-md-4">
+          <div className="d-flex flex-column flex-lg-row gap-4">
 
-          <div style={{ flex: 1, minWidth: 0 }}>
-            <div className="d-flex flex-column-reverse flex-md-row gap-3">
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <div className="d-flex flex-column-reverse flex-md-row gap-3">
 
-              <div className="d-flex flex-row flex-md-column gap-2" style={{
-                maxHeight: "400px",
-                overflowY: "auto",
-                overflowX: "auto",
-                maxWidth: "100%"
-              }}>
-                {images.map((img, i) => (
-                  <img
-                    key={i}
-                    // src={img}
-                    src={optimizeUrl(img)}
-                    onClick={() => setSelectedImage(img)}
-                    style={{
-                      width: "70px",
-                      height: "70px",
-                      objectFit: "cover",
-                      cursor: "pointer",
-                      border: selectedImage === img ? "2px solid black" : "1px solid #ccc"
-                    }}
-                  />
-                ))}
-              </div>
+                <div className="d-flex flex-row flex-md-column gap-2" style={{
+                  maxHeight: "400px",
+                  overflowY: "auto",
+                  overflowX: "auto",
+                  maxWidth: "100%"
+                }}>
+                  {images.map((img, i) => (
+                    <img
+                      key={i}
+                      // src={img}
+                      src={optimizeUrl(img)}
+                      onClick={() => setSelectedImage(img)}
+                      style={{
+                        width: "70px",
+                        height: "70px",
+                        objectFit: "cover",
+                        cursor: "pointer",
+                        border: selectedImage === img ? "2px solid black" : "1px solid #ccc"
+                      }}
+                    />
+                  ))}
+                </div>
 
-              <div style={{ flex: 1, position: "relative", textAlign: "center" }}>
-                <button
-                  onClick={prevImage}
-                  style={{
-                    position: "absolute",
-                    left: "5px",
-                    top: "45%",
-                    zIndex: 2
-                  }}
-                ></button>
-
-                <img src={optimizeUrl(selectedImage)} style={{ width: "100%", maxHeight: "400px", objectFit: "contain" }} />
-
-                <button
-                  onClick={prevImage}
-                  style={{
-                    position: "absolute",
-                    right: "5px",
-                    top: "45%",
-                    zIndex: 2
-                  }}
-                ></button>
-              </div>
-
-            </div>
-          </div>
-
-          <div style={{ flex: 1, minWidth: 0 }}>
-
-            <p className="text-muted mb-1">{product.main_category}</p>
-            <h2
-              style={{
-                wordBreak: "break-word",
-                fontSize: "clamp(1.6rem,5vw,2rem)"
-              }}
-            >
-              {product.title}
-            </h2>
-
-            <div className="d-flex flex-wrap gap-2 align-items-center mt-2">
-              <h4>${displayPrice.selling}</h4>
-              <span className="text-decoration-line-through text-muted">${displayPrice.mrp}</span>
-              <span className="badge bg-dark">{displayPrice.discount}% OFF</span>
-            </div>
-
-            <p className="text-muted mt-2" style={{
-              display: "-webkit-box",
-              WebkitLineClamp: 2,
-              WebkitBoxOrient: "vertical",
-              overflow: "hidden"
-            }}>
-              {product.description}
-            </p>
-
-            {/* COLORS */}
-            <div className="mt-3">
-              <strong>Colors:</strong>
-              <div className="d-flex gap-2 mt-2 flex-wrap">
-                {product.product_colors?.map((c, i) => (
-                  <img
-                    key={i}
-                    src={optimizeUrl(c.color_image)}
-                    onClick={() => {
-                      setSelectedImage(c.color_image);
-                      setSelectedColor(c);
-                    }}
-                    style={{
-                      width: "50px",
-                      height: "50px",
-                      objectFit: "cover",
-                      cursor: "pointer",
-                      border: selectedColor === c ? "2px solid black" : "1px solid #ccc"
-                    }}
-                  />
-                ))}
-              </div>
-            </div>
-
-            {/* SIZES */}
-            <div className="mt-3">
-              <strong>Sizes:</strong>
-              <div className="d-flex gap-2 mt-2 overflow-auto pb-2">
-                {product.product_sizes?.map((s, i) => (
+                <div style={{ flex: 1, position: "relative", textAlign: "center" }}>
                   <button
-                    key={i}
-                    onClick={() => {
-                      setSelectedSize(s);
-
-                      const mrp = s.mrp_variation || 0;
-                      const discount = s.discount_variation || 0;
-
-                      const selling =
-                        mrp && discount
-                          ? mrp - (mrp * discount) / 100
-                          : s.selling_price || product.selling_price;
-
-                      setDisplayPrice({
-                        selling,
-                        mrp: mrp || product.mrp,
-                        discount: discount || product.discount_percent
-                      });
-                    }}
+                    onClick={prevImage}
                     style={{
-                      minWidth: "80px",
-                      border: selectedSize === s ? "2px solid black" : "1px solid #ccc"
+                      position: "absolute",
+                      left: "5px",
+                      top: "45%",
+                      zIndex: 2
                     }}
-                  >
-                    {s.size}
-                  </button>
-                ))}
-              </div>
-            </div>
+                  ></button>
 
-            <p className="mt-3">Shape: {product.shape}</p>
-            <p>Material: {product.materials}</p>
+                  <img src={optimizeUrl(selectedImage)} style={{ width: "100%", maxHeight: "400px", objectFit: "contain" }} />
 
-            {/* BUTTONS */}
-            <div className="mt-4 d-flex flex-column flex-sm-row gap-3">
-              <button
-                className="btn btn-dark w-100"
-                disabled={!isSelectionValid}
-                onClick={() => {
-                  if (!isSelectionValid) return;
-                  console.log("Buy Now", { product, selectedSize, selectedColor });
-                }}
-              >
-                Buy Now
-              </button>
-
-              <button
-                className="btn btn-outline-dark w-100"
-                disabled={!isSelectionValid}
-                onClick={() => {
-                  if (!isSelectionValid) return;
-
-                  addToCart({
-                    ...product,
-                    selectedSize,
-                    selectedColor,
-                    price: displayPrice.selling,
-                  });
-                }}
-              >
-                Add to Cart
-              </button>
-            </div>
-
-          </div>
-
-        </div>
-      </div>
-
-      {/* RELATED PRODUCTS */}
-      <div className="card p-4 mt-5">
-
-        <h5 className="text-muted text-center">Related Products</h5>
-        <h2 className="text-center mb-4">Explore Related Products</h2>
-
-        <div className="row g-3">
-
-          {related.map((p) => (
-            <div
-              key={p.id}
-              className="col-12 col-sm-6 col-md-4 col-lg-3"
-              onClick={() => navigate(`/products/${p.id}`)}
-            >
-              <div
-                style={{
-                  border: "1px solid #eee",
-                  borderRadius: "10px",
-                  padding: "10px",
-                  cursor: "pointer",
-                  aspectRatio: "9 / 14",
-                  display: "flex",
-                  flexDirection: "column",
-                  overflow: "hidden"
-                }}
-              >
-
-                <img
-                  src={optimizeUrl(p.thumbnail)}
-                  style={{
-                    width: "100%",
-                    aspectRatio: "1 / 1",
-                    objectFit: "cover",
-                    borderRadius: "10px"
-                  }}
-                />
-
-                <p className="text-muted mt-2 mb-1" style={{ fontSize: "12px" }}>
-                  {p.main_category}
-                </p>
-
-                <h6>{p.title}</h6>
-
-                <div className="d-flex gap-2 align-items-center">
-                  <span>${p.selling_price}</span>
-                  <span style={{
-                    textDecoration: "line-through",
-                    fontSize: "12px",
-                    color: "#888"
-                  }}>
-                    ${p.mrp}
-                  </span>
+                  <button
+                    onClick={prevImage}
+                    style={{
+                      position: "absolute",
+                      right: "5px",
+                      top: "45%",
+                      zIndex: 2
+                    }}
+                  ></button>
                 </div>
 
               </div>
             </div>
-          ))}
 
+            <div style={{ flex: 1, minWidth: 0 }}>
+
+              <p className="text-muted mb-1">{product.main_category}</p>
+              <h2
+                style={{
+                  wordBreak: "break-word",
+                  fontSize: "clamp(1.6rem,5vw,2rem)"
+                }}
+              >
+                {product.title}
+              </h2>
+
+              <div className="d-flex flex-wrap gap-2 align-items-center mt-2">
+                <h4>${displayPrice.selling}</h4>
+                <span className="text-decoration-line-through text-muted">${displayPrice.mrp}</span>
+                <span className="badge bg-dark">{displayPrice.discount}% OFF</span>
+              </div>
+
+              <p className="text-muted mt-2" style={{
+                display: "-webkit-box",
+                WebkitLineClamp: 2,
+                WebkitBoxOrient: "vertical",
+                overflow: "hidden"
+              }}>
+                {product.description}
+              </p>
+
+              {/* COLORS */}
+              <div className="mt-3">
+                <strong>Colors:</strong>
+                <div className="d-flex gap-2 mt-2 flex-wrap">
+                  {product.product_colors?.map((c, i) => (
+                    <img
+                      key={i}
+                      src={optimizeUrl(c.color_image)}
+                      onClick={() => {
+                        setSelectedImage(c.color_image);
+                        setSelectedColor(c);
+                      }}
+                      style={{
+                        width: "50px",
+                        height: "50px",
+                        objectFit: "cover",
+                        cursor: "pointer",
+                        border: selectedColor === c ? "2px solid black" : "1px solid #ccc"
+                      }}
+                    />
+                  ))}
+                </div>
+              </div>
+
+              {/* SIZES */}
+              <div className="mt-3">
+                <strong>Sizes:</strong>
+                <div className="d-flex gap-2 mt-2 overflow-auto pb-2">
+                  {product.product_sizes?.map((s, i) => (
+                    <button
+                      key={i}
+                      onClick={() => {
+                        setSelectedSize(s);
+
+                        const mrp = s.mrp_variation || 0;
+                        const discount = s.discount_variation || 0;
+
+                        const selling =
+                          mrp && discount
+                            ? mrp - (mrp * discount) / 100
+                            : s.selling_price || product.selling_price;
+
+                        setDisplayPrice({
+                          selling,
+                          mrp: mrp || product.mrp,
+                          discount: discount || product.discount_percent
+                        });
+                      }}
+                      style={{
+                        minWidth: "80px",
+                        border: selectedSize === s ? "2px solid black" : "1px solid #ccc"
+                      }}
+                    >
+                      {s.size}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <p className="mt-3">Shape: {product.shape}</p>
+              <p>Material: {product.materials}</p>
+
+              {/* BUTTONS */}
+              <div className="mt-4 d-flex flex-column flex-sm-row gap-3">
+                <button
+                  className="btn btn-dark w-100"
+                  disabled={!isSelectionValid}
+                  onClick={() => {
+                    if (!isSelectionValid) return;
+                    console.log("Buy Now", { product, selectedSize, selectedColor });
+                  }}
+                >
+                  Buy Now
+                </button>
+
+                <button
+                  className="btn btn-outline-dark w-100"
+                  disabled={!isSelectionValid}
+                  onClick={() => {
+                    if (!isSelectionValid) return;
+
+                    addToCart({
+                      ...product,
+                      selectedSize,
+                      selectedColor,
+                      price: displayPrice.selling,
+                    });
+                  }}
+                >
+                  Add to Cart
+                </button>
+              </div>
+
+            </div>
+
+          </div>
         </div>
 
+        {/* RELATED PRODUCTS */}
+        <div className="card p-4 mt-5">
+
+          <h5 className="text-muted text-center">Related Products</h5>
+          <h2 className="text-center mb-4">Explore Related Products</h2>
+
+          <div className="row g-3">
+
+            {related.map((p) => (
+              <div
+                key={p.id}
+                className="col-12 col-sm-6 col-md-4 col-lg-3"
+                onClick={() => navigate(`/products/${p.slug}`)}
+              >
+                <div
+                  style={{
+                    border: "1px solid #eee",
+                    borderRadius: "10px",
+                    padding: "10px",
+                    cursor: "pointer",
+                    aspectRatio: "9 / 14",
+                    display: "flex",
+                    flexDirection: "column",
+                    overflow: "hidden"
+                  }}
+                >
+
+                  <img
+                    src={optimizeUrl(p.thumbnail)}
+                    style={{
+                      width: "100%",
+                      aspectRatio: "1 / 1",
+                      objectFit: "cover",
+                      borderRadius: "10px"
+                    }}
+                  />
+
+                  <p className="text-muted mt-2 mb-1" style={{ fontSize: "12px" }}>
+                    {p.main_category}
+                  </p>
+
+                  <h6>{p.title}</h6>
+
+                  <div className="d-flex gap-2 align-items-center">
+                    <span>${p.selling_price}</span>
+                    <span style={{
+                      textDecoration: "line-through",
+                      fontSize: "12px",
+                      color: "#888"
+                    }}>
+                      ${p.mrp}
+                    </span>
+                  </div>
+
+                </div>
+              </div>
+            ))}
+
+          </div>
+
+        </div>
       </div>
-    </div>
+    </>
   );
 }

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { signUp } from "../lib/auth";
 import { useNavigate } from "react-router-dom";
+import SEO from "../components/SEO";
 
 export default function Signup() {
   const navigate = useNavigate();
@@ -34,25 +35,6 @@ export default function Signup() {
 
       alert("Signup successful. Please check your email to confirm.");
       navigate("/login");
-      //   } catch (err) {
-      //     const msg = err?.message?.toLowerCase() || "";
-
-      //     // 🔴 Handle specific Supabase errors
-      //     if (msg.includes("already registered")) {
-      //       alert("This email is already registered. Please login instead.");
-      //     } else if (msg.includes("rate limit")) {
-      //       alert("Too many attempts. Please wait a few seconds and try again.");
-      //     } else if (msg.includes("invalid email")) {
-      //       alert("Please enter a valid email address.");
-      //     } else if (msg.includes("password")) {
-      //       alert("Password should be at least 6 characters.");
-      //     } else {
-      //       alert("Something went wrong. Please try again.");
-      //     }
-      //   } finally {
-      //     setLoading(false);
-      //   }
-      // };
 
     } catch (err) {
       console.error(err); // 👈 IMPORTANT
@@ -60,9 +42,15 @@ export default function Signup() {
       alert(
         err?.message || err?.error_description || JSON.stringify(err)
       );
-    }}
+    }
+  }
 
-    return (
+  return (
+    <><SEO
+      title="Create an Account | Eurasian House"
+      description="Create your Eurasian House account for faster checkout, order tracking and personalized shopping."
+      canonical="https://eurasianrugs.com/signup"
+    />
       <div className="container mt-5" style={{ maxWidth: "400px" }}>
         <h3 className="mb-3">Sign Up</h3>
 
@@ -105,5 +93,6 @@ export default function Signup() {
           </button>
         </form>
       </div>
-    );
-  }
+    </>
+  );
+}

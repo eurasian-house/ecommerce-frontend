@@ -69,7 +69,7 @@ export default function Inspiration() {
     ];
 
     const handleClick = (id) => {
-        navigate(`/products/${id}`);
+        navigate(`/products/${p.slug}`)
     };
 
     return (

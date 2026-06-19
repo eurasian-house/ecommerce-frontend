@@ -39,7 +39,7 @@ export default function TopDeals() {
                     <div
                         key={p.id}
                         style={{ width: "260px", flex: "0 0 auto", cursor: "pointer" }}
-                        onClick={() => navigate(`/products/${p.id}`)}
+                        onClick={() => navigate(`/products/${p.slug}`)}
                     >
                         <div className="card h-100">
 

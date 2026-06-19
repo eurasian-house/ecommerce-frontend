@@ -8,6 +8,7 @@ export default function AddProduct() {
 
     const initialForm = {
         title: "",
+        slug: "",
         main_category: "",
         sub_category: "",
         item_type: "",
@@ -55,12 +56,28 @@ export default function AddProduct() {
         setEditingId(null);
     };
 
+    const createSlug = (text) => {
+        return text
+            .toLowerCase()
+            .trim()
+            .replace(/[^a-z0-9]+/g, "-")
+            .replace(/^-+|-+$/g, "");
+    };
+
     const handleChange = (e) => {
-        setForm({ ...form, [e.target.name]: e.target.value });
+        const { name, value } = e.target;
+
+        setForm((prev) => ({
+            ...prev,
+            [name]: value,
+            ...(name === "title"
+                ? { slug: createSlug(value) }
+                : {})
+        }));
 
         setErrors(prev => ({
             ...prev,
-            [e.target.name]: false
+            [name]: false
         }));
     };
 
@@ -164,6 +181,7 @@ export default function AddProduct() {
         if (isEditing) {
             await supabase.from("products").update({
                 title: form.title,
+                slug: form.slug,
                 main_category: form.main_category,
                 sub_category: form.sub_category,
                 item_type: form.item_type,
@@ -212,6 +230,7 @@ export default function AddProduct() {
                 .from("products")
                 .insert([{
                     title: form.title,
+                    slug: form.slug,
                     main_category: form.main_category,
                     sub_category: form.sub_category,
                     item_type: form.item_type,
@@ -263,12 +282,6 @@ export default function AddProduct() {
         resetForm();
     };
 
-    // useEffect(() => {
-    //     if (form.mrp && form.discount_percent) {
-    //         const sp = form.mrp - (form.mrp * form.discount_percent) / 100;
-    //         setForm((prev) => ({ ...prev, selling_price: sp }));
-    //     }
-    // }, [form.mrp, form.discount_percent]);
     useEffect(() => {
         if (!navData || !navData.product) return;
 
@@ -321,6 +334,13 @@ export default function AddProduct() {
                 <h3>{isEditing ? "Edit Product" : "Add Product"}</h3>
 
                 <input className={`form-control mb-2 ${errors.title ? "is-invalid" : ""}`} name="title" value={form.title} placeholder="Title" onChange={handleChange} />
+                <input
+                    className="form-control mb-2"
+                    name="slug"
+                    value={form.slug}
+                    placeholder="Slug"
+                    onChange={handleChange}
+                />
                 <input className={`form-control mb-2 ${errors.main_category ? "is-invalid" : ""}`} name="main_category" value={form.main_category} placeholder="Main Category" onChange={handleChange} />
                 <input className={`form-control mb-2 ${errors.sub_category ? "is-invalid" : ""}`} name="sub_category" value={form.sub_category} placeholder="Sub Category" onChange={handleChange} />
                 <input className={`form-control mb-2 ${errors.item_type ? "is-invalid" : ""}`} name="item_type" value={form.item_type} placeholder="physical/digital" onChange={handleChange} />

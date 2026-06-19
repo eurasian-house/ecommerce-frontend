@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import SEO from "../components/SEO";
 
 
 const Blogs = () => {
@@ -13,6 +14,14 @@ const Blogs = () => {
   ];
 
   return (
+
+    <><SEO
+  title="Rug Buying Guides & Articles | Eurasian House"
+  description="Expert articles on choosing, maintaining and decorating with handmade rugs and carpets."
+  canonical="https://eurasianrugs.com/blogs"
+/>
+
+
     <div className="container py-5">
       {/* Header Section */}
       <header className="pb-3 mb-4 border-bottom">
@@ -66,6 +75,7 @@ const Blogs = () => {
         &copy; 2026 Eurasin House
       </footer>
     </div>
+    </>
   );
 };
 

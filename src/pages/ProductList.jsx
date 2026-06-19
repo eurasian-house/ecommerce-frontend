@@ -3,7 +3,7 @@ import { supabase } from "../lib/supabase";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import { applyActiveFilter } from '../utils/productQueries'
-// import { useLocation } from "react-router-dom";
+import SEO from "../components/SEO";
 
 export default function ProductList({ colorFilter }) { // ✅ receive prop
   const [products, setProducts] = useState([]);
@@ -169,206 +169,214 @@ export default function ProductList({ colorFilter }) { // ✅ receive prop
     setSelectedImages((prev) => ({ ...prev, [id]: img }));
   };
 
-  const handleProductClick = (id) => {
-    navigate(`/products/${id}`);
+  const handleProductClick = (slug) => {
+    navigate(`/products/${slug}`);
   };
 
   return (
-    <div className="container mt-4">
+    <>
+      <SEO
+        title="Shop All Rugs | Eurasian House"
+        description="Browse our collection of handmade rugs including Persian, Kilim, Tibetan, Jute, Dhurrie and more."
+        canonical="https://eurasianrugs.com/products"
+      />
 
-      {/* FILTERS */}
-      <div className="card p-3 mb-4">
-        <div className="row g-3">
+      <div className="container mt-4">
 
-          <div className="col-md-3">
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Search..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            />
+        {/* FILTERS */}
+        <div className="card p-3 mb-4">
+          <div className="row g-3">
+
+            <div className="col-md-3">
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Search..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+            </div>
+
+            <div className="col-md-3">
+              <select
+                className="form-control"
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+              >
+                <option value="">All Categories</option>
+                {uniqueCategories.map((c, i) => (
+                  <option key={i} value={c}>{c}</option>
+                ))}
+              </select>
+            </div>
+
+            <div className="col-md-3">
+              <select
+                className="form-control"
+                value={sort}
+                onChange={(e) => setSort(e.target.value)}
+              >
+                <option value="">Sort By</option>
+                <option value="az">A-Z</option>
+                <option value="za">Z-A</option>
+                <option value="new">Date: New → Old</option>
+                <option value="old">Date: Old → New</option>
+                <option value="low">Price: Low → High</option>
+                <option value="high">Price: High → Low</option>
+              </select>
+            </div>
+
+            <div className="col-md-3">
+              <select
+                className="form-control"
+                value={budget}
+                onChange={(e) => setBudget(e.target.value)}
+              >
+                <option value="">Budget</option>
+                <option value="1">Below $299</option>
+                <option value="2">$299 - $499</option>
+                <option value="3">$499 - $999</option>
+                <option value="4">$999 - $1,499</option>
+                <option value="5">Above $1,499</option>
+              </select>
+            </div>
+
           </div>
-
-          <div className="col-md-3">
-            <select
-              className="form-control"
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
-            >
-              <option value="">All Categories</option>
-              {uniqueCategories.map((c, i) => (
-                <option key={i} value={c}>{c}</option>
-              ))}
-            </select>
-          </div>
-
-          <div className="col-md-3">
-            <select
-              className="form-control"
-              value={sort}
-              onChange={(e) => setSort(e.target.value)}
-            >
-              <option value="">Sort By</option>
-              <option value="az">A-Z</option>
-              <option value="za">Z-A</option>
-              <option value="new">Date: New → Old</option>
-              <option value="old">Date: Old → New</option>
-              <option value="low">Price: Low → High</option>
-              <option value="high">Price: High → Low</option>
-            </select>
-          </div>
-
-          <div className="col-md-3">
-            <select
-              className="form-control"
-              value={budget}
-              onChange={(e) => setBudget(e.target.value)}
-            >
-              <option value="">Budget</option>
-              <option value="1">Below $299</option>
-              <option value="2">$299 - $499</option>
-              <option value="3">$499 - $999</option>
-              <option value="4">$999 - $1,499</option>
-              <option value="5">Above $1,499</option>
-            </select>
-          </div>
-
         </div>
-      </div>
 
-      {/* PRODUCTS */}
-      <div className="row">
-        {filtered?.length === 0 ? (
-          <div className="text-center mt-5">
-            <h5>No products in this category</h5>
-          </div>
-        ) : (
-          filtered.map((p) => (
-            <div
-              key={p.id}
-              className="col-12 col-sm-6 col-md-4 col-lg-3 mb-4"
-              onClick={() => handleProductClick(p.id)}
-              style={{ cursor: "pointer" }}
-            >
-              <div className="card h-100 border-0 shadow-sm overflow-hidden">
+        {/* PRODUCTS */}
+        <div className="row">
+          {filtered?.length === 0 ? (
+            <div className="text-center mt-5">
+              <h5>No products in this category</h5>
+            </div>
+          ) : (
+            filtered.map((p) => (
+              <div
+                key={p.id}
+                className="col-12 col-sm-6 col-md-4 col-lg-3 mb-4"
+                onClick={() => handleProductClick(p.slug)}
+                style={{ cursor: "pointer" }}
+              >
+                <div className="card h-100 border-0 shadow-sm overflow-hidden">
 
-                <img
-                  src={selectedImages[p.id]}
-                  className="card-img-top"
-                  style={{
-                    width: "100%",
-                    aspectRatio: "1 / 1",
-                    objectFit: "cover",
-                  }}
-                />
-
-                <div className="card-body">
-
-                  <p className="text-muted small mb-1">
-                    {p.main_category}
-                  </p>
-
-                  <h6
-                    className="fw-semibold mb-3"
+                  <img
+                    src={selectedImages[p.id]}
+                    className="card-img-top"
                     style={{
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      display: "-webkit-box",
-                      WebkitBoxOrient: "vertical",
-                      WebkitLineClamp: 2,
-                      lineHeight: "1.4",
-                      height: "3em",
+                      width: "100%",
+                      aspectRatio: "1 / 1",
+                      objectFit: "cover",
                     }}
-                  >
-                    {p.title}
-                  </h6>
+                  />
 
-                  <div className="d-flex align-items-center gap-2">
-                    <span className="fw-bold">${p.selling_price}</span>
-                    <span className="text-muted text-decoration-line-through small">
-                      ${p.mrp}
+                  <div className="card-body">
+
+                    <p className="text-muted small mb-1">
+                      {p.main_category}
+                    </p>
+
+                    <h6
+                      className="fw-semibold mb-3"
+                      style={{
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        display: "-webkit-box",
+                        WebkitBoxOrient: "vertical",
+                        WebkitLineClamp: 2,
+                        lineHeight: "1.4",
+                        height: "3em",
+                      }}
+                    >
+                      {p.title}
+                    </h6>
+
+                    <div className="d-flex align-items-center gap-2">
+                      <span className="fw-bold">${p.selling_price}</span>
+                      <span className="text-muted text-decoration-line-through small">
+                        ${p.mrp}
+                      </span>
+                    </div>
+
+                    <span className="badge bg-dark mt-2">
+                      {p.discount_percent}% OFF
                     </span>
-                  </div>
 
-                  <span className="badge bg-dark mt-2">
-                    {p.discount_percent}% OFF
-                  </span>
+                    <div className="d-flex gap-2 mt-4 mb-4 flex-wrap">
+                      {p.product_colors?.slice(0, 5).map((c) => (
+                        <div
+                          key={c.id}
+                          onClick={(e) =>
+                            handleColorClick(e, p.id, c.color_image)
+                          }
+                          title={c.color_name}
+                          style={{
+                            width: 34,
+                            height: 34,
+                            borderRadius: "50%",
+                            backgroundColor: c.color_name?.toLowerCase(),
+                            cursor: "pointer",
+                            boxShadow: "0 1px 3px rgba(0,0,0,.15)",
+                            border:
+                              selectedImages[p.id] === c.color_image
+                                ? "3px solid black"
+                                : "2px solid #cfcfcf",
+                          }}
+                        />
+                      ))}
+                    </div>
 
-                  <div className="d-flex gap-2 mt-4 mb-4 flex-wrap">
-                    {p.product_colors?.slice(0, 5).map((c) => (
-                      <div
-                        key={c.id}
-                        onClick={(e) =>
-                          handleColorClick(e, p.id, c.color_image)
-                        }
-                        title={c.color_name}
-                        style={{
-                          width: 34,
-                          height: 34,
-                          borderRadius: "50%",
-                          backgroundColor: c.color_name?.toLowerCase(),
-                          cursor: "pointer",
-                          boxShadow: "0 1px 3px rgba(0,0,0,.15)",
-                          border:
-                            selectedImages[p.id] === c.color_image
-                              ? "3px solid black"
-                              : "2px solid #cfcfcf",
+                    <div className="mt-3 d-grid gap-2">
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+
+                          const firstColor = p.product_colors?.[0];
+                          const firstSize = p.product_sizes?.[0];
+
+                          addToCart({
+                            ...p,
+                            selectedColor: firstColor,
+                            selectedSize: firstSize,
+                            price: p.selling_price,
+                            quantity: 1,
+                          });
+
+                          navigate("/cart");
                         }}
-                      />
-                    ))}
+                        className="btn btn-outline-dark btn-sm"
+                      >
+                        Buy it now
+                      </button>
+                      {/* Add to cart by selecting first color and first size from the varation */}
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+
+                          const firstColor = p.product_colors?.[0];
+                          const firstSize = p.product_sizes?.[0];
+
+                          addToCart({
+                            ...p,
+                            selectedColor: firstColor,
+                            selectedSize: firstSize,
+                            price: p.selling_price,
+                          });
+                        }}
+                        className="btn btn-dark btn-sm"
+                      >
+                        Add to cart
+                      </button>
+                    </div>
+
                   </div>
-
-                  <div className="mt-3 d-grid gap-2">
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-
-                        const firstColor = p.product_colors?.[0];
-                        const firstSize = p.product_sizes?.[0];
-
-                        addToCart({
-                          ...p,
-                          selectedColor: firstColor,
-                          selectedSize: firstSize,
-                          price: p.selling_price,
-                          quantity: 1,
-                        });
-
-                        navigate("/cart");
-                      }}
-                      className="btn btn-outline-dark btn-sm"
-                    >
-                      Buy it now
-                    </button>
-                    {/* Add to cart by selecting first color and first size from the varation */}
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-
-                        const firstColor = p.product_colors?.[0];
-                        const firstSize = p.product_sizes?.[0];
-
-                        addToCart({
-                          ...p,
-                          selectedColor: firstColor,
-                          selectedSize: firstSize,
-                          price: p.selling_price,
-                        });
-                      }}
-                      className="btn btn-dark btn-sm"
-                    >
-                      Add to cart
-                    </button>
-                  </div>
-
                 </div>
               </div>
-            </div>
-          ))
-        )}
-      </div>
+            ))
+          )}
+        </div>
 
-    </div>
+      </div>
+    </>
   );
 }

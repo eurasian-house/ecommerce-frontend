@@ -50,7 +50,7 @@ export default function App() {
             <Route element={<Layout />}>
               <Route path="/" element={<Products />} />
               <Route path="/products" element={<ProductList />} />
-              <Route path="/products/:id" element={<ProductDetail />} />
+              <Route path="/products/:slug" element={<ProductDetail />} />
               <Route path="/blogs" element={<Blogs />} />
               <Route path="/us" element={<Us />} />
               <Route path="/contact" element={<Contact />} />
