@@ -47,6 +47,7 @@ const PriceUnder = () => {
                             src={images.leftLarge}
                             className="card-img h-100"
                             style={{ objectFit: "cover" }}
+                            loading="lazy"
                             alt=""
                         />
                         <div
@@ -84,6 +85,7 @@ const PriceUnder = () => {
                                     src={images.orangeWhatsNew}
                                     className="card-img h-100"
                                     style={{ objectFit: "cover" }}
+                                    loading="lazy"
                                     alt=""
                                 />
 
@@ -116,6 +118,7 @@ const PriceUnder = () => {
                                     className="card-img h-100"
                                     style={{ objectFit: "cover" }}
                                     alt=""
+                                    loading="lazy"
                                 />
 
                                 <div
@@ -144,6 +147,7 @@ const PriceUnder = () => {
                             >
                                 <img
                                     src={images.middleRightPlant}
+                                    loading="lazy"
                                     className="card-img h-100"
                                     style={{ objectFit: "cover" }}
                                     alt=""
@@ -175,6 +179,7 @@ const PriceUnder = () => {
                             >
                                 <img
                                     src={images.bottomRightRoom}
+                                    loading="lazy"
                                     className="card-img h-100"
                                     style={{ objectFit: "cover" }}
                                     alt=""

@@ -36,7 +36,9 @@ export default function Navbar() {
         <NavLink className="navbar-brand" to="/">
           <img
             src="/logo.png"
-            alt="Logo"
+            alt="Eurasian House Logo"
+            fetchPriority="high"
+            decoding="async"
             style={{ height: "clamp(45px,6vw,60px)", objectFit: "contain" }}
           />
         </NavLink>

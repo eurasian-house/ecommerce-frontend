@@ -48,6 +48,9 @@ export default function IdeasSection() {
 
               <img
                 src={item.img}
+                alt={item.title}
+                loading="lazy"
+                decoding="async"
                 className="card-img-top"
                 style={{
                   height: isMobile ? "240px" : "420px",

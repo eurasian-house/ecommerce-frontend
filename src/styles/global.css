@@ -12,3 +12,10 @@ body {
   background: var(--color-bg);
 }
 
+.footer-link{
+  transition: color .2s ease;
+}
+
+.footer-link:hover{
+  color:#fff !important;
+}

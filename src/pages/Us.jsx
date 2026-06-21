@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from "react-router-dom";
 import SEO from "../components/SEO";
+import { Link } from "react-router-dom";
 
 const Us = () => {
 
@@ -96,7 +97,34 @@ const Us = () => {
         <div className="p-4 p-md-5 mb-4 text-white rounded-5 bg-dark shadow-lg mt-5">
           <div className="col-md-8 px-0 mx-auto text-center">
             <h2 className="display-6 italic fw-light">"Our mission is to empower interior designers and homeowners through premium craftsmanship and timeless design."</h2>
-            <p className="lead my-3 text-secondary">- Founded in 2026</p>
+            <p className="lead my-3 text-secondary">- Founded in 2025</p>
+
+            <section className="container my-5">
+              <div className="p-5 rounded-4 bg-light text-center border">
+                <h2 className="fw-bold text-primary mb-3">
+                  Discover the Perfect Rug for Your Home
+                </h2>
+
+                <p className="text-muted mb-4">
+                  Browse our handcrafted collection of Persian, Kilim, Tibetan, Jute, and
+                  modern rugs, carefully selected to bring elegance and comfort to your
+                  living spaces.
+                </p>
+
+                <div className="d-flex flex-wrap justify-content-center gap-3">
+                  <Link to="/products" className="btn btn-primary px-4">
+                    Explore Collection
+                  </Link>
+
+                  <Link to="/contact" className="btn btn-outline-primary px-4">
+                    Contact Our Experts
+                  </Link>
+                </div>
+              </div>
+            </section>
+
+
+
           </div>
         </div>
       </div>

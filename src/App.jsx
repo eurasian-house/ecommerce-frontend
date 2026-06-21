@@ -37,6 +37,13 @@ import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 
 import BlogDetails from "./pages/BlogDetails";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import Terms from "./pages/Terms";
+import RefundPolicy from "./pages/RefundPolicy";
+import ShippingPolicy from "./pages/ShippingPolicy";
+import CancellationPolicy from "./pages/CancellationPolicy";
+import FAQ from "./pages/FAQ";
+import NotFound from "./pages/NotFound";
 
 
 export default function App() {
@@ -111,6 +118,14 @@ export default function App() {
             <Route path="/reset-password" element={<ResetPassword />} />
 
             <Route path="/blogs/:id" element={<BlogDetails />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/terms" element={<Terms />} />
+            <Route path="/refund-policy" element={<RefundPolicy />} />
+            <Route path="/shipping-policy" element={<ShippingPolicy />} />
+            <Route path="/cancellation-policy" element={<CancellationPolicy />} />
+            <Route path="/faq" element={<FAQ />} />
+            <Route path="*" element={<NotFound />} />
+
 
           </Routes>
         </BrowserRouter>

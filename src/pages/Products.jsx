@@ -16,6 +16,7 @@ import Inspiration from "../components/Inspiration";
 import { applyActiveFilter } from "../utils/productQueries";
 
 import SEO from "../components/SEO";
+import { organizationSchema, websiteSchema } from "../seo/schemas";
 
 export default function Products() {
   const [products, setProducts] = useState([]);
@@ -77,6 +78,10 @@ export default function Products() {
         title="Handmade Rugs & Carpets | Eurasian House"
         description="Shop premium handmade rugs, Persian carpets, Kilims, Dhurries, Tibetan rugs, Jute rugs and more. Crafted with timeless elegance."
         canonical="https://eurasianrugs.com/"
+        schema={[
+          organizationSchema,
+          websiteSchema,
+        ]}
       />
 
 

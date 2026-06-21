@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { supabase } from "../lib/supabase";
 import SEO from "../components/SEO";
+import { Link } from "react-router-dom";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -257,7 +258,7 @@ const Contact = () => {
                       wordBreak: "break-word",
                     }}
                   >
-                    contacteurasianhouse@gmail.com
+                    contact@eurasianrugs.com, contacteurasianhouse@gmail.com
                   </p>
                 </div>
               </div>
@@ -274,6 +275,19 @@ const Contact = () => {
           </div>
 
         </div>
+      </div>
+      <div className="text-center mt-5 p-5 bg-light border rounded-4">
+        <h2 className="fw-bold text-primary mb-3">
+          Looking for the Perfect Rug?
+        </h2>
+
+        <p className="text-muted mb-4">
+          Explore our collection of handcrafted Persian, Kilim, Tibetan, Jute, and modern rugs designed to suit every home and style.
+        </p>
+
+        <Link to="/products" className="btn btn-primary px-4">
+          Explore Our Collection
+        </Link>
       </div>
     </>
   );

@@ -7,6 +7,7 @@ export default function SEO({
   image = "https://eurasianrugs.com/og-image.png",
   type = "website",
   keywords = "handmade rugs, carpets, Persian rugs, Kilim rugs, Tibetan rugs, Jute rugs",
+  schema = null,
 }) {
   return (
     <Helmet>
@@ -33,6 +34,15 @@ export default function SEO({
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={image} />
+      {schema &&
+        (Array.isArray(schema) ? schema : [schema]).map((item, index) => (
+          <script
+            key={index}
+            type="application/ld+json"
+          >
+            {JSON.stringify(item)}
+          </script>
+        ))}
     </Helmet>
   );
 }

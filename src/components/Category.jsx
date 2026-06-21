@@ -29,6 +29,9 @@ export default function Category() {
               <img
                 src={`/category/${cat.toLowerCase().replace(/\s/g, "")}.png`}
                 className="card-img-top"
+                alt={`${cat} Rugs`}
+                loading="lazy"
+                decoding="async"
                 style={{
                   height: window.innerWidth < 576 ? "80px" : "100px", objectFit: "cover"
                 }}

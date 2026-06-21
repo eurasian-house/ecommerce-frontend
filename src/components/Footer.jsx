@@ -2,6 +2,7 @@ import React from 'react';
 import logo from "/logo.png";
 import { FaFacebookF, FaInstagram, FaWhatsapp } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -23,7 +24,9 @@ const Footer = () => {
             >
               <img
                 src={logo}
-                alt="Logo"
+                alt="Eurasian House Logo"
+                loading="lazy"
+                decoding="async"
                 style={{
                   width: "100%",
                   height: "100%",
@@ -74,37 +77,209 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div className="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
-            <h5 className="text-uppercase mb-4 fw-bold text-light small">Explore</h5>
-            <p><a href="/" className="text-secondary text-decoration-none hover-white">Home</a></p>
-            <p><a href="/blogs" className="text-secondary text-decoration-none">Blogs</a></p>
-            <p><a href="/us" className="text-secondary text-decoration-none">About Us</a></p>
-            <p><a href="/contact" className="text-secondary text-decoration-none">Contact</a></p>
+            <h5 className="text-uppercase mb-4 fw-bold text-light small">Company</h5>
+            <p>
+              <Link to="/account" className="text-secondary text-decoration-none footer-link footer-link">
+                My Account
+              </Link>
+            </p>
+            <p>
+              <Link
+                to="/products?sort=top-deals"
+                className="text-secondary text-decoration-none footer-link footer-link"
+              >
+                Top Deals
+              </Link>
+            </p>
+            <p>
+              <Link to="/" className="text-secondary text-decoration-none footer-link footer-link">
+                Home
+              </Link>
+            </p>
+
+            <p>
+              <Link to="/products" className="text-secondary text-decoration-none footer-link">
+                Shop
+              </Link>
+            </p>
+
+            <p>
+              <Link to="/blogs" className="text-secondary text-decoration-none footer-link">
+                Blogs
+              </Link>
+            </p>
+
+            <p>
+              <Link to="/us" className="text-secondary text-decoration-none footer-link">
+                About Us
+              </Link>
+            </p>
+
+            <p>
+              <Link to="/contact" className="text-secondary text-decoration-none footer-link">
+                Contact Us
+              </Link>
+            </p>
           </div>
 
-          {/* Services / Categories */}
+          {/* Customer Support */}
           <div className="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3">
-            <h5 className="text-uppercase mb-4 fw-bold text-light small">Services</h5>
-            <p><a href="#!" className="text-secondary text-decoration-none">Handmade Rugs</a></p>
-            <p><a href="#!" className="text-secondary text-decoration-none">Web Development</a></p>
-            <p><a href="#!" className="text-secondary text-decoration-none">Educational Coaching</a></p>
-            <p><a href="#!" className="text-secondary text-decoration-none">UI/UX Design</a></p>
+            <h5 className="text-uppercase mb-4 fw-bold text-light small">
+              Customer Support
+            </h5>
+
+            <p>
+              <Link
+                to="/privacy-policy"
+                className="text-secondary text-decoration-none footer-link"
+              >
+                Privacy Policy
+              </Link>
+            </p>
+
+            <p>
+              <Link
+                to="/terms"
+                className="text-secondary text-decoration-none footer-link"
+              >
+                Terms & Conditions
+              </Link>
+            </p>
+
+            <p>
+              <Link
+                to="/shipping-policy"
+                className="text-secondary text-decoration-none footer-link"
+              >
+                Shipping Policy
+              </Link>
+            </p>
+
+            <p>
+              <Link
+                to="/refund-policy"
+                className="text-secondary text-decoration-none footer-link"
+              >
+                Return & Refund
+              </Link>
+            </p>
+
+            <p>
+              <Link
+                to="/cancellation-policy"
+                className="text-secondary text-decoration-none footer-link"
+              >
+                Cancellation Policy
+              </Link>
+            </p>
+
+            <p>
+              <Link
+                to="/faq"
+                className="text-secondary text-decoration-none footer-link"
+              >
+                FAQ
+              </Link>
+            </p>
           </div>
 
-          {/* Newsletter Section */}
+          {/* Shop by Category */}
+          <div className="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
+            <h5 className="text-uppercase mb-4 fw-bold text-light small">
+              Shop by Category
+            </h5>
+
+            <p>
+              <Link
+                to="/products?category=Persian"
+                className="text-secondary text-decoration-none footer-link"
+              >
+                Persian Rugs
+              </Link>
+            </p>
+
+            <p>
+              <Link
+                to="/products?category=Tufted"
+                className="text-secondary text-decoration-none footer-link"
+              >
+                Tufted Rugs
+              </Link>
+            </p>
+
+            <p>
+              <Link
+                to="/products?category=Hand Knotted"
+                className="text-secondary text-decoration-none footer-link"
+              >
+                Hand Knotted
+              </Link>
+            </p>
+
+            <p>
+              <Link
+                to="/products?category=Kilim"
+                className="text-secondary text-decoration-none footer-link"
+              >
+                Kilim Rugs
+              </Link>
+            </p>
+
+            <p>
+              <Link
+                to="/products?category=Tibetan"
+                className="text-secondary text-decoration-none footer-link"
+              >
+                Tibetan Rugs
+              </Link>
+            </p>
+
+            <p>
+              <Link
+                to="/products?category=Jute"
+                className="text-secondary text-decoration-none footer-link"
+              >
+                Jute Rugs
+              </Link>
+            </p>
+
+            <p>
+              <Link
+                to="/products?category=Dhurrie"
+                className="text-secondary text-decoration-none footer-link"
+              >
+                Dhurrie Rugs
+              </Link>
+            </p>
+          </div>
+
+
+          {/* Contact */}
           <div className="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
-            <h5 className="text-uppercase mb-4 fw-bold text-light small">Newsletter</h5>
-            <p className="text-secondary small">Join our mailing list for the latest updates.</p>
-            <form className="mt-3">
-              <div className="input-group mb-3">
-                <input
-                  type="email"
-                  className="form-control bg-secondary border-0 text-white rounded-start-pill ps-3"
-                  placeholder="Your Email"
-                  aria-label="Email"
-                />
-                <button className="btn btn-primary rounded-end-pill px-3" type="button">Join</button>
-              </div>
-            </form>
+            <h5 className="text-uppercase mb-4 fw-bold text-light small">
+              Contact Us
+            </h5>
+
+            <p className="text-secondary small mb-3">
+              We'd love to hear from you. Reach out for product inquiries,
+              custom rug orders, or any assistance.
+            </p>
+
+            <p className="text-secondary small mb-2">
+              📍 Bhadohi - 221401, Uttar Pradesh, India
+            </p>
+
+            <p className="text-secondary small mb-2">
+              📞 +91 70800 12972
+            </p>
+
+            <p className="text-secondary small mb-2">
+              ✉️ contact@eurasianrugs.com
+            </p>
+
+            <p className="text-secondary small mb-0">
+              🌍 Worldwide Shipping Available
+            </p>
           </div>
 
         </div>
@@ -115,14 +290,28 @@ const Footer = () => {
         <div className="row align-items-center">
           <div className="col-md-7 col-lg-8">
             <p className="text-secondary small">
-              © 2026 Copyright:
-              <strong className="text-primary"> EurasianHouse.com</strong>
+              © 2026 <strong className="text-primary"> Eurasian House</strong>. All Rights Reserved.
+
             </p>
           </div>
           <div className="col-md-5 col-lg-4">
-            <p className="text-md-end text-secondary small">
-              Privacy Policy | Terms of Service
-            </p>
+            <div className="text-md-end text-secondary small">
+              <Link
+                to="/privacy-policy"
+                className="text-secondary text-decoration-none"
+              >
+                Privacy Policy
+              </Link>
+
+              <span className="mx-2">|</span>
+
+              <Link
+                to="/terms"
+                className="text-secondary text-decoration-none"
+              >
+                Terms & Conditions
+              </Link>
+            </div>
           </div>
         </div>
       </div>

@@ -76,7 +76,10 @@ export default function HeroCarousel({ onSlideClick }) {
             >
                 <img
                     src={slides[current].image}
-                    alt=""
+                    alt={`Eurasian House ${slides[current].title}`}
+                    fetchPriority="high"
+                    loading="eager"
+                    decoding="async"
                     style={{
                         width: "100%",
                         height: "100%",

@@ -11,10 +11,7 @@ export default function ProductCard({
 
   const { addToCart } = useCart();
   const navigate = useNavigate();
-  // for pagination
 
-  console.log(product.product_colors);
-  console.log(selectedImage);
 
   return (
     <div
@@ -29,12 +26,14 @@ export default function ProductCard({
 
         <img
           src={selectedImage || product.thumbnail}
+          alt={`${product.title} - Handmade ${product.main_category} Rug`}
           className="card-img-top"
           style={{
             width: "100%",
             aspectRatio: "1 / 1",
             objectFit: "cover",
           }}
+          loading="lazy"
         />
 
         <div className="card-body d-flex flex-column">

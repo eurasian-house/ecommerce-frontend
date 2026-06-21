@@ -22,17 +22,26 @@ export default function TopDeals() {
             return;
         }
 
-        console.log(data); // debug
         setProducts(data || []);
+    };
+
+
+    const optimizeUrl = (url) => {
+        if (!url.includes("/upload/")) return url;
+
+        return url.replace(
+            "/upload/",
+            "/upload/f_auto,q_auto,dpr_auto,c_limit,w_auto/"
+        );
     };
 
     return (
         <div className="mb-4">
             <div className="text-center mb-3">
-        <span className="badge rounded-pill bg-primary bg-opacity-10 text-primary px-4 py-2 fw-bold text-uppercase tracking-wider">
-          Today's best Deal...
-        </span>
-      </div>
+                <span className="badge rounded-pill bg-primary bg-opacity-10 text-primary px-4 py-2 fw-bold text-uppercase tracking-wider">
+                    Today's best Deal...
+                </span>
+            </div>
             {/* 🔥 SAME STYLE AS COLOR FILTER */}
             <div className="d-flex overflow-auto gap-3 pb-2">
                 {products.map((p) => (
@@ -44,7 +53,10 @@ export default function TopDeals() {
                         <div className="card h-100">
 
                             <img
-                                src={p.thumbnail}
+                                src={optimizeUrl(p.thumbnail)}
+                                alt={p.title}
+                                loading="lazy"
+                                decoding="async"
                                 className="card-img-top"
                                 style={{
                                     height: "220px",

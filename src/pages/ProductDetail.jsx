@@ -3,6 +3,10 @@ import { useEffect, useState, useRef } from "react";
 import { supabase } from "../lib/supabase";
 import { useCart } from "../context/CartContext";
 import SEO from "../components/SEO";
+import {
+  getProductSchema,
+  getBreadcrumbSchema,
+} from "../seo/schemas";
 
 export default function ProductDetail() {
   const { slug } = useParams();
@@ -50,7 +54,7 @@ export default function ProductDetail() {
 
     return url.replace(
       "/upload/",
-      "/upload/f_auto,q_auto,w_auto/"
+      "/upload/f_auto,q_auto,dpr_auto,c_limit,w_auto/"
     );
   };
 
@@ -127,7 +131,6 @@ export default function ProductDetail() {
     },
   };
   if (!product) return <div className="container mt-4">Loading...</div>;
-  console.log(productSchema);
 
   return (
     <>  <SEO
@@ -139,7 +142,23 @@ export default function ProductDetail() {
       canonical={`https://eurasianrugs.com/products/${product.slug}`}
       image={product.thumbnail}
       type="product"
-      schema={productSchema}
+      schema={[
+        getProductSchema(product),
+        getBreadcrumbSchema([
+          {
+            name: "Home",
+            url: "https://eurasianrugs.com/",
+          },
+          {
+            name: "Products",
+            url: "https://eurasianrugs.com/products",
+          },
+          {
+            name: product.title,
+            url: `https://eurasianrugs.com/products/${product.slug}`,
+          },
+        ]),
+      ]}
     />
       <div className="container-fluid px-0 mt-3">
 
@@ -161,6 +180,9 @@ export default function ProductDetail() {
                       // src={img}
                       src={optimizeUrl(img)}
                       onClick={() => setSelectedImage(img)}
+                      alt={product.title}
+                      fetchPriority="high"
+                      loading="lazy"
                       style={{
                         width: "70px",
                         height: "70px",
@@ -234,6 +256,8 @@ export default function ProductDetail() {
                     <img
                       key={i}
                       src={optimizeUrl(c.color_image)}
+                      alt={`${product.title} - ${c.color_name}`}
+                      loading="lazy"
                       onClick={() => {
                         setSelectedImage(c.color_image);
                         setSelectedColor(c);
@@ -266,12 +290,12 @@ export default function ProductDetail() {
                         const selling =
                           mrp && discount
                             ? mrp - (mrp * discount) / 100
-                            : s.selling_price || product.selling_price;
+                            : s.selling_price || Number(product.selling_price);
 
                         setDisplayPrice({
                           selling,
                           mrp: mrp || product.mrp,
-                          discount: discount || product.discount_percent
+                          discount: discount || Number(product.discount_percent)
                         });
                       }}
                       style={{
@@ -353,6 +377,8 @@ export default function ProductDetail() {
 
                   <img
                     src={optimizeUrl(p.thumbnail)}
+                    alt={p.title}
+                    loading="lazy"
                     style={{
                       width: "100%",
                       aspectRatio: "1 / 1",
