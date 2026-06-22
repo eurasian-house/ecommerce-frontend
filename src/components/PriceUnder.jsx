@@ -19,11 +19,11 @@ const PriceUnder = () => {
 
     // ✅ FIXED IMAGE PATHS (NO process.env)
     const images = {
-        leftLarge: "/priceunder/left_large_easter.jpg",
-        topRightAdventure: "/priceunder/adventure_bag.jpg",
-        orangeWhatsNew: "/priceunder/orange_whats_new.jpg",
-        middleRightPlant: "/priceunder/plant_window.jpg",
-        bottomRightRoom: "/priceunder/kids_room.jpg",
+        leftLarge: "/priceunder/left.jpg",
+        topRightAdventure: "/priceunder/tr.jpg",
+        orangeWhatsNew: "/priceunder/tc.jpg",
+        middleRightPlant: "/priceunder/bc.jpg",
+        bottomRightRoom: "/priceunder/br.jpg",
     };
 
     return (

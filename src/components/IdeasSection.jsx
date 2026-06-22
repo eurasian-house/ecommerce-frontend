@@ -21,7 +21,7 @@ export default function IdeasSection() {
       id: 3,
       title: "The New Neutral: How Earthy 3D Rugs Can Instantly Warm Up a Cold, Minimalist Room",
       desc: "Room-warming styling tips, earthy palettes.",
-      img: "/ideas/idea3.png",
+      img: "/ideas/idea3.jpg",
     },
   ];
 
