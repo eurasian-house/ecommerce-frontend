@@ -197,6 +197,7 @@ export default function ProductDetail() {
                 <div style={{ flex: 1, position: "relative", textAlign: "center" }}>
                   <button
                     onClick={prevImage}
+                    aria-label="Previous image"
                     style={{
                       position: "absolute",
                       left: "5px",
@@ -208,7 +209,8 @@ export default function ProductDetail() {
                   <img src={optimizeUrl(selectedImage)} style={{ width: "100%", maxHeight: "400px", objectFit: "contain" }} />
 
                   <button
-                    onClick={prevImage}
+                    onClick={nextImage}
+                    aria-label="Next image"
                     style={{
                       position: "absolute",
                       right: "5px",

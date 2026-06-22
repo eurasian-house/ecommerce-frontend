@@ -124,6 +124,8 @@ export default function HeroCarousel({ onSlideClick }) {
                 className={`btn btn-dark position-absolute top-50 start-0 translate-middle-y ${isMobile ? "btn-sm" : ""
                     }`}
                 onClick={prevSlide}
+                type="button"
+                aria-label="Previous slide"
             >
                 ‹
             </button>
@@ -132,6 +134,8 @@ export default function HeroCarousel({ onSlideClick }) {
                 className={`btn btn-dark position-absolute top-50 end-0 translate-middle-y ${isMobile ? "btn-sm" : ""
                     }`}
                 onClick={nextSlide}
+                type="button"
+                aria-label="Next slide"
             >
                 ›
             </button>

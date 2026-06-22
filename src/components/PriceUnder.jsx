@@ -48,7 +48,7 @@ const PriceUnder = () => {
                             className="card-img h-100"
                             style={{ objectFit: "cover" }}
                             loading="lazy"
-                            alt=""
+                            alt="What's new!"
                         />
                         <div
                             className="card-img-overlay d-flex flex-column justify-content-end text-white p-4"
@@ -86,7 +86,7 @@ const PriceUnder = () => {
                                     className="card-img h-100"
                                     style={{ objectFit: "cover" }}
                                     loading="lazy"
-                                    alt=""
+                                    alt="Under Price $299"
                                 />
 
                                 <div
@@ -117,7 +117,7 @@ const PriceUnder = () => {
                                     src={images.topRightAdventure}
                                     className="card-img h-100"
                                     style={{ objectFit: "cover" }}
-                                    alt=""
+                                    alt="Round and Oval Rugs"
                                     loading="lazy"
                                 />
 
@@ -126,7 +126,7 @@ const PriceUnder = () => {
                                     style={priceUnderStyles.overlay}
                                 >
                                     <h6 style={priceUnderStyles.textShadow}>
-                                        Round or Oval Rugs
+                                        Round and Oval Rugs
                                     </h6>
                                 </div>
                             </div>
@@ -150,7 +150,7 @@ const PriceUnder = () => {
                                     loading="lazy"
                                     className="card-img h-100"
                                     style={{ objectFit: "cover" }}
-                                    alt=""
+                                    alt="Irregular Shape Rugs"
                                 />
 
                                 <div
@@ -182,7 +182,7 @@ const PriceUnder = () => {
                                     loading="lazy"
                                     className="card-img h-100"
                                     style={{ objectFit: "cover" }}
-                                    alt=""
+                                    alt="Only Premium Carpets/Rugs"
                                 />
 
                                 <div

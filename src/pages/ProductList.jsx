@@ -190,6 +190,8 @@ export default function ProductList({ colorFilter }) { // ✅ receive prop
             <div className="col-md-3">
               <input
                 type="text"
+                id="search"
+                name="search"
                 className="form-control"
                 placeholder="Search..."
                 value={search}
@@ -262,6 +264,7 @@ export default function ProductList({ colorFilter }) { // ✅ receive prop
 
                   <img
                     src={selectedImages[p.id]}
+                    alt={p.title}
                     className="card-img-top"
                     style={{
                       width: "100%",

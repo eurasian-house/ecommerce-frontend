@@ -106,6 +106,7 @@ const Contact = () => {
 
                     <input
                       type="text"
+                      id="firstName"
                       name="firstName"
                       value={formData.firstName}
                       onChange={handleChange}
@@ -122,6 +123,7 @@ const Contact = () => {
 
                     <input
                       type="text"
+                      id="lastName"
                       name="lastName"
                       value={formData.lastName}
                       onChange={handleChange}
@@ -138,6 +140,7 @@ const Contact = () => {
 
                     <input
                       type="email"
+                      id="email"
                       name="email"
                       value={formData.email}
                       onChange={handleChange}
@@ -154,6 +157,7 @@ const Contact = () => {
 
                     <input
                       type="tel"
+                      id="phone"
                       name="phone"
                       value={formData.phone}
                       onChange={handleChange}
@@ -172,6 +176,7 @@ const Contact = () => {
 
                     <textarea
                       rows="5"
+                      id="message"
                       name="message"
                       value={formData.message}
                       onChange={handleChange}

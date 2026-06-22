@@ -26,6 +26,8 @@ export default function ResetPassword() {
 
       <input
         type="password"
+        id="password"
+        name="password"
         className="form-control mb-3"
         placeholder="New Password"
         value={password}

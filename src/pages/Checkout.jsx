@@ -199,42 +199,42 @@ export default function Checkout() {
 
       <h5>Shipping Details</h5>
 
-      <input className="form-control mb-3" placeholder="Full Name"
+      <input className="form-control mb-3" placeholder="Full Name" id="full_name"
         value={form.name}
         onChange={(e) => setForm({ ...form, name: e.target.value })}
       />
 
-      <input className="form-control mb-3" placeholder="Email"
+      <input className="form-control mb-3" placeholder="Email" id="email"
         value={form.email}
         onChange={(e) => setForm({ ...form, email: e.target.value })}
       />
 
-      <input className="form-control mb-3" placeholder="Phone"
+      <input className="form-control mb-3" placeholder="Phone" id="phone"
         value={form.phone}
         onChange={(e) => setForm({ ...form, phone: e.target.value })}
       />
 
-      <input className="form-control mb-3" placeholder="Address"
+      <input className="form-control mb-3" placeholder="Address" id="address"
         value={form.address}
         onChange={(e) => setForm({ ...form, address: e.target.value })}
       />
 
-      <input className="form-control mb-3" placeholder="City"
+      <input className="form-control mb-3" placeholder="City" id="city"
         value={form.city}
         onChange={(e) => setForm({ ...form, city: e.target.value })}
       />
 
-      <input className="form-control mb-3" placeholder="State"
+      <input className="form-control mb-3" placeholder="State" id="state"
         value={form.state}
         onChange={(e) => setForm({ ...form, state: e.target.value })}
       />
 
-      <input className="form-control mb-3" placeholder="Country"
+      <input className="form-control mb-3" placeholder="Country" id="country"
         value={form.country}
         onChange={(e) => setForm({ ...form, country: e.target.value })}
       />
 
-      <input className="form-control mb-3" placeholder="Pincode"
+      <input className="form-control mb-3" placeholder="Pincode" id="pincode"
         value={form.pincode}
         onChange={(e) => setForm({ ...form, pincode: e.target.value })}
       />

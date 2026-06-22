@@ -192,6 +192,8 @@ export default function AllProducts() {
                             />
 
                             <button
+                                type="button"
+                                aria-label="Search"
                                 style={{
                                     position: "absolute",
                                     right: "6px",
@@ -208,7 +210,7 @@ export default function AllProducts() {
                                     cursor: "pointer"
                                 }}
                             >
-                                <i className="bi bi-search text-white"></i>
+                                <i className="bi bi-search text-white" aria-hidden="true"></i>
                             </button>
                         </div>
 

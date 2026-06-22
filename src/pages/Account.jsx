@@ -111,6 +111,7 @@ export default function Account() {
             <label>Name</label>
             <input
               className="form-control mb-2"
+              id="full_name"
               value={profile?.full_name || ""}
               disabled={!editMode}
               onChange={(e) => handleChange("full_name", e.target.value)}
@@ -119,6 +120,7 @@ export default function Account() {
             <label>Email</label>
             <input
               className="form-control mb-2"
+              id="email"
               value={userEmail}
               disabled
             />
@@ -126,6 +128,7 @@ export default function Account() {
             <label>Phone</label>
             <input
               className="form-control mb-2"
+              id="phone"
               value={profile?.phone || ""}
               disabled={!editMode}
               onChange={(e) => handleChange("phone", e.target.value)}
@@ -134,6 +137,7 @@ export default function Account() {
             <label>Address</label>
             <input
               className="form-control mb-2"
+              id="address"
               value={profile?.address || ""}
               disabled={!editMode}
               onChange={(e) => handleChange("address", e.target.value)}
@@ -141,6 +145,7 @@ export default function Account() {
             <label>City</label>
             <input
               className="form-control mb-2"
+              id="city"
               value={profile?.city || ""}
               disabled={!editMode}
               onChange={(e) => handleChange("city", e.target.value)}
@@ -148,6 +153,7 @@ export default function Account() {
             <label>State</label>
             <input
               className="form-control mb-2"
+              id="state"
               value={profile?.state || ""}
               disabled={!editMode}
               onChange={(e) => handleChange("state", e.target.value)}
@@ -155,6 +161,7 @@ export default function Account() {
             <label>Country</label>
             <input
               className="form-control mb-2"
+              id="country"
               value={profile?.country || ""}
               disabled={!editMode}
               onChange={(e) => handleChange("country", e.target.value)}
@@ -163,6 +170,7 @@ export default function Account() {
             <label>Pincode</label>
             <input
               className="form-control"
+              id="pincode"
               value={profile?.pincode || ""}
               disabled={!editMode}
               onChange={(e) => handleChange("pincode", e.target.value)}

@@ -42,6 +42,8 @@ export default function Login() {
         <form onSubmit={handleSubmit}>
           <input
             type="email"
+            id="email"
+            name="email"
             className="form-control mb-3"
             placeholder="Email"
             value={form.email}
@@ -52,6 +54,8 @@ export default function Login() {
 
           <input
             type="password"
+            id="password"
+            name="password"
             className="form-control mb-3"
             placeholder="Password"
             value={form.password}

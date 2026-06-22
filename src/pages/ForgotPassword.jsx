@@ -22,6 +22,8 @@ export default function ForgotPassword() {
 
       <input
         type="email"
+        id="email"
+        name="email"
         className="form-control mb-3"
         placeholder="Enter email"
         value={email}

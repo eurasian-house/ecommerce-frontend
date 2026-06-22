@@ -91,7 +91,8 @@ export default function Navbar() {
             }}
           >
             <input
-              type="text"
+              type="search"
+              id = "search"
               className="form-control border-0 shadow-none"
               placeholder="Search for the Products"
               value={search}
@@ -104,6 +105,7 @@ export default function Navbar() {
             />
 
             <button
+              aria-label="Search products"
               type="submit"
               className="border-0 d-flex align-items-center justify-content-center fw-bold"
               style={{
@@ -135,10 +137,12 @@ export default function Navbar() {
           </div>
 
           {/* CART */}
-          <div
-            className="flex-shrink-0"
+          <button
+            type="button"
+            className="flex-shrink-0 border-0 bg-transparent p-0"
             style={{ position: "relative", cursor: "pointer" }}
             onClick={() => navigate("/cart")}
+            aria-label="Shopping cart"
           >
             <i className="bi bi-cart fs-5"></i>
 
@@ -165,19 +169,21 @@ export default function Navbar() {
                 {totalItems}
               </span>
             )}
-          </div>
+          </button>
 
           <button
             className="navbar-toggler ms-2 flex-shrink-0 order-2"
             type="button"
             onClick={() => setNavOpen(!navOpen)}
-            aria-label="Toggle navigation"
+            aria-label={navOpen ? "Close navigation menu" : "Open navigation menu"}
+            aria-expanded={navOpen}
+            aria-controls="navbarContent"
           >
             <span className="navbar-toggler-icon"></span>
           </button>
         </div>
 
       </div>
-    </nav>
+    </nav >
   );
 }

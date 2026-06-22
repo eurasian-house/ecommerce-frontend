@@ -57,6 +57,9 @@ export default function Signup() {
         <form onSubmit={handleSubmit}>
           <input
             className="form-control mb-3"
+            id="full_name"
+            name="full_name"
+            type="text"
             placeholder="Full Name"
             required
             onChange={(e) =>
@@ -67,6 +70,8 @@ export default function Signup() {
           <input
             type="email"
             className="form-control mb-3"
+            id="email"
+            name="email"
             placeholder="Email"
             required
             onChange={(e) =>
@@ -77,6 +82,8 @@ export default function Signup() {
           <input
             type="password"
             className="form-control mb-3"
+            id="password"
+            name="password"
             placeholder="Password"
             required
             minLength={6}

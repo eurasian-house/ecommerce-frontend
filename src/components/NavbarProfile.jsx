@@ -30,6 +30,9 @@ export default function NavbarProfile({ user }) {
       <button
         className="btn btn-light ms-2"
         onClick={() => setOpen(!open)}
+        aria-label={user ? "Open account menu" : "Open login menu"}
+        aria-expanded={open}
+        aria-haspopup="menu"
       >
         <i className="bi bi-person-circle fs-4"></i>
       </button>

@@ -43,6 +43,7 @@ export default function Cart() {
                     <div className="d-flex gap-3 align-items-start w-100">
                         <img
                             src={item.thumbnail}
+                            alt={item.title}
                             style={{
                                 width: 80,
                                 height: 80,
@@ -92,6 +93,7 @@ export default function Cart() {
                                     item.quantity - 1
                                 )
                             }
+                            aria-label="Decrease quantity"
                         >
                             -
                         </button>
@@ -108,6 +110,7 @@ export default function Cart() {
                                     item.quantity + 1
                                 )
                             }
+                            aria-label="Increase quantity"
                         >
                             +
                         </button>
