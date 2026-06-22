@@ -27,7 +27,7 @@ export default function Category() {
           >
             <div className="card border-0 shadow-sm h-100">
               <img
-                src={`/category/${cat.toLowerCase().replace(/\s/g, "")}.png`}
+                src={`/category/${cat.toLowerCase().replace(/\s/g, "")}.jpg`}
                 className="card-img-top"
                 alt={`${cat} Rugs`}
                 loading="lazy"

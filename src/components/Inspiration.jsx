@@ -117,6 +117,7 @@ export default function Inspiration() {
                     >
                         <img
                             src={p.thumbnail}
+                            alt={p.title}
                             style={{
                                 width: "100%",
                                 borderRadius: "12px",

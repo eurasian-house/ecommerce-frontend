@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "../lib/supabase";
 
+import LazySection from "../components/LazySection";
 import HeroCarousel from "./HeroCarousel";
 import ForUser from "../components/ForUser";
 import PriceUnder from "../components/PriceUnder";
@@ -49,7 +50,6 @@ export default function Products() {
 
     query = applyActiveFilter(query); // ✅ active only
 
-    // const { data, error } = await query.range(from, to);
     const { data, count, error } = await query
       .range(from, to);
 
@@ -93,6 +93,7 @@ export default function Products() {
           colorFilter={colorFilter}
           setColorFilter={setColorFilter}
         />
+
 
         {/* PRODUCT LIST */}
         <div className="d-flex overflow-auto gap-3 pb-2">
@@ -139,11 +140,21 @@ export default function Products() {
         </div>
 
         {/* EXTRA SECTIONS */}
-        <ForUser />
-        <PriceUnder />
-        <TopDeals />
-        <IdeasSection />
-        <Inspiration />
+        <LazySection minHeight={350}>
+          <ForUser />
+        </LazySection>
+        <LazySection minHeight={350}>
+          <PriceUnder />
+        </LazySection>
+        <LazySection minHeight={350}>
+          <TopDeals />
+        </LazySection>
+        <LazySection minHeight={350}>
+          <IdeasSection />
+        </LazySection>
+        <LazySection minHeight={350}>
+          <Inspiration />
+        </LazySection>
 
       </div>
     </>
