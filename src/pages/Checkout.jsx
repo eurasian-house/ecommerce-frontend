@@ -3,6 +3,7 @@ import { supabase } from "../lib/supabase";
 import { createOrder } from "../utils/createOrder";
 import { useCart } from "../context/CartContext";
 import { useNavigate } from "react-router-dom";
+import { loadRazorpay } from "../utils/loadRazorpay";
 
 export default function Checkout() {
   console.log("NEW BUILD LOADED");
@@ -176,8 +177,11 @@ export default function Checkout() {
         },
       };
 
-      if (!window.Razorpay) {
-        alert("Razorpay SDK not loaded. Refresh page.");
+      // ✅ Load Razorpay SDK only when needed
+      const razorpayLoaded = await loadRazorpay();
+
+      if (!razorpayLoaded) {
+        alert("Failed to load Razorpay. Please try again.");
         setLoading(false);
         return;
       }
