@@ -33,7 +33,7 @@ export default function Login() {
     <><SEO
       title="Login | Eurasian House"
       description="Log in to your Eurasian House account to manage orders and your profile."
-      canonical="https://eurasianrugs.com/login"
+      canonical="https://www.eurasianrugs.com/login"
     />
       <div className="container mt-5" style={{ maxWidth: "400px" }}>
         <h3 className="mb-3">Login</h3>

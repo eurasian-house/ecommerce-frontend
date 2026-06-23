@@ -7,7 +7,7 @@ export default function CancellationPolicy() {
       <SEO
         title="Cancellation Policy | Eurasian House"
         description="Learn about the order cancellation process, eligibility, and applicable conditions at Eurasian House."
-        canonical="https://eurasianrugs.com/cancellation-policy"
+        canonical="https://www.eurasianrugs.com/cancellation-policy"
       />
       <PolicyLayout
         title="Cancellation Policy"

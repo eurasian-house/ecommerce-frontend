@@ -77,7 +77,7 @@ export default function Products() {
       <SEO
         title="Handmade Rugs & Carpets | Eurasian House"
         description="Shop premium handmade rugs, Persian carpets, Kilims, Dhurries, Tibetan rugs, Jute rugs and more. Crafted with timeless elegance."
-        canonical="https://eurasianrugs.com/"
+        canonical="https://www.eurasianrugs.com/"
         schema={[
           organizationSchema,
           websiteSchema,

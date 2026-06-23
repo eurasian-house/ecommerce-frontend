@@ -178,7 +178,7 @@ export default function ProductList({ colorFilter }) { // ✅ receive prop
       <SEO
         title="Shop All Rugs | Eurasian House"
         description="Browse our collection of handmade rugs including Persian, Kilim, Tibetan, Jute, Dhurrie and more."
-        canonical="https://eurasianrugs.com/products"
+        canonical="https://www.eurasianrugs.com/products"
       />
 
       <div className="container mt-4">

@@ -3,8 +3,8 @@ import { Helmet } from "react-helmet-async";
 export default function SEO({
   title = "Eurasian House",
   description = "Discover premium handmade rugs and carpets.",
-  canonical = "https://eurasianrugs.com",
-  image = "https://eurasianrugs.com/og-image.png",
+  canonical = "https://www.eurasianrugs.com",
+  image = "https://www.eurasianrugs.com/og-image.png",
   type = "website",
   keywords = "handmade rugs, carpets, Persian rugs, Kilim rugs, Tibetan rugs, Jute rugs",
   schema = null,

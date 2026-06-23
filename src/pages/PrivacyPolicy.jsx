@@ -6,7 +6,7 @@ export default function PrivacyPolicy() {
         <PolicyLayout
             title="Privacy Policy"
             description="Learn how Eurasian House collects, uses, stores, and protects your personal information when you visit or shop on our website."
-            canonical="https://eurasianrugs.com/privacy-policy"
+            canonical="https://www.eurasianrugs.com/privacy-policy"
         >
 
             {/* All your existing privacy policy sections go here */}

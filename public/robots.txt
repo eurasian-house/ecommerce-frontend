@@ -2,4 +2,4 @@ User-agent: *
 
 Allow: /
 
-Sitemap: https://eurasianrugs.com/sitemap.xml
+Sitemap: https://www.eurasianrugs.com/sitemap.xml

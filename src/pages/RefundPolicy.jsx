@@ -7,7 +7,7 @@ export default function RefundPolicy() {
       <SEO
         title="Refund & Return Policy | Eurasian House"
         description="Understand our refund, return, replacement, and exchange policy for handmade rugs and carpets purchased from Eurasian House."
-        canonical="https://eurasianrugs.com/refund-policy"
+        canonical="https://www.eurasianrugs.com/refund-policy"
       />
       <PolicyLayout
         title="Refund & Return Policy"

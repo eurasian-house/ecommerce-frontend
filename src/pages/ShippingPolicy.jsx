@@ -7,7 +7,7 @@ export default function ShippingPolicy() {
       <SEO
         title="Shipping Policy | Eurasian House"
         description="View shipping methods, delivery timelines, shipping charges, and order tracking information for Eurasian House."
-        canonical="https://eurasianrugs.com/shipping-policy"
+        canonical="https://www.eurasianrugs.com/shipping-policy"
       />
       <PolicyLayout
         title="Shipping Policy"

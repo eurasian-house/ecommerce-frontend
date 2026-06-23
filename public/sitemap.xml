@@ -4,7 +4,7 @@
 
   <!-- Home -->
   <url>
-    <loc>https://eurasianrugs.com/</loc>
+    <loc>https://www.eurasianrugs.com/</loc>
     <lastmod>2026-06-21</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
@@ -12,7 +12,7 @@
 
   <!-- Products -->
   <url>
-    <loc>https://eurasianrugs.com/products</loc>
+    <loc>https://www.eurasianrugs.com/products</loc>
     <lastmod>2026-06-21</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
@@ -20,7 +20,7 @@
 
   <!-- About -->
   <url>
-    <loc>https://eurasianrugs.com/us</loc>
+    <loc>https://www.eurasianrugs.com/us</loc>
     <lastmod>2026-06-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -28,7 +28,7 @@
 
   <!-- Contact -->
   <url>
-    <loc>https://eurasianrugs.com/contact</loc>
+    <loc>https://www.eurasianrugs.com/contact</loc>
     <lastmod>2026-06-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -36,7 +36,7 @@
 
   <!-- FAQ -->
   <url>
-    <loc>https://eurasianrugs.com/faq</loc>
+    <loc>https://www.eurasianrugs.com/faq</loc>
     <lastmod>2026-06-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -44,7 +44,7 @@
 
   <!-- Privacy Policy -->
   <url>
-    <loc>https://eurasianrugs.com/privacy-policy</loc>
+    <loc>https://www.eurasianrugs.com/privacy-policy</loc>
     <lastmod>2026-06-21</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.4</priority>
@@ -52,7 +52,7 @@
 
   <!-- Terms -->
   <url>
-    <loc>https://eurasianrugs.com/terms</loc>
+    <loc>https://www.eurasianrugs.com/terms</loc>
     <lastmod>2026-06-21</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.4</priority>
@@ -60,7 +60,7 @@
 
   <!-- Refund -->
   <url>
-    <loc>https://eurasianrugs.com/refund-policy</loc>
+    <loc>https://www.eurasianrugs.com/refund-policy</loc>
     <lastmod>2026-06-21</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.4</priority>
@@ -68,7 +68,7 @@
 
   <!-- Shipping -->
   <url>
-    <loc>https://eurasianrugs.com/shipping-policy</loc>
+    <loc>https://www.eurasianrugs.com/shipping-policy</loc>
     <lastmod>2026-06-21</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.4</priority>
@@ -76,7 +76,7 @@
 
   <!-- Cancellation -->
   <url>
-    <loc>https://eurasianrugs.com/cancellation-policy</loc>
+    <loc>https://www.eurasianrugs.com/cancellation-policy</loc>
     <lastmod>2026-06-21</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.4</priority>

@@ -79,7 +79,7 @@ const Contact = () => {
     <><SEO
       title="Contact Eurasian House"
       description="Get in touch with Eurasian House for product inquiries, orders, or customer support."
-      canonical="https://eurasianrugs.com/contact"
+      canonical="https://www.eurasianrugs.com/contact"
     />
       <div className="container py-5">
         {/* Header */}

@@ -6,7 +6,7 @@ export default function Terms() {
     <><SEO
       title="Terms & Conditions | Eurasian House"
       description="Read the terms and conditions governing the use of the Eurasian House website and purchases made through our online store."
-      canonical="https://eurasianrugs.com/terms"
+      canonical="https://www.eurasianrugs.com/terms"
     />
       <PolicyLayout
         title="Terms & Conditions"

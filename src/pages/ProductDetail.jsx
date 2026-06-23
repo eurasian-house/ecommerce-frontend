@@ -127,7 +127,7 @@ export default function ProductDetail() {
       price: displayPrice.selling,
       availability:
         "https://schema.org/InStock",
-      url: `https://eurasianrugs.com/products/${product.slug}`,
+      url: `https://www.eurasianrugs.comproducts/${product.slug}`,
     },
   };
   if (!product) return <div className="container mt-4">Loading...</div>;

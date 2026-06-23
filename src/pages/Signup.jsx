@@ -49,7 +49,7 @@ export default function Signup() {
     <><SEO
       title="Create an Account | Eurasian House"
       description="Create your Eurasian House account for faster checkout, order tracking and personalized shopping."
-      canonical="https://eurasianrugs.com/signup"
+      canonical="https://www.eurasianrugs.com/signup"
     />
       <div className="container mt-5" style={{ maxWidth: "400px" }}>
         <h3 className="mb-3">Sign Up</h3>

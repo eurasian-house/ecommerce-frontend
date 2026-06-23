@@ -72,7 +72,7 @@ export default function FAQ() {
       <SEO
         title="FAQ | Eurasian House"
         description="Find answers to frequently asked questions about our products, ordering process, and customer support."
-        canonical="https://eurasianrugs.com/faq"
+        canonical="https://www.eurasianrugs.com/faq"
         schema={getFAQSchema(faqs)}
       />
       <div className="container py-5" style={{ maxWidth: "900px" }}>

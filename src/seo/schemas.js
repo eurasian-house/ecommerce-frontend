@@ -4,9 +4,9 @@ export const organizationSchema = {
 
   name: "Eurasian House",
 
-  url: "https://eurasianrugs.com",
+  url: "https://www.eurasianrugs.com",
 
-  logo: "https://eurasianrugs.com/logo.png",
+  logo: "https://www.eurasianrugs.com/logo.png",
 
   description:
     "Eurasian House offers premium handmade Persian, Kilim, Tufted, Tibetan, Jute and designer rugs crafted with exceptional quality.",
@@ -27,7 +27,7 @@ export const websiteSchema = {
 
   name: "Eurasian House",
 
-  url: "https://eurasianrugs.com"
+  url: "https://www.eurasianrugs.com"
 };
 
 
@@ -62,7 +62,7 @@ export const getProductSchema = (product) => ({
         ? "https://schema.org/InStock"
         : "https://schema.org/OutOfStock",
 
-    url: `https://eurasianrugs.com/products/${product.slug}`,
+    url: `https://www.eurasianrugs.com/products/${product.slug}`,
 
     itemCondition:
       "https://schema.org/NewCondition"
