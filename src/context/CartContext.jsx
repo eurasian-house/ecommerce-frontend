@@ -1,4 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import { trackAddToCart } from "../lib/analytics";
+import { trackRemoveFromCart } from "../lib/analytics";
 
 const CartContext = createContext();
 
@@ -16,6 +18,8 @@ export default function CartProvider({ children }) {
   }, [cart]);
 
   const addToCart = (product) => {
+    trackAddToCart(product);
+
     setCart((prev) => {
       const exists = prev.find(
         (p) =>
@@ -39,6 +43,7 @@ export default function CartProvider({ children }) {
   };
 
   const removeFromCart = (id, sizeId, colorId) => {
+    trackRemoveFromCart(product);
     setCart((prev) =>
       prev.filter(
         (p) =>

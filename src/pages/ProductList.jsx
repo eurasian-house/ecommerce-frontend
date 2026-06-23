@@ -5,6 +5,8 @@ import { useCart } from "../context/CartContext";
 import { applyActiveFilter } from '../utils/productQueries'
 import SEO from "../components/SEO";
 
+import { trackFilters } from "../lib/analytics";
+
 export default function ProductList({ colorFilter }) { // ✅ receive prop
   const [products, setProducts] = useState([]);
   const [filtered, setFiltered] = useState([]);
@@ -52,6 +54,41 @@ export default function ProductList({ colorFilter }) { // ✅ receive prop
   useEffect(() => {
     applyFilters();
   }, [products, search, category, sort, budget, discount, colorFilter, autoShapes, autoQuality]); // ✅ include color
+
+
+  useEffect(() => {
+    const hasFilters =
+      category ||
+      search ||
+      budget ||
+      discount ||
+      colorFilter ||
+      autoShapes?.length ||
+      autoQuality ||
+      sort;
+
+    if (!hasFilters) return;
+
+    trackFilters({
+      category: category || "All",
+      search: search || "",
+      budget: budget || "",
+      discount: discount || "",
+      color: colorFilter || "",
+      shape: autoShapes?.join(", ") || "",
+      quality: autoQuality || "",
+      sort: sort || "",
+    });
+  }, [
+    category,
+    search,
+    budget,
+    discount,
+    colorFilter,
+    autoShapes,
+    autoQuality,
+    sort,
+  ]);
 
   const fetchProducts = async () => {
     let query = supabase

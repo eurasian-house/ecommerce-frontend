@@ -4,6 +4,7 @@ import { createOrder } from "../utils/createOrder";
 import { useCart } from "../context/CartContext";
 import { useNavigate } from "react-router-dom";
 import { loadRazorpay } from "../utils/loadRazorpay";
+import { trackBeginCheckout, trackPurchase } from "../lib/analytics";
 
 export default function Checkout() {
   console.log("NEW BUILD LOADED");
@@ -73,6 +74,7 @@ export default function Checkout() {
   }
 
   const handlePlaceOrder = async () => {
+    trackBeginCheckout(cart);
     if (
       !form.name ||
       !form.phone ||
@@ -154,6 +156,9 @@ export default function Checkout() {
               alert("Payment verification failed");
               return;
             }
+
+            // Send GA4 purchase event BEFORE clearing the cart
+            trackPurchase(orderId, cart);
 
             clearCart();
 

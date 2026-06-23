@@ -2,6 +2,9 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
 import { supabase } from "../lib/supabase";
 import { useCart } from "../context/CartContext";
+
+import { trackProductView } from "../lib/analytics";
+
 import SEO from "../components/SEO";
 import {
   getProductSchema,
@@ -30,6 +33,12 @@ export default function ProductDetail() {
   useEffect(() => {
     fetchProduct();
   }, [slug]);
+
+  useEffect(() => {
+    if (!product) return;
+
+    trackProductView(product);
+  }, [product]);
 
   useEffect(() => {
     window.scrollTo({
@@ -127,7 +136,7 @@ export default function ProductDetail() {
       price: displayPrice.selling,
       availability:
         "https://schema.org/InStock",
-      url: `https://www.eurasianrugs.comproducts/${product.slug}`,
+      url: `https://www.eurasianrugs.com/products/${product.slug}`,
     },
   };
   if (!product) return <div className="container mt-4">Loading...</div>;
@@ -139,7 +148,7 @@ export default function ProductDetail() {
         product.description?.substring(0, 160) ||
         `${product.title} at Eurasian House`
       }
-      canonical={`https://eurasianrugs.com/products/${product.slug}`}
+      canonical={`https://www.eurasianrugs.com/products/${product.slug}`}
       image={product.thumbnail}
       type="product"
       schema={[
@@ -147,15 +156,15 @@ export default function ProductDetail() {
         getBreadcrumbSchema([
           {
             name: "Home",
-            url: "https://eurasianrugs.com/",
+            url: "https://www.eurasianrugs.com/",
           },
           {
             name: "Products",
-            url: "https://eurasianrugs.com/products",
+            url: "https://www.eurasianrugs.com/products",
           },
           {
             name: product.title,
-            url: `https://eurasianrugs.com/products/${product.slug}`,
+            url: `https://www.eurasianrugs.com/products/${product.slug}`,
           },
         ]),
       ]}

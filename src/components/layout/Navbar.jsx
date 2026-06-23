@@ -4,9 +4,9 @@ import { useState } from "react";
 import { useCart } from "../../context/CartContext";
 import NavbarProfile from "../NavbarProfile";
 
-// ✅ ADD
 import { useAuth } from "../../context/AuthContext";
 
+import { trackSearch } from "../../lib/analytics";
 
 export default function Navbar() {
   const [search, setSearch] = useState("");
@@ -18,9 +18,14 @@ export default function Navbar() {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    if (search.trim()) {
-      navigate(`/products?search=${search}`);
-    }
+
+    const query = search.trim();
+
+    if (!query) return;
+
+    trackSearch(query);
+
+    navigate(`/products?search=${encodeURIComponent(query)}`);
   };
 
   const closeNavbar = () => {
@@ -92,7 +97,7 @@ export default function Navbar() {
           >
             <input
               type="search"
-              id = "search"
+              id="search"
               className="form-control border-0 shadow-none"
               placeholder="Search for the Products"
               value={search}

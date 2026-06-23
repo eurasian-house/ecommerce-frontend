@@ -11,7 +11,7 @@ const Us = () => {
     <><SEO
       title="About Eurasian House"
       description="Learn about Eurasian House, our passion for handcrafted rugs, and our commitment to quality and craftsmanship."
-      canonical="https://eurasianrugs.com/us"
+      canonical="https://www.eurasianrugs.com/us"
     />
       <div className="container py-5">
         {/* Hero Section: About Me / Us */}

@@ -1,4 +1,5 @@
 import { useLocation } from "react-router-dom";
+import { trackWhatsApp } from "../lib/analytics";
 
 export default function WhatsAppFloat() {
   const location = useLocation();
@@ -27,6 +28,7 @@ export default function WhatsAppFloat() {
       href={whatsappLink}
       target="_blank"
       rel="noopener noreferrer"
+      onClick={trackWhatsApp}
       style={{
         position: "fixed",
         bottom: "24px",

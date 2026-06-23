@@ -11,6 +11,8 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import CartProvider from "./context/CartContext";
 import { AuthProvider } from "./context/AuthContext";
 
+import Analytics from "./components/Analytics";
+
 const ProductDetail = lazy(() => import("./pages/ProductDetail"));
 const Blogs = lazy(() => import("./pages/Blogs"));
 const Us = lazy(() => import("./pages/Us"));
@@ -53,6 +55,7 @@ export default function App() {
     <AuthProvider>
       <CartProvider>
         <BrowserRouter>
+        <Analytics />
           <Suspense
             fallback={
               <div className="d-flex justify-content-center align-items-center vh-100">

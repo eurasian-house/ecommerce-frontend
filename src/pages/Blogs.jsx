@@ -18,7 +18,7 @@ const Blogs = () => {
     <><SEO
   title="Rug Buying Guides & Articles | Eurasian House"
   description="Expert articles on choosing, maintaining and decorating with handmade rugs and carpets."
-  canonical="https://eurasianrugs.com/blogs"
+  canonical="https://www.eurasianrugs.com/blogs"
 />
 
 
