@@ -6,7 +6,6 @@ import NavbarProfile from "../NavbarProfile";
 
 // ✅ ADD
 import { useAuth } from "../../context/AuthContext";
-import { Collapse } from "bootstrap";
 
 export default function Navbar() {
   const [search, setSearch] = useState("");

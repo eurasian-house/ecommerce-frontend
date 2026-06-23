@@ -1,7 +1,7 @@
 import SEO from "../components/SEO";
 import { getFAQSchema } from "../seo/schemas";
 import { Link } from "react-router-dom";
-// import Accordion from "react-bootstrap/Accordion";
+
 
 export default function FAQ() {
   const faqs = [
