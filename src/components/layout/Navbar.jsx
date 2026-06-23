@@ -7,6 +7,7 @@ import NavbarProfile from "../NavbarProfile";
 // ✅ ADD
 import { useAuth } from "../../context/AuthContext";
 
+
 export default function Navbar() {
   const [search, setSearch] = useState("");
   const [navOpen, setNavOpen] = useState(false);
