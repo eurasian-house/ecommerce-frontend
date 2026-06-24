@@ -8,7 +8,7 @@ export default function Layout() {
     <>
       <Navbar />
 
-      <div className="container-fluid px-4 mt-3">
+      <div className="container-fluid px-1 mt-3">
         <Outlet />
       </div>
       <WhatsAppFloat />

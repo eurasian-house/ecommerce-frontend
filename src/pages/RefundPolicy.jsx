@@ -26,7 +26,7 @@ export default function RefundPolicy() {
           Products must be returned unused, undamaged, and in their original
           packaging with all tags and accessories. Returns must be requested
           within the eligible return period mentioned at the time of purchase if found damaged.
-          Video record while unpacking/unboxing the product to ensure you have evidence in case of any issues. Please contact us immediately within 12 hours, if you receive a damaged or defective item so we can assist you with the return process.
+          Video record while unpacking/unboxing the product to ensure you have evidence in case of any issues. Please contact us immediately within 12 hours with the clear picture or video of the damaged product, if you receive a damaged or defective item so we can assist you with the return process.
         </p>
 
         <h2>3. Non-Returnable Items</h2>

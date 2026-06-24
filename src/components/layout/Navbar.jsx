@@ -11,6 +11,7 @@ import { trackSearch } from "../../lib/analytics";
 export default function Navbar() {
   const [search, setSearch] = useState("");
   const [navOpen, setNavOpen] = useState(false);
+  const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
   const navigate = useNavigate();
   const { cart } = useCart();
 
@@ -35,7 +36,7 @@ export default function Navbar() {
   const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
-    <nav className="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <nav className="navbar navbar-expand-lg bg-white border-bottom sticky-top py-0">
       <div className="container-fluid px-2 px-md-4 d-flex align-items-center">
 
         <NavLink className="navbar-brand" to="/">
@@ -77,61 +78,128 @@ export default function Navbar() {
           </ul>
         </div>
 
-        {/* Search+User+Cart */}
-
-        <div className="d-flex align-items-center gap-2 ms-auto flex-grow-1 order-1 order-lg-0">
-
+        {mobileSearchOpen && (
           <form
             onSubmit={handleSearch}
-            className="d-flex align-items-center flex-grow-1"
+            className="w-100 mt-3 d-md-none order-5"
             style={{
-              border: "1px solid #2f2933",
-              borderRadius: "50px",
-              overflow: "hidden",
-              width: "clamp(220px, 30vw, 700px)",
-              background: "#f5f4f2",
-              height: "45px",
-              // flex: 1,
-              minWidth: 0,
+              flexBasis: "100%"
             }}
           >
-            <input
-              type="search"
-              id="search"
-              className="form-control border-0 shadow-none"
-              placeholder="Search for the Products"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
+            <div
+              className="d-flex align-items-center"
               style={{
-                background: "transparent",
-                padding: "10px 18px",
-                fontSize: "clamp(.9rem,2vw,1.1rem)"
-              }}
-            />
-
-            <button
-              aria-label="Search products"
-              type="submit"
-              className="border-0 d-flex align-items-center justify-content-center fw-bold"
-              style={{
-                width: "40px",
-                height: "40px",
-                minWidth: "40px",
-                minHeight: "40px",
-                borderRadius: "50%",
-                background: "#0d6efd",
-                margin: "3px",
-                color: "white",
-                fontSize: "1.8rem",
-                fontWeight: "900",
-                padding: 0,
-                flexShrink: 0,
-                aspectRatio: "1 / 1",
+                border: "1px solid #2f2933",
+                borderRadius: "50px",
+                overflow: "hidden",
+                background: "#f5f4f2",
+                height: "45px",
               }}
             >
-              <i className="bi bi-search fs-6 fw-bold" style={{ WebkitTextStroke: "2px white", textStroke: "2px white" }}></i>
-            </button>
+              <input
+                type="search"
+                className="form-control border-0 shadow-none"
+                placeholder="Search products..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+
+              <button
+                type="button"
+                className="btn btn-sm"
+                onClick={() => setMobileSearchOpen(false)}
+              >
+                ✕
+              </button>
+
+              <button
+                type="submit"
+                className="border-0"
+                style={{
+                  width: "40px",
+                  height: "40px",
+                  borderRadius: "50%",
+                  background: "#0d6efd",
+                  color: "white",
+                  margin: "3px",
+                }}
+              >
+                <i className="bi bi-search"></i>
+              </button>
+            </div>
           </form>
+        )}
+
+        {/* Search+User+Cart */}
+
+        <div
+          className="d-flex align-items-center flex-grow-1 order-1 order-lg-0 navbar-actions"
+          style={{ justifyContent: "space-between" }}
+        >
+
+          <>
+            {/* Desktop Search */}
+            <form
+              onSubmit={handleSearch}
+              className="align-items-center flex-grow-1 desktop-search d-none d-md-flex"
+              style={{
+                border: "1px solid #2f2933",
+                borderRadius: "50px",
+                overflow: "hidden",
+                width: "clamp(120px, 30vw, 700px)",
+                background: "#f5f4f2",
+                height: "45px",
+                minWidth: 0,
+              }}
+            >
+              <input
+                type="search"
+                id="search"
+                className="form-control border-0 shadow-none"
+                placeholder="Search for the Products"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                style={{
+                  background: "transparent",
+                  padding: "10px 18px",
+                  fontSize: "clamp(.9rem,2vw,1.1rem)"
+                }}
+              />
+
+              <button
+                aria-label="Search products"
+                type="submit"
+                className="border-0 d-flex align-items-center justify-content-center fw-bold"
+                style={{
+                  width: "40px",
+                  height: "40px",
+                  minWidth: "40px",
+                  borderRadius: "50%",
+                  background: "#0d6efd",
+                  margin: "3px",
+                  color: "white",
+                  padding: 0,
+                }}
+              >
+                <i className="bi bi-search fs-6 fw-bold"></i>
+              </button>
+            </form>
+
+            {/* Mobile Search Icon */}
+            {!mobileSearchOpen && (
+              <button
+                type="button"
+                className="border-0 bg-transparent p-0 d-md-none"
+                onClick={() => setMobileSearchOpen(true)}
+                aria-label="Open search"
+              >
+                <i className="bi bi-search fs-4"></i>
+              </button>
+            )}
+
+            {/* Mobile Search Bar */}
+
+          </>
 
           <div className="d-flex align-items-center flex-shrink-0 position-relative">
 
@@ -144,7 +212,7 @@ export default function Navbar() {
           {/* CART */}
           <button
             type="button"
-            className="flex-shrink-0 border-0 bg-transparent p-0"
+            className="flex-shrink-0 border-0 bg-transparent p-0 mx-2"
             style={{ position: "relative", cursor: "pointer" }}
             onClick={() => navigate("/cart")}
             aria-label="Shopping cart"
@@ -177,7 +245,7 @@ export default function Navbar() {
           </button>
 
           <button
-            className="navbar-toggler ms-2 flex-shrink-0 order-2"
+            className="navbar-toggler flex-shrink-0 order-2"
             type="button"
             onClick={() => setNavOpen(!navOpen)}
             aria-label={navOpen ? "Close navigation menu" : "Open navigation menu"}
