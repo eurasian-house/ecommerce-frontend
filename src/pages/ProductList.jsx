@@ -374,7 +374,6 @@ export default function ProductList({ colorFilter }) { // ✅ receive prop
                 <ProductCard
                   product={p}
                   selectedImage={selectedImages[p.id]}
-                  onClick={() => handleProductClick(p.slug)}
                   onColorClick={(productId, image) =>
                     setSelectedImages((prev) => ({
                       ...prev,

@@ -2,8 +2,11 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
 import { supabase } from "../lib/supabase";
 import { useCart } from "../context/CartContext";
+import { Link } from "react-router-dom";
 
 import { trackProductView } from "../lib/analytics";
+import { useSwipeable } from "react-swipeable";
+import ProductCard from "../components/ProductCard";
 
 import SEO from "../components/SEO";
 import {
@@ -22,6 +25,7 @@ export default function ProductDetail() {
   const [selectedColor, setSelectedColor] = useState(null);
   const [activeTab, setActiveTab] = useState("description");
   const [related, setRelated] = useState([]);
+  const detailsRef = useRef(null);
   const [displayPrice, setDisplayPrice] = useState({
     selling: 0,
     mrp: 0,
@@ -29,6 +33,8 @@ export default function ProductDetail() {
   });
   // From Cart
   const { addToCart } = useCart();
+
+
 
   useEffect(() => {
     fetchProduct();
@@ -93,11 +99,15 @@ export default function ProductDetail() {
 
       const { data: relatedData } = await supabase
         .from("products")
-        .select("*")
+        .select(`
+    *,
+    product_colors (*),
+    product_sizes (*)
+  `)
         .eq("main_category", data.main_category)
         .eq("shape", data.shape)
         .neq("id", data.id)
-        .limit(12);
+        .limit(10);
 
       setRelated(relatedData || []);
     }
@@ -116,6 +126,11 @@ export default function ProductDetail() {
     const prev = (index - 1 + images.length) % images.length;
     setSelectedImage(images[prev]);
   };
+  const handlers = useSwipeable({
+    onSwipedLeft: nextImage,
+    onSwipedRight: prevImage,
+    trackMouse: true
+  });
 
   const isSelectionValid = selectedSize && selectedColor;
 
@@ -171,17 +186,26 @@ export default function ProductDetail() {
     />
       <div className="container-fluid px-0 mt-3">
 
-        <div className="card border-0 rounded-0 rounded-md-3 p-2 p-md-4">
+        <div
+          className="bg-white p-3 p-md-5"
+          style={{
+            borderRadius: "24px",
+            boxShadow: "0 10px 40px rgba(0,0,0,0.06)"
+          }}
+        >
           <div className="d-flex flex-column flex-lg-row gap-4">
 
             <div style={{ flex: 1, minWidth: 0 }}>
               <div className="d-flex flex-column-reverse flex-md-row gap-3">
 
-                <div className="d-flex flex-row flex-md-column gap-2" style={{
-                  maxHeight: "400px",
+                <div className="thumbnail-strip d-flex flex-row flex-md-column gap-2" style={{
+                  maxHeight: window.innerWidth < 768
+                    ? "300px"
+                    : "500px",
                   overflowY: "auto",
                   overflowX: "auto",
-                  maxWidth: "100%"
+                  maxWidth: "100%",
+                  scrollbarWidth: "none"
                 }}>
                   {images.map((img, i) => (
                     <img
@@ -203,30 +227,55 @@ export default function ProductDetail() {
                   ))}
                 </div>
 
-                <div style={{ flex: 1, position: "relative", textAlign: "center" }}>
+                <div
+                  {...handlers}
+                  style={{
+                    flex: 1,
+                    position: "relative",
+                    textAlign: "center"
+                  }}
+                >
                   <button
                     onClick={prevImage}
-                    aria-label="Previous image"
+                    className="btn btn-light image-nav-btn"
                     style={{
                       position: "absolute",
-                      left: "5px",
-                      top: "45%",
-                      zIndex: 2
+                      left: "15px",
+                      top: "50%",
+                      transform: "translateY(-50%)",
+                      zIndex: 5,
+                      width: "48px",
+                      height: "48px",
+                      borderRadius: "50%",
+                      boxShadow: "0 4px 15px rgba(0,0,0,.15)"
                     }}
-                  ></button>
+                  >
+                    <i className="bi bi-chevron-left"></i>
+                  </button>
 
-                  <img src={optimizeUrl(selectedImage)} style={{ width: "100%", maxHeight: "400px", objectFit: "contain" }} />
+                  <img src={optimizeUrl(selectedImage)} style={{
+                    width: "100%", maxHeight: window.innerWidth < 768
+                      ? "300px"
+                      : "500px", objectFit: "contain"
+                  }} />
 
                   <button
                     onClick={nextImage}
-                    aria-label="Next image"
+                    className="btn btn-light image-nav-btn"
                     style={{
                       position: "absolute",
-                      right: "5px",
-                      top: "45%",
-                      zIndex: 2
+                      right: "15px",
+                      top: "50%",
+                      transform: "translateY(-50%)",
+                      zIndex: 5,
+                      width: "48px",
+                      height: "48px",
+                      borderRadius: "50%",
+                      boxShadow: "0 4px 15px rgba(0,0,0,.15)"
                     }}
-                  ></button>
+                  >
+                    <i className="bi bi-chevron-right"></i>
+                  </button>
                 </div>
 
               </div>
@@ -235,29 +284,58 @@ export default function ProductDetail() {
             <div style={{ flex: 1, minWidth: 0 }}>
 
               <p className="text-muted mb-1">{product.main_category}</p>
-              <h2
+              <h1
+                className="fw-semibold mb-3"
                 style={{
-                  wordBreak: "break-word",
-                  fontSize: "clamp(1.6rem,5vw,2rem)"
+                  fontSize: "clamp(1.8rem,4vw,2.8rem)",
+                  lineHeight: 1.2
                 }}
               >
                 {product.title}
-              </h2>
+              </h1>
 
-              <div className="d-flex flex-wrap gap-2 align-items-center mt-2">
-                <h4>${displayPrice.selling}</h4>
-                <span className="text-decoration-line-through text-muted">${displayPrice.mrp}</span>
-                <span className="badge bg-dark">{displayPrice.discount}% OFF</span>
+              <div className="d-flex align-items-center gap-3 mt-3 mb-4 flex-wrap" style={{ color: "#198754" }}>
+                <h3 className="mb-0 fw-bold">
+                  ${displayPrice.selling}
+                </h3>
+
+                <span
+                  className="text-muted text-decoration-line-through"
+                >
+                  ${displayPrice.mrp}
+                </span>
+
+                <span
+                  className="badge rounded-pill bg-danger"
+                >
+                  {displayPrice.discount}% OFF
+                </span>
               </div>
 
-              <p className="text-muted mt-2" style={{
-                display: "-webkit-box",
-                WebkitLineClamp: 2,
-                WebkitBoxOrient: "vertical",
-                overflow: "hidden"
-              }}>
-                {product.description}
-              </p>
+              <div className="mt-3">
+                <p
+                  className="text-muted mb-2"
+                  style={{
+                    display: "-webkit-box",
+                    WebkitLineClamp: 2,
+                    WebkitBoxOrient: "vertical",
+                    overflow: "hidden"
+                  }}
+                >
+                  {product.description}
+                </p>
+
+                <button
+                  className="btn btn-link p-0 text-dark fw-semibold"
+                  onClick={() =>
+                    detailsRef.current?.scrollIntoView({
+                      behavior: "smooth"
+                    })
+                  }
+                >
+                  Show More
+                </button>
+              </div>
 
               {/* COLORS */}
               <div className="mt-3">
@@ -309,10 +387,8 @@ export default function ProductDetail() {
                           discount: discount || Number(product.discount_percent)
                         });
                       }}
-                      style={{
-                        minWidth: "80px",
-                        border: selectedSize === s ? "2px solid black" : "1px solid #ccc"
-                      }}
+                      className={`size-btn ${selectedSize === s ? "active" : ""
+                        }`}
                     >
                       {s.size}
                     </button>
@@ -330,7 +406,16 @@ export default function ProductDetail() {
                   disabled={!isSelectionValid}
                   onClick={() => {
                     if (!isSelectionValid) return;
-                    console.log("Buy Now", { product, selectedSize, selectedColor });
+
+                    addToCart({
+                      ...product,
+                      cartItemId: crypto.randomUUID(),
+                      selectedSize,
+                      selectedColor,
+                      price: displayPrice.selling,
+                    });
+
+                    navigate("/cart");
                   }}
                 >
                   Buy Now
@@ -344,6 +429,7 @@ export default function ProductDetail() {
 
                     addToCart({
                       ...product,
+                      cartItemId: crypto.randomUUID(),
                       selectedSize,
                       selectedColor,
                       price: displayPrice.selling,
@@ -360,68 +446,197 @@ export default function ProductDetail() {
         </div>
 
         {/* RELATED PRODUCTS */}
-        <div className="card p-4 mt-5">
+        <hr
+          className="my-5"
+          style={{
+            opacity: 0.1
+          }}
+        />
 
-          <h5 className="text-muted text-center">Related Products</h5>
-          <h2 className="text-center mb-4">Explore Related Products</h2>
+        <div className="related-products-section mt-1">
 
-          <div className="row g-3">
+          <div className="text-center mb-5">
 
-            {related.map((p) => (
-              <div
-                key={p.id}
-                className="col-12 col-sm-6 col-md-4 col-lg-3"
-                onClick={() => navigate(`/products/${p.slug}`)}
-              >
-                <div
-                  style={{
-                    border: "1px solid #eee",
-                    borderRadius: "10px",
-                    padding: "10px",
-                    cursor: "pointer",
-                    aspectRatio: "9 / 14",
-                    display: "flex",
-                    flexDirection: "column",
-                    overflow: "hidden"
-                  }}
-                >
+            <span className="related-subtitle">
+              YOU MAY ALSO LIKE
+            </span>
 
-                  <img
-                    src={optimizeUrl(p.thumbnail)}
-                    alt={p.title}
-                    loading="lazy"
-                    style={{
-                      width: "100%",
-                      aspectRatio: "1 / 1",
-                      objectFit: "cover",
-                      borderRadius: "10px"
-                    }}
-                  />
+            <h2 className="related-title mt-2">
+              Similar Handcrafted Items
+            </h2>
 
-                  <p className="text-muted mt-2 mb-1" style={{ fontSize: "12px" }}>
-                    {p.main_category}
-                  </p>
-
-                  <h6>{p.title}</h6>
-
-                  <div className="d-flex gap-2 align-items-center">
-                    <span>${p.selling_price}</span>
-                    <span style={{
-                      textDecoration: "line-through",
-                      fontSize: "12px",
-                      color: "#888"
-                    }}>
-                      ${p.mrp}
-                    </span>
-                  </div>
-
-                </div>
-              </div>
-            ))}
+            <p className="related-description">
+              Discover premium handmade items carefully selected
+              to complement this design.
+            </p>
 
           </div>
 
+          <div className="row g-4 justify-content-center">
+            {related.map((product) => (
+              <ProductCard
+                key={product.id}
+                product={product}
+              />
+            ))}
+          </div>
+
         </div>
+        <hr
+          className="my-5"
+          style={{
+            opacity: 0.1
+          }}
+        />
+
+        {/* PRODUCT DETAILS */}
+        <div
+          ref={detailsRef}
+          className="mt-5 p-4 p-md-5 bg-light rounded-4"
+        >
+          <h2 className="mb-4 fw-bold">
+            Product Details
+          </h2>
+
+          <div className="row g-4">
+
+            <div className="col-md-6">
+              <h6 className="fw-bold" style={{
+                borderBottom: "3px solid #111",
+                paddingBottom: "8px"
+              }}>Description</h6>
+              <div className="trust-quote">
+                <div className="trust-quote-icon">❝</div>
+
+                <p className="mb-0">
+                  We understand that ordering a handmade rug online requires trust.
+                  That's why we stand behind every order we ship. If any disruption
+                  occurs from our side on orders up to <strong>$499</strong>, we will
+                  compensate you with <strong>50% of your order value</strong>.
+                  Your satisfaction matters to us, and we believe you should shop with
+                  complete peace of mind. We've got your back—every step of the way.
+                </p>
+
+                <div className="trust-quote-signature">
+                  — The Eurasian House Team
+                </div>
+              </div>
+              <p>{product.description}</p>
+            </div>
+
+            <div className="col-md-6">
+              <h6 className="fw-bold" style={{
+                borderBottom: "3px solid #111",
+                paddingBottom: "8px"
+              }}>Specifications</h6>
+
+              <ul className="list-group">
+
+                <li className="list-group-item">
+                  <strong>Shape:</strong> {product.shape}
+                </li>
+
+                <li className="list-group-item">
+                  <strong>Material:</strong> {product.materials}
+                </li>
+
+                <li className="list-group-item">
+                  <strong>Category:</strong> {product.main_category}
+                </li>
+
+                <li className="list-group-item">
+                  <strong>Color:</strong> {product.primary_color}
+                </li>
+
+                <li className="list-group-item">
+                  <strong>Other Colors:</strong>{" "}
+                  {product.other_colors?.join(", ")}
+                </li>
+                <li className="list-group-item">
+                  <strong>Quality:</strong> {product.quality}
+                </li>
+
+                <li className="list-group-item">
+                  <strong>Shapes Availability:</strong> Also available in different shapes kindly <Link
+                    to="/contact"
+                    className="fw-bold text-decoration-underline"
+                  >
+                    Contact Us
+                  </Link>
+                </li>
+
+                <li className="list-group-item">
+                  <strong>Sizes Availability:</strong> Also available in different sizes kindly <Link
+                    to="/contact"
+                    className="fw-bold text-decoration-underline"
+                  >
+                    Contact Us
+                  </Link>
+                </li>
+
+                <li className="list-group-item">
+                  <strong>Colors Availability:</strong> Also available in different Colors kindly <Link
+                    to="/contact"
+                    className="fw-bold text-decoration-underline"
+                  >
+                    Contact Us
+                  </Link>
+                </li>
+
+                <li className="list-group-item">
+                  <strong>Shipping:</strong> Free All over the World. Kindly refer to our <Link
+                    to="/shipping-policy"
+                    className="fw-bold text-decoration-underline"
+                  >
+                    Shipping Policy
+                  </Link>
+                </li>
+
+                <li className="list-group-item">
+                  <strong>Return Policy:</strong>{" "}
+                  Yes, kindly read our{" "}
+                  <Link
+                    to="/refund-policy"
+                    className="fw-bold text-decoration-underline"
+                  >
+                    Refund & Return Policy
+                  </Link>{" "}
+                  for more details.
+                </li>
+
+              </ul>
+              <div className="referral-card">
+                <div className="referral-icon">
+                  🎁
+                </div>
+
+                <h5 className="referral-title">
+                  Share the Comfort, Earn Rewards
+                </h5>
+
+                <p className="mb-0">
+                  If you love your experience with Eurasian House, share it with
+                  someone close to you. When a friend or family member places
+                  their very first order using your referral, both of you receive
+                  <strong> $15 in rewards.</strong>
+
+                  Your friend gets <strong>$15 off</strong> their first purchase,
+                  and you receive <strong>$15 in store credit</strong> to use on
+                  your next order.
+
+                  A small thank you from us for helping our family grow.
+                </p>
+
+                <div className="referral-signature">
+                  — With gratitude, The Eurasian House Team
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+
       </div>
     </>
   );

@@ -37,7 +37,7 @@ export default function Cart() {
 
             {cart.map((item) => (
                 <div
-                    key={item.id}
+                    key={item.cartItemId}
                     className="d-flex flex-column flex-md-row align-items-start align-items-md-center justify-content-between gap-3 mb-3 border p-3 rounded"
                 >
                     <div className="d-flex gap-3 align-items-start w-100">

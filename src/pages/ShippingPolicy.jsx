@@ -1,5 +1,6 @@
 import PolicyLayout from "../components/PolicyLayout";
 import SEO from "../components/SEO";
+import { Link } from "react-router-dom";
 
 export default function ShippingPolicy() {
   return (
@@ -28,14 +29,13 @@ export default function ShippingPolicy() {
 
         <h2>3. Shipping Charges</h2>
         <p>
-          Shipping charges, if applicable, will be displayed during checkout
+          We offer <strong>Free Shipping</strong> to all over the world. Shipping charges, if applicable, will be displayed during checkout or in Product Detail page,
           before you complete your purchase.
         </p>
 
         <h2>4. Order Tracking</h2>
         <p>
-          Once your order is shipped, tracking information will be shared via
-          email or other available communication methods.
+          Following your successful order placement, we will keep you updated on its production progress. Once your order has shipped, we will send you the tracking information via email or your preferred communication channel.
         </p>
 
         <h2>5. Delivery Delays</h2>
@@ -54,20 +54,29 @@ export default function ShippingPolicy() {
         <h2>7. International Shipping</h2>
         <p>
           International shipping may be available for selected destinations.
-          Customers are responsible for any customs duties, taxes, or import fees
-          imposed by their country. Or else offered free shipping in offers season.
+          Customers are responsible for any customs duties etc
+          imposed by their country. But Shipping charge/Delivery charge is completely free.
         </p>
 
         <h2>8. Damaged Shipments</h2>
         <p>
-          If your package arrives damaged, please contact us promptly with photos
-          of the package and product so we can investigate and assist you.
+          If your package arrives damaged, please contact us promptly with photos/videos
+          of the package and product so we can investigate and assist you. For return policy please visit <Link
+            to="/refund-policy"
+            className="fw-bold text-decoration-underline"
+          >
+            Refund & Return Policy
+          </Link>
         </p>
 
         <h2>9. Contact Us</h2>
         <p>
-          For shipping-related questions, please contact us through our Contact
-          page.
+          For shipping-related questions, please contact us through our <Link
+            to="/contact"
+            className="fw-bold text-decoration-underline"
+          >
+            Contact Page
+          </Link>
         </p>
       </PolicyLayout>
     </>

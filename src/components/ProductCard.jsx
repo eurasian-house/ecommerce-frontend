@@ -21,7 +21,10 @@ export default function ProductCard({
         flex: "0 0 auto",
         cursor: "pointer",
       }}
-      onClick={onClick}
+      onClick={
+        onClick ||
+        (() => navigate(`/products/${product.slug}`))
+      }
     >
       <div className="card h-100 shadow-sm border-0 overflow-hidden">
 
@@ -118,6 +121,7 @@ export default function ProductCard({
 
                 addToCart({
                   ...product,
+                  cartItemId: crypto.randomUUID(),
                   selectedColor: firstColor,
                   selectedSize: firstSize,
                   price: product.selling_price,
@@ -143,6 +147,7 @@ export default function ProductCard({
 
                 addToCart({
                   ...product,
+                  cartItemId: crypto.randomUUID(),
                   selectedColor: firstColor,
                   selectedSize: firstSize,
                   price: product.selling_price,
