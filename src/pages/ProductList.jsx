@@ -4,13 +4,18 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import { applyActiveFilter } from '../utils/productQueries'
 import SEO from "../components/SEO";
+import ProductCard from "../components/ProductCard";
 
 import { trackFilters } from "../lib/analytics";
 
 export default function ProductList({ colorFilter }) { // ✅ receive prop
+  // Pagination state
+  const [visibleCount, setVisibleCount] = useState(20);
+
   const [products, setProducts] = useState([]);
   const [filtered, setFiltered] = useState([]);
   const [selectedImages, setSelectedImages] = useState({});
+  const [showFilters, setShowFilters] = useState(false);
 
   const [search, setSearch] = useState("");
   // const [category, setCategory] = useState("");
@@ -30,11 +35,17 @@ export default function ProductList({ colorFilter }) { // ✅ receive prop
 
 
   const [discount, setDiscount] = useState("");
+  const [shape, setShape] = useState("");
+  const [quality, setQuality] = useState("");
   // From CArt
   const { addToCart } = useCart();
 
   const navigate = useNavigate();
   const hasCountedViews = useRef(false);
+
+  useEffect(() => {
+    setVisibleCount(20);
+  }, [search, category, sort, budget, discount, colorFilter, autoShapes, autoQuality]);
 
   useEffect(() => {
     fetchProducts();
@@ -45,15 +56,23 @@ export default function ProductList({ colorFilter }) { // ✅ receive prop
     const searchFromURL = params.get("search") || "";
     const categoryFromURL = params.get("category") || "";
     const discountFromURL = params.get("discount") || "";
+    const shapeFromURL = params.get("shape") || "";
+    const qualityFromURL = params.get("quality") || "";
+    const sortFromURL = params.get("sort") || "";
+    const budgetFromURL = params.get("budget") || "";
 
     setSearch(searchFromURL);
     setCategory(categoryFromURL);
     setDiscount(discountFromURL);
+    setSort(sortFromURL);
+    setBudget(budgetFromURL);
+    setShape(shapeFromURL);
+    setQuality(qualityFromURL);
   }, [location.search]);
 
   useEffect(() => {
     applyFilters();
-  }, [products, search, category, sort, budget, discount, colorFilter, autoShapes, autoQuality]); // ✅ include color
+  }, [products, search, category, sort, budget, discount, colorFilter, shape, quality]); // ✅ include color
 
 
   useEffect(() => {
@@ -63,6 +82,8 @@ export default function ProductList({ colorFilter }) { // ✅ receive prop
       budget ||
       discount ||
       colorFilter ||
+      // shape ||
+      // quality ||
       autoShapes?.length ||
       autoQuality ||
       sort;
@@ -133,20 +154,23 @@ export default function ProductList({ colorFilter }) { // ✅ receive prop
       );
     }
 
-    if (autoShapes?.length > 0) {
+    if (shape) {
+      const selectedShapes = shape
+        .split(",")
+        .map((s) => s.trim().toLowerCase());
+
       data = data.filter((p) =>
-        autoShapes.some(
-          (shape) =>
-            p.shape?.toLowerCase() === shape.toLowerCase()
+        selectedShapes.includes(
+          p.shape?.toLowerCase()
         )
       );
     }
 
-    if (autoQuality) {
+    if (quality) {
       data = data.filter(
         (p) =>
           p.quality?.toLowerCase() ===
-          autoQuality.toLowerCase()
+          quality.toLowerCase()
       );
     }
 
@@ -210,6 +234,24 @@ export default function ProductList({ colorFilter }) { // ✅ receive prop
     navigate(`/products/${slug}`);
   };
 
+  const updateURL = (key, value) => {
+    const params = new URLSearchParams(location.search);
+
+    if (value) {
+      params.set(key, value);
+    } else {
+      params.delete(key);
+    }
+
+    navigate(
+      {
+        pathname: location.pathname,
+        search: params.toString(),
+      },
+      { replace: true }
+    );
+  };
+
   return (
     <>
       <SEO
@@ -221,202 +263,142 @@ export default function ProductList({ colorFilter }) { // ✅ receive prop
       <div className="container mt-4">
 
         {/* FILTERS */}
-        <div className="card p-3 mb-4">
-          <div className="row g-3">
+        <div
+          className="mb-4 p-4 rounded-4 border bg-white shadow-sm"
+          style={{
+            borderColor: "#e9ecef",
+          }}
+        >
+          <div className="d-flex align-items-center justify-content-between mb-3">
+            <h5 className="mb-0 fw-semibold">
+              Filter Products
+            </h5>
 
-            <div className="col-md-3">
-              <input
-                type="text"
-                id="search"
-                name="search"
-                className="form-control"
-                placeholder="Search..."
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-              />
+            <span className="text-muted small">
+              {filtered.length} Products
+            </span>
+          </div>
+          <button
+            className="btn btn-dark w-100 d-md-none mb-3 rounded-pill"
+            onClick={() => setShowFilters(!showFilters)}
+          >
+            {showFilters ? "Hide Filters" : "Filter & Sort"}
+          </button>
+          <div className={`${showFilters ? "d-block" : "d-none"} d-md-block`}>
+            <div className="row g-4">
+
+              <div className="col-md-3">
+                <input
+                  type="text"
+                  id="search"
+                  name="search"
+                  className="form-control rounded-pill"
+                  placeholder="Search..."
+                  value={search}
+                  onChange={(e) => {
+                    setSearch(e.target.value);
+                    updateURL("search", e.target.value);
+                  }}
+                />
+              </div>
+
+              <div className="col-md-3">
+                <select
+                  className="form-control rounded-pill"
+                  value={category}
+                  onChange={(e) => {
+                    setCategory(e.target.value);
+                    updateURL("category", e.target.value);
+                  }}
+                >
+                  <option value="">All Categories</option>
+                  {uniqueCategories.map((c, i) => (
+                    <option key={i} value={c}>{c}</option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="col-md-3">
+                <select
+                  className="form-control rounded-pill"
+                  value={sort}
+                  onChange={(e) => {
+                    setSort(e.target.value);
+                    updateURL("sort", e.target.value);
+                  }}
+                >
+                  <option value="">Sort By</option>
+                  <option value="az">A-Z</option>
+                  <option value="za">Z-A</option>
+                  <option value="new">Date: New → Old</option>
+                  <option value="old">Date: Old → New</option>
+                  <option value="low">Price: Low → High</option>
+                  <option value="high">Price: High → Low</option>
+                </select>
+              </div>
+
+              <div className="col-md-3">
+                <select
+                  className="form-control rounded-pill"
+                  value={budget}
+                  onChange={(e) => {
+                    setBudget(e.target.value);
+                    updateURL("budget", e.target.value);
+                  }}
+                >
+                  <option value="">Budget</option>
+                  <option value="1">Below $299</option>
+                  <option value="2">$299 - $499</option>
+                  <option value="3">$499 - $999</option>
+                  <option value="4">$999 - $1,499</option>
+                  <option value="5">Above $1,499</option>
+                </select>
+              </div>
+
             </div>
-
-            <div className="col-md-3">
-              <select
-                className="form-control"
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-              >
-                <option value="">All Categories</option>
-                {uniqueCategories.map((c, i) => (
-                  <option key={i} value={c}>{c}</option>
-                ))}
-              </select>
-            </div>
-
-            <div className="col-md-3">
-              <select
-                className="form-control"
-                value={sort}
-                onChange={(e) => setSort(e.target.value)}
-              >
-                <option value="">Sort By</option>
-                <option value="az">A-Z</option>
-                <option value="za">Z-A</option>
-                <option value="new">Date: New → Old</option>
-                <option value="old">Date: Old → New</option>
-                <option value="low">Price: Low → High</option>
-                <option value="high">Price: High → Low</option>
-              </select>
-            </div>
-
-            <div className="col-md-3">
-              <select
-                className="form-control"
-                value={budget}
-                onChange={(e) => setBudget(e.target.value)}
-              >
-                <option value="">Budget</option>
-                <option value="1">Below $299</option>
-                <option value="2">$299 - $499</option>
-                <option value="3">$499 - $999</option>
-                <option value="4">$999 - $1,499</option>
-                <option value="5">Above $1,499</option>
-              </select>
-            </div>
-
           </div>
         </div>
 
         {/* PRODUCTS */}
-        <div className="row">
+        <div className="row g-4">
           {filtered?.length === 0 ? (
             <div className="text-center mt-5">
               <h5>No products in this category</h5>
             </div>
           ) : (
-            filtered.map((p) => (
+            filtered.slice(0, visibleCount).map((p) => (
               <div
                 key={p.id}
-                className="col-12 col-sm-6 col-md-4 col-lg-3 mb-4"
-                onClick={() => handleProductClick(p.slug)}
-                style={{ cursor: "pointer" }}
+                className="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 mb-4"
               >
-                <div className="card h-100 border-0 shadow-sm overflow-hidden">
-
-                  <img
-                    src={selectedImages[p.id]}
-                    alt={p.title}
-                    className="card-img-top"
-                    style={{
-                      width: "100%",
-                      aspectRatio: "1 / 1",
-                      objectFit: "cover",
-                    }}
-                  />
-
-                  <div className="card-body">
-
-                    <p className="text-muted small mb-1">
-                      {p.main_category}
-                    </p>
-
-                    <h6
-                      className="fw-semibold mb-3"
-                      style={{
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                        display: "-webkit-box",
-                        WebkitBoxOrient: "vertical",
-                        WebkitLineClamp: 2,
-                        lineHeight: "1.4",
-                        height: "3em",
-                      }}
-                    >
-                      {p.title}
-                    </h6>
-
-                    <div className="d-flex align-items-center gap-2">
-                      <span className="fw-bold">${p.selling_price}</span>
-                      <span className="text-muted text-decoration-line-through small">
-                        ${p.mrp}
-                      </span>
-                    </div>
-
-                    <span className="badge bg-dark mt-2">
-                      {p.discount_percent}% OFF
-                    </span>
-
-                    <div className="d-flex gap-2 mt-4 mb-4 flex-wrap">
-                      {p.product_colors?.slice(0, 5).map((c) => (
-                        <div
-                          key={c.id}
-                          onClick={(e) =>
-                            handleColorClick(e, p.id, c.color_image)
-                          }
-                          title={c.color_name}
-                          style={{
-                            width: 34,
-                            height: 34,
-                            borderRadius: "50%",
-                            backgroundColor: c.color_name?.toLowerCase(),
-                            cursor: "pointer",
-                            boxShadow: "0 1px 3px rgba(0,0,0,.15)",
-                            border:
-                              selectedImages[p.id] === c.color_image
-                                ? "3px solid black"
-                                : "2px solid #cfcfcf",
-                          }}
-                        />
-                      ))}
-                    </div>
-
-                    <div className="mt-3 d-grid gap-2">
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-
-                          const firstColor = p.product_colors?.[0];
-                          const firstSize = p.product_sizes?.[0];
-
-                          addToCart({
-                            ...p,
-                            selectedColor: firstColor,
-                            selectedSize: firstSize,
-                            price: p.selling_price,
-                            quantity: 1,
-                          });
-
-                          navigate("/cart");
-                        }}
-                        className="btn btn-outline-dark btn-sm"
-                      >
-                        Buy it now
-                      </button>
-                      {/* Add to cart by selecting first color and first size from the varation */}
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-
-                          const firstColor = p.product_colors?.[0];
-                          const firstSize = p.product_sizes?.[0];
-
-                          addToCart({
-                            ...p,
-                            selectedColor: firstColor,
-                            selectedSize: firstSize,
-                            price: p.selling_price,
-                          });
-                        }}
-                        className="btn btn-dark btn-sm"
-                      >
-                        Add to cart
-                      </button>
-                    </div>
-
-                  </div>
-                </div>
+                <ProductCard
+                  product={p}
+                  selectedImage={selectedImages[p.id]}
+                  onClick={() => handleProductClick(p.slug)}
+                  onColorClick={(productId, image) =>
+                    setSelectedImages((prev) => ({
+                      ...prev,
+                      [productId]: image,
+                    }))
+                  }
+                  cardWidth="100%"
+                />
               </div>
             ))
           )}
         </div>
 
       </div>
+      {visibleCount < filtered.length && (
+        <div className="text-center my-4">
+          <button
+            className="btn btn-outline-dark px-4"
+            onClick={() => setVisibleCount(prev => prev + 10)}
+          >
+            Show 10 More
+          </button>
+        </div>
+      )}
     </>
   );
 }

@@ -6,6 +6,7 @@ export default function ProductCard({
   onClick,
   selectedImage,
   onColorClick,
+  cardWidth = "200px",
 }) {
 
 
@@ -16,7 +17,7 @@ export default function ProductCard({
   return (
     <div
       style={{
-        width: "200px",
+        width: cardWidth,
         flex: "0 0 auto",
         cursor: "pointer",
       }}
@@ -147,7 +148,7 @@ export default function ProductCard({
                   price: product.selling_price,
                 });
               }}
-              className="btn btn-dark"
+              className="btn btn-dark btn-sm"
             >
               Add to cart
             </button>

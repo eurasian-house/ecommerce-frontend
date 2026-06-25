@@ -69,7 +69,10 @@ export default function Inspiration() {
     ];
 
     const handleClick = (id) => {
-        navigate(`/products/${p.slug}`)
+        const product = products.find((p) => p.id === id);
+        if (product) {
+            navigate(`/products/${product.slug}`);
+        }
     };
 
     return (

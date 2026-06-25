@@ -36,11 +36,7 @@ const PriceUnder = () => {
                         className="card border-0 position-relative h-100 overflow-hidden"
                         style={{ cursor: "pointer" }}
                         onClick={() =>
-                            navigate("/products", {
-                                state: {
-                                    autoSort: "new"
-                                }
-                            })
+                            navigate("/products?sort=new")
                         }
                     >
                         <img
@@ -74,11 +70,7 @@ const PriceUnder = () => {
                                 className="card border-0 position-relative h-100 overflow-hidden"
                                 style={{ cursor: "pointer" }}
                                 onClick={() =>
-                                    navigate("/products", {
-                                        state: {
-                                            autoBudget: "1"
-                                        }
-                                    })
+                                    navigate("/products?budget=1")
                                 }
                             >
                                 <img
@@ -106,11 +98,7 @@ const PriceUnder = () => {
                                 className="card border-0 position-relative h-100 overflow-hidden"
                                 style={{ cursor: "pointer" }}
                                 onClick={() =>
-                                    navigate("/products", {
-                                        state: {
-                                            autoShapes: ["Round", "Oval"]
-                                        }
-                                    })
+                                    navigate("/products?shape=round,oval")
                                 }
                             >
                                 <img
@@ -138,11 +126,7 @@ const PriceUnder = () => {
                                 className="card border-0 position-relative h-100 overflow-hidden"
                                 style={{ cursor: "pointer" }}
                                 onClick={() =>
-                                    navigate("/products", {
-                                        state: {
-                                            autoShapes: ["Irregular"]
-                                        }
-                                    })
+                                    navigate("/products?shape=irregular")
                                 }
                             >
                                 <img
@@ -170,11 +154,7 @@ const PriceUnder = () => {
                                 className="card border-0 position-relative h-100 overflow-hidden"
                                 style={{ cursor: "pointer" }}
                                 onClick={() =>
-                                    navigate("/products", {
-                                        state: {
-                                            autoQuality: "Premium"
-                                        }
-                                    })
+                                    navigate("/products?quality=premium")
                                 }
                             >
                                 <img
