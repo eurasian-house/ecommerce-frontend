@@ -75,26 +75,22 @@ export default function Inspiration() {
     return (
         <div className="container mt-4">
             <div className="text-center mb-3">
-                <span className="badge rounded-pill bg-primary bg-opacity-10 text-primary px-4 py-2 fw-bold text-uppercase tracking-wider">
+                <span className="badge rounded-pill bg-primary bg-opacity-10 text-primary section-title">
                     Choose by Amenities
                 </span>
             </div>
 
             {/* TABS */}
-            <div className="d-flex gap-4 mb-4 flex-wrap">
+            <div className="d-flex gap-1 mb-4 flex-wrap justify-content-center">
                 {subCategories.map((cat, i) => (
-                    <span
+                    <button
                         key={i}
                         onClick={() => setActiveTab(cat)}
-                        style={{
-                            cursor: "pointer",
-                            borderBottom:
-                                activeTab === cat ? "2px solid black" : "none",
-                            fontWeight: activeTab === cat ? "600" : "400",
-                        }}
+                        className={`amenity-chip ${activeTab === cat ? "active" : ""
+                            }`}
                     >
                         {cat}
-                    </span>
+                    </button>
                 ))}
             </div>
 

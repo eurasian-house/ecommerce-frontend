@@ -26,14 +26,14 @@ const slides = [
         id: 4,
         image: "/heroimages/hero4.jpg",
         title: "Flat 55% OFF",
-        subtitle: "Best Sellers",
+        subtitle: "Free Shipping on all carpets",
         discount: 55,
     },
     {
         id: 5,
         image: "/heroimages/hero5.jpg",
         title: "Flat 75% OFF",
-        subtitle: "Best Sellers",
+        subtitle: "Warehouse to Door Delivery",
         discount: 75,
     },
 ];
@@ -123,6 +123,11 @@ export default function HeroCarousel({ onSlideClick }) {
             <button
                 className={`btn btn-dark position-absolute top-50 start-0 translate-middle-y ${isMobile ? "btn-sm" : ""
                     }`}
+                style={{
+                    background: "rgba(255,255,255,0.3)",
+                    color: "#fff",
+                    border: "none",
+                }}
                 onClick={prevSlide}
                 type="button"
                 aria-label="Previous slide"
@@ -133,6 +138,11 @@ export default function HeroCarousel({ onSlideClick }) {
             <button
                 className={`btn btn-dark position-absolute top-50 end-0 translate-middle-y ${isMobile ? "btn-sm" : ""
                     }`}
+                    style={{
+                    background: "rgba(255,255,255,0.3)",
+                    color: "#fff",
+                    border: "none",
+                }}
                 onClick={nextSlide}
                 type="button"
                 aria-label="Next slide"

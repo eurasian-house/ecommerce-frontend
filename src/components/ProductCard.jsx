@@ -16,7 +16,7 @@ export default function ProductCard({
   return (
     <div
       style={{
-        width: "280px",
+        width: "200px",
         flex: "0 0 auto",
         cursor: "pointer",
       }}
@@ -30,28 +30,29 @@ export default function ProductCard({
           className="card-img-top"
           style={{
             width: "100%",
-            aspectRatio: "1 / 1",
+            aspectRatio: "4  / 3",
             objectFit: "cover",
           }}
           loading="lazy"
         />
 
-        <div className="card-body d-flex flex-column">
+        <div className="card-body d-flex flex-column p-3">
 
-          <p className="text-muted small mb-1">
+          <p className="text-muted small" style={{ marginBottom: "1px" }}>
             {product.main_category}
           </p>
 
           <h6
-            className="fw-semibold mb-3"
+            className="fw-semibold mb-0"
             style={{
               overflow: "hidden",
               textOverflow: "ellipsis",
               display: "-webkit-box",
               WebkitBoxOrient: "vertical",
               WebkitLineClamp: 2,
-              lineHeight: "1.4",
-              height: "3.0em",
+              height: "2.6em",
+              lineHeight: "1.3",
+              fontSize: "0.95rem",
               wordBreak: "break-word",
             }}
           >
@@ -59,7 +60,7 @@ export default function ProductCard({
           </h6>
 
           <div className="d-flex align-items-center gap-2">
-            <span className="fw-bold fs-5">
+            <span className="fw-bold fs-6" style={{ color: "#198754" }}>
               ${product.selling_price}
             </span>
 
@@ -74,7 +75,7 @@ export default function ProductCard({
             {product.discount_percent}% OFF
           </span>
 
-          <div className="d-flex gap-2 mb-4 flex-wrap">
+          <div className="d-flex gap-2 mb-1 flex-wrap">
             {product.product_colors?.slice(0, 5).map((c) => (
               <div
                 key={c.id}
@@ -88,8 +89,8 @@ export default function ProductCard({
                   );
                 }}
                 style={{
-                  width: 24,
-                  height: 24,
+                  width: 20,
+                  height: 20,
                   borderRadius: "50%",
                   backgroundColor:
                     c.color_name?.toLowerCase(),
@@ -105,7 +106,7 @@ export default function ProductCard({
             ))}
           </div>
 
-          <div className="mt-auto d-grid gap-2">
+          <div className="mt-auto d-grid gap-1">
 
             <button
               onClick={(e) => {
@@ -124,7 +125,7 @@ export default function ProductCard({
 
                 navigate("/cart");
               }}
-              className="btn btn-outline-dark"
+              className="btn btn-outline-dark btn-sm"
             >
               Buy it now
             </button>

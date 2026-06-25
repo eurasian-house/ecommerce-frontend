@@ -1,54 +1,47 @@
 export default function Colors({ colorFilter, setColorFilter }) {
-  const COLORS = ["Red", "Blue", "Green", "Black", "White", "Brown", "Gold", "Multi"];
+  const COLORS = ["Maroon", "Royal Blue", "Emerald Green", "Beige", "Grey", "White", "Teal", "Rose Pink", "Orange", "Multi"];
 
   return (
     <div className="mb-4">
       <div className="text-center mb-3">
-        <span className="badge rounded-pill bg-primary bg-opacity-10 text-primary px-4 py-2 fw-bold text-uppercase tracking-wider">
+        <span className="badge rounded-pill bg-primary bg-opacity-10 text-primary section-title">
           Choose by Colours
         </span>
       </div>
-      <div className="d-flex gap-2 flex-wrap">
+      <div className="d-flex justify-content-center gap-3 flex-wrap">
         {COLORS.map((c) => (
-          <button
+          <div 
             key={c}
-            className="btn btn-sm border"
+            className={`color-swatch ${colorFilter === c ? "active" : ""}`}
+            title={c}
+            onClick={() => setColorFilter(c)}
             style={{
               background:
-                c === "Red" ? "red" :
-                  c === "Blue" ? "blue" :
-                    c === "Green" ? "green" :
-                      c === "Black" ? "black" :
-                        c === "White" ? "white" :
-                          c === "Brown" ? "brown" :
-                            c === "Gold" ? "gold" :
-                              "linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet)",
-
-              color:
-                c === "White" || c === "Gold"
-                  ? "black"
-                  : "white",
+                c === "Maroon" ? "#7A1F3D" :
+                  c === "Royal Blue" ? "#1F4E9E" :
+                    c === "Emerald Green" ? "#0F8A5F" :
+                      c === "Beige" ? "#D8C3A5" :
+                        c === "Grey" ? "#8A8A8A" :
+                          c === "White" ? "#ffffff" :
+                            c === "Teal" ? "#0F766E" :
+                              c === "Rose Pink" ? "#D88C9A" :
+                                c === "Orange" ? "#D97706" :
+                                  "linear-gradient(90deg, #7A1F3D, #1F4E9E, #0F8A5F, #D8C3A5, #8A8A8A)",
 
               border:
                 c === "White"
-                  ? "1px solid #ccc"
-                  : "none",
-
-              fontWeight: "600",
-
-              opacity: colorFilter && colorFilter !== c ? 0.6 : 1
+                  ? "1px solid #dcdcdc"
+                  : undefined
             }}
-            onClick={() => setColorFilter(c)}
-          >
-            {c === "Multi" ? "Multicolor" : c}
-          </button>
+          />
         ))}
 
         <button
-          className="btn btn-sm btn-secondary"
+          className="color-clear"
           onClick={() => setColorFilter("")}
+          title="Clear filter"
         >
-          Clear
+          ✕
         </button>
       </div>
     </div>

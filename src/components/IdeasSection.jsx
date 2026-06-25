@@ -2,7 +2,6 @@ import { useNavigate } from "react-router-dom";
 
 export default function IdeasSection() {
   const navigate = useNavigate();
-  const isMobile = window.innerWidth < 576;
 
   const ideas = [
     {
@@ -28,7 +27,7 @@ export default function IdeasSection() {
   return (
     <div className="mb-5">
       <div className="text-center mb-3">
-        <span className="badge rounded-pill bg-primary bg-opacity-10 text-primary px-4 py-2 fw-bold text-uppercase tracking-wider">
+        <span className="badge rounded-pill bg-primary bg-opacity-10 text-primary section-title">
           Ideas for your home
         </span>
       </div>
@@ -38,7 +37,7 @@ export default function IdeasSection() {
           <div
             key={i}
             style={{
-              width: isMobile ? "260px" : "420px",
+              width: "300px",
               flex: "0 0 auto",
               cursor: "pointer"
             }}
@@ -53,21 +52,39 @@ export default function IdeasSection() {
                 decoding="async"
                 className="card-img-top"
                 style={{
-                  height: isMobile ? "240px" : "420px",
+                  height: "270px",
                   objectFit: "cover"
                 }}
               />
 
               <div className="card-body">
                 <h5
-                  className="fw-bold"
-                  style={{ fontSize: isMobile ? "1rem" : "1.25rem" }}
+                  className="fw-bold mb-2"
+                  style={{
+                    fontSize: "1.15rem",
+                    display: "-webkit-box",
+                    WebkitBoxOrient: "vertical",
+                    WebkitLineClamp: 3,
+                    overflow: "hidden",
+                    lineHeight: "1.3",
+                    height: "3.9em",
+                  }}
                 >
                   {item.title}
                 </h5>
-                <p className="text-muted small">{item.desc}</p>
+                <p
+                  className="text-muted small mb-3"
+                  style={{
+                    display: "-webkit-box",
+                    WebkitBoxOrient: "vertical",
+                    WebkitLineClamp: 2,
+                    overflow: "hidden",
+                    lineHeight: "1.4",
+                    height: "2.8em",
+                  }}
+                >{item.desc}</p>
 
-                <div className={isMobile ? "mt-3 mb-3" : "mt-5 mb-5"}>
+                <div className="mt-3 mb-3">
                   <span className="border border-1.5 border-black rounded-circle px-3 py-3">
                     →
                   </span>

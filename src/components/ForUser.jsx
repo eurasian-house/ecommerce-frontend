@@ -8,14 +8,14 @@ const ForUser = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="container-fluid min-vh-100 d-flex align-items-center justify-content-center bg-light border-top border-bottom">
+    <div className="container-fluid min-vh-100 d-flex align-items-center justify-content-center bg-cream border-top border-bottom">
       <div className="container py-5">
         <div className="row justify-content-center text-center">
           <div className="col-lg-10">
             
             {/* Minimalist Icon/Badge */}
             <div className="mb-4">
-              <span className="badge rounded-pill bg-primary bg-opacity-10 text-primary px-4 py-2 fw-bold text-uppercase tracking-wider">
+              <span className="badge rounded-pill bg-primary bg-opacity-10 text-primary section-title">
                 Our Commitment
               </span>
             </div>

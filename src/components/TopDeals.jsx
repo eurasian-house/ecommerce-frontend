@@ -38,7 +38,7 @@ export default function TopDeals() {
     return (
         <div className="mb-4">
             <div className="text-center mb-3">
-                <span className="badge rounded-pill bg-primary bg-opacity-10 text-primary px-4 py-2 fw-bold text-uppercase tracking-wider">
+                <span className="badge rounded-pill bg-primary bg-opacity-10 text-primary section-title">
                     Today's best Deal...
                 </span>
             </div>
@@ -47,7 +47,7 @@ export default function TopDeals() {
                 {products.map((p) => (
                     <div
                         key={p.id}
-                        style={{ width: "260px", flex: "0 0 auto", cursor: "pointer" }}
+                        style={{ width: "200px", flex: "0 0 auto", cursor: "pointer" }}
                         onClick={() => navigate(`/products/${p.slug}`)}
                     >
                         <div className="card h-100">
@@ -59,40 +59,42 @@ export default function TopDeals() {
                                 decoding="async"
                                 className="card-img-top"
                                 style={{
-                                    height: "220px",
+                                    aspectRatio: "4 / 3",
+                                    height: "auto",
                                     objectFit: "cover",
                                     width: "100%"
                                 }}
                             />
 
-                            <div className="card-body">
+                            <div className="card-body p-3">
                                 <p className="text-muted small mb-1">
                                     {p.main_category}
                                 </p>
 
                                 <h6
-                                    className="mb-2"
+                                    className="mb-0 fw-semibold"
                                     style={{
                                         display: "-webkit-box",
                                         WebkitBoxOrient: "vertical",
-                                        WebkitLineClamp: 3,
+                                        WebkitLineClamp: 2,
                                         overflow: "hidden",
-                                        lineHeight: "1.4",
-                                        height: "4.2em",   // 3 lines × 1.4
-                                        wordBreak: "break-word"
+                                        lineHeight: "1.3",
+                                        height: "2.6em", // 2 × 1.3
+                                        wordBreak: "break-word",
+                                        fontSize: "0.95rem",
                                     }}
                                 >
                                     {p.title}
                                 </h6>
 
                                 <div className="d-flex align-items-center gap-2">
-                                    <span className="fw-bold">${p.selling_price}</span>
+                                    <span className="fw-bold" style={{ color: "#0F5132" }}>${p.selling_price}</span>
                                     <span className="text-muted text-decoration-line-through small">
                                         ${p.mrp}
                                     </span>
                                 </div>
 
-                                <span className="badge bg-dark mt-2">
+                                <span className="badge bg-dark mt-1">
                                     {p.discount_percent}% OFF
                                 </span>
                                 <div className="small text-muted mt-2">

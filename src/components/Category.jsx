@@ -20,7 +20,7 @@ export default function Category() {
           <div
             key={cat}
             style={{
-              minWidth: window.innerWidth < 576 ? "110px" : "140px",
+              minWidth: "140px",
               cursor: "pointer",
             }}
             onClick={() => handleCategoryClick(cat)}
@@ -33,11 +33,11 @@ export default function Category() {
                 loading="lazy"
                 decoding="async"
                 style={{
-                  height: window.innerWidth < 576 ? "80px" : "100px", objectFit: "cover"
+                  height: "80px", objectFit: "cover",
                 }}
                 onError={(e) => (e.target.src = "/placeholder.jpg")}
               />
-              <div className="card-body text-center p-1 p-sm-2">
+              <div className="card-body text-center p-2">
                 <small>{cat}</small>
               </div>
             </div>

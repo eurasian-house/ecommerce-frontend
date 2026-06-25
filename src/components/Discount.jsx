@@ -1,28 +1,40 @@
 import { useNavigate } from "react-router-dom";
 
-const DISCOUNTS = [20, 30, 40, 50];
+const OFFERS = [
+  { discount: 20, tag: "Valentine Special" },
+  { discount: 30, tag: "Eid Offers" },
+  { discount: 40, tag: "Festive Sale" },
+  { discount: 50, tag: "Summer Sale" },
+];
 
 export default function Discount() {
   const navigate = useNavigate();
 
   return (
     <div className="mb-4">
-      <div className="text-center mb-3">
-        <span className="badge rounded-pill bg-primary bg-opacity-10 text-primary px-4 py-2 fw-bold text-uppercase tracking-wider">
-          Choose by offers!
+      <div className="text-center mb-4">
+        <span className="badge rounded-pill bg-primary bg-opacity-10 text-primary section-title">
+          Choose by Offers!
         </span>
       </div>
       <div className="d-flex overflow-auto gap-3 pb-2">
-        {DISCOUNTS.map((d) => (
+        {OFFERS.map((offer) => (
           <div
-            key={d}
+            key={offer.discount}
             style={{ minWidth: "200px", cursor: "pointer" }}
-            onClick={() => navigate(`/products?discount=${d}`)}
+            onClick={() => navigate(`/products?discount=${offer.discount}`)}
           >
-            <div className="card border-0 shadow-sm h-100 bg-dark text-white">
+            <div className="card glass-card">
               <div className="card-body d-flex flex-column justify-content-center align-items-center text-center">
-                <h4 className="fw-bold">{d}% OFF</h4>
-                <small>Shop Now →</small>
+                <h3 className="fw-bold mb-1">{offer.discount}% OFF</h3>
+
+                <p className="offer-tag mb-2">
+                  {offer.tag}
+                </p>
+
+                <small className="text-muted">
+                  Explore Collection →
+                </small>
               </div>
             </div>
           </div>
