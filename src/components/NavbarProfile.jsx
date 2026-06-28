@@ -25,7 +25,11 @@ export default function NavbarProfile({ user }) {
   };
 
   return (
-    <div className="position-relative" ref={dropdownRef}>
+    <div
+      className="position-relative"
+      ref={dropdownRef}
+      style={{ overflow: "visible" }}
+    >
       {/* Profile Icon */}
       <button
         className="btn btn-light ms-2"
@@ -40,8 +44,7 @@ export default function NavbarProfile({ user }) {
       {/* Dropdown */}
       {open && (
         <div
-          className="card shadow position-absolute end-0 mt-2"
-          style={{ width: "280px", zIndex: 1000 }}
+          className="card shadow profile-dropdown"
         >
           <div className="card-body">
 

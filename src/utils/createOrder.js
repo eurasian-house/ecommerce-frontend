@@ -36,11 +36,13 @@ export async function createOrder(cartItems, customerData) {
     return { success: false, error: orderError.message };
   }
 
+
   const items = cartItems.map((item) => ({
     order_id: order.id,
     product_id: item.id,
     quantity: item.quantity,
     price: item.price,
+    production_days: item.production_days,
 
     // Future scalable IDs
     size_id: item.selectedSize?.id || null,
@@ -76,10 +78,12 @@ export async function createOrder(cartItems, customerData) {
     country: customerData.country,
   }));
 
-  console.log(
-    "Items going into order_items:",
-    JSON.stringify(items, null, 2)
-  );
+
+  // For Debugging
+  // console.log(
+  //   "Items going into order_items:",
+  //   JSON.stringify(items, null, 2)
+  // );
 
   const { error: itemsError } = await supabase
     .from("order_items")

@@ -38,7 +38,15 @@ export default function Cart() {
             {cart.map((item) => (
                 <div
                     key={item.cartItemId}
-                    className="d-flex flex-column flex-md-row align-items-start align-items-md-center justify-content-between gap-3 mb-3 border p-3 rounded"
+                    className="d-flex flex-column flex-md-row align-items-start align-items-md-center justify-content-between gap-3 mb-3 border p-3 rounded cart-item"
+                    onClick={() =>
+                        navigate(`/products/${item.slug}`, {
+                            state: {
+                                selectedSizeId: item.selectedSize?.id,
+                                selectedColorId: item.selectedColor?.id,
+                            },
+                        })
+                    }
                 >
                     <div className="d-flex gap-3 align-items-start w-100">
                         <img
@@ -85,13 +93,15 @@ export default function Cart() {
                     <div className="d-flex align-items-center gap-2 mt-2 mt-md-0">
                         <button
                             className="btn btn-sm btn-outline-dark"
-                            onClick={() =>
+                            onClick={(e) => {
+                                e.stopPropagation();
                                 updateQuantity(
                                     item.id,
                                     item.selectedSize?.id,
                                     item.selectedColor?.id,
                                     item.quantity - 1
                                 )
+                            }
                             }
                             aria-label="Decrease quantity"
                         >
@@ -102,7 +112,8 @@ export default function Cart() {
 
                         <button
                             className="btn btn-sm btn-outline-dark"
-                            onClick={() =>
+                            onClick={(e) => {
+                                e.stopPropagation();
                                 updateQuantity(
                                     item.id,
                                     item.selectedSize?.id,
@@ -110,7 +121,9 @@ export default function Cart() {
                                     item.quantity + 1
                                 )
                             }
+                            }
                             aria-label="Increase quantity"
+
                         >
                             +
                         </button>
@@ -118,8 +131,10 @@ export default function Cart() {
 
                     <button
                         className="btn btn-sm btn-danger align-self-start align-self-md-center"
-                        onClick={() =>
+                        onClick={(e) => {
+                            e.stopPropagation();
                             removeFromCart(item.id, item.selectedSize?.id, item.selectedColor?.id)
+                        }
                         }
                     >
                         Remove

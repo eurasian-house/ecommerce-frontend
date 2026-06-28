@@ -16,7 +16,15 @@ export default function Orders() {
     const orderLimit = 10;
 
 
-    const STATUS_FLOW = ["pending", "paid", "shipped", "delivered"];
+    const STATUS_FLOW = [
+        "pending",
+        "paid",
+        "processed",
+        "manufacturing",
+        "manufactured",
+        "shipped",
+        "delivered",
+    ];
 
     const navigate = useNavigate();
 
@@ -113,11 +121,29 @@ export default function Orders() {
     };
     const getStatusColor = (status) => {
         switch (status) {
-            case "pending": return "warning";
-            case "paid": return "primary";
-            case "shipped": return "info";
-            case "delivered": return "success";
-            default: return "secondary";
+            case "pending":
+                return "warning";
+
+            case "paid":
+                return "primary";
+
+            case "processed":
+                return "secondary";
+
+            case "manufacturing":
+                return "dark";
+
+            case "manufactured":
+                return "info";
+
+            case "shipped":
+                return "primary";
+
+            case "delivered":
+                return "success";
+
+            default:
+                return "secondary";
         }
     };
 

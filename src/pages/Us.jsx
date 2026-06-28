@@ -19,7 +19,7 @@ const Us = () => {
           <div className="col-12 col-sm-8 col-lg-6 d-flex justify-content-center">
             {/* Placeholder for a profile or team image */}
             <div
-              className="bg-secondary text-white d-flex align-items-center justify-content-center rounded-5 shadow-lg"
+              className=" d-flex align-items-center justify-content-center rounded-5 shadow-lg overflow-hidden"
               style={{
                 width: "100%",
                 maxWidth: "700px",
@@ -27,8 +27,21 @@ const Us = () => {
                 margin: "0 auto",
               }}
             >
-              <span className="fs-4 text-center px-3">
-                Insert Your Image Here
+              <span>
+                <img
+                  className="rounded-5"
+                  src="/us.jpg"
+                  loading="lazy"
+                  alt="Eurasian House Team"
+                  decoding="async"
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover", // use "contain" if you don't want any cropping
+                    display: "block",
+                  }}
+
+                />
               </span>
             </div>
           </div>

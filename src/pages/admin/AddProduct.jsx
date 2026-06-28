@@ -13,6 +13,7 @@ export default function AddProduct() {
         sub_category: "",
         item_type: "",
         description: "",
+        production_days: "",
         shape: "",
         mrp: "",
         discount_percent: "",
@@ -138,6 +139,7 @@ export default function AddProduct() {
         if (!form.sub_category) newErrors.sub_category = true;
         if (!form.item_type) newErrors.item_type = true;
         if (!form.description) newErrors.description = true;
+        if (!form.production_days) newErrors.production_days = true;
         if (!form.mrp) newErrors.mrp = true;
         if (!form.discount_percent) newErrors.discount_percent = true;
         if (!form.selling_price) newErrors.selling_price = true;
@@ -186,6 +188,7 @@ export default function AddProduct() {
                 sub_category: form.sub_category,
                 item_type: form.item_type,
                 description: form.description,
+                production_days: form.production_days,
                 mrp: form.mrp,
                 discount_percent: form.discount_percent,
                 selling_price: form.selling_price,
@@ -235,6 +238,7 @@ export default function AddProduct() {
                     sub_category: form.sub_category,
                     item_type: form.item_type,
                     description: form.description,
+                    production_days: form.production_days,
                     mrp: form.mrp,
                     discount_percent: form.discount_percent,
                     selling_price: form.selling_price,
@@ -345,6 +349,7 @@ export default function AddProduct() {
                 <input className={`form-control mb-2 ${errors.sub_category ? "is-invalid" : ""}`} name="sub_category" value={form.sub_category} placeholder="Sub Category" onChange={handleChange} />
                 <input className={`form-control mb-2 ${errors.item_type ? "is-invalid" : ""}`} name="item_type" value={form.item_type} placeholder="physical/digital" onChange={handleChange} />
                 <textarea className={`form-control mb-2 ${errors.description ? "is-invalid" : ""}`} name="description" value={form.description} placeholder="Description" onChange={handleChange} />
+                <input className={`form-control mb-2 ${errors.production_days ? "is-invalid" : ""}`} name="production_days" type="number" min="1" value={form.production_days} placeholder="Production Time (Days)" onChange={handleChange} />
 
                 <input className={`form-control mb-2 ${errors.mrp ? "is-invalid" : ""}`} name="mrp" value={form.mrp} placeholder="MRP in $" onChange={handleChange} />
                 <input className={`form-control mb-2 ${errors.discount_percent ? "is-invalid" : ""}`} name="discount_percent" value={form.discount_percent} placeholder="Discount %" onChange={handleChange} />

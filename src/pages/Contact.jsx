@@ -281,7 +281,7 @@ const Contact = () => {
 
         </div>
       </div>
-      <div className="text-center mt-5 p-5 bg-light border rounded-4">
+      <div className="text-center mt-5 p-3 bg-light border rounded-4">
         <h2 className="fw-bold text-primary mb-3">
           Looking for the Perfect Rug?
         </h2>

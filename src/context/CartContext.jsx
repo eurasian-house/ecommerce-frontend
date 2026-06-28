@@ -43,7 +43,17 @@ export default function CartProvider({ children }) {
   };
 
   const removeFromCart = (id, sizeId, colorId) => {
-    trackRemoveFromCart(product);
+    const item = cart.find(
+      (p) =>
+        p.id === id &&
+        p.selectedSize?.id === sizeId &&
+        p.selectedColor?.id === colorId
+    );
+
+    if (item) {
+      trackRemoveFromCart(item);
+    }
+
     setCart((prev) =>
       prev.filter(
         (p) =>

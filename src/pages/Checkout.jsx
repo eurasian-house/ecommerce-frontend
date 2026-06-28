@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "../lib/supabase";
 import { createOrder } from "../utils/createOrder";
 import { useCart } from "../context/CartContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { loadRazorpay } from "../utils/loadRazorpay";
 import { trackBeginCheckout, trackPurchase } from "../lib/analytics";
 
@@ -207,6 +207,14 @@ export default function Checkout() {
       <h3 className="mb-4">Checkout</h3>
 
       <h5>Shipping Details</h5>
+      <p className="text-muted fst-italic small mb-2">
+        Complete your{" "}
+        <Link to="/account" className="text-decoration-none">
+          account
+        </Link>{" "}
+        profile to automatically fill your contact and shipping information during
+        checkout, making future purchases faster and more convenient.
+      </p>
 
       <input className="form-control mb-3" placeholder="Full Name" id="full_name"
         value={form.name}
@@ -249,6 +257,11 @@ export default function Checkout() {
       />
 
       <h5 className="mt-4">Total: ${total}</h5>
+      <p className="text-muted fst-italic small mb-0">
+        For your security, opening the payment gateway may take up to one minute.
+        Please remain on this page and avoid refreshing or closing your browser while
+        the payment is being prepared.
+      </p>
 
       <button
         className="btn btn-dark w-100 mt-3"

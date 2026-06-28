@@ -31,7 +31,7 @@ body {
 }
 
 .footer-link:hover {
-  color: #fff
+  color: #fff !important;
 }
 
 .bg-cream {
@@ -39,9 +39,10 @@ body {
 }
 
 /* Mobile Scrollbar Hidden */
-::-webkit-scrollbar{
- display:none;
+::-webkit-scrollbar {
+  display: none;
 }
+
 .thumbnail-strip::-webkit-scrollbar {
   display: none;
 }
@@ -188,11 +189,9 @@ body {
   margin: 2rem 0;
   padding: 1.75rem 1.75rem 1.75rem 4rem;
   border-radius: 20px;
-  background: linear-gradient(
-    135deg,
-    #faf8f4 0%,
-    #f5f1e8 100%
-  );
+  background: linear-gradient(135deg,
+      #faf8f4 0%,
+      #f5f1e8 100%);
   border: 1px solid rgba(0, 0, 0, 0.08);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
 }
@@ -234,11 +233,9 @@ body {
   margin: 2rem 0;
   padding: 2rem;
   border-radius: 20px;
-  background: linear-gradient(
-    135deg,
-    #f8f5ef 0%,
-    #fffdf9 100%
-  );
+  background: linear-gradient(135deg,
+      #f8f5ef 0%,
+      #fffdf9 100%);
   border: 1px solid rgba(0, 0, 0, 0.08);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
   text-align: center;
@@ -267,6 +264,8 @@ body {
   font-weight: 600;
   color: #111;
 }
+
+
 
 /* Responsive Design */
 
@@ -303,3 +302,23 @@ body {
   }
 }
 
+
+
+
+.profile-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: 280px;
+  z-index: 2000;
+}
+
+@media (max-width: 576px) {
+  .profile-dropdown {
+    position: fixed;
+    top: 70px;
+    left: 10px;
+    right: 10px;
+    width: auto;
+  }
+}

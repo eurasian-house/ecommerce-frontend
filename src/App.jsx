@@ -48,6 +48,7 @@ const Messages = lazy(() => import("./pages/admin/Messages"));
 const Marketing = lazy(() => import("./pages/admin/Marketing"));
 const Finances = lazy(() => import("./pages/admin/Finances"));
 const OrderDetails = lazy(() => import("./pages/admin/OrderDetails"));
+const CustOrderDetail = lazy(() => import("./pages/CustOrderDetail"));
 
 
 export default function App() {
@@ -55,7 +56,7 @@ export default function App() {
     <AuthProvider>
       <CartProvider>
         <BrowserRouter>
-        <Analytics />
+          <Analytics />
           <Suspense
             fallback={
               <div className="d-flex justify-content-center align-items-center vh-100">
@@ -139,6 +140,7 @@ export default function App() {
               <Route path="/cancellation-policy" element={<CancellationPolicy />} />
               <Route path="/faq" element={<FAQ />} />
               <Route path="*" element={<NotFound />} />
+              <Route path="/account/orders/:id" element={<ProtectedRoute> <CustOrderDetail /></ProtectedRoute>} />
 
 
             </Routes>

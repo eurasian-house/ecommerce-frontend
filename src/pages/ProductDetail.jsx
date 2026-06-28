@@ -1,4 +1,4 @@
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
 import { supabase } from "../lib/supabase";
 import { useCart } from "../context/CartContext";
@@ -17,6 +17,11 @@ import {
 export default function ProductDetail() {
   const { slug } = useParams();
   const navigate = useNavigate(); // ✅ added
+
+  // For Cart to Detail page again
+  const location = useLocation();
+  const selectedSizeId = location.state?.selectedSizeId;
+  const selectedColorId = location.state?.selectedColorId;
 
   const [product, setProduct] = useState(null);
   const [selectedImage, setSelectedImage] = useState("");
@@ -132,6 +137,27 @@ export default function ProductDetail() {
     trackMouse: true
   });
 
+  useEffect(() => {
+    if (!product) return;
+
+    if (selectedSizeId) {
+      const size = product.product_sizes.find(
+        (s) => s.id === selectedSizeId
+      );
+      if (size) setSelectedSize(size);
+    }
+
+    if (selectedColorId) {
+      const color = product.product_colors.find(
+        (c) => c.id === selectedColorId
+      );
+      if (color) setSelectedColor(color);
+    }
+  }, [product, selectedSizeId, selectedColorId]);
+
+
+
+
   const isSelectionValid = selectedSize && selectedColor;
 
   const productSchema = product && {
@@ -155,6 +181,12 @@ export default function ProductDetail() {
     },
   };
   if (!product) return <div className="container mt-4">Loading...</div>;
+
+  const expectedDelivery = new Date();
+  expectedDelivery.setDate(
+    expectedDelivery.getDate() + (product.production_days || 0) + 7
+  );
+
 
   return (
     <>  <SEO
@@ -285,17 +317,17 @@ export default function ProductDetail() {
 
               <p className="text-muted mb-1">{product.main_category}</p>
               <h1
-                className="fw-semibold mb-3"
+                className="fw-semibold"
                 style={{
-                  fontSize: "clamp(1.8rem,4vw,2.8rem)",
-                  lineHeight: 1.2
+                  fontSize: "clamp(1.2rem,4vw,2.8rem)",
+                  lineHeight: 1
                 }}
               >
                 {product.title}
               </h1>
 
-              <div className="d-flex align-items-center gap-3 mt-3 mb-4 flex-wrap" style={{ color: "#198754" }}>
-                <h3 className="mb-0 fw-bold">
+              <div className="d-flex align-items-center gap-3 flex-wrap">
+                <h3 className="mb-0 fw-bold" style={{ color: "#198754" }}>
                   ${displayPrice.selling}
                 </h3>
 
@@ -312,7 +344,7 @@ export default function ProductDetail() {
                 </span>
               </div>
 
-              <div className="mt-3">
+              <div className="mt-1">
                 <p
                   className="text-muted mb-2"
                   style={{
@@ -398,6 +430,18 @@ export default function ProductDetail() {
 
               <p className="mt-3">Shape: {product.shape}</p>
               <p>Material: {product.materials}</p>
+
+              <div className="mt-2 text-muted">
+                <i className="bi bi-truck me-2"></i>
+                <strong>Expected Delivery:</strong>{" "}
+                {expectedDelivery.toLocaleDateString("en-IN", {
+                  day: "numeric",
+                  month: "short",
+                  year: "numeric",
+                })}
+              </div>
+
+
 
               {/* BUTTONS */}
               <div className="mt-4 d-flex flex-column flex-sm-row gap-3">
@@ -557,7 +601,15 @@ export default function ProductDetail() {
                 </li>
 
                 <li className="list-group-item">
-                  <strong>Shapes Availability:</strong> Also available in different shapes kindly <Link
+                  <strong>Expected Delivery:</strong>  {expectedDelivery.toLocaleDateString("en-IN", {
+                    day: "numeric",
+                    month: "short",
+                    year: "numeric",
+                  })}
+                </li>
+
+                <li className="list-group-item">
+                  <strong>Shapes Availability:</strong> Custom shapes are available, kindly <Link
                     to="/contact"
                     className="fw-bold text-decoration-underline"
                   >
@@ -566,7 +618,7 @@ export default function ProductDetail() {
                 </li>
 
                 <li className="list-group-item">
-                  <strong>Sizes Availability:</strong> Also available in different sizes kindly <Link
+                  <strong>Sizes Availability:</strong> Custom Sizes are available, kindly <Link
                     to="/contact"
                     className="fw-bold text-decoration-underline"
                   >
@@ -575,7 +627,7 @@ export default function ProductDetail() {
                 </li>
 
                 <li className="list-group-item">
-                  <strong>Colors Availability:</strong> Also available in different Colors kindly <Link
+                  <strong>Colors Availability:</strong> Custom Colors are available, kindly <Link
                     to="/contact"
                     className="fw-bold text-decoration-underline"
                   >
@@ -584,7 +636,7 @@ export default function ProductDetail() {
                 </li>
 
                 <li className="list-group-item">
-                  <strong>Shipping:</strong> Free All over the World. Kindly refer to our <Link
+                  <strong>Shipping:</strong> Free all over the world. Kindly refer to our <Link
                     to="/shipping-policy"
                     className="fw-bold text-decoration-underline"
                   >

@@ -1,0 +1,48 @@
+.account-order-card {
+    transition: all .25s ease;
+}
+
+.account-order-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 .75rem 2rem rgba(0,0,0,.12) !important;
+}
+
+.order-status-badge {
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: .75rem;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.status-pending {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.status-paid {
+    background: #cff4fc;
+    color: #055160;
+}
+
+.status-processed,
+.status-manufacturing,
+.status-manufactured {
+    background: #e7f1ff;
+    color: #084298;
+}
+
+.status-shipped {
+    background: #e2e3ff;
+    color: #4b3fbc;
+}
+
+.status-delivered {
+    background: #d1e7dd;
+    color: #146c43;
+}
+
+.status-cancelled {
+    background: #f8d7da;
+    color: #842029;
+}
