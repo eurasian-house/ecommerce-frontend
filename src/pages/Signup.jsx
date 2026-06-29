@@ -83,65 +83,89 @@ export default function Signup() {
         className="container-fluid"
         style={{ background: "#FAF8F5", minHeight: "100vh" }}
       >
-        <div className="row min-vh-100">
+        <div className="row min-vh-100 g-0">
 
           {/* Left Side (Desktop Only) */}
-          <div className="col-lg-6 d-none d-lg-block p-0">
+          <div className="col-lg-6 d-none d-lg-block p-0 signup-image">
             <img
               src="/signup.jpg"
               alt="Hand Knotted Carpet"
-              className="w-100 h-100"
-              style={{
-                objectFit: "cover",
-              }}
+              className="w-100 h-100 signup-img"
             />
+
+            <div className="signup-overlay">
+              <div className="signup-content">
+                <span className="signup-tag">
+                  Handcrafted Since Generations
+                </span>
+
+                <h1>
+                  Timeless Rugs.<br />
+                  Crafted for Modern Homes.
+                </h1>
+
+                <p>
+                  Experience authentic hand-knotted hand-tufted, carpets that bring warmth,
+                  elegance and heritage into every space.
+                </p>
+              </div>
+            </div>
           </div>
 
           {/* Right Side */}
-          <div className="col-lg-6 d-flex align-items-center justify-content-center px-4">
+          <div className="col-lg-5 d-flex align-items-center justify-content-center px-5">
             <div
               className="bg-white shadow-sm rounded-4 p-4 p-md-5"
-              style={{ width: "100%", maxWidth: "460px" }}
+              style={{ width: "100%", maxWidth: "520px" }}
             >
 
               {/* Your form comes here */}
 
-              <h2 className="fw-bold mb-2">
-                Create your account
+              <h2 className="fw-bold mb-4">
+                Welcome to Eurasian House
               </h2>
 
-              <p className="text-muted mb-4">
-                Save your favorites, track orders and enjoy faster checkout.
-              </p>
 
               <button
                 type="button"
-                className="btn btn-outline-dark w-100 d-flex align-items-center justify-content-center py-2 mb-4"
+                className="btn btn-light border w-100 d-flex align-items-center justify-content-center py-2 mb-4 rounded-3"
                 onClick={() => handleOAuthSignup("google")}
               >
                 <img
                   src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
                   alt="Google"
                   width="20"
-                  height="20"
-                  className="me-2"
+                  className="me-3"
                 />
                 Continue with Google
               </button>
 
               <button
                 type="button"
-                className="btn btn-outline-dark w-100 d-flex align-items-center justify-content-center py-2 mb-3"
+                className="btn btn-light border w-100 d-flex align-items-center justify-content-center py-2 mb-4 rounded-3"
                 onClick={() => handleOAuthSignup("facebook")}
               >
-                <i className="bi bi-facebook me-2 text-primary"></i>
+                <i
+                  className="bi bi-facebook me-3"
+                  style={{ color: "#1877F2", fontSize: "1.2rem" }}
+                ></i>
                 Continue with Facebook
               </button>
 
               <div className="d-flex align-items-center my-4">
-                <hr className="flex-grow-1" />
-                <span className="mx-3 text-muted small">OR</span>
-                <hr className="flex-grow-1" />
+                <div className="flex-grow-1 border-top"></div>
+
+                <span
+                  className="px-3 text-uppercase text-muted"
+                  style={{
+                    letterSpacing: "1px",
+                    fontSize: ".75rem"
+                  }}
+                >
+                  Or
+                </span>
+
+                <div className="flex-grow-1 border-top"></div>
               </div>
 
               <form onSubmit={handleSubmit}>
@@ -194,7 +218,11 @@ export default function Signup() {
 
                   <button
                     type="button"
-                    className="btn btn-outline-secondary"
+                    className="btn"
+                    style={{
+                      border: "1px solid #dee2e6",
+                      color: "#6c757d",
+                    }}
                     onClick={() => setShowPassword(!showPassword)}
                   >
                     <i
@@ -224,7 +252,11 @@ export default function Signup() {
 
                   <button
                     type="button"
-                    className="btn btn-outline-secondary"
+                    className="btn"
+                    style={{
+                      border: "1px solid #dee2e6",
+                      color: "#6c757d",
+                    }}
                     onClick={() => setShowPassword(!showPassword)}
                   >
                     <i
