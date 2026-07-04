@@ -43,7 +43,7 @@ export default function IdeasSection() {
             }}
             onClick={() => navigate(`/blogs/${item.id}`)}
           >
-            <div className="card bg-light h-100">
+            <div className="card inspiration-card bg-light h-100 overflow-hidden">
 
               <img
                 src={item.img}

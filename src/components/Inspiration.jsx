@@ -130,7 +130,7 @@ export default function Inspiration() {
             {visibleCount < filtered.length && (
                 <div className="text-center mt-4">
                     <button
-                        className="btn btn-dark"
+                        className="btn pagination-btn pagination-btn-dark"
                         onClick={() => setVisibleCount((prev) => prev + 6)}
                     >
                         Show more 6

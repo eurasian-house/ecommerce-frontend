@@ -87,7 +87,7 @@ export default function ForgotPassword() {
 
           {/* Right Side */}
 
-          <div className="col-lg-6 d-flex align-items-center justify-content-center px-5">
+          <div className="col-lg-6 d-flex align-items-center justify-content-center auth-form-column">
 
             <div
               className="bg-white rounded-4 p-4 p-md-5"

@@ -1,0 +1,1066 @@
+.wholesale-hero {
+    background: #faf8f5;
+    padding: 120px 0;
+}
+
+.wholesale-label {
+    display: inline-block;
+    letter-spacing: 3px;
+    font-size: .8rem;
+    color: #9a8f83;
+    font-weight: 600;
+    margin-bottom: 18px;
+}
+
+.wholesale-hero h1 {
+    font-size: 3.2rem;
+    font-weight: 700;
+    line-height: 1.2;
+    color: #2d2a26;
+    margin-bottom: 25px;
+}
+
+.wholesale-hero p {
+    color: #6e665e;
+    line-height: 1.9;
+    font-size: 1.08rem;
+    max-width: 620px;
+}
+
+.minimum-order-card {
+
+    background: white;
+    border-radius: 24px;
+    padding: 50px;
+
+    border: 1px solid #ece5de;
+
+    box-shadow: 0 20px 50px rgba(0, 0, 0, .05);
+
+}
+
+.minimum-order-card small {
+
+    color: #8d6b45;
+
+    text-transform: uppercase;
+
+    letter-spacing: 2px;
+
+    font-weight: 600;
+
+}
+
+.minimum-order-card h2 {
+
+    font-size: 3rem;
+
+    margin: 20px 0;
+
+    color: #2d2a26;
+
+    font-weight: 700;
+
+}
+
+.minimum-order-card p {
+
+    margin: 0;
+
+    color: #6e665e;
+
+}
+
+@media(max-width:991px) {
+
+    .wholesale-hero {
+
+        padding: 80px 0;
+
+    }
+
+    .wholesale-hero h1 {
+
+        font-size: 2.3rem;
+
+    }
+
+    .minimum-order-card {
+
+        padding: 35px;
+
+        margin-top: 20px;
+
+    }
+
+}
+
+@media(max-width:576px) {
+
+    .wholesale-hero h1 {
+
+        font-size: 1.9rem;
+
+    }
+
+    .minimum-order-card h2 {
+
+        font-size: 2.2rem;
+
+    }
+
+}
+
+/* ==========================
+   Manufacturing Partner
+========================== */
+
+.manufacturing-partner {
+    padding: 120px 0;
+    background: #ffffff;
+}
+
+.partner-image {
+    overflow: hidden;
+    border-radius: 24px;
+    box-shadow: 0 20px 45px rgba(0, 0, 0, .08);
+}
+
+.partner-image img {
+    width: 100%;
+    transition: .5s;
+}
+
+.partner-image:hover img {
+    transform: scale(1.05);
+}
+
+.partner-label {
+    display: inline-block;
+    letter-spacing: 3px;
+    font-size: .8rem;
+    font-weight: 600;
+    color: #9a8f83;
+    margin-bottom: 18px;
+}
+
+.manufacturing-partner h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #2d2a26;
+    margin-bottom: 25px;
+    line-height: 1.3;
+}
+
+.manufacturing-partner p {
+    color: #6e665e;
+    line-height: 1.9;
+    margin-bottom: 20px;
+    font-size: 1.05rem;
+}
+
+@media(max-width:991px) {
+
+    .manufacturing-partner {
+        padding: 80px 0;
+    }
+
+    .manufacturing-partner h2 {
+        font-size: 2rem;
+    }
+
+}
+
+@media(max-width:576px) {
+
+    .manufacturing-partner h2 {
+        font-size: 1.7rem;
+    }
+
+}
+
+/* ==========================
+   Who We Work With
+========================== */
+
+.who-we-work {
+    background: #faf8f5;
+    padding: 120px 0;
+}
+
+.work-label {
+    display: inline-block;
+    letter-spacing: 3px;
+    font-size: .8rem;
+    color: #9a8f83;
+    font-weight: 600;
+    margin-bottom: 18px;
+}
+
+.who-we-work h2 {
+    font-size: 2.5rem;
+    color: #2d2a26;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.who-we-work p {
+    max-width: 760px;
+    margin: auto;
+    color: #6e665e;
+    line-height: 1.8;
+}
+
+.work-card {
+    background: #fff;
+    border: 1px solid #ece5de;
+    border-radius: 20px;
+    padding: 35px 25px;
+    text-align: center;
+    transition: .3s;
+    height: 100%;
+}
+
+.work-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, .06);
+}
+
+.work-card i {
+    font-size: 2.3rem;
+    color: #8d6b45;
+    margin-bottom: 20px;
+    display: block;
+}
+
+.work-card h5 {
+    margin: 0;
+    color: #2d2a26;
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+@media(max-width:991px) {
+
+    .who-we-work {
+        padding: 80px 0;
+    }
+
+    .who-we-work h2 {
+        font-size: 2rem;
+    }
+
+}
+
+@media(max-width:576px) {
+
+    .who-we-work h2 {
+        font-size: 1.7rem;
+    }
+
+    .work-card {
+        padding: 28px 20px;
+    }
+
+}
+
+/* ==========================
+   Why Businesses Choose Us
+========================== */
+
+.business-choose {
+    background: #ffffff;
+    padding: 120px 0;
+}
+
+.business-label {
+    display: inline-block;
+    letter-spacing: 3px;
+    font-size: .8rem;
+    color: #9a8f83;
+    font-weight: 600;
+    margin-bottom: 18px;
+}
+
+.business-choose h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #2d2a26;
+    margin-bottom: 20px;
+}
+
+.business-choose p {
+    color: #6e665e;
+    line-height: 1.8;
+}
+
+.business-card {
+    background: #faf8f5;
+    border-radius: 20px;
+    padding: 35px;
+    height: 100%;
+    transition: .3s;
+    border: 1px solid #ece5de;
+}
+
+.business-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, .06);
+}
+
+.business-card i {
+    font-size: 2.4rem;
+    color: #8d6b45;
+    margin-bottom: 22px;
+    display: block;
+}
+
+.business-card h5 {
+    font-weight: 600;
+    color: #2d2a26;
+    margin-bottom: 15px;
+}
+
+.business-card p {
+    margin: 0;
+    color: #6e665e;
+    line-height: 1.8;
+}
+
+@media(max-width:991px) {
+
+    .business-choose {
+        padding: 80px 0;
+    }
+
+    .business-choose h2 {
+        font-size: 2rem;
+    }
+
+}
+
+@media(max-width:576px) {
+
+    .business-choose h2 {
+        font-size: 1.7rem;
+    }
+
+    .business-card {
+        padding: 28px;
+    }
+
+}
+
+/* ==========================
+   Bhadohi Section
+========================== */
+
+.bhadohi-section {
+    background: #faf8f5;
+    padding: 120px 0;
+}
+
+.bhadohi-label {
+    display: inline-block;
+    letter-spacing: 3px;
+    font-size: .8rem;
+    color: #9a8f83;
+    font-weight: 600;
+    margin-bottom: 18px;
+}
+
+.bhadohi-section h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #2d2a26;
+    line-height: 1.3;
+    margin-bottom: 25px;
+}
+
+.bhadohi-section h2 span {
+    color: #8d6b45;
+}
+
+.bhadohi-section p {
+    color: #6e665e;
+    line-height: 1.9;
+    margin-bottom: 20px;
+}
+
+.bhadohi-features {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.bhadohi-feature {
+    background: #fff;
+    border: 1px solid #ece5de;
+    border-radius: 18px;
+    padding: 22px 26px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    transition: .3s;
+}
+
+.bhadohi-feature:hover {
+    transform: translateX(8px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, .06);
+}
+
+.bhadohi-feature i {
+    font-size: 1.8rem;
+    color: #8d6b45;
+}
+
+.bhadohi-feature span {
+    color: #2d2a26;
+    font-weight: 600;
+}
+
+@media(max-width:991px) {
+
+    .bhadohi-section {
+        padding: 80px 0;
+    }
+
+    .bhadohi-section h2 {
+        font-size: 2rem;
+    }
+
+}
+
+@media(max-width:576px) {
+
+    .bhadohi-section h2 {
+        font-size: 1.7rem;
+    }
+
+    .bhadohi-feature {
+        padding: 18px 20px;
+    }
+
+}
+
+.carpet-city-badge {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    background: #fff;
+
+    border: 1px solid #e7ddd3;
+
+    padding: 12px 18px;
+
+    border-radius: 50px;
+
+    margin-bottom: 28px;
+
+    box-shadow: 0 8px 20px rgba(0, 0, 0, .04);
+
+}
+
+.carpet-city-badge i {
+
+    color: #8d6b45;
+
+    font-size: 1.1rem;
+
+}
+
+.carpet-city-badge span {
+
+    color: #5e5650;
+
+    font-size: .95rem;
+
+}
+
+/*============================
+Manufacturing Capabilities
+=============================*/
+
+.manufacturing-capabilities {
+    background: #ffffff;
+    padding: 120px 0;
+}
+
+.capability-label {
+    display: inline-block;
+    letter-spacing: 3px;
+    font-size: .8rem;
+    color: #9a8f83;
+    font-weight: 600;
+    margin-bottom: 18px;
+}
+
+.manufacturing-capabilities h2 {
+    font-size: 2.5rem;
+    color: #2d2a26;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.manufacturing-capabilities p {
+    max-width: 760px;
+    margin: auto;
+    color: #6e665e;
+    line-height: 1.8;
+}
+
+.capability-grid {
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    justify-content: center;
+
+    gap: 18px;
+
+    margin-top: 55px;
+
+}
+
+.capability-pill {
+
+    padding: 18px 28px;
+
+    background: #faf8f5;
+
+    border: 1px solid #ece5de;
+
+    border-radius: 60px;
+
+    color: #2d2a26;
+
+    font-weight: 600;
+
+    transition: .3s;
+
+}
+
+.capability-pill:hover {
+
+    background: #8d6b45;
+
+    color: #fff;
+
+    transform: translateY(-4px);
+
+}
+
+@media(max-width:991px) {
+
+    .manufacturing-capabilities {
+
+        padding: 80px 0;
+
+    }
+
+    .manufacturing-capabilities h2 {
+
+        font-size: 2rem;
+
+    }
+
+}
+
+@media(max-width:576px) {
+
+    .manufacturing-capabilities h2 {
+
+        font-size: 1.7rem;
+
+    }
+
+    .capability-pill {
+
+        width: 100%;
+
+        text-align: center;
+
+    }
+
+}
+
+/*===================================
+Partner Benefits
+===================================*/
+
+.partner-benefits {
+    background: #faf8f5;
+    padding: 120px 0;
+}
+
+.partner-benefits-label {
+    display: inline-block;
+    letter-spacing: 3px;
+    font-size: .8rem;
+    color: #9a8f83;
+    font-weight: 600;
+    margin-bottom: 18px;
+}
+
+.partner-benefits h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #2d2a26;
+    margin-bottom: 20px;
+}
+
+.partner-benefits p {
+    color: #6e665e;
+    line-height: 1.8;
+}
+
+.benefit-item {
+
+    background: #fff;
+
+    border: 1px solid #ece5de;
+
+    border-radius: 20px;
+
+    padding: 30px;
+
+    display: flex;
+
+    gap: 22px;
+
+    align-items: flex-start;
+
+    height: 100%;
+
+    transition: .3s;
+
+}
+
+.benefit-item:hover {
+
+    transform: translateY(-6px);
+
+    box-shadow: 0 18px 40px rgba(0, 0, 0, .06);
+
+}
+
+.benefit-item i {
+
+    font-size: 2rem;
+
+    color: #8d6b45;
+
+    flex-shrink: 0;
+
+}
+
+.benefit-item h5 {
+
+    margin-bottom: 10px;
+
+    color: #2d2a26;
+
+    font-weight: 600;
+
+}
+
+.benefit-item p {
+
+    margin: 0;
+
+    color: #6e665e;
+
+}
+
+@media(max-width:991px) {
+
+    .partner-benefits {
+
+        padding: 80px 0;
+
+    }
+
+    .partner-benefits h2 {
+
+        font-size: 2rem;
+
+    }
+
+}
+
+@media(max-width:576px) {
+
+    .partner-benefits h2 {
+
+        font-size: 1.7rem;
+
+
+
+    }
+
+    .benefit-item {
+
+        padding: 24px;
+
+    }
+
+}
+
+/*==================================
+Wholesale Journey
+==================================*/
+
+.wholesale-journey {
+    background: #ffffff;
+    padding: 120px 0;
+}
+
+.journey-label {
+    display: inline-block;
+    letter-spacing: 3px;
+    font-size: .8rem;
+    color: #9a8f83;
+    font-weight: 600;
+    margin-bottom: 18px;
+}
+
+.wholesale-journey h2 {
+    font-size: 2.5rem;
+    color: #2d2a26;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.wholesale-journey p {
+    color: #6e665e;
+    line-height: 1.8;
+}
+
+.journey-timeline {
+
+    max-width: 900px;
+
+    margin: 70px auto 0;
+
+    position: relative;
+
+}
+
+.journey-timeline::before {
+
+    content: "";
+
+    position: absolute;
+
+    left: 35px;
+
+    top: 0;
+
+    bottom: 0;
+
+    width: 2px;
+
+    background: #e5ddd5;
+
+}
+
+.journey-step {
+
+    display: flex;
+
+    gap: 30px;
+
+    position: relative;
+
+    margin-bottom: 50px;
+
+}
+
+.journey-icon {
+
+    width: 70px;
+
+    height: 70px;
+
+    border-radius: 50%;
+
+    background: #faf8f5;
+
+    border: 1px solid #ece5de;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    flex-shrink: 0;
+
+    position: relative;
+
+    z-index: 2;
+
+}
+
+.journey-icon i {
+
+    font-size: 1.7rem;
+
+    color: #8d6b45;
+
+}
+
+.journey-content {
+
+    padding-top: 10px;
+
+}
+
+.journey-content h5 {
+
+    font-weight: 600;
+
+    color: #2d2a26;
+
+    margin-bottom: 12px;
+
+}
+
+.journey-content p {
+
+    margin: 0;
+
+    color: #6e665e;
+
+}
+
+.journey-step:last-child {
+
+    margin-bottom: 0;
+
+}
+
+@media(max-width:991px) {
+
+    .wholesale-journey {
+
+        padding: 80px 0;
+
+    }
+
+    .wholesale-journey h2 {
+
+        font-size: 2rem;
+
+    }
+
+}
+
+@media(max-width:576px) {
+
+    .wholesale-journey h2 {
+
+        font-size: 1.7rem;
+
+    }
+
+    .journey-step {
+
+        gap: 18px;
+
+    }
+
+    .journey-icon {
+
+        width: 58px;
+
+        height: 58px;
+
+    }
+
+    .journey-icon i {
+
+        font-size: 1.3rem;
+
+    }
+
+    .journey-timeline::before {
+
+        left: 28px;
+
+    }
+
+}
+
+/*=========================
+Wholesale Eligibility
+=========================*/
+
+.wholesale-eligibility {
+
+    background: #faf8f5;
+
+    padding: 120px 0;
+
+}
+
+.eligibility-card {
+
+    max-width: 850px;
+
+    margin: auto;
+
+    background: #fff;
+
+    border-radius: 24px;
+
+    padding: 60px;
+
+    text-align: center;
+
+    border: 1px solid #ece5de;
+
+    box-shadow: 0 20px 50px rgba(0, 0, 0, .05);
+
+}
+
+.eligibility-label {
+
+    display: inline-block;
+
+    letter-spacing: 3px;
+
+    font-size: .8rem;
+
+    color: #9a8f83;
+
+    font-weight: 600;
+
+    margin-bottom: 18px;
+
+}
+
+.eligibility-card h2 {
+
+    font-size: 2.4rem;
+
+    color: #2d2a26;
+
+    font-weight: 700;
+
+}
+
+.eligibility-price {
+
+    font-size: 4rem;
+
+    color: #8d6b45;
+
+    font-weight: 700;
+
+    margin: 25px 0;
+
+}
+
+.eligibility-card p {
+
+    color: #6e665e;
+
+    line-height: 1.9;
+
+}
+
+@media(max-width:768px) {
+
+    .eligibility-card {
+
+        padding: 35px 25px;
+
+    }
+
+    .eligibility-price {
+
+        font-size: 2.8rem;
+
+    }
+
+}
+
+/*=========================
+Wholesale CTA
+=========================*/
+
+.wholesale-cta {
+
+    background: #2d2a26;
+
+    padding: 120px 0;
+
+}
+
+.cta-box {
+
+    text-align: center;
+
+    max-width: 900px;
+
+    margin: auto;
+
+}
+
+.cta-box span {
+
+    letter-spacing: 3px;
+
+    font-size: .8rem;
+
+    color: #d2b48c;
+
+    font-weight: 600;
+
+}
+
+.cta-box h2 {
+
+    font-size: 2.8rem;
+
+    font-weight: 700;
+
+    color: white;
+
+    margin: 25px 0;
+
+}
+
+.cta-box p {
+
+    color: #d8d2cb;
+
+    line-height: 1.9;
+
+    font-size: 1.08rem;
+
+    margin-bottom: 40px;
+
+}
+
+@media(max-width:768px) {
+
+    .wholesale-cta {
+
+        padding: 80px 0;
+
+    }
+
+    .cta-box h2 {
+
+        font-size: 2rem;
+
+    }
+
+}

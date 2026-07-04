@@ -311,7 +311,7 @@ export default function CustOrderDetail() {
                                             ${item.price}
                                         </div>
 
-                                        <div className="text-muted small mb-1">
+                                        <div className="text-muted small mb-2">
                                             <i className="bi bi-truck me-1"></i>
                                             Expected delivery:{" "}
                                             {new Date(
@@ -326,6 +326,18 @@ export default function CustOrderDetail() {
                                                 year: "numeric",
                                             })}
                                         </div>
+
+                                        {order.status === "delivered" && (
+                                            <button
+                                                className="btn btn-outline-dark btn-sm"
+                                                onClick={() =>
+                                                    navigate(`/write-review/${item.id}`)
+                                                }
+                                            >
+                                                <i className="bi bi-star me-1"></i>
+                                                Write Review
+                                            </button>
+                                        )}
 
                                     </div>
 

@@ -33,7 +33,7 @@ const PriceUnder = () => {
                 {/* LEFT */}
                 <div className="col-lg-6">
                     <div
-                        className="card border-0 position-relative h-100 overflow-hidden"
+                        className="card premium-grid-card border-0 position-relative h-100 overflow-hidden"
                         style={{ cursor: "pointer" }}
                         onClick={() =>
                             navigate("/products?sort=new")
@@ -41,7 +41,7 @@ const PriceUnder = () => {
                     >
                         <img
                             src={images.leftLarge}
-                            className="card-img h-100"
+                            className="card-img h-100 premium-grid-image"
                             style={{ objectFit: "cover" }}
                             loading="lazy"
                             alt="What's new!"
@@ -67,7 +67,7 @@ const PriceUnder = () => {
                         {/* TOP MIDDLE */}
                         <div className="col-6">
                             <div
-                                className="card border-0 position-relative h-100 overflow-hidden"
+                                className="card premium-grid-card border-0 position-relative h-100 overflow-hidden"
                                 style={{ cursor: "pointer" }}
                                 onClick={() =>
                                     navigate("/products?budget=1")
@@ -75,7 +75,7 @@ const PriceUnder = () => {
                             >
                                 <img
                                     src={images.orangeWhatsNew}
-                                    className="card-img h-100"
+                                    className="card-img h-100 premium-grid-image"
                                     style={{ objectFit: "cover" }}
                                     loading="lazy"
                                     alt="Under Price $299"
@@ -95,7 +95,7 @@ const PriceUnder = () => {
                         {/* TOP RIGHT */}
                         <div className="col-6">
                             <div
-                                className="card border-0 position-relative h-100 overflow-hidden"
+                                className="card premium-grid-card border-0 position-relative h-100 overflow-hidden"
                                 style={{ cursor: "pointer" }}
                                 onClick={() =>
                                     navigate("/products?shape=round,oval")
@@ -103,7 +103,7 @@ const PriceUnder = () => {
                             >
                                 <img
                                     src={images.topRightAdventure}
-                                    className="card-img h-100"
+                                    className="card-img h-100 premium-grid-image"
                                     style={{ objectFit: "cover" }}
                                     alt="Round and Oval Rugs"
                                     loading="lazy"
@@ -123,7 +123,7 @@ const PriceUnder = () => {
                         {/* MIDDLE */}
                         <div className="col-6">
                             <div
-                                className="card border-0 position-relative h-100 overflow-hidden"
+                                className="card premium-grid-card border-0 position-relative h-100 overflow-hidden"
                                 style={{ cursor: "pointer" }}
                                 onClick={() =>
                                     navigate("/products?shape=irregular")
@@ -132,7 +132,7 @@ const PriceUnder = () => {
                                 <img
                                     src={images.middleRightPlant}
                                     loading="lazy"
-                                    className="card-img h-100"
+                                    className="card-img h-100 premium-grid-image"
                                     style={{ objectFit: "cover" }}
                                     alt="Irregular Shape Rugs"
                                 />
@@ -151,7 +151,7 @@ const PriceUnder = () => {
                         {/* BOTTOM */}
                         <div className="col-6">
                             <div
-                                className="card border-0 position-relative h-100 overflow-hidden"
+                                className="card premium-grid-card border-0 position-relative h-100 overflow-hidden"
                                 style={{ cursor: "pointer" }}
                                 onClick={() =>
                                     navigate("/products?quality=premium")
@@ -160,7 +160,7 @@ const PriceUnder = () => {
                                 <img
                                     src={images.bottomRightRoom}
                                     loading="lazy"
-                                    className="card-img h-100"
+                                    className="card-img h-100 premium-grid-image"
                                     style={{ objectFit: "cover" }}
                                     alt="Only Premium Carpets/Rugs"
                                 />

@@ -1,0 +1,282 @@
+.wholesale-contact {
+    background: #FAF8F5;
+    min-height: 100vh;
+}
+
+
+.wholesale-contact .card {
+    border-radius: 22px;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, .06) !important;
+}
+
+.wholesale-contact h1 {
+    font-weight: 700;
+}
+
+.wholesale-contact h5 {
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.wholesale-contact .form-label {
+    font-weight: 500;
+    margin-bottom: .45rem;
+}
+
+.wholesale-contact .form-control,
+.wholesale-contact .form-select {
+    min-height: 60px;
+}
+
+.wholesale-contact textarea.form-control {
+    min-height: 150px;
+    resize: vertical;
+}
+
+.wholesale-contact .form-control:focus,
+.wholesale-contact .form-select:focus {
+    border-color: #212529;
+    box-shadow: 0 0 0 .15rem rgba(33, 37, 41, .1);
+}
+
+.wholesale-contact .form-check {
+    margin-right: 1.25rem;
+    margin-bottom: .75rem;
+}
+
+.wholesale-contact .btn {
+    height: 54px;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: .25s;
+}
+
+.wholesale-contact .btn:hover {
+    transform: translateY(-2px);
+}
+
+.wholesale-contact hr {
+    opacity: .12;
+}
+
+@media (max-width: 768px) {
+    .wholesale-contact .card {
+        padding: 1.25rem !important;
+    }
+
+    .wholesale-contact h1 {
+        font-size: 2rem;
+    }
+
+    .wholesale-contact .form-check {
+        display: block;
+        margin-bottom: .6rem;
+    }
+}
+
+.wholesale-contact .card {
+    border-radius: 20px;
+}
+
+.wholesale-contact .form-control,
+.wholesale-contact .form-select {
+    border-radius: 12px;
+    min-height: 58px;
+}
+
+.wholesale-contact textarea.form-control {
+    min-height: 180px;
+}
+
+.wholesale-contact .btn-dark {
+    transition: .25s;
+}
+
+.wholesale-contact .btn-dark:hover {
+    transform: translateY(-2px);
+}
+
+.wholesale-contact .btn-outline-dark {
+    border-radius: 999px;
+    margin-right: .5rem;
+    margin-bottom: .5rem;
+}
+
+.wholesale-contact .card {
+    transition: .25s;
+}
+
+.wholesale-contact .card:hover {
+    transform: translateY(-4px);
+}
+
+
+.upload-dropzone {
+    border: 2px dashed #cfcfcf;
+    border-radius: 18px;
+    padding: 40px 25px;
+    text-align: center;
+    cursor: pointer;
+    background: #fafafa;
+    transition: .25s;
+}
+
+.upload-dropzone:hover {
+    border-color: #212529;
+    background: #f5f5f5;
+}
+
+.upload-dropzone i {
+    color: #6c757d;
+}
+
+.upload-dropzone:hover i {
+    color: #212529;
+}
+
+.wholesale-contact .btn-outline-dark {
+    min-width: 180px;
+    height: 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+    padding: 0 1.25rem;
+    font-size: .95rem;
+
+}
+
+@media (max-width: 991.98px) {
+
+    .wholesale-contact .btn-outline-dark {
+        min-width: calc(50% - .5rem);
+        width: calc(50% - .5rem);
+    }
+
+}
+
+@media (max-width: 575.98px) {
+
+    .wholesale-contact .btn-outline-dark {
+        width: 100%;
+        min-width: 100%;
+        height: 46px;
+        font-size: .9rem;
+    }
+
+    .wholesale-contact .d-inline-block {
+        display: block !important;
+        width: 100%;
+        margin-right: 0 !important;
+    }
+
+}
+
+
+
+.product-pill{
+    display:inline-block;
+    margin:0 .5rem .75rem 0;
+}
+
+.wholesale-contact .btn-outline-dark{
+    min-width:180px;
+    height:48px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    text-align:center;
+    padding:0 1.25rem;
+}
+
+@media (max-width: 991.98px){
+
+    .product-pill{
+        width:calc(50% - .5rem);
+        margin-right:.5rem;
+    }
+
+    .product-pill .btn{
+        width:100%;
+    }
+
+}
+
+@media (max-width: 575.98px){
+
+    .product-pill{
+        width:100%;
+        margin-right:0;
+    }
+
+    .product-pill .btn{
+        width:100%;
+    }
+
+}
+
+/* ================= Mobile ================= */
+
+@media (max-width: 767.98px){
+
+    .wholesale-contact{
+        padding-top:1.5rem !important;
+        padding-bottom:1.5rem !important;
+    }
+
+    .wholesale-contact .card-body{
+        padding:1rem !important;
+    }
+
+    .wholesale-contact form{
+        padding:1rem !important;
+    }
+
+    .wholesale-contact h1{
+        font-size:2rem;
+    }
+
+    .wholesale-contact h4{
+        font-size:1.4rem;
+        margin-bottom:1rem !important;
+    }
+
+    .wholesale-contact .form-control,
+    .wholesale-contact .form-select{
+        min-height:48px;
+        height:48px;
+        font-size:.95rem;
+    }
+
+    .wholesale-contact textarea.form-control{
+        height:140px !important;
+    }
+
+    .wholesale-contact .form-floating > label{
+        padding:.75rem 1rem;
+        font-size:.9rem;
+    }
+
+    .wholesale-contact .btn-lg{
+        padding:.75rem 1rem !important;
+        font-size:1rem;
+    }
+
+    .upload-dropzone{
+        padding:24px 16px;
+    }
+
+    .upload-dropzone h5{
+        font-size:1rem;
+    }
+
+    .upload-dropzone p,
+    .upload-dropzone small{
+        font-size:.85rem;
+    }
+
+}

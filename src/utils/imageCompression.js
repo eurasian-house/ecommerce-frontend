@@ -38,5 +38,11 @@ export const compressImage = (file, { maxWidth, quality }) => {
 export const IMAGE_RULES = {
     thumbnail: { maxWidth: 600, quality: 0.7 },
     gallery: { maxWidth: 1200, quality: 0.75 },
-    variant: { maxWidth: 800, quality: 0.7 }
+    variant: { maxWidth: 800, quality: 0.7 },
+
+    // Customer avatar
+    avatar: {
+        maxWidth: 256,
+        quality: 0.6,
+    },
 };

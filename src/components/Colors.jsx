@@ -1,5 +1,5 @@
 export default function Colors({ colorFilter, setColorFilter }) {
-  const COLORS = ["Maroon", "Royal Blue", "Emerald Green", "Beige", "Grey", "White", "Teal", "Rose Pink", "Orange", "Multi"];
+  const COLORS = ["Maroon", "Gold", "Navy Blue", "Green", "Beige", "Brown", "Grey", "White", "Black", "Teal", "Pink", "Orange", "Multi"];
 
   return (
     <div className="mb-4">
@@ -10,7 +10,7 @@ export default function Colors({ colorFilter, setColorFilter }) {
       </div>
       <div className="d-flex justify-content-center gap-3 flex-wrap">
         {COLORS.map((c) => (
-          <div 
+          <div
             key={c}
             className={`color-swatch ${colorFilter === c ? "active" : ""}`}
             title={c}
@@ -18,15 +18,18 @@ export default function Colors({ colorFilter, setColorFilter }) {
             style={{
               background:
                 c === "Maroon" ? "#7A1F3D" :
-                  c === "Royal Blue" ? "#1F4E9E" :
-                    c === "Emerald Green" ? "#0F8A5F" :
-                      c === "Beige" ? "#D8C3A5" :
-                        c === "Grey" ? "#8A8A8A" :
-                          c === "White" ? "#ffffff" :
-                            c === "Teal" ? "#0F766E" :
-                              c === "Rose Pink" ? "#D88C9A" :
-                                c === "Orange" ? "#D97706" :
-                                  "linear-gradient(90deg, #7A1F3D, #1F4E9E, #0F8A5F, #D8C3A5, #8A8A8A)",
+                  c === "Gold" ? "#D4AF37" :
+                    c === "Navy Blue" ? "#1E3A8A" :
+                      c === "Green" ? "#2E8B57" :
+                        c === "Beige" ? "#DCC9A3" :
+                          c === "Brown" ? "#7B4A2F" :
+                            c === "Grey" ? "#8B8B8B" :
+                              c === "White" ? "#FFFFFF" :
+                                c === "Black" ? "#1F1F1F" :
+                                  c === "Teal" ? "#0F766E" :
+                                    c === "Pink" ? "#EC4899" :
+                                      c === "Orange" ? "#EA580C" :
+                                        "linear-gradient(135deg, #ff8707, #ff0000, #1E3A8A, #008138, #ffaa00, #eb5200, #ff00e6)",
 
               border:
                 c === "White"

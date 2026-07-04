@@ -113,7 +113,7 @@ export default function Signup() {
           </div>
 
           {/* Right Side */}
-          <div className="col-lg-5 d-flex align-items-center justify-content-center px-5">
+          <div className="col-lg-5 d-flex align-items-center justify-content-center auth-form-column">
             <div
               className="bg-white shadow-sm rounded-4 p-4 p-md-5"
               style={{ width: "100%", maxWidth: "520px" }}

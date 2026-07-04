@@ -7,6 +7,10 @@ import { toast } from "react-toastify";
 import FormInput from "../components/forms/FormInput";
 import FormField from "../components/forms/FormField";
 import FormSelect from "../components/forms/FormSelect";
+import { compressImage, IMAGE_RULES } from "../utils/imageCompression";
+import { uploadCustomerImage } from "../lib/customerCloudinary";
+import UserAvatar from "../components/common/UserAvatar";
+import { getAvatar } from "../utils/getAvatar";
 import "../styles/account.css";
 import {
   validateName,
@@ -26,6 +30,7 @@ export default function Account() {
   const [loading, setLoading] = useState(true);
   const [userEmail, setUserEmail] = useState("");
   const [errors, setErrors] = useState({});
+  const [originalProfile, setOriginalProfile] = useState(null);
   const navigate = useNavigate();
   const [visibleOrders, setVisibleOrders] = useState(10);
 
@@ -45,7 +50,21 @@ export default function Account() {
           .eq("id", user.id)
           .single();
 
+        if (!profileData.avatar_url) {
+          const { assignDefaultAvatar } = await import("../utils/assignDefaultAvatar");
+
+          const avatar = assignDefaultAvatar();
+
+          await supabase
+            .from("profiles")
+            .update({ avatar_url: avatar })
+            .eq("id", user.id);
+
+          profileData.avatar_url = avatar;
+        }
+
         setProfile(profileData);
+
 
         const { data: orderData, error } = await supabase
           .from("orders")
@@ -148,7 +167,30 @@ export default function Account() {
         })
         .eq("id", profile.id);
 
-      if (error) throw error;
+      // Update reviewer name in all previous reviews
+      const { error: reviewNameError } = await supabase
+        .from("product_reviews")
+        .update({
+          reviewer_name: profile.full_name,
+        })
+        .eq("user_id", profile.id);
+
+      if (reviewNameError) {
+        console.error("Review name update failed:", reviewNameError);
+      }
+
+      // Update QnA name in all previous questions
+      const { error: questionNameError } = await supabase
+        .from("product_questions")
+        .update({
+          customer_name: profile.full_name,
+        })
+        .eq("user_id", profile.id);
+
+      if (questionNameError) {
+        console.error("Question name update failed:", questionNameError);
+      }
+
 
       setEditMode(false);
       toast.success("Profile updated successfully.");
@@ -157,6 +199,67 @@ export default function Account() {
       toast.error("Unable to update your profile. Please try again.");
     }
   };
+
+
+  const handleAvatarUpload = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    try {
+      const compressed = await compressImage(file, IMAGE_RULES.avatar);
+
+      const avatarUrl = await uploadCustomerImage(
+        compressed,
+        "avatars"
+      );
+
+      const { data, error } = await supabase
+        .from("profiles")
+        .update({ avatar_url: avatarUrl })
+        .eq("id", profile.id)
+        .select();
+
+      if (error) throw error;
+
+      // Keep all previous reviews in sync
+      const { error: reviewAvatarError } = await supabase
+        .from("product_reviews")
+        .update({
+          reviewer_avatar: avatarUrl,
+        })
+        .eq("user_id", profile.id);
+
+      if (reviewAvatarError) {
+        console.error("Review avatar update failed:", reviewAvatarError);
+      }
+
+      // Keep all previous questions in sync
+      const { error: questionAvatarError } = await supabase
+        .from("product_questions")
+        .update({
+          customer_avatar: avatarUrl,
+        })
+        .eq("user_id", profile.id);
+
+      if (questionAvatarError) {
+        console.error("Question avatar update failed:", questionAvatarError);
+      }
+
+      setProfile((prev) => ({
+        ...prev,
+        avatar_url: avatarUrl,
+      }));
+
+
+
+      toast.success("Avatar updated.");
+    } catch (err) {
+      console.error(err);
+      toast.error("Failed to upload avatar.");
+    }
+  };
+
+
 
   if (loading) {
     return <div className="text-center mt-5">Loading...</div>;
@@ -167,125 +270,206 @@ export default function Account() {
       <div className="row">
 
         {/* LEFT PROFILE */}
-        <div className="col-md-4">
+        <div className="col-lg-4">
           <div
-            className="card p-3 shadow-sm"
+            className="card border-0 shadow-lg rounded-4 p-3 account-card"
             style={{ position: "sticky", top: "100px" }}
           >
-            <div className="d-flex justify-content-between mb-3">
-              <h5>Account Profile</h5>
+            <div className="text-center position-relative mb-3">
 
-              {!editMode ? (
-                <button
-                  className="btn btn-sm btn-outline-primary"
-                  onClick={() => setEditMode(true)}
-                >
-                  Edit
-                </button>
-              ) : (
-                <button
-                  className="btn btn-sm btn-success"
-                  onClick={handleSave}
-                >
-                  Save
-                </button>
-              )}
+              <div className="position-absolute top-0 end-0 d-flex gap-2">
+
+                {!editMode ? (
+                  <button
+                    className="btn btn-light btn-sm rounded-pill px-3 border"
+                    onClick={() => {
+                      setOriginalProfile({ ...profile });
+                      setEditMode(true);
+                    }}
+                  >
+                    <i className="bi bi-pencil me-1"></i>
+                    Edit
+                  </button>
+                ) : (
+                  <>
+                    <div className="d-flex flex-column gap-2">
+
+                      <button
+                        className="btn btn-dark btn-sm rounded-pill px-3"
+                        onClick={handleSave}
+                      >
+                        <i className="bi bi-check-lg me-1"></i>
+                        Save
+                      </button>
+
+                      <button
+                        className="btn btn-outline-secondary btn-sm rounded-pill px-3"
+                        onClick={() => {
+                          setProfile(originalProfile);
+                          setEditMode(false);
+                        }}
+                      >
+                        <i className="bi bi-x-lg me-1"></i>
+                        Cancel
+                      </button>
+
+                    </div>
+                  </>
+                )}
+
+              </div>
+
+              <div
+                className="mx-auto rounded-circle d-flex align-items-center justify-content-center mb-3"
+                style={{
+                  width: "80px",
+                  height: "80px",
+                  background: "#f8f8f8",
+                  border: "1px solid #ececec"
+                }}
+              >
+                <UserAvatar
+                  src={getAvatar(profile)}
+                  alt={profile.full_name}
+                  size={70}
+                />
+              </div>
+
+              <h5 className="fw-semibold mb-1">
+                {profile.full_name || "Your Name"}
+              </h5>
+
+              <p className="text-muted small mb-3">
+                Manage your account information
+              </p>
+
+              <label className="btn btn-light border rounded-pill btn-sm px-3">
+                <i className="bi bi-camera me-2"></i>
+                Change Photo
+                <input
+                  type="file"
+                  accept="image/*"
+                  hidden
+                  onChange={handleAvatarUpload}
+                />
+              </label>
+
+              <hr className="mt-4 mb-0" />
+
             </div>
 
-            <FormInput
-              label="Name"
-              id="full_name"
-              value={profile?.full_name || ""}
-              disabled={!editMode}
-              error={errors.full_name}
-              onChange={(e) => handleChange("full_name", e.target.value)}
-            />
+            <div className="row g-2">
 
-            <FormField label="Email" htmlFor="email">
-              <input
-                className="form-control"
-                id="email"
-                value={userEmail}
-                disabled
-              />
-            </FormField>
+              <div className="col-12">
+                <FormInput
+                  label="Name"
+                  id="full_name"
+                  value={profile?.full_name || ""}
+                  disabled={!editMode}
+                  error={errors.full_name}
+                  onChange={(e) => handleChange("full_name", e.target.value)}
+                />
+              </div>
 
-            <FormInput
-              label="Phone"
-              id="phone"
-              value={profile?.phone || ""}
-              disabled={!editMode}
-              error={errors.phone}
-              onChange={(e) => handleChange("phone", e.target.value)}
-            />
+              <div className="col-12">
+                <FormField label="Email" htmlFor="email">
+                  <div className="form-control bg-light border-0">
+                    <i className="bi bi-envelope me-2"></i>
+                    {userEmail}
+                  </div>
+                </FormField>
+              </div>
 
-            <FormSelect
-              label="Country"
-              id="country"
-              value={profile?.country || ""}
-              disabled={!editMode}
-              error={errors.country}
-              onChange={(e) => handleChange("country", e.target.value)}
-            >
-              <option value="">Select Country</option>
+              <div className="col-md-6">
+                <FormInput
+                  label="Phone"
+                  id="phone"
+                  value={profile?.phone || ""}
+                  disabled={!editMode}
+                  error={errors.phone}
+                  onChange={(e) => handleChange("phone", e.target.value)}
+                />
+              </div>
 
-              {countries.map((country, index) =>
-                country.value === "" ? (
-                  <option key={`divider-${index}`} disabled>
-                    {country.label}
-                  </option>
-                ) : (
-                  <option
-                    key={country.value}
-                    value={country.label}
-                  >
-                    {country.label}
-                  </option>
-                )
-              )}
-            </FormSelect>
+              <div className="col-md-6">
+                <FormSelect
+                  label="Country"
+                  id="country"
+                  value={profile?.country || ""}
+                  disabled={!editMode}
+                  error={errors.country}
+                  onChange={(e) => handleChange("country", e.target.value)}
+                >
+                  <option value="">Select Country</option>
 
-            <FormInput
-              label="Pincode"
-              id="pincode"
-              value={profile?.pincode || ""}
-              disabled={!editMode}
-              error={errors.pincode}
-              onChange={(e) => handleChange("pincode", e.target.value)}
-              onBlur={handlePostalLookup}
-            />
+                  {countries.map((country, index) =>
+                    country.value === "" ? (
+                      <option key={`divider-${index}`} disabled>
+                        {country.label}
+                      </option>
+                    ) : (
+                      <option
+                        key={country.value}
+                        value={country.label}
+                      >
+                        {country.label}
+                      </option>
+                    )
+                  )}
+                </FormSelect>
+              </div>
 
-            <FormInput
-              label="Address"
-              id="address"
-              value={profile?.address || ""}
-              disabled={!editMode}
-              error={errors.address}
-              onChange={(e) => handleChange("address", e.target.value)}
-            />
+              <div className="col-md-6">
+                <FormInput
+                  label="Pincode"
+                  id="pincode"
+                  value={profile?.pincode || ""}
+                  disabled={!editMode}
+                  error={errors.pincode}
+                  onChange={(e) => handleChange("pincode", e.target.value)}
+                  onBlur={handlePostalLookup}
+                />
+              </div>
 
-            <FormInput
-              label="City"
-              id="city"
-              value={profile?.city || ""}
-              disabled={!editMode}
-              error={errors.city}
-              onChange={(e) => handleChange("city", e.target.value)}
-            />
+              <div className="col-md-6">
+                <FormInput
+                  label="State"
+                  id="state"
+                  value={profile?.state || ""}
+                  disabled={!editMode}
+                  error={errors.state}
+                  onChange={(e) => handleChange("state", e.target.value)}
+                />
+              </div>
 
-            <FormInput
-              label="State"
-              id="state"
-              value={profile?.state || ""}
-              disabled={!editMode}
-              error={errors.state}
-              onChange={(e) => handleChange("state", e.target.value)}
-            />
+              <div className="col-md-6">
+                <FormInput
+                  label="City"
+                  id="city"
+                  value={profile?.city || ""}
+                  disabled={!editMode}
+                  error={errors.city}
+                  onChange={(e) => handleChange("city", e.target.value)}
+                />
+              </div>
+
+              <div className="col-12">
+                <FormInput
+                  label="Address"
+                  id="address"
+                  value={profile?.address || ""}
+                  disabled={!editMode}
+                  error={errors.address}
+                  onChange={(e) => handleChange("address", e.target.value)}
+                />
+              </div>
+
+            </div>
           </div>
         </div>
 
         {/* RIGHT ORDERS */}
-        <div className="col-md-8">
+        <div className="col-md-8 mt-4 mt-md-0">
           <h4 className="mb-3">My Orders</h4>
 
           {orders.length === 0 ? (
@@ -308,7 +492,7 @@ export default function Account() {
 
                   <div
                     key={order.id}
-                    className="card border-0 shadow-sm rounded-4 p-4 account-order-card"
+                    className="card border-0 shadow-sm rounded-4 p-3 account-order-card"
                     style={{ cursor: "pointer" }}
                     onClick={() => navigate(`/account/orders/${order.id}`)}
                   >

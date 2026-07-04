@@ -1,5 +1,6 @@
 import { useCart } from "../context/CartContext";
 import { useNavigate } from "react-router-dom";
+import StarRating from "../components/common/StarRating";
 
 export default function ProductCard({
   product,
@@ -26,12 +27,12 @@ export default function ProductCard({
         (() => navigate(`/products/${product.slug}`))
       }
     >
-      <div className="card h-100 shadow-sm border-0 overflow-hidden">
+      <div className="card product-card h-100 shadow-sm border-0 overflow-hidden">
 
         <img
+          className="card-img-top product-card-image"
           src={selectedImage || product.thumbnail}
           alt={`${product.title} - Handmade ${product.main_category} Rug`}
-          className="card-img-top"
           style={{
             width: "100%",
             aspectRatio: "4  / 3",
@@ -63,6 +64,11 @@ export default function ProductCard({
             {product.title}
           </h6>
 
+          <StarRating
+            rating={product.average_rating}
+            reviewCount={product.review_count}
+          />
+
           <div className="d-flex align-items-center gap-2">
             <span className="fw-bold fs-6" style={{ color: "#198754" }}>
               ${product.selling_price}
@@ -82,6 +88,7 @@ export default function ProductCard({
           <div className="d-flex gap-2 mb-1 flex-wrap">
             {product.product_colors?.slice(0, 5).map((c) => (
               <div
+                className="product-color-dot"
                 key={c.id}
                 title={c.color_name}
                 onClick={(e) => {

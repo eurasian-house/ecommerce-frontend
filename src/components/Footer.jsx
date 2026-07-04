@@ -36,7 +36,7 @@ const Footer = () => {
               />
             </div>
             <p className="text-secondary small">
-              Providing premium handcrafted quality since 2026.
+              Providing premium handcrafted quality since 2025.
               We believe in the intersection of modern technology and traditional
               craftsmanship.
             </p>

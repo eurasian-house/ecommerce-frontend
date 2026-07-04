@@ -19,26 +19,28 @@ export default function Category() {
         {CATEGORIES.map((cat) => (
           <div
             key={cat}
+            className="category-wrapper"
             style={{
-              minWidth: "140px",
               cursor: "pointer",
             }}
             onClick={() => handleCategoryClick(cat)}
           >
-            <div className="card border-0 shadow-sm h-100">
+            <div className="card category-card border-0 shadow-sm h-100 overflow-hidden">
               <img
                 src={`/category/${cat.toLowerCase().replace(/\s/g, "")}.jpg`}
-                className="card-img-top"
+                className="card-img-top category-image"
                 alt={`${cat} Rugs`}
                 loading="lazy"
                 decoding="async"
                 style={{
-                  height: "80px", objectFit: "cover",
+                  height: "110px", objectFit: "cover",
                 }}
                 onError={(e) => (e.target.src = "/placeholder.jpg")}
               />
-              <div className="card-body text-center p-2">
-                <small>{cat}</small>
+              <div className="card-body text-center p-3">
+                <h6 className="category-title mb-0">
+                  {cat}
+                </h6>
               </div>
             </div>
           </div>

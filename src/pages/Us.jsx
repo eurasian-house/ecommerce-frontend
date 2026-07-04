@@ -27,22 +27,15 @@ const Us = () => {
                 margin: "0 auto",
               }}
             >
-              <span>
-                <img
-                  className="rounded-5"
-                  src="/us.jpg"
-                  loading="lazy"
-                  alt="Eurasian House Team"
-                  decoding="async"
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover", // use "contain" if you don't want any cropping
-                    display: "block",
-                  }}
+              <div className="story-image">
 
+                <img
+                  src="/us.jpg"
+                  alt="Artisan weaving a handmade rug"
+                  className="img-fluid rounded-4"
                 />
-              </span>
+
+              </div>
             </div>
           </div>
           <div className="col-lg-6">

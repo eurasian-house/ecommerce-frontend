@@ -14,8 +14,16 @@ import Discount from "../components/Discount";
 import Colors from "../components/Colors";
 import ProductCard from "../components/ProductCard";
 import Inspiration from "../components/Inspiration";
-import { applyActiveFilter } from "../utils/productQueries";
 
+import WhyChooseUs from "../components/WhyChooseUs";
+import ShopWithConfidence from "../components/ShopWithConfidence";
+import CustomerInspiration from "../components/CustomerInspiration";
+import LoomToLiving from "../components/LoomToLiving";
+import OurPromise from "../components/OurPromise";
+import BrandStory from "../components/BrandStory";
+import WholesaleHeroCTA from "../components/WholesaleHeroCTA";
+
+import { applyActiveFilter } from "../utils/productQueries";
 import SEO from "../components/SEO";
 import { organizationSchema, websiteSchema } from "../seo/schemas";
 
@@ -76,7 +84,7 @@ export default function Products() {
     <>
       <SEO
         title="Handmade Rugs & Carpets | Eurasian House"
-        description="Shop premium handmade rugs, Persian carpets, Kilims, Dhurries, Tibetan rugs, Jute rugs and more. Crafted with timeless elegance."
+        description="Shop premium handmade rugs, hand knotted rugs, hand tufted rugs, Persian carpets, Kilims, Dhurries, Tibetan rugs, Jute rugs and more. Crafted with timeless elegance."
         canonical="https://www.eurasianrugs.com/"
         schema={[
           organizationSchema,
@@ -88,6 +96,7 @@ export default function Products() {
       <div className="container-fluid px-0">
         <Category />
         <HeroCarousel onSlideClick={handleCarouselClick} />
+        <WholesaleHeroCTA />
         <Discount />
         <Colors
           colorFilter={colorFilter}
@@ -122,20 +131,23 @@ export default function Products() {
               />
             ))}
         </div>
-        <div className="d-flex justify-content-center mt-3 gap-2">
+        <div className="d-flex justify-content-center align-items-center gap-3 mt-4 mb-5">
           <button
-            className="btn btn-outline-dark btn-sm"
+            className="btn pagination-btn pagination-btn-light"
+            disabled={page === 1}
             onClick={() => setPage((p) => Math.max(p - 1, 1))}
           >
-            Prev
+            <i className="bi bi-arrow-left me-2"></i>
+            Previous
           </button>
 
           <button
-            className="btn btn-dark btn-sm"
+            className="btn pagination-btn pagination-btn-dark"
             disabled={page >= totalPages}
             onClick={() => setPage((p) => p + 1)}
           >
             Next
+            <i className="bi bi-arrow-right ms-2"></i>
           </button>
         </div>
 
@@ -148,6 +160,24 @@ export default function Products() {
         </LazySection>
         <LazySection minHeight={350}>
           <TopDeals />
+        </LazySection>
+        <LazySection minHeight={450}>
+          <WhyChooseUs />
+        </LazySection>
+        <LazySection minHeight={450}>
+          <ShopWithConfidence />
+        </LazySection>
+        <LazySection minHeight={350}>
+          <CustomerInspiration />
+        </LazySection>
+        <LazySection minHeight={350}>
+          <LoomToLiving />
+        </LazySection>
+        <LazySection minHeight={350}>
+          <OurPromise />
+        </LazySection>
+        <LazySection minHeight={350}>
+          <BrandStory />
         </LazySection>
         <LazySection minHeight={350}>
           <IdeasSection />

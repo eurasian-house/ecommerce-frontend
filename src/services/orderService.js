@@ -33,6 +33,31 @@ export const getOrderById = async (id) => {
     };
 };
 
+export const getOrderItemById = async (orderItemId) => {
+    const { data, error } = await supabase
+        .from("order_items")
+        .select(`
+            *,
+            orders (
+                id,
+                user_id,
+                status
+            ),
+            products (
+                id,
+                title,
+                slug,
+                thumbnail
+            )
+        `)
+        .eq("id", orderItemId)
+        .single();
+
+    if (error) throw error;
+
+    return data;
+};
+
 export const updateOrderStatus = async (id, status) => {
     const { error } = await supabase
         .from("orders")

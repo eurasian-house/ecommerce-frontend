@@ -1,9 +1,12 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "../lib/supabase";
+import UserAvatar from "../components/common/UserAvatar";
+import { getAvatar } from "../utils/getAvatar";
 
 export default function NavbarProfile({ user }) {
   const [open, setOpen] = useState(false);
+  const [profile, setProfile] = useState(null);
   const dropdownRef = useRef();
   const navigate = useNavigate();
 
@@ -17,6 +20,25 @@ export default function NavbarProfile({ user }) {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  useEffect(() => {
+    async function loadProfile() {
+      if (!user) {
+        setProfile(null);
+        return;
+      }
+
+      const { data } = await supabase
+        .from("profiles")
+        .select("full_name, avatar_url")
+        .eq("id", user.id)
+        .single();
+
+      setProfile(data);
+    }
+
+    loadProfile();
+  }, [user]);
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
@@ -32,55 +54,76 @@ export default function NavbarProfile({ user }) {
     >
       {/* Profile Icon */}
       <button
-        className="btn btn-light ms-2"
+        className="btn border-0 bg-transparent p-0 ms-2"
         onClick={() => setOpen(!open)}
         aria-label={user ? "Open account menu" : "Open login menu"}
         aria-expanded={open}
         aria-haspopup="menu"
       >
-        <i className="bi bi-person-circle fs-4"></i>
+        {user ? (
+          <div
+            className="rounded-circle d-inline-flex align-items-center justify-content-center"
+            style={{
+              padding: "2px",
+              border: "1.5px solid #d6d6d6",
+            }}
+          >
+            <UserAvatar
+              src={getAvatar(profile)}
+              alt={profile?.full_name}
+              size={36}
+            />
+          </div>
+        ) : (
+          <i className="bi bi-person-circle fs-4"></i>
+        )}
       </button>
 
       {/* Dropdown */}
       {open && (
         <div
-          className="card shadow profile-dropdown"
+          className="card border-0 shadow-lg rounded-4 profile-dropdown"
+          style={{ width: 280, overflow: "hidden" }}
         >
           <div className="card-body">
 
-            <div className="d-flex align-items-center mb-3">
-              <div
-                className="bg-secondary rounded-circle me-2 flex-shrink-0"
-                style={{
-                  width: 40,
-                  height: 40,
-                  minWidth: 40,
-                  minHeight: 40
-                }}
-              ></div>
-              <div style={{ minWidth: 0 }}>
-                <strong
+            <div className="text-center mb-4">
+
+              <UserAvatar
+                src={getAvatar(profile)}
+                alt={profile?.full_name}
+                size={68}
+              />
+
+              <h6 className="fw-bold mt-3 mb-1">
+                {profile?.full_name || "Guest"}
+              </h6>
+
+              {user && (
+                <div
+                  className="text-muted small"
                   style={{
-                    display: "block",
                     overflowWrap: "break-word",
                     wordBreak: "break-word",
-                    whiteSpace: "normal",
-                    lineHeight: "1.3"
                   }}
                 >
-                  {user ? user.email : "Guest"}
-                </strong>
-              </div>
+                  {user.email}
+                </div>
+              )}
+
             </div>
 
             <button
-              className="btn btn-primary w-100 mb-3"
+              className="btn btn-outline-dark rounded-pill w-100 mb-2"
               onClick={() => {
                 setOpen(false);
                 navigate("/account");
               }}
             >
-              View and edit profile
+              <>
+                <i className="bi bi-person me-2"></i>
+                My Account
+              </>
             </button>
 
             {!user ? (
@@ -88,14 +131,20 @@ export default function NavbarProfile({ user }) {
                 className="btn btn-outline-dark w-100"
                 onClick={() => navigate("/login")}
               >
-                Login
+                <>
+                  <i className="bi bi-box-arrow-in-right me-2"></i>
+                  Login
+                </>
               </button>
             ) : (
               <button
-                className="btn btn-dark w-100"
+                className="btn btn-danger rounded-pill w-100"
                 onClick={handleLogout}
               >
-                Logout
+                <>
+                  <i className="bi bi-box-arrow-right me-2"></i>
+                  Logout
+                </>
               </button>
             )}
 

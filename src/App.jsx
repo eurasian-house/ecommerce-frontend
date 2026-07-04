@@ -12,6 +12,12 @@ import CartProvider from "./context/CartContext";
 import { AuthProvider } from "./context/AuthContext";
 
 import Analytics from "./components/Analytics";
+import WriteReview from "./pages/WriteReview";
+import AdminQuestions from "./pages/admin/AdminQuestions";
+import AdminReviews from "./pages/admin/AdminReviews";
+import Wholesale from "./pages/Wholesale";
+import WholesaleContact from "./pages/WholesaleContact";
+import WholesaleLeads from "./pages/admin/WholesaleLeads";
 
 const ProductDetail = lazy(() => import("./pages/ProductDetail"));
 const Blogs = lazy(() => import("./pages/Blogs"));
@@ -49,6 +55,7 @@ const Marketing = lazy(() => import("./pages/admin/Marketing"));
 const Finances = lazy(() => import("./pages/admin/Finances"));
 const OrderDetails = lazy(() => import("./pages/admin/OrderDetails"));
 const CustOrderDetail = lazy(() => import("./pages/CustOrderDetail"));
+
 
 
 export default function App() {
@@ -116,8 +123,10 @@ export default function App() {
                 <Route path="messages" element={<Messages />} />
                 <Route path="marketing" element={<Marketing />} />
                 <Route path="finances" element={<Finances />} />
+                <Route path="questions" element={<AdminQuestions />} />
               </Route>
               <Route path="/admin/orders/:id" element={<OrderDetails />} />
+
 
               {/* CHECKOUT */}
               <Route
@@ -141,6 +150,18 @@ export default function App() {
               <Route path="/faq" element={<FAQ />} />
               <Route path="*" element={<NotFound />} />
               <Route path="/account/orders/:id" element={<ProtectedRoute> <CustOrderDetail /></ProtectedRoute>} />
+              <Route path="/write-review/:orderItemId" element={<WriteReview />} />
+              <Route path="/admin/reviews" element={<AdminProtectedRoute> <AdminReviews /></AdminProtectedRoute>} />
+              <Route path="/wholesale" element={<Wholesale />} />
+              <Route path="/wholesale-contact" element={<WholesaleContact />} />
+              <Route
+                path="/admin/wholesale-leads"
+                element={
+                  <AdminProtectedRoute>
+                    <WholesaleLeads />
+                  </AdminProtectedRoute>
+                }
+              />
 
 
             </Routes>

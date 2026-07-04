@@ -7,6 +7,8 @@ import { Link } from "react-router-dom";
 import { trackProductView } from "../lib/analytics";
 import { useSwipeable } from "react-swipeable";
 import ProductCard from "../components/ProductCard";
+import ProductQuestions from "../components/ProductQuestions";
+import ProductReviews from "../components/ProductReviews";
 
 import SEO from "../components/SEO";
 import {
@@ -25,6 +27,7 @@ export default function ProductDetail() {
 
   const [product, setProduct] = useState(null);
   const [selectedImage, setSelectedImage] = useState("");
+  const [previewImage, setPreviewImage] = useState(null);
   const [images, setImages] = useState([]);
   const [selectedSize, setSelectedSize] = useState(null);
   const [selectedColor, setSelectedColor] = useState(null);
@@ -285,11 +288,17 @@ export default function ProductDetail() {
                     <i className="bi bi-chevron-left"></i>
                   </button>
 
-                  <img src={optimizeUrl(selectedImage)} style={{
-                    width: "100%", maxHeight: window.innerWidth < 768
-                      ? "300px"
-                      : "500px", objectFit: "contain"
-                  }} />
+                  <img
+                    src={optimizeUrl(selectedImage)}
+                    alt={product.title}
+                    onClick={() => setPreviewImage(optimizeUrl(selectedImage))}
+                    style={{
+                      width: "100%",
+                      maxHeight: window.innerWidth < 768 ? "300px" : "500px",
+                      objectFit: "contain",
+                      cursor: "zoom-in"
+                    }}
+                  />
 
                   <button
                     onClick={nextImage}
@@ -688,8 +697,32 @@ export default function ProductDetail() {
 
           </div>
         </div>
+        <ProductReviews productId={product.id} />
+        <ProductQuestions productId={product.id} />
 
       </div>
+      {previewImage && (
+        <div
+          className="modal fade show"
+          style={{
+            display: "block",
+            background: "rgba(0,0,0,.88)",
+            backdropFilter: "blur(6px)"
+          }}
+          onClick={() => setPreviewImage(null)}
+        >
+          <div className="modal-dialog modal-dialog-centered modal-lg">
+            <div className="modal-content border-0 bg-transparent shadow-none">
+              <img
+                src={previewImage}
+                className="img-fluid rounded-4 shadow-lg"
+                alt={product?.title}
+                onClick={(e) => e.stopPropagation()}
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }

@@ -9,7 +9,11 @@ export default function AdminLayout() {
     { to: "/admin/orders", icon: "bi-cart-check", label: "Orders" },
     { to: "/admin/messages", icon: "bi-chat-left-dots", label: "Messages" },
     { to: "/admin/marketing", icon: "bi-megaphone", label: "Marketing" },
-    { to: "/admin/finances", icon: "bi-wallet2", label: "Finances" }
+    { to: "/admin/finances", icon: "bi-wallet2", label: "Finances" },
+    { to: "/admin/questions", icon: "bi-chat-left-text", label: "QnA" },
+    { to: "/admin/reviews", icon: "bi bi-star-fill", label: "Reviews" },
+    { to: "/admin/wholesale-leads", icon: "bi bi-building me-2", label: "Wholesale Leads" }
+
   ];
 
   return (

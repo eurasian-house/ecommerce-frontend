@@ -1,0 +1,146 @@
+.shop-confidence{
+    background:#ffffff;
+    padding:110px 0;
+}
+
+.confidence-header{
+    margin-bottom:60px;
+}
+
+.confidence-label{
+    font-size:.8rem;
+    letter-spacing:3px;
+    color:#9a8f83;
+    font-weight:600;
+}
+
+.confidence-header h2{
+    margin-top:18px;
+    font-size:2.4rem;
+    font-weight:700;
+    color:#2d2a26;
+}
+
+.confidence-header p{
+    max-width:720px;
+    margin:20px auto 0;
+    color:#6e665e;
+    line-height:1.8;
+}
+
+.confidence-list{
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+}
+
+.confidence-item{
+    background:#fff;
+    border:1px solid #ece5de;
+    border-radius:18px;
+    padding:28px 32px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    transition:.3s;
+}
+
+.confidence-item:hover{
+    transform:translateX(8px);
+    box-shadow:0 15px 35px rgba(0,0,0,.06);
+}
+
+.confidence-left{
+    display:flex;
+    align-items:center;
+    gap:24px;
+}
+
+.confidence-icon{
+    width:72px;
+    height:72px;
+    border-radius:50%;
+    background:#faf5ef;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-shrink:0;
+}
+
+.confidence-icon i{
+    font-size:1.8rem;
+    color:#8d6b45;
+}
+
+.confidence-item h5{
+    margin-bottom:8px;
+    color:#2d2a26;
+    font-weight:600;
+}
+
+.confidence-item p{
+    margin:0;
+    color:#6e665e;
+    line-height:1.7;
+}
+
+.confidence-arrow{
+    font-size:1.3rem;
+    color:#c1b6ab;
+    transition:.3s;
+}
+
+.confidence-item:hover .confidence-arrow{
+    transform:translateX(6px);
+}
+
+@media(max-width:768px){
+
+.shop-confidence{
+    padding:80px 0;
+}
+
+.confidence-header h2{
+    font-size:1.9rem;
+}
+
+.confidence-item{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:20px;
+}
+
+.confidence-left{
+    align-items:flex-start;
+}
+
+.confidence-arrow{
+    display:none;
+}
+
+}
+
+@media(max-width:576px){
+
+.confidence-header h2{
+    font-size:1.6rem;
+}
+
+.confidence-item{
+    padding:24px;
+}
+
+.confidence-icon{
+    width:60px;
+    height:60px;
+}
+
+.confidence-icon i{
+    font-size:1.5rem;
+}
+
+}
+
+.confidence-item{
+    cursor:pointer;
+}

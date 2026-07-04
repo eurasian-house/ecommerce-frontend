@@ -1,56 +1,3 @@
-// import { createContext, useContext, useEffect, useState } from "react";
-// import { supabase } from "../lib/supabase";
-
-// const AuthContext = createContext();
-
-// export function AuthProvider({ children }) {
-//     const [user, setUser] = useState(null);
-//     const [loading, setLoading] = useState(true);
-
-//     useEffect(() => {
-//         // get current user
-//         supabase.auth.getUser().then(async ({ data }) => {
-//             const user = data.user;
-//             setUser(user);
-
-//             // ✅ auto create profile after email-confirm login
-//             if (user) {
-//                 await supabase.from("profiles").upsert(
-//                     {
-//                         id: user.id,
-//                         full_name: user.user_metadata?.full_name || "",
-//                     },
-//                     { onConflict: "id" }
-//                 );
-//             }
-
-//             setLoading(false);
-//         });
-
-//         // listen to auth changes
-//         const { data: listener } = supabase.auth.onAuthStateChange(
-//             (_event, session) => {
-//                 setUser(session?.user ?? null);
-//             }
-//         );
-
-//         return () => {
-//             listener.subscription.unsubscribe();
-//         };
-//     }, []);
-
-//     return (
-//         <AuthContext.Provider value={{ user, loading }}>
-//             {children}
-//         </AuthContext.Provider>
-//     );
-// }
-
-// export const useAuth = () => useContext(AuthContext);
-
-
-
-
 import { createContext, useContext, useEffect, useState } from "react";
 import { supabase } from "../lib/supabase";
 
@@ -74,14 +21,23 @@ export function AuthProvider({ children }) {
 
             // auto create profile
             if (user) {
-                await supabase.from("profiles").upsert(
-                    {
+                const { data: existingProfile } = await supabase
+                    .from("profiles")
+                    .select("id")
+                    .eq("id", user.id)
+                    .maybeSingle();
+
+                if (!existingProfile) {
+                    await supabase.from("profiles").insert({
                         id: user.id,
-                        full_name: user.user_metadata?.full_name || "",
+                        full_name:
+                            user.user_metadata?.full_name ||
+                            user.user_metadata?.name ||
+                            "",
                         email: user.email,
-                    },
-                    { onConflict: "id" }
-                );
+                        avatar_url: assignDefaultAvatar(),
+                    });
+                }
             }
 
             setLoading(false);
