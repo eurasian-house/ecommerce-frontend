@@ -3,10 +3,31 @@ export default function Colors({ colorFilter, setColorFilter }) {
 
   return (
     <div className="mb-4">
-      <div className="text-center mb-3">
-        <span className="badge rounded-pill bg-primary bg-opacity-10 text-primary section-title">
-          Choose by Colours
+      <div className="text-center mb-5">
+        <span
+          className="badge rounded-pill section-title"
+          style={{
+            backgroundColor: "#F3E8C8",
+            color: "#8B6B2E",
+          }}
+        >
+          Color Collection
         </span>
+
+        <h2 className="mt-3 fw-semibold display-6">
+          Find Your Perfect Palette
+        </h2>
+
+        <p
+          className="mx-auto mt-3"
+          style={{
+            maxWidth: 620,
+            color: "#777",
+            lineHeight: 1.8,
+          }}
+        >
+          Browse rugs by color and find the perfect match for your decor, furniture, and personal taste.
+        </p>
       </div>
       <div className="d-flex justify-content-center gap-3 flex-wrap">
         {COLORS.map((c) => (

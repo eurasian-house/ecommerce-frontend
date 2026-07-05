@@ -315,10 +315,10 @@ export default function WholesaleContact() {
                                                 required
                                             >
                                                 <option value=""></option>
-                                                <option>₹10L–25L</option>
-                                                <option>₹25L–50L</option>
-                                                <option>₹50L–1Cr</option>
-                                                <option>₹1Cr+</option>
+                                                <option>$9,999–$19,999</option>
+                                                <option>$19,999–$49,999</option>
+                                                <option>$49,999–$99,999</option>
+                                                <option>$99,999+</option>
                                             </select>
 
                                             <label htmlFor="estimated_order_value">

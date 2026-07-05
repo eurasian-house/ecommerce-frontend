@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "../lib/supabase";
 import { useNavigate } from "react-router-dom";
 import { applyActiveFilter } from '../utils/productQueries'
+import "./Inspiration.css";
 
 export default function Inspiration() {
     const [products, setProducts] = useState([]);
@@ -76,74 +77,120 @@ export default function Inspiration() {
     };
 
     return (
-        <div className="container mt-4">
-            <div className="text-center mb-3">
-                <span className="badge rounded-pill bg-primary bg-opacity-10 text-primary section-title">
-                    Choose by Amenities
+        <section className="container py-5">
+
+            {/* Heading */}
+            <div className="text-center mb-5">
+
+                <span className="premium-badge">
+                    Curated Collection
                 </span>
+
+                <h2 className="mt-3 fw-semibold display-6">
+                    Shop by Space
+                </h2>
+
+                <p
+                    className="mx-auto mt-3"
+                    style={{
+                        maxWidth: 620,
+                        color: "#777",
+                        lineHeight: 1.8
+                    }}
+                >
+                    Discover handcrafted rugs selected for every interior,
+                    from cozy living spaces to luxurious master suites.
+                </p>
+
             </div>
 
-            {/* TABS */}
-            <div className="d-flex gap-1 mb-4 flex-wrap justify-content-center">
+            {/* Category Chips */}
+
+            <div className="d-flex justify-content-center flex-wrap gap-3 mb-5">
+
                 {subCategories.map((cat, i) => (
+
                     <button
                         key={i}
                         onClick={() => setActiveTab(cat)}
-                        className={`amenity-chip ${activeTab === cat ? "active" : ""
+                        className={`premium-chip ${activeTab === cat ? "active" : ""
                             }`}
                     >
                         {cat}
                     </button>
+
                 ))}
+
             </div>
 
-            {/* MASONRY */}
+            {/* Masonry */}
+
             <div
                 style={{
-                    columns: "220px",
-                    columnGap: "16px",
+                    columns: isMobile ? "1" : "260px",
+                    columnGap: "22px"
                 }}
             >
                 {filtered.slice(0, visibleCount).map((p) => (
+
                     <div
                         key={p.id}
-                        style={{
-                            breakInside: "avoid",
-                            marginBottom: isMobile ? "12px" : "16px",
-                            cursor: "pointer",
-                        }}
+                        className="premium-masonry-card"
                         onClick={() => handleClick(p.id)}
                     >
+
                         <img
                             src={p.thumbnail}
                             alt={p.title}
-                            style={{
-                                width: "100%",
-                                borderRadius: "12px",
-                            }}
+                            className="premium-masonry-image"
                         />
+
+                        <div className="premium-overlay">
+
+                            <h6 className="fw-semibold mb-1">
+                                {p.title}
+                            </h6>
+
+                            <small>
+                                View Collection →
+                            </small>
+
+                        </div>
+
                     </div>
+
                 ))}
             </div>
 
-            {/* SHOW MORE */}
+            {/* Load More */}
+
             {visibleCount < filtered.length && (
-                <div className="text-center mt-4">
+
+                <div className="text-center mt-5">
+
                     <button
-                        className="btn pagination-btn pagination-btn-dark"
-                        onClick={() => setVisibleCount((prev) => prev + 6)}
+                        className="btn premium-load-btn"
+                        onClick={() =>
+                            setVisibleCount((prev) => prev + 6)
+                        }
                     >
-                        Show more 6
+                        Explore More
                     </button>
+
                 </div>
+
             )}
 
-            {/* EMPTY */}
             {filtered.length === 0 && (
-                <div className="text-center mt-5">
-                    <h5>No products in this category</h5>
+
+                <div className="text-center py-5">
+
+                    <h5>No products found.</h5>
+
                 </div>
+
             )}
-        </div>
+
+        </section>
     );
 }

@@ -49,12 +49,12 @@ export default function Wholesale() {
 
                                 <small>Minimum Wholesale Order</small>
 
-                                <h2>₹10,00,000</h2>
+                                <h2>$9,999</h2>
 
                                 <p>
                                     Wholesale pricing is available for businesses
                                     and customers placing orders valued at
-                                    ₹10 lakh or above.
+                                    $9,999 or above.
                                 </p>
 
                             </div>
@@ -684,7 +684,7 @@ export default function Wholesale() {
 
                         <div className="eligibility-price">
 
-                            ₹10,00,000+
+                            $9,999+
 
                         </div>
 
@@ -692,7 +692,7 @@ export default function Wholesale() {
                             To ensure dedicated production planning, competitive wholesale
                             pricing, and personalized business support, our wholesale
                             program is available for orders valued at
-                            <strong> ₹10,00,000 or above.</strong>
+                            <strong> $9,999 or above.</strong>
                         </p>
 
                         <p>
@@ -748,7 +748,7 @@ export default function Wholesale() {
 
                             ["How long does production take?", "Production timelines depend on order size, design complexity and manufacturing schedule."],
 
-                            ["What is the minimum order?", "Wholesale pricing begins for orders valued at ₹10,00,000 or above."]
+                            ["What is the minimum order?", "Wholesale pricing begins for orders valued at $9,999 or above."]
 
                         ].map(([q, a], i) => (
 

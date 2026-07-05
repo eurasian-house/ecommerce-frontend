@@ -116,18 +116,13 @@ export default function Account() {
   };
 
   const handlePostalLookup = async () => {
-    console.log("Postal lookup called");
 
     if (!profile?.country || !profile?.pincode) return;
-
-    console.log(profile.country, profile.pincode);
 
     const result = await lookupAddress(
       profile.country,
       profile.pincode
     );
-
-    console.log(result);
 
     if (!result) return;
 
@@ -270,8 +265,6 @@ export default function Account() {
   if (loading) {
     return <div className="text-center mt-5">Loading...</div>;
   }
-
-  console.log("Countries:", countries);
 
   return (
     <div className="container mt-5">

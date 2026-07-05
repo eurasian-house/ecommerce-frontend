@@ -34,18 +34,21 @@ export default function CustomerInspiration() {
             .not("image_url", "is", null)
             .order("created_at", { ascending: false });
 
-        console.log(data);
-        console.log(error);
-
         setReviews(data || []);
     }
 
     return (
         <div className="container mt-5">
 
-            <div className="text-center mb-4">
+            <div className="text-center mb-5">
 
-                <span className="badge rounded-pill bg-primary bg-opacity-10 text-primary section-title">
+                <span
+                    className="badge rounded-pill section-title"
+                    style={{
+                        backgroundColor: "#F3E8C8",
+                        color: "#8B6B2E",
+                    }}
+                >
                     Styled by Our Customers
                 </span>
 

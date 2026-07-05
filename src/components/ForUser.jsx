@@ -12,23 +12,46 @@ const ForUser = () => {
       <div className="container py-5">
         <div className="row justify-content-center text-center">
           <div className="col-lg-10">
-            
+
             {/* Minimalist Icon/Badge */}
             <div className="mb-4">
-              <span className="badge rounded-pill bg-primary bg-opacity-10 text-primary section-title">
+              <span
+                className="badge rounded-pill section-title"
+                style={{
+                  backgroundColor: "#F3E8C8",
+                  color: "#8B6B2E",
+                }}
+              >
                 Our Commitment
               </span>
+
+              <h2 className="mt-3 fw-semibold display-6">
+                Crafted with Integrity
+              </h2>
+
+              <p
+                className="mx-auto mt-3"
+                style={{
+                  maxWidth: 620,
+                  color: "#777",
+                  lineHeight: 1.8,
+                }}
+              >
+                Every rug reflects our dedication to exceptional craftsmanship,
+                premium materials, ethical sourcing, and lasting quality that
+                transforms houses into timeless homes.
+              </p>
             </div>
 
             {/* Main Heading - The "Bigger" Statement */}
             <h1 className="display-1 fw-bolder text-dark mb-4 tracking-tight">
-              We really <span className="text-primary italic">care</span> for our customer.
+              We really <span style={{ color: "#8B6B2E" }}>care</span> for our customer.
             </h1>
 
             {/* Supporting Text */}
             <p className="lead fs-3 text-secondary mb-5 mx-auto" style={{ maxWidth: '800px' }}>
-              From the initial spark of an idea to the final delivery, 
-              your satisfaction is the heartbeat of our process. 
+              From the initial spark of an idea to the final delivery,
+              your satisfaction is the heartbeat of our process.
               We don't just build products; we build relationships.
             </p>
 
@@ -52,7 +75,7 @@ const ForUser = () => {
             <div className="mt-5 pt-4">
               <button className="btn btn-dark btn-lg px-5 py-3 rounded-pill shadow-lg hover-lift"
                 onClick={() => navigate("/products")}
-                >
+              >
                 Experience the Difference
               </button>
             </div>

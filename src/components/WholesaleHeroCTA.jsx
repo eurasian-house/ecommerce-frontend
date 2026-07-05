@@ -13,7 +13,7 @@ const features = [
 export default function WholesaleHeroCTA() {
     return (
         <section className="wholesale-section"
-            style={{ "padding-top": "0px" }}
+            style={{ "paddingTop": "0px" }}
         >
             <div className="container">
 

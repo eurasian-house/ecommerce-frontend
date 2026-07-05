@@ -170,7 +170,7 @@ const PriceUnder = () => {
                                     style={priceUnderStyles.overlay}
                                 >
                                     <h6 style={priceUnderStyles.textShadow}>
-                                        Only Premium Carpets
+                                        Premium Rugs
                                     </h6>
                                 </div>
                             </div>

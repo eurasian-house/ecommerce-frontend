@@ -45,7 +45,7 @@ export default function Navbar() {
             alt="Eurasian House Logo"
             fetchPriority="high"
             decoding="async"
-            style={{ height: "clamp(45px,6vw,60px)", objectFit: "contain" }}
+            style={{ height: "clamp(45px,6vw,60px)", objectFit: "contain", borderRadius: '50%' }}
           />
         </NavLink>
 
@@ -57,27 +57,39 @@ export default function Navbar() {
 
           <ul className="navbar-nav mx-auto mb-3 mb-lg-0 text-center text-lg-start">
             <li className="nav-item">
-              <NavLink to="/" onClick={closeNavbar} className={({ isActive }) => `nav-link ${isActive ? "text-primary fw-semibold" : "text-dark"}`}>Home</NavLink>
+              <NavLink to="/" onClick={closeNavbar} className={({ isActive }) => `nav-link ${isActive ? " fw-semibold" : "text-dark"}`} style={({ isActive }) => ({
+                color: isActive ? "#B68D40" : "#212529", // Replace with your desired hex
+              })}>Home</NavLink>
             </li>
 
             <li className="nav-item">
-              <NavLink to="/products" onClick={closeNavbar} className={({ isActive }) => `nav-link ${isActive ? "text-primary fw-semibold" : "text-dark"}`}>Products</NavLink>
+              <NavLink to="/products" onClick={closeNavbar} className={({ isActive }) => `nav-link ${isActive ? "fw-semibold" : "text-dark"}`} style={({ isActive }) => ({
+                color: isActive ? "#B68D40" : "#212529", // Replace with your desired hex
+              })}>Products</NavLink>
             </li>
 
             <li className="nav-item">
-              <NavLink to="/blogs" onClick={closeNavbar} className={({ isActive }) => `nav-link ${isActive ? "text-primary fw-semibold" : "text-dark"}`}>Blogs</NavLink>
+              <NavLink to="/blogs" onClick={closeNavbar} className={({ isActive }) => `nav-link ${isActive ? "fw-semibold" : "text-dark"}`} style={({ isActive }) => ({
+                color: isActive ? "#B68D40" : "#212529", // Replace with your desired hex
+              })}>Blogs</NavLink>
             </li>
 
             <li className="nav-item">
-              <NavLink to="/wholesale" onClick={closeNavbar} className={({ isActive }) => `nav-link ${isActive ? "text-primary fw-semibold" : "text-dark"}`}>Trade</NavLink>
+              <NavLink to="/wholesale" onClick={closeNavbar} className={({ isActive }) => `nav-link ${isActive ? "fw-semibold" : "text-dark"}`} style={({ isActive }) => ({
+                color: isActive ? "#B68D40" : "#212529", // Replace with your desired hex
+              })}>Trade</NavLink>
             </li>
 
             <li className="nav-item">
-              <NavLink to="/us" onClick={closeNavbar} className={({ isActive }) => `nav-link ${isActive ? "text-primary fw-semibold" : "text-dark"}`}>About Us</NavLink>
+              <NavLink to="/us" onClick={closeNavbar} className={({ isActive }) => `nav-link ${isActive ? "fw-semibold" : "text-dark"}`} style={({ isActive }) => ({
+                color: isActive ? "#B68D40" : "#212529", // Replace with your desired hex
+              })}>About Us</NavLink>
             </li>
 
             <li className="nav-item">
-              <NavLink to="/contact" onClick={closeNavbar} className={({ isActive }) => `nav-link ${isActive ? "text-primary fw-semibold" : "text-dark"}`}>Contact Us</NavLink>
+              <NavLink to="/contact" onClick={closeNavbar} className={({ isActive }) => `nav-link ${isActive ? "fw-semibold" : "text-dark"}`} style={({ isActive }) => ({
+                color: isActive ? "#B68D40" : "#212529", // Replace with your desired hex
+              })}>Contact Us</NavLink>
             </li>
           </ul>
         </div>
@@ -106,6 +118,10 @@ export default function Navbar() {
                 placeholder="Search products..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
+                style={{
+                  background: "transparent",
+                  height: "100%",
+                }}
               />
 
               <button
@@ -118,14 +134,16 @@ export default function Navbar() {
 
               <button
                 type="submit"
-                className="border-0"
+                className="border-0 d-flex align-items-center justify-content-center flex-shrink-0"
                 style={{
-                  width: "40px",
-                  height: "40px",
+                  width: "42px",
+                  height: "42px",
+                  minWidth: "42px",
+                  minHeight: "42px",
                   borderRadius: "50%",
-                  background: "#0d6efd",
-                  color: "white",
-                  margin: "3px",
+                  background: "#8d6c2f",
+                  color: "#fff",
+                  margin: "2px",
                 }}
               >
                 <i className="bi bi-search"></i>
@@ -179,7 +197,7 @@ export default function Navbar() {
                   height: "40px",
                   minWidth: "40px",
                   borderRadius: "50%",
-                  background: "#0d6efd",
+                  background: "#8d6c2f",
                   margin: "3px",
                   color: "white",
                   padding: 0,

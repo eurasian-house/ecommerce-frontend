@@ -280,7 +280,7 @@ export default function Orders() {
                                         </div>
 
                                         <div className="fw-bold">
-                                            ₹{Number(item.price).toLocaleString()}
+                                            ${Number(item.price).toLocaleString()}
                                         </div>
 
                                     </div>

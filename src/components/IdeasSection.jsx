@@ -26,13 +26,36 @@ export default function IdeasSection() {
 
   return (
     <div className="mb-5">
-      <div className="text-center mb-3">
-        <span className="badge rounded-pill bg-primary bg-opacity-10 text-primary section-title">
-          Ideas for your home
+      <div className="text-center mb-5">
+        <span
+          className="badge rounded-pill section-title"
+          style={{
+            backgroundColor: "#F3E8C8",
+            color: "#8B6B2E",
+          }}
+        >
+          Inspired Living
         </span>
+
+        <h2 className="mt-3 fw-semibold display-6">
+          Bring Character to Every Room
+        </h2>
+
+        <p
+          className="mx-auto mt-3"
+          style={{
+            maxWidth: 620,
+            color: "#777",
+            lineHeight: 1.8,
+          }}
+        >
+          Discover thoughtfully designed interiors where handcrafted rugs add warmth, texture, and timeless elegance to everyday living.
+        </p>
       </div>
 
-      <div className="d-flex overflow-auto gap-3 pb-2">
+      <div
+        className="d-flex overflow-auto gap-3 pb-2 justify-content-md-center justify-content-start align-items-center"
+      >
         {ideas.map((item, i) => (
           <div
             key={i}

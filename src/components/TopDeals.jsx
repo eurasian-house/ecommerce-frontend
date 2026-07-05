@@ -14,7 +14,7 @@ export default function TopDeals() {
         const { data, error } = await supabase
             .from("products")
             .select("*")
-            .order("clicks", { ascending: false })
+            // .order("clicks", { ascending: false })
             .limit(10);
 
         if (error) {
@@ -37,10 +37,31 @@ export default function TopDeals() {
 
     return (
         <div className="mb-4">
-            <div className="text-center mb-3">
-                <span className="badge rounded-pill bg-primary bg-opacity-10 text-primary section-title">
-                    Today's best Deal...
+            <div className="text-center mb-5 mt-5">
+                <span
+                    className="badge rounded-pill section-title"
+                    style={{
+                        backgroundColor: "#F3E8C8",
+                        color: "#8B6B2E",
+                    }}
+                >
+                    Featured Deals
                 </span>
+
+                <h2 className="mt-3 fw-semibold display-6">
+                    Exceptional Finds, Exceptional Value
+                </h2>
+
+                <p
+                    className="mx-auto mt-3"
+                    style={{
+                        maxWidth: 620,
+                        color: "#777",
+                        lineHeight: 1.8,
+                    }}
+                >
+                    Discover the <strong style={{ color: "#8B6B2E" }}>Top 10</strong> handcrafted rugs that are capturing the attention of homeowners around the world. Explore the styles our customers are choosing most.
+                </p>
             </div>
             {/* 🔥 SAME STYLE AS COLOR FILTER */}
             <div className="d-flex overflow-auto gap-3 pb-2">
@@ -97,9 +118,9 @@ export default function TopDeals() {
                                 <span className="badge bg-dark mt-1">
                                     {p.discount_percent}% OFF
                                 </span>
-                                <div className="small text-muted mt-2">
+                                {/* <div className="small text-muted mt-2">
                                     {p.clicks} clicks this week
-                                </div>
+                                </div> */}
                             </div>
 
                         </div>

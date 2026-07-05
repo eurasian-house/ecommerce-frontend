@@ -130,12 +130,11 @@ export default function Cart() {
                     </div>
 
                     <button
-                        className="btn btn-sm btn-danger align-self-start align-self-md-center"
+                        className="btn btn-sm align-self-start align-self-md-center remove-cart-btn"
                         onClick={(e) => {
                             e.stopPropagation();
-                            removeFromCart(item.id, item.selectedSize?.id, item.selectedColor?.id)
-                        }
-                        }
+                            removeFromCart( item.id, item.selectedSize?.id, item.selectedColor?.id );
+                        }}
                     >
                         Remove
                     </button>
@@ -154,7 +153,7 @@ export default function Cart() {
                 </button>
 
                 <button
-                    className="btn btn-outline-danger"
+                    className="btn clear-cart-btn"
                     onClick={clearCart}
                 >
                     Clear Cart
