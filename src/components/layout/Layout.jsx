@@ -7,10 +7,11 @@ export default function Layout() {
   return (
     <>
       <Navbar />
-
-      <div className="container-fluid px-1 mt-3">
-        <Outlet />
-      </div>
+      <main>
+        <div className="container-fluid px-1 mt-3">
+          <Outlet />
+        </div>
+      </main>
       <WhatsAppFloat />
 
       <Footer /> {/* ✅ ADD THIS */}

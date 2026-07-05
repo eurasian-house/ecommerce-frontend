@@ -26,6 +26,8 @@ export default function WhatsAppFloat() {
   return (
     <a
       href={whatsappLink}
+      aria-label="Chat with us on WhatsApp"
+      title="Chat with us on WhatsApp"
       target="_blank"
       rel="noopener noreferrer"
       onClick={trackWhatsApp}
