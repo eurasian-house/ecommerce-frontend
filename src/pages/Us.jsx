@@ -8,130 +8,348 @@ const Us = () => {
   const navigate = useNavigate();
 
   return (
-    <><SEO
-      title="About Eurasian House"
-      description="Learn about Eurasian House, our passion for handcrafted rugs, and our commitment to quality and craftsmanship."
-      canonical="https://www.eurasianrugs.com/us"
-    />
-      <div className="container py-5">
-        {/* Hero Section: About Me / Us */}
-        <div className="row flex-lg-row-reverse align-items-center g-5 py-5 mb-5">
-          <div className="col-12 col-sm-8 col-lg-6 d-flex justify-content-center">
-            {/* Placeholder for a profile or team image */}
-            <div
-              className=" d-flex align-items-center justify-content-center rounded-5 shadow-lg overflow-hidden"
-              style={{
-                width: "100%",
-                maxWidth: "700px",
-                aspectRatio: "16 / 9",
-                margin: "0 auto",
-              }}
-            >
-              <div className="story-image">
+    <>
+      <SEO
+        title="About Eurasian House"
+        description="Learn about Eurasian House, our passion for handcrafted rugs, and our commitment to quality and craftsmanship."
+        canonical="https://www.eurasianrugs.com/us"
+      />
 
+      <div
+        className="py-5"
+        style={{
+          background: "#FAF8F5",
+          minHeight: "100vh",
+        }}
+      >
+        <div className="container">
+
+          {/* Hero */}
+          <section className="row align-items-center g-5 mb-5">
+
+            <div className="col-lg-6 order-lg-2">
+              <div className="story-image">
                 <img
                   src="/us.jpg"
                   alt="Artisan weaving a handmade rug"
                   className="img-fluid rounded-4"
                 />
-
               </div>
             </div>
-          </div>
-          <div className="col-lg-6">
-            <h1 className="display-4 fw-bold lh-1 mb-3 text-primary text-center text-lg-start">About Us</h1>
-            <p className="lead text-muted text-center text-lg-start">
-              We are a team of passionate artisans dedicated to weaving high-quality luxury carpets.
-              Our journey started with a simple idea: bring the rich heritage of Bhadohi to life.<br />
-              Every handmade piece blends timeless tradition with contemporary design to elevate your space.
-              We craft more than just floor coverings; we weave stories of elegance, comfort and coziness for everyone.
-            </p>
-            <div className="d-grid gap-2 d-md-flex justify-content-md-start mt-4">
-              <button
-                type="button"
-                className="btn btn-primary btn-lg px-4 me-md-2 rounded-pill shadow"
-                onClick={() => navigate("/products")}
+
+            <div className="col-lg-6">
+
+              <small
+                className="text-uppercase"
+                style={{
+                  letterSpacing: "4px",
+                  color: "#B68D40",
+                  fontWeight: 600,
+                }}
               >
-                Our Products
-              </button>
-              <button
-                type="button"
-                className="btn btn-outline-secondary btn-lg px-4 rounded-pill"
-                onClick={() => navigate("/contact")}
+                Since 2025
+              </small>
+
+              <h1
+                className="fw-bold mt-3 mb-4"
+                style={{
+                  color: "#2F241F",
+                  fontSize: "clamp(2.3rem,5vw,4.2rem)",
+                  lineHeight: 1.15,
+                }}
               >
-                Contact Us
-              </button>
+                Handmade Rugs,
+                <br />
+                Woven With Heritage.
+              </h1>
+
+              <p
+                className="text-muted"
+                style={{
+                  lineHeight: 1.9,
+                  fontSize: "1.08rem",
+                }}
+              >
+                Eurasian House was founded with a simple vision—to bring the rich
+                weaving heritage of Bhadohi to homes around the world. Every rug
+                is handcrafted by skilled artisans whose techniques have been
+                refined through generations.
+              </p>
+
+              <p
+                className="text-muted"
+                style={{
+                  lineHeight: 1.9,
+                  fontSize: "1.08rem",
+                }}
+              >
+                We don't simply manufacture rugs. We create timeless pieces of
+                art that blend traditional craftsmanship with contemporary design,
+                offering warmth, comfort and lasting elegance for every interior.
+              </p>
+
+              <div className="d-flex flex-wrap gap-3 mt-4">
+                <button
+                  className="btn btn-dark rounded-pill px-5 py-3"
+                  onClick={() => navigate("/products")}
+                >
+                  Explore Collection
+                </button>
+
+                <button
+                  className="btn btn-outline-dark rounded-pill px-5 py-3"
+                  onClick={() => navigate("/contact")}
+                >
+                  Contact Us
+                </button>
+              </div>
+
             </div>
+
+          </section>
+
+          {/* Divider */}
+          <div className="text-center my-5">
+            <div
+              className="mx-auto"
+              style={{
+                width: "90px",
+                height: "3px",
+                background: "#B68D40",
+              }}
+            ></div>
           </div>
-        </div>
 
-        <hr className="my-5" />
+          {/* Values */}
 
-        {/* Values / Features Section */}
-        <div className="row g-4 py-5 row-cols-1 row-cols-lg-3">
-          <div className="feature col text-center">
-            <div className="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3 px-3 py-2 rounded-circle shadow-sm">
-              <i className="bi bi-cpu"></i> {/* Requires Bootstrap Icons */}
-              💡
+          <section className="mb-5">
+
+            <div className="text-center mb-5">
+              <small
+                className="text-uppercase"
+                style={{
+                  letterSpacing: "4px",
+                  color: "#B68D40",
+                  fontWeight: 600,
+                }}
+              >
+                Our Values
+              </small>
+
+              <h2
+                className="fw-bold mt-3"
+                style={{
+                  color: "#2F241F",
+                  fontSize: "clamp(2rem,4vw,3rem)",
+                }}
+              >
+                Built On Craftsmanship
+              </h2>
             </div>
-            <h3 className="fs-4 fw-bold">Craftsmanship</h3>
-            <p>Constantly pushing the boundaries of what is possible with traditional weaving and 3D textures.
-              Our journey merges generations of Bhadohi artistry with modern, elegant design concepts.
-              We innovate every tuft and knot to create premium, cozy masterpieces for your space.</p>
-          </div>
-          <div className="feature col text-center">
-            <div className="feature-icon d-inline-flex align-items-center justify-content-center text-bg-success bg-gradient fs-2 mb-3 px-3 py-2 rounded-circle shadow-sm">
-              🎯
-            </div>
-            <h3 className="fs-4 fw-bold">Precision</h3>
-            <p>Every single knot and every tuft of wool is crafted with extreme attention to detail.
-              Our artisans meticulously carve each 3D texture to ensure an flawless, premium finish.
-              From the initial design sketch to the final wash, quality is woven into every inch.</p>
-          </div>
-          <div className="feature col text-center">
-            <div className="feature-icon d-inline-flex align-items-center justify-content-center text-bg-warning bg-gradient fs-2 mb-3 px-3 py-2 rounded-circle shadow-sm">
-              🤝
-            </div>
-            <h3 className="fs-4 fw-bold">Collaboration</h3>
-            <p>We believe in working closely with our clients to turn their unique vision into a reality.
-              Whether customizing a bespoke size, color, or 3D texture, your dream design guides our loom.
-              From our heritage workshops in Bhadohi directly to your doorstep, we partner with you at every step.</p>
-          </div>
-        </div>
 
-        {/* Quote / Mission Section */}
-        <div className="p-4 p-md-5 mb-4 text-white rounded-5 bg-dark shadow-lg mt-5">
-          <div className="col-md-8 px-0 mx-auto text-center">
-            <h2 className="display-6 italic fw-light">"Our mission is to empower interior designers and homeowners through premium craftsmanship and timeless design."</h2>
-            <p className="lead my-3 text-secondary">- Founded in 2025</p>
+            <div className="row g-4">
 
-            <section className="container my-5">
-              <div className="p-5 rounded-4 bg-light text-center border">
-                <h2 className="fw-bold text-primary mb-3">
-                  Discover the Perfect Rug for Your Home
-                </h2>
+              <div className="col-lg-4">
+                <div
+                  className="h-100 bg-white rounded-4 shadow-sm p-5"
+                  style={{
+                    border: "1px solid rgba(0,0,0,.06)",
+                  }}
+                >
+                  <div
+                    style={{
+                      fontSize: "2.3rem",
+                    }}
+                  >
+                    🧵
+                  </div>
 
-                <p className="text-muted mb-4">
-                  Browse our handcrafted collection of Persian, Kilim, Tibetan, Jute, and
-                  modern rugs, carefully selected to bring elegance and comfort to your
-                  living spaces.
-                </p>
+                  <h3
+                    className="fw-bold mt-4 mb-3"
+                    style={{ color: "#2F241F" }}
+                  >
+                    Craftsmanship
+                  </h3>
 
-                <div className="d-flex flex-wrap justify-content-center gap-3">
-                  <Link to="/products" className="btn btn-primary px-4">
-                    Explore Collection
-                  </Link>
-
-                  <Link to="/contact" className="btn btn-outline-primary px-4">
-                    Contact Our Experts
-                  </Link>
+                  <p className="text-muted" style={{ lineHeight: 1.8 }}>
+                    Every rug is handcrafted by experienced artisans using
+                    traditional weaving techniques passed down through
+                    generations, ensuring remarkable quality and timeless beauty.
+                  </p>
                 </div>
               </div>
-            </section>
 
+              <div className="col-lg-4">
+                <div
+                  className="h-100 bg-white rounded-4 shadow-sm p-5"
+                  style={{
+                    border: "1px solid rgba(0,0,0,.06)",
+                  }}
+                >
+                  <div
+                    style={{
+                      fontSize: "2.3rem",
+                    }}
+                  >
+                    ✨
+                  </div>
 
+                  <h3
+                    className="fw-bold mt-4 mb-3"
+                    style={{ color: "#2F241F" }}
+                  >
+                    Precision
+                  </h3>
 
-          </div>
+                  <p className="text-muted" style={{ lineHeight: 1.8 }}>
+                    From the first sketch to the final wash, every knot, colour
+                    and texture is inspected with exceptional attention to detail
+                    to achieve a flawless finish.
+                  </p>
+                </div>
+              </div>
+
+              <div className="col-lg-4">
+                <div
+                  className="h-100 bg-white rounded-4 shadow-sm p-5"
+                  style={{
+                    border: "1px solid rgba(0,0,0,.06)",
+                  }}
+                >
+                  <div
+                    style={{
+                      fontSize: "2.3rem",
+                    }}
+                  >
+                    🤝
+                  </div>
+
+                  <h3
+                    className="fw-bold mt-4 mb-3"
+                    style={{ color: "#2F241F" }}
+                  >
+                    Partnership
+                  </h3>
+
+                  <p className="text-muted" style={{ lineHeight: 1.8 }}>
+                    We work closely with homeowners, architects and interior
+                    designers to create bespoke rugs tailored to each unique
+                    vision and space.
+                  </p>
+                </div>
+              </div>
+
+            </div>
+
+          </section>
+
+          {/* Mission */}
+
+          <section
+            className="rounded-4 overflow-hidden shadow-sm my-5"
+            style={{
+              background:
+                "linear-gradient(135deg,#2F241F,#6A5648)",
+              color: "#fff",
+              padding: "5rem 2rem",
+            }}
+          >
+            <div
+              className="mx-auto text-center"
+              style={{
+                maxWidth: "900px",
+              }}
+            >
+              <small
+                className="text-uppercase"
+                style={{
+                  letterSpacing: "4px",
+                  opacity: ".8",
+                }}
+              >
+                Our Mission
+              </small>
+
+              <h2
+                className="fw-light my-4"
+                style={{
+                  fontSize: "clamp(2rem,4vw,3.2rem)",
+                  lineHeight: 1.5,
+                }}
+              >
+                "To preserve the heritage of handmade weaving while creating
+                luxury rugs that enrich modern living spaces around the world."
+              </h2>
+
+              <p
+                style={{
+                  opacity: ".85",
+                  fontSize: "1.05rem",
+                }}
+              >
+                Crafted in Bhadohi • Appreciated Worldwide
+              </p>
+            </div>
+          </section>
+
+          {/* CTA */}
+
+          <section
+            className="bg-white rounded-4 shadow-sm text-center"
+            style={{
+              padding: "4rem 2rem",
+              border: "1px solid rgba(0,0,0,.06)",
+            }}
+          >
+            <small
+              className="text-uppercase"
+              style={{
+                letterSpacing: "4px",
+                color: "#B68D40",
+                fontWeight: 600,
+              }}
+            >
+              Explore
+            </small>
+
+            <h2
+              className="fw-bold mt-3"
+              style={{
+                color: "#2F241F",
+              }}
+            >
+              Find the Perfect Handmade Rug
+            </h2>
+
+            <p
+              className="text-muted mx-auto mt-3"
+              style={{
+                maxWidth: "700px",
+                lineHeight: 1.8,
+              }}
+            >
+              Browse our collection of Persian, Modern, Kilim, Tibetan, Jute and
+              custom handmade rugs, each crafted to bring elegance, warmth and
+              timeless character to your home.
+            </p>
+
+            <div className="d-flex flex-wrap justify-content-center gap-3 mt-4">
+              <Link
+                to="/products"
+                className="btn btn-dark rounded-pill px-5 py-3"
+              >
+                Explore Collection
+              </Link>
+
+              <Link
+                to="/contact"
+                className="btn btn-outline-dark rounded-pill px-5 py-3"
+              >
+                Talk to Our Experts
+              </Link>
+            </div>
+          </section>
+
         </div>
       </div>
     </>

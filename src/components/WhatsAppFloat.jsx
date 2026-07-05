@@ -36,7 +36,7 @@ export default function WhatsAppFloat() {
         width: "60px",
         height: "60px",
         borderRadius: "50%",
-        background: "#0d6efd",
+        background: "#25D366",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -47,7 +47,7 @@ export default function WhatsAppFloat() {
         zIndex: 9999,
       }}
     >
-      💬
+      <i className="bi bi-whatsapp"></i>
     </a>
   );
 }

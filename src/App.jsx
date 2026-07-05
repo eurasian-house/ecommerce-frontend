@@ -19,6 +19,8 @@ import Wholesale from "./pages/Wholesale";
 import WholesaleContact from "./pages/WholesaleContact";
 import WholesaleLeads from "./pages/admin/WholesaleLeads";
 
+import PayPalCheckout from "./pages/PayPalCheckout";
+
 const ProductDetail = lazy(() => import("./pages/ProductDetail"));
 const Blogs = lazy(() => import("./pages/Blogs"));
 const Us = lazy(() => import("./pages/Us"));
@@ -161,6 +163,10 @@ export default function App() {
                     <WholesaleLeads />
                   </AdminProtectedRoute>
                 }
+              />
+              <Route
+                path="/checkout/paypal"
+                element={<PayPalCheckout />}
               />
 
 

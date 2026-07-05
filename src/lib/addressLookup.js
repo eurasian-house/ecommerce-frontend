@@ -1,9 +1,17 @@
-export async function lookupAddress(countryCode, postalCode) {
-  if (!countryCode || !postalCode) return null;
+import countryList from "react-select-country-list";
+
+export async function lookupAddress(countryName, postalCode) {
+  if (!countryName || !postalCode) return null;
+
+  const country = countryList()
+    .getData()
+    .find((c) => c.label === countryName);
+
+  if (!country) return null;
 
   try {
     const res = await fetch(
-      `https://api.zippopotam.us/${countryCode}/${postalCode}`
+      `https://api.zippopotam.us/${country.value.toLowerCase()}/${postalCode}`
     );
 
     if (!res.ok) return null;

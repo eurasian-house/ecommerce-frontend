@@ -12,6 +12,7 @@ export default function Checkout() {
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState("razorpay");
 
 
   const [form, setForm] = useState({
@@ -73,8 +74,105 @@ export default function Checkout() {
     );
   }
 
+  const handleRazorpay = async (orderId) => {
+    // ✅ Step 2: create Razorpay order
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/create-razorpay-order`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        amount: Number(total),
+        orderId,
+      }),
+    });
+
+    if (!res.ok) {
+      alert("Backend error (Razorpay order failed)");
+      setLoading(false);
+      return;
+    }
+
+    const razorpayOrder = await res.json();
+
+    if (!razorpayOrder.id) {
+      alert("Invalid Razorpay order");
+      setLoading(false);
+      return;
+    }
+
+    // ✅ Step 3: open Razorpay
+    const options = {
+      key: import.meta.env.VITE_RAZORPAY_KEY,
+      amount: razorpayOrder.amount,
+      currency: "INR",
+      order_id: razorpayOrder.id,
+
+      handler: async function (response) {
+        try {
+          const verifyRes = await fetch(`${import.meta.env.VITE_API_URL}/verify-payment`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              razorpay_order_id: razorpayOrder.id,
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_signature: response.razorpay_signature,
+              orderId,
+            }),
+          });
+
+          const verifyData = await verifyRes.json();
+
+          if (!verifyRes.ok || !verifyData.success) {
+            alert("Payment verification failed");
+            return;
+          }
+
+          // Send GA4 purchase event BEFORE clearing the cart
+          trackPurchase(orderId, cart);
+
+          clearCart();
+
+          navigate("/order-success", {
+            state: { orderId },
+          });
+
+        } catch (err) {
+          alert("Payment verification error");
+        }
+      },
+
+      prefill: {
+        name: form.name,
+        contact: form.phone,
+        email: form.email,
+      },
+
+      theme: {
+        color: "#000000",
+      },
+    };
+
+    // ✅ Load Razorpay SDK only when needed
+    const razorpayLoaded = await loadRazorpay();
+
+    if (!razorpayLoaded) {
+      alert("Failed to load Razorpay. Please try again.");
+      setLoading(false);
+      return;
+    }
+
+    const rzp = new window.Razorpay(options);
+    rzp.open();
+
+  };
+
+
   const handlePlaceOrder = async () => {
     trackBeginCheckout(cart);
+    // console.log("Payment Method:", paymentMethod);
     if (
       !form.name ||
       !form.phone ||
@@ -91,7 +189,7 @@ export default function Checkout() {
     setLoading(true);
 
     try {
-      // ✅ Step 1: create DB order
+      // Create DB order
       const orderRes = await createOrder(cart, form);
 
       if (!orderRes.success) {
@@ -102,174 +200,275 @@ export default function Checkout() {
 
       const orderId = orderRes.orderId;
 
-      // ✅ Step 2: create Razorpay order
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/create-razorpay-order`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          amount: Number(total),
-          orderId,
-        }),
-      });
-
-      if (!res.ok) {
-        alert("Backend error (Razorpay order failed)");
-        setLoading(false);
-        return;
+      if (paymentMethod === "razorpay") {
+        await handleRazorpay(orderId);
+      } else {
+        navigate("/checkout/paypal", {
+          state: {
+            orderId,
+            amount: total,
+            form,
+          },
+        });
       }
-
-      const razorpayOrder = await res.json();
-
-      if (!razorpayOrder.id) {
-        alert("Invalid Razorpay order");
-        setLoading(false);
-        return;
-      }
-
-      // ✅ Step 3: open Razorpay
-      const options = {
-        key: import.meta.env.VITE_RAZORPAY_KEY,
-        amount: razorpayOrder.amount,
-        currency: "INR",
-        order_id: razorpayOrder.id,
-
-        handler: async function (response) {
-          try {
-            const verifyRes = await fetch(`${import.meta.env.VITE_API_URL}/verify-payment`, {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                razorpay_order_id: razorpayOrder.id,
-                razorpay_payment_id: response.razorpay_payment_id,
-                razorpay_signature: response.razorpay_signature,
-                orderId,
-              }),
-            });
-
-            const verifyData = await verifyRes.json();
-
-            if (!verifyRes.ok || !verifyData.success) {
-              alert("Payment verification failed");
-              return;
-            }
-
-            // Send GA4 purchase event BEFORE clearing the cart
-            trackPurchase(orderId, cart);
-
-            clearCart();
-
-            navigate("/order-success", {
-              state: { orderId },
-            });
-
-          } catch (err) {
-            alert("Payment verification error");
-          }
-        },
-
-        prefill: {
-          name: form.name,
-          contact: form.phone,
-          email: form.email,
-        },
-
-        theme: {
-          color: "#000000",
-        },
-      };
-
-      // ✅ Load Razorpay SDK only when needed
-      const razorpayLoaded = await loadRazorpay();
-
-      if (!razorpayLoaded) {
-        alert("Failed to load Razorpay. Please try again.");
-        setLoading(false);
-        return;
-      }
-
-      const rzp = new window.Razorpay(options);
-      rzp.open();
 
     } catch (err) {
       console.error(err);
       alert("Error processing payment");
+    } finally {
+      setLoading(false);
     }
-
-    setLoading(false);
   };
-
   return (
-    <div className="container mt-5" style={{ maxWidth: "600px" }}>
-      <h3 className="mb-4">Checkout</h3>
-
-      <h5>Shipping Details</h5>
-      <p className="text-muted fst-italic small mb-2">
-        Complete your{" "}
-        <Link to="/account" className="text-decoration-none">
-          account
-        </Link>{" "}
-        profile to automatically fill your contact and shipping information during
-        checkout, making future purchases faster and more convenient.
-      </p>
-
-      <input className="form-control mb-3" placeholder="Full Name" id="full_name"
-        value={form.name}
-        onChange={(e) => setForm({ ...form, name: e.target.value })}
-      />
-
-      <input className="form-control mb-3" placeholder="Email" id="email"
-        value={form.email}
-        onChange={(e) => setForm({ ...form, email: e.target.value })}
-      />
-
-      <input className="form-control mb-3" placeholder="Phone" id="phone"
-        value={form.phone}
-        onChange={(e) => setForm({ ...form, phone: e.target.value })}
-      />
-
-      <input className="form-control mb-3" placeholder="Address" id="address"
-        value={form.address}
-        onChange={(e) => setForm({ ...form, address: e.target.value })}
-      />
-
-      <input className="form-control mb-3" placeholder="City" id="city"
-        value={form.city}
-        onChange={(e) => setForm({ ...form, city: e.target.value })}
-      />
-
-      <input className="form-control mb-3" placeholder="State" id="state"
-        value={form.state}
-        onChange={(e) => setForm({ ...form, state: e.target.value })}
-      />
-
-      <input className="form-control mb-3" placeholder="Country" id="country"
-        value={form.country}
-        onChange={(e) => setForm({ ...form, country: e.target.value })}
-      />
-
-      <input className="form-control mb-3" placeholder="Pincode" id="pincode"
-        value={form.pincode}
-        onChange={(e) => setForm({ ...form, pincode: e.target.value })}
-      />
-
-      <h5 className="mt-4">Total: ${total}</h5>
-      <p className="text-muted fst-italic small mb-0">
-        For your security, opening the payment gateway may take up to one minute.
-        Please remain on this page and avoid refreshing or closing your browser while
-        the payment is being prepared.
-      </p>
-
-      <button
-        className="btn btn-dark w-100 mt-3"
-        onClick={handlePlaceOrder}
-        disabled={loading}
+    <div className="container py-5">
+      <div
+        className="mx-auto shadow-sm"
+        style={{
+          maxWidth: "720px",
+          background: "#fff",
+          borderRadius: "24px",
+          padding: "2rem",
+          border: "1px solid #ece8e2",
+        }}
       >
-        {loading ? "Processing..." : "Pay Now"}
-      </button>
+        {/* Header */}
+        <div className="text-center mb-4">
+          <span
+            className="text-uppercase"
+            style={{
+              fontSize: ".75rem",
+              letterSpacing: "2px",
+              color: "#8b7355",
+              fontWeight: 600,
+            }}
+          >
+            Secure Checkout
+          </span>
+
+          <h2 className="fw-bold mt-2 mb-2">
+            Complete Your Order
+          </h2>
+
+          <p className="text-muted mb-0">
+            You're just one step away from bringing handcrafted luxury into your home.
+          </p>
+        </div>
+
+        {/* Shipping */}
+        <div
+          className="mb-4"
+          style={{
+            background: "#faf8f5",
+            borderRadius: "18px",
+            padding: "20px",
+          }}
+        >
+          <h5 className="fw-semibold mb-3">
+            Shipping Information
+          </h5>
+
+          <p className="text-muted small mb-0">
+            Save time on future purchases by completing your{" "}
+            <Link
+              to="/account"
+              className="fw-semibold text-decoration-none"
+            >
+              account profile
+            </Link>
+            . Your contact and shipping information will be filled in
+            automatically during checkout.
+          </p>
+        </div>
+
+        {/* Form */}
+        <div className="row g-3">
+
+          <div className="col-12">
+            <input
+              className="form-control"
+              placeholder="Full Name"
+              id="full_name"
+              value={form.name}
+              onChange={(e) =>
+                setForm({ ...form, name: e.target.value })
+              }
+            />
+          </div>
+
+          <div className="col-md-6">
+            <input
+              className="form-control"
+              placeholder="Email Address"
+              id="email"
+              value={form.email}
+              onChange={(e) =>
+                setForm({ ...form, email: e.target.value })
+              }
+            />
+          </div>
+
+          <div className="col-md-6">
+            <input
+              className="form-control"
+              placeholder="Phone Number"
+              id="phone"
+              value={form.phone}
+              onChange={(e) =>
+                setForm({ ...form, phone: e.target.value })
+              }
+            />
+          </div>
+
+          <div className="col-12">
+            <input
+              className="form-control"
+              placeholder="Street Address"
+              id="address"
+              value={form.address}
+              onChange={(e) =>
+                setForm({ ...form, address: e.target.value })
+              }
+            />
+          </div>
+
+          <div className="col-md-6">
+            <input
+              className="form-control"
+              placeholder="City"
+              id="city"
+              value={form.city}
+              onChange={(e) =>
+                setForm({ ...form, city: e.target.value })
+              }
+            />
+          </div>
+
+          <div className="col-md-6">
+            <input
+              className="form-control"
+              placeholder="State / Province"
+              id="state"
+              value={form.state}
+              onChange={(e) =>
+                setForm({ ...form, state: e.target.value })
+              }
+            />
+          </div>
+
+          <div className="col-md-6">
+            <input
+              className="form-control"
+              placeholder="Country"
+              id="country"
+              value={form.country}
+              onChange={(e) =>
+                setForm({ ...form, country: e.target.value })
+              }
+            />
+          </div>
+
+          <div className="col-md-6">
+            <input
+              className="form-control"
+              placeholder="Postal / ZIP Code"
+              id="pincode"
+              value={form.pincode}
+              onChange={(e) =>
+                setForm({ ...form, pincode: e.target.value })
+              }
+            />
+          </div>
+
+        </div>
+
+        {/* Payment Method */}
+        <div
+          className="mt-4"
+          style={{
+            background: "#faf8f5",
+            borderRadius: "18px",
+            padding: "20px",
+          }}
+        >
+          <h5 className="fw-semibold mb-3">
+            Payment Method
+          </h5>
+
+          <div className="form-check mb-2">
+            <input
+              className="form-check-input"
+              type="radio"
+              id="razorpay"
+              checked={paymentMethod === "razorpay"}
+              onChange={() => setPaymentMethod("razorpay")}
+            />
+
+            <label
+              className="form-check-label"
+              htmlFor="razorpay"
+            >
+              Razorpay (Cards, UPI, Net Banking)
+            </label>
+          </div>
+
+          <div className="form-check">
+            <input
+              className="form-check-input"
+              type="radio"
+              id="paypal"
+              checked={paymentMethod === "paypal"}
+              onChange={() => setPaymentMethod("paypal")}
+            />
+
+            <label
+              className="form-check-label"
+              htmlFor="paypal"
+            >
+              PayPal
+            </label>
+          </div>
+        </div>
+
+        {/* Order Summary */}
+        <div
+          className="mt-4"
+          style={{
+            background: "#faf8f5",
+            borderRadius: "18px",
+            padding: "20px",
+          }}
+        >
+          <div className="d-flex justify-content-between align-items-center mb-2">
+            <span className="fw-semibold">
+              Order Total
+            </span>
+
+            <h4 className="fw-bold mb-0">
+              ${total}
+            </h4>
+          </div>
+
+          <p className="text-muted small mb-0">
+            Payments are securely processed. Opening the payment gateway may
+            take up to one minute. Please do not refresh or close your browser
+            while your secure payment session is being prepared.
+          </p>
+        </div>
+
+        {/* Button */}
+        <button
+          className="btn btn-dark w-100 mt-4 py-3 fw-semibold"
+          style={{
+            borderRadius: "999px",
+            fontSize: "1.05rem",
+            letterSpacing: ".5px",
+          }}
+          onClick={handlePlaceOrder}
+          disabled={loading}
+        >
+          {loading ? "Processing Secure Payment..." : "Proceed to Secure Payment"}
+        </button>
+      </div>
     </div>
   );
 }

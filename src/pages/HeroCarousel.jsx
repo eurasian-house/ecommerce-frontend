@@ -4,37 +4,32 @@ const slides = [
     {
         id: 1,
         image: "/heroimages/hero1.jpg",
-        title: "Flat 20% OFF",
-        subtitle: "On Premium Carpets",
-        discount: 20,
+        title: "Timeless Hand-Knotted Masterpieces",
+        subtitle: "Crafted by master artisans to bring warmth, elegance, and enduring beauty to every home."
     },
     {
         id: 2,
         image: "/heroimages/hero2.jpg",
-        title: "Flat 30% OFF",
-        subtitle: "Limited Time Offer",
-        discount: 30,
+        title: "Luxury Rugs for Modern Living",
+        subtitle: "Discover handcrafted rugs that blend traditional artistry with contemporary interiors."
     },
     {
         id: 3,
         image: "/heroimages/hero3.jpg",
-        title: "Flat 40% OFF",
-        subtitle: "Best Sellers",
-        discount: 40,
+        title: "Where Heritage Meets Contemporary Design",
+        subtitle: "Every rug is woven with exceptional craftsmanship using premium natural materials."
     },
     {
         id: 4,
         image: "/heroimages/hero4.jpg",
-        title: "Flat 55% OFF",
-        subtitle: "Free Shipping on all carpets",
-        discount: 55,
+        title: "Crafted in Bhadohi, Admired Worldwide",
+        subtitle: "Experience authentic Indian craftsmanship with complimentary worldwide shipping."
     },
     {
         id: 5,
         image: "/heroimages/hero5.jpg",
-        title: "Flat 75% OFF",
-        subtitle: "Warehouse to Door Delivery",
-        discount: 75,
+        title: "Designed to Last for Generations",
+        subtitle: "Invest in heirloom-quality rugs that become more beautiful with time."
     },
 ];
 
@@ -62,17 +57,11 @@ export default function HeroCarousel({ onSlideClick }) {
 
 
     return (
-        <div className="mb-4 position-relative overflow-hidden">
-
+        <div className="hero-carousel mb-4 position-relative overflow-hidden">
             {/* SLIDE */}
             <div
-                style={{
-                    height: isMobile ? "220px" : "600px",
-                    overflow: "hidden",
-                    cursor: "pointer",
-                    position: "relative"
-                }}
-                onClick={() => onSlideClick(slides[current].discount)}
+                className="hero-slide"
+                onClick={onSlideClick}
             >
                 <img
                     src={slides[current].image}
@@ -80,54 +69,44 @@ export default function HeroCarousel({ onSlideClick }) {
                     fetchPriority="high"
                     loading="eager"
                     decoding="async"
-                    style={{
-                        width: "100%",
-                        height: "100%",
-                        objectFit: "cover",
-                    }}
+                    className="hero-image"
                 />
 
                 {/* OVERLAY */}
-                <div
-                    className="position-absolute top-0 start-0 w-100 h-100 d-flex flex-column justify-content-center"
-                    style={{
-                        background: "rgba(0,0,0,0.4)",
-                        color: "white",
-                        paddingLeft: isMobile ? "20px" : "60px",
-                    }}
-                >
-                    <h2
-                        className="fw-bold"
-                        style={{ fontSize: isMobile ? "1.5rem" : "2rem" }}
-                    >
-                        {slides[current].title}
-                    </h2>
-                    <p style={{ fontSize: isMobile ? "0.9rem" : "1rem" }}>
-                        {slides[current].subtitle}
-                    </p>
+                <div className="hero-overlay">
+                    {/* Decorative Glow */}
+                    <div className="hero-glow" />
 
-                    <button
-                        className="btn btn-light btn-sm mt-2"
-                        style={{ width: isMobile ? "100px" : "140px" }}
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            onSlideClick(slides[current].discount);
-                        }}
-                    >
-                        Shop Now
-                    </button>
+                    {/* Content */}
+                    <div className="hero-content">
+                        <span className="hero-badge">
+                            Crafted in India
+                        </span>
+
+                        <h2 className="hero-title fw-bold">
+                            {slides[current].title}
+                        </h2>
+
+                        <p className="hero-subtitle">
+                            {slides[current].subtitle}
+                        </p>
+
+                        <button
+                            className="btn hero-btn mt-4"
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                onSlideClick();
+                            }}
+                        >
+                            Explore Collection →
+                        </button>
+                    </div>
                 </div>
             </div>
 
-            {/* ARROWS */}
+            {/* LEFT ARROW */}
             <button
-                className={`btn btn-dark position-absolute top-50 start-0 translate-middle-y ${isMobile ? "btn-sm" : ""
-                    }`}
-                style={{
-                    background: "rgba(255,255,255,0.3)",
-                    color: "#fff",
-                    border: "none",
-                }}
+                className="hero-arrow hero-arrow-left"
                 onClick={prevSlide}
                 type="button"
                 aria-label="Previous slide"
@@ -135,14 +114,9 @@ export default function HeroCarousel({ onSlideClick }) {
                 ‹
             </button>
 
+            {/* RIGHT ARROW */}
             <button
-                className={`btn btn-dark position-absolute top-50 end-0 translate-middle-y ${isMobile ? "btn-sm" : ""
-                    }`}
-                    style={{
-                    background: "rgba(255,255,255,0.3)",
-                    color: "#fff",
-                    border: "none",
-                }}
+                className="hero-arrow hero-arrow-right"
                 onClick={nextSlide}
                 type="button"
                 aria-label="Next slide"
@@ -150,75 +124,15 @@ export default function HeroCarousel({ onSlideClick }) {
                 ›
             </button>
 
-            {/* DOTS WITH PROGRESS */}
-            <div
-                className="d-flex justify-content-center gap-3"
-                style={{
-                    position: "absolute",
-                    bottom: "15px",
-                    left: "50%",
-                    transform: "translateX(-50%)",
-                    zIndex: 2
-                }}
-            >
+            {/* DOTS */}
+            <div className="hero-dots d-flex justify-content-center gap-2">
                 {slides.map((_, i) => (
                     <div
                         key={i}
                         onClick={() => setCurrent(i)}
-                        style={{
-                            width: "18px",
-                            height: "18px",
-                            borderRadius: "50%",
-                            position: "relative",
-                            cursor: "pointer",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                        }}
-                    >
-                        {/* inner dot */}
-                        <div
-                            style={{
-                                width: "5px",
-                                height: "5px",
-                                borderRadius: "50%",
-                                background: "white",
-                            }}
-                        />
-
-                        {/* animated ring */}
-                        {current === i && (
-                            <svg
-                                width="24"
-                                height="24"
-                                style={{
-                                    position: "absolute",
-                                    top: "-3px",
-                                    left: "-3px",
-                                    transform: "rotate(-90deg)",
-                                }}
-                            >
-                                <circle
-                                    cx="12"
-                                    cy="12"
-                                    r="10"
-                                    stroke="white"
-                                    strokeWidth="1"
-                                    fill="none"
-                                    strokeDasharray={63}
-                                    strokeDashoffset={63}
-                                >
-                                    <animate
-                                        attributeName="stroke-dashoffset"
-                                        from="63"
-                                        to="0"
-                                        dur={`${duration}ms`}
-                                        fill="freeze"
-                                    />
-                                </circle>
-                            </svg>
-                        )}
-                    </div>
+                        className={`hero-dot ${current === i ? "active" : ""
+                            }`}
+                    />
                 ))}
             </div>
         </div>

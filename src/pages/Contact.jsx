@@ -76,223 +76,383 @@ const Contact = () => {
   };
 
   return (
-    <><SEO
-      title="Contact Eurasian House"
-      description="Get in touch with Eurasian House for product inquiries, orders, or customer support."
-      canonical="https://www.eurasianrugs.com/contact"
-    />
-      <div className="container py-5">
-        {/* Header */}
-        <div className="text-center mb-5">
-          <h1 className="display-4 fw-bold lh-1 mb-3 text-primary">Get in Touch</h1>
-          <p className="lead text-muted">
-            Have a question? We'd love to hear from you.
-          </p>
-        </div>
+    <>
+      <SEO
+        title="Contact Eurasian House"
+        description="Get in touch with Eurasian House for product inquiries, orders, or customer support."
+        canonical="https://www.eurasianrugs.com/contact"
+      />
 
-        <div className="row g-5">
+      <div
+        className="py-5"
+        style={{
+          background: "#FAF8F5",
+          minHeight: "100vh",
+        }}
+      >
+        <div className="container">
 
-          {/* LEFT */}
-          <div className="col-lg-7">
-            <div className="card border-0 shadow-lg rounded-4 p-4">
+          {/* Hero */}
+          <section className="text-center mb-5">
 
-              <form onSubmit={handleSubmit}>
-                <div className="row g-3">
+            <small
+              className="text-uppercase"
+              style={{
+                letterSpacing: "4px",
+                color: "#B68D40",
+                fontWeight: 600,
+              }}
+            >
+              Contact Eurasian House
+            </small>
 
-                  <div className="col-md-6">
-                    <label className="form-label fw-semibold">
-                      First Name
-                    </label>
+            <h1
+              className="fw-bold mt-3"
+              style={{
+                color: "#2F241F",
+                fontSize: "clamp(2.4rem,5vw,4.3rem)",
+                lineHeight: 1.15,
+              }}
+            >
+              Let's Create Something
+              <br />
+              Beautiful Together
+            </h1>
 
-                    <input
-                      type="text"
-                      id="firstName"
-                      name="firstName"
-                      value={formData.firstName}
-                      onChange={handleChange}
-                      placeholder="John"
-                      required
-                      className="form-control form-control-lg bg-light border-0 small-placeholder"
-                    />
-                  </div>
+            <p
+              className="text-muted mx-auto mt-4"
+              style={{
+                maxWidth: "720px",
+                lineHeight: 1.8,
+                fontSize: "1.08rem",
+              }}
+            >
+              Whether you're looking for a bespoke handmade rug, wholesale
+              partnership, or simply have a question, our team is here to help.
+            </p>
 
-                  <div className="col-md-6">
-                    <label className="form-label fw-semibold">
-                      Last Name
-                    </label>
+          </section>
 
-                    <input
-                      type="text"
-                      id="lastName"
-                      name="lastName"
-                      value={formData.lastName}
-                      onChange={handleChange}
-                      placeholder="Doe"
-                      required
-                      className="form-control form-control-lg bg-light border-0 small-placeholder"
-                    />
-                  </div>
+          <div className="row g-5 align-items-stretch">
 
-                  <div className="col-12">
-                    <label className="form-label fw-semibold">
-                      Email Address
-                    </label>
+            {/* Contact Form */}
 
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      placeholder="name@example.com"
-                      required
-                      className="form-control form-control-lg bg-light border-0 small-placeholder"
-                    />
-                  </div>
+            <div className="col-lg-7">
 
-                  <div className="col-12">
-                    <label className="form-label fw-semibold">
-                      Phone Number
-                    </label>
+              <div
+                className="bg-white rounded-4 shadow-sm h-100"
+                style={{
+                  border: "1px solid rgba(0,0,0,.06)",
+                  padding: "2.5rem",
+                }}
+              >
 
-                    <input
-                      type="tel"
-                      id="phone"
-                      name="phone"
-                      value={formData.phone}
-                      onChange={handleChange}
-                      placeholder="+CountryCode ContactNumber (+1 202 555 0123)"
-                      className="form-control form-control-lg bg-light border-0 small-placeholder"
-                      required
-                    />
-                  </div>
+                <h2
+                  className="fw-bold mb-4"
+                  style={{
+                    color: "#2F241F",
+                  }}
+                >
+                  Send Us a Message
+                </h2>
 
+                <form onSubmit={handleSubmit}>
 
+                  <div className="row g-4">
 
-                  <div className="col-12">
-                    <label className="form-label fw-semibold">
-                      Message
-                    </label>
+                    <div className="col-md-6">
+                      <label className="form-label fw-semibold">
+                        First Name
+                      </label>
 
-                    <textarea
-                      rows="5"
-                      id="message"
-                      name="message"
-                      value={formData.message}
-                      onChange={handleChange}
-                      placeholder="How can we help you?"
-                      required
-                      className="form-control form-control-lg bg-light border-0 small-placeholder"
-                    />
-                  </div>
-
-                  {success && (
-                    <div className="col-12">
-                      <div className="alert alert-success">
-                        {success}
-                      </div>
+                      <input
+                        type="text"
+                        name="firstName"
+                        value={formData.firstName}
+                        onChange={handleChange}
+                        required
+                        placeholder="John"
+                        className="form-control form-control-lg rounded-3"
+                      />
                     </div>
-                  )}
 
-                  <div className="col-12 mt-4">
-                    <button
-                      type="submit"
-                      disabled={loading}
-                      className="btn btn-primary btn-lg w-100 rounded-pill shadow-sm"
+                    <div className="col-md-6">
+                      <label className="form-label fw-semibold">
+                        Last Name
+                      </label>
+
+                      <input
+                        type="text"
+                        name="lastName"
+                        value={formData.lastName}
+                        onChange={handleChange}
+                        required
+                        placeholder="Doe"
+                        className="form-control form-control-lg rounded-3"
+                      />
+                    </div>
+
+                    <div className="col-12">
+                      <label className="form-label fw-semibold">
+                        Email Address
+                      </label>
+
+                      <input
+                        type="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        required
+                        placeholder="name@example.com"
+                        className="form-control form-control-lg rounded-3"
+                      />
+                    </div>
+
+                    <div className="col-12">
+                      <label className="form-label fw-semibold">
+                        Phone Number
+                      </label>
+
+                      <input
+                        type="tel"
+                        name="phone"
+                        value={formData.phone}
+                        onChange={handleChange}
+                        required
+                        placeholder="+1 202 555 0123"
+                        className="form-control form-control-lg rounded-3"
+                      />
+                    </div>
+
+                    <div className="col-12">
+                      <label className="form-label fw-semibold">
+                        Message
+                      </label>
+
+                      <textarea
+                        rows="6"
+                        name="message"
+                        value={formData.message}
+                        onChange={handleChange}
+                        required
+                        placeholder="Tell us about your project..."
+                        className="form-control form-control-lg rounded-3"
+                      />
+                    </div>
+
+                    {success && (
+                      <div className="col-12">
+                        <div className="alert alert-success rounded-3">
+                          {success}
+                        </div>
+                      </div>
+                    )}
+
+                    <div className="col-12">
+
+                      <button
+                        type="submit"
+                        disabled={loading}
+                        className="btn btn-dark rounded-pill px-5 py-3 w-100"
+                      >
+                        {loading ? "Sending..." : "Send Message"}
+                      </button>
+
+                    </div>
+
+                  </div>
+
+                </form>
+
+              </div>
+
+            </div>
+
+            {/* Contact Info */}
+
+            <div className="col-lg-5">
+
+              <div
+                className="rounded-4 shadow-sm h-100"
+                style={{
+                  background:
+                    "linear-gradient(135deg,#2F241F,#6B5748)",
+                  color: "#fff",
+                  padding: "3rem",
+                }}
+              >
+
+                <small
+                  className="text-uppercase"
+                  style={{
+                    letterSpacing: "3px",
+                    opacity: ".8",
+                  }}
+                >
+                  Contact Details
+                </small>
+
+                <h2 className="fw-bold mt-3 mb-5">
+                  We'd Love To Hear
+                  <br />
+                  From You
+                </h2>
+
+                <div className="mb-5">
+
+                  <div className="d-flex mb-4">
+
+                    <div
+                      className="me-3"
                       style={{
-                        backgroundColor: "#0d6efd",
-                        borderColor: "#0d6efd",
+                        fontSize: "1.6rem",
                       }}
                     >
-                      {loading ? "Sending..." : "Send Message"}
-                    </button>
+                      📍
+                    </div>
+
+                    <div>
+                      <h6 className="fw-semibold mb-1">
+                        Studio & Workshop
+                      </h6>
+
+                      <p className="mb-0" style={{ opacity: ".85" }}>
+                        Bhadohi, Uttar Pradesh,
+                        <br />
+                        India
+                      </p>
+                    </div>
+
+                  </div>
+
+                  <div className="d-flex mb-4">
+
+                    <div
+                      className="me-3"
+                      style={{
+                        fontSize: "1.6rem",
+                      }}
+                    >
+                      📞
+                    </div>
+
+                    <div>
+                      <h6 className="fw-semibold mb-1">
+                        Phone
+                      </h6>
+
+                      <p className="mb-0" style={{ opacity: ".85" }}>
+                        +91 708 001 2972
+                      </p>
+                    </div>
+
+                  </div>
+
+                  <div className="d-flex">
+
+                    <div
+                      className="me-3"
+                      style={{
+                        fontSize: "1.6rem",
+                      }}
+                    >
+                      ✉️
+                    </div>
+
+                    <div>
+                      <h6 className="fw-semibold mb-1">
+                        Email
+                      </h6>
+
+                      <p
+                        className="mb-0"
+                        style={{
+                          opacity: ".85",
+                          wordBreak: "break-word",
+                        }}
+                      >
+                        contact@eurasianrugs.com
+                        <br />
+                        contacteurasianhouse@gmail.com
+                      </p>
+                    </div>
+
                   </div>
 
                 </div>
-              </form>
 
-            </div>
-          </div>
+                <hr className="border-light opacity-25 my-5" />
 
-          {/* RIGHT */}
-          <div className="col-lg-5">
-            <div className="h-100 p-5 bg-dark text-white rounded-4 shadow-lg">
+                <p
+                  className="mb-0"
+                  style={{
+                    lineHeight: 1.8,
+                    opacity: ".85",
+                  }}
+                >
+                  Every inquiry is personally reviewed by our team. We typically
+                  respond within one business day and are always happy to discuss
+                  custom designs, wholesale orders and interior projects.
+                </p>
 
-              <h2 className="fw-bold mb-4 text-center">
-                Contact Information
-              </h2>
-
-              <p className="text-secondary mb-5 text-center">
-                Fill out the form and our team will get back to you within a fraction of time.
-              </p>
-
-              <div className="d-flex align-items-center mb-4">
-                <div className="fs-3 me-3 text-primary">📍</div>
-
-                <div>
-                  <h6 className="mb-0">Our Office</h6>
-
-                  <p className="mb-0 text-secondary">
-                    Bhadohi, Uttar Pradesh, India
-                  </p>
-                </div>
-              </div>
-
-              <div className="d-flex align-items-center mb-4">
-                <div className="fs-3 me-3 text-primary">📞</div>
-
-                <div>
-                  <h6 className="mb-0">Phone</h6>
-
-                  <p className="mb-0 text-secondary">
-                    +91 708 001 2972
-                  </p>
-                </div>
-              </div>
-
-              <div className="d-flex align-items-center mb-4">
-                <div className="fs-3 me-3 text-primary">📧</div>
-
-                <div>
-                  <h6 className="mb-0">Email</h6>
-
-                  <p
-                    className="mb-0 text-secondary"
-                    style={{
-                      overflowWrap: "break-word",
-                      wordBreak: "break-word",
-                    }}
-                  >
-                    contact@eurasianrugs.com, contacteurasianhouse@gmail.com
-                  </p>
-                </div>
-              </div>
-
-              <hr className="my-5 opacity-25" />
-
-              <div className="d-flex gap-3 fs-4">
-                <span>🌐</span>
-                <span>📱</span>
-                <span>✉️</span>
               </div>
 
             </div>
+
           </div>
+
+          {/* Bottom CTA */}
+
+          <section
+            className="bg-white rounded-4 shadow-sm text-center mt-5"
+            style={{
+              border: "1px solid rgba(0,0,0,.06)",
+              padding: "4rem 2rem",
+            }}
+          >
+
+            <small
+              className="text-uppercase"
+              style={{
+                letterSpacing: "4px",
+                color: "#B68D40",
+                fontWeight: 600,
+              }}
+            >
+              Discover
+            </small>
+
+            <h2
+              className="fw-bold mt-3"
+              style={{
+                color: "#2F241F",
+              }}
+            >
+              Explore Our Handmade Collection
+            </h2>
+
+            <p
+              className="text-muted mx-auto mt-3"
+              style={{
+                maxWidth: "700px",
+                lineHeight: 1.8,
+              }}
+            >
+              Browse our curated selection of Persian, Modern, Kilim, Tibetan,
+              Jute and bespoke handmade rugs, crafted to bring timeless elegance
+              into every space.
+            </p>
+
+            <Link
+              to="/products"
+              className="btn btn-dark rounded-pill px-5 py-3 mt-3"
+            >
+              Explore Collection
+            </Link>
+
+          </section>
 
         </div>
-      </div>
-      <div className="text-center mt-5 p-3 bg-light border rounded-4">
-        <h2 className="fw-bold text-primary mb-3">
-          Looking for the Perfect Rug?
-        </h2>
-
-        <p className="text-muted mb-4">
-          Explore our collection of handcrafted Persian, Kilim, Tibetan, Jute, and modern rugs designed to suit every home and style.
-        </p>
-
-        <Link to="/products" className="btn btn-primary px-4">
-          Explore Our Collection
-        </Link>
       </div>
     </>
   );

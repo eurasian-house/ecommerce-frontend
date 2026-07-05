@@ -76,7 +76,7 @@ export default function Products() {
   };
 
   const handleCarouselClick = (value) => {
-    navigate(`/products?discount=${value}`);
+    navigate(`/products`);
   };
 
 

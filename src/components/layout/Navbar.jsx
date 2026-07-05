@@ -69,6 +69,10 @@ export default function Navbar() {
             </li>
 
             <li className="nav-item">
+              <NavLink to="/wholesale" onClick={closeNavbar} className={({ isActive }) => `nav-link ${isActive ? "text-primary fw-semibold" : "text-dark"}`}>Trade</NavLink>
+            </li>
+
+            <li className="nav-item">
               <NavLink to="/us" onClick={closeNavbar} className={({ isActive }) => `nav-link ${isActive ? "text-primary fw-semibold" : "text-dark"}`}>About Us</NavLink>
             </li>
 

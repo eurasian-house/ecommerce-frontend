@@ -62,38 +62,154 @@ export default function OrderSuccess() {
   }
 
   return (
-    <div className="d-flex justify-content-center align-items-center vh-100 bg-light">
+    <div
+      className="d-flex align-items-center justify-content-center py-5"
+      style={{
+        minHeight: "100vh",
+        background: "linear-gradient(180deg, #faf8f5 0%, #ffffff 100%)",
+        padding: "20px",
+      }}
+    >
       <div
-        className="card shadow p-4 text-center"
-        style={{ maxWidth: "450px", width: "100%", borderRadius: "16px" }}
+        className="text-center shadow-sm"
+        style={{
+          maxWidth: "650px",
+          width: "100%",
+          background: "#fff",
+          borderRadius: "28px",
+          padding: "48px 36px",
+          border: "1px solid #ece8e2",
+        }}
       >
-        <h2 className="mb-3">Payment Successful 🎉</h2>
+        {/* Success Icon */}
+        <div
+          className="mx-auto mb-4 d-flex align-items-center justify-content-center"
+          style={{
+            width: "90px",
+            height: "90px",
+            borderRadius: "50%",
+            background: "#eef9f1",
+            color: "#2e7d32",
+            fontSize: "2.8rem",
+          }}
+        >
+          ✓
+        </div>
 
-        <hr />
+        {/* Heading */}
+        <span
+          className="text-uppercase"
+          style={{
+            fontSize: ".75rem",
+            letterSpacing: "2px",
+            color: "#8b7355",
+            fontWeight: 600,
+          }}
+        >
+          Order Confirmed
+        </span>
 
-        <p><strong>Order ID:</strong> {order.id}</p>
-        <p><strong>Payment ID:</strong> {order.payment_id}</p>
-        <p><strong>Total Amount:</strong> ${order.total_amount}</p>
-        <p>
-          <strong>Date & Time:</strong>{" "}
-          {new Date(order.created_at).toLocaleString()}
+        <h2 className="fw-bold mt-2 mb-3">
+          Thank You for Your Purchase
+        </h2>
+
+        <p
+          className="text-muted mx-auto mb-4"
+          style={{ maxWidth: "480px" }}
+        >
+          Your payment has been successfully received. Our artisans will begin
+          preparing your handcrafted rug shortly. You'll receive email updates as
+          your order progresses.
         </p>
 
-        <div className="d-flex justify-content-between mt-4">
-          <button
-            className="btn btn-outline-primary"
-            onClick={() => navigate("/")}
-          >
-            Continue Shopping
-          </button>
+        {/* Order Details */}
+        <div
+          className="text-start"
+          style={{
+            background: "#faf8f5",
+            borderRadius: "20px",
+            padding: "24px",
+          }}
+        >
+          <div className="d-flex justify-content-between mb-3">
+            <span className="text-muted">Order ID</span>
+            <strong>{order.id}</strong>
+          </div>
 
-          <button
-            className="btn btn-primary"
-            onClick={() => navigate("/account")}
-          >
-            View Orders
-          </button>
+          <div className="d-flex justify-content-between mb-3">
+            <span className="text-muted">Payment Reference</span>
+            <strong title={order.razorpay_payment_id}>
+              {order.razorpay_payment_id?.slice(0, 12)}...
+            </strong>
+          </div>
+
+          <div className="d-flex justify-content-between mb-3">
+            <span className="text-muted">Total Paid</span>
+            <strong>${order.total_amount}</strong>
+          </div>
+
+          <div className="d-flex justify-content-between">
+            <span className="text-muted">Order Date</span>
+            <strong>
+              {new Date(order.created_at).toLocaleString()}
+            </strong>
+          </div>
         </div>
+
+        {/* Information */}
+        <div
+          className="mt-4 p-3"
+          style={{
+            background: "#fffaf2",
+            border: "1px solid #f0e4c3",
+            borderRadius: "16px",
+          }}
+        >
+          <small className="text-muted">
+            We will send you email notifications or whatsapp updates as your order moves through
+            processing, manufacturing, shipping, and delivery. You can also track
+            your order anytime from your account.
+          </small>
+        </div>
+
+        {/* Buttons */}
+        <div className="row g-3 mt-4">
+          <div className="col-md-6">
+            <button
+              className="btn btn-outline-dark w-100 py-3"
+              style={{
+                borderRadius: "999px",
+                fontWeight: 600,
+              }}
+              onClick={() => navigate("/")}
+            >
+              Continue Shopping
+            </button>
+          </div>
+
+          <div className="col-md-6">
+            <button
+              className="btn btn-dark w-100 py-3"
+              style={{
+                borderRadius: "999px",
+                fontWeight: 600,
+              }}
+              onClick={() => navigate("/account")}
+            >
+              Track My Order
+            </button>
+          </div>
+        </div>
+
+        {/* Footer */}
+        <p
+          className="text-muted small mt-4 mb-0"
+          style={{ lineHeight: 1.7 }}
+        >
+          Thank you for choosing <strong>Eurasian House</strong>. Every rug is
+          handcrafted with care, preserving generations of artisanal excellence
+          from Bhadohi, India.
+        </p>
       </div>
     </div>
   );

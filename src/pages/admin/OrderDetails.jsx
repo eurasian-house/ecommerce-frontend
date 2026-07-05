@@ -22,6 +22,8 @@ export default function OrderDetails() {
 
     if (!order) return <div className="container mt-4">Loading...</div>;
 
+    const customer = order.order_items?.[0];
+
     return (
         <div className="container mt-4">
 
@@ -29,14 +31,14 @@ export default function OrderDetails() {
 
             <div className="card p-3 mb-3">
                 <p><b>Order ID:</b> {order.id}</p>
-                <p><b>Name:</b> {order.profiles?.full_name}</p>
-                <p><b>Phone:</b> {order.profiles?.phone}</p>
-                <p><b>Email:</b> {order.profiles?.email}</p>
-                <p><b>Address:</b> {order.profiles?.address}</p>
-                <p><b>City:</b> {order.profiles?.city}</p>
-                <p><b>State:</b> {order.profiles?.state}</p>
-                <p><b>Country:</b> {order.profiles?.country}</p>
-                <p><b>Pin Code:</b> {order.profiles?.pincode}</p>
+                <p><b>Name:</b> {customer?.customer_name}</p>
+                <p><b>Phone:</b> {customer?.phone}</p>
+                <p><b>Email:</b> {customer?.email}</p>
+                <p><b>Address:</b> {customer?.address}</p>
+                <p><b>City:</b> {customer?.city}</p>
+                <p><b>State:</b> {customer?.state}</p>
+                <p><b>Country:</b> {customer?.country}</p>
+                <p><b>Pin Code:</b> {customer?.pincode}</p>
                 <p><b>Total:</b> ${order.total_amount}</p>
                 <p><b>Date:</b> {new Date(order.created_at).toLocaleString()}</p>
             </div>

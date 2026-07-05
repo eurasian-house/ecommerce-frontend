@@ -45,7 +45,7 @@ export default function CustomerInspiration() {
 
             <div className="text-center mb-4">
 
-                <span className="badge rounded-pill bg-success bg-opacity-10 text-success section-title">
+                <span className="badge rounded-pill bg-primary bg-opacity-10 text-primary section-title">
                     Styled by Our Customers
                 </span>
 
