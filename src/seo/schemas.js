@@ -15,9 +15,9 @@ export const organizationSchema = {
 
   sameAs: [
     // Add these later
-    // "https://facebook.com/...",
-    // "https://instagram.com/...",
-    // "https://pinterest.com/..."
+    "https://www.facebook.com/eurasianhouse",
+    "https://www.instagram.com/eurasianhouse/",
+    "https://in.pinterest.com/eurasianhouse/"
   ]
 };
 
@@ -52,11 +52,9 @@ export const getProductSchema = (product) => ({
 
   offers: {
     "@type": "Offer",
-
-    priceCurrency: "INR",
-
+    priceCurrency: "USD",
     price: product.selling_price,
-
+    priceValidUntil: "2027-12-31",
     availability:
       product.status === "active"
         ? "https://schema.org/InStock"

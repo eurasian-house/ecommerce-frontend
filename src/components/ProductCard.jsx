@@ -1,6 +1,7 @@
 import { useCart } from "../context/CartContext";
 import { useNavigate } from "react-router-dom";
 import StarRating from "../components/common/StarRating";
+import { toast } from "react-toastify";
 
 export default function ProductCard({
   product,
@@ -159,6 +160,19 @@ export default function ProductCard({
                   selectedSize: firstSize,
                   price: product.selling_price,
                 });
+                toast.success(
+                  <div>
+                    <div className="fw-semibold">Added to Cart</div>
+                    <small>{product.title}</small>
+                  </div>,
+                  {
+                    position: "top-right",
+                    autoClose: 2500,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                  }
+                );
               }}
               className="btn btn-dark btn-sm"
             >

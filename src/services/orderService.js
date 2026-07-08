@@ -21,9 +21,14 @@ export const getOrderById = async (id) => {
     const { data: items } = await supabase
         .from("order_items")
         .select(`
-            *,
-            products (title, thumbnail)
-        `)
+        *,
+        products (
+            id,
+            slug,
+            title,
+            thumbnail
+        )
+    `)
         .eq("order_id", id);
 
     return {

@@ -1,6 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { supabase } from "../lib/supabase";
+import confetti from "canvas-confetti";
 
 export default function OrderSuccess() {
   const navigate = useNavigate();
@@ -39,6 +40,34 @@ export default function OrderSuccess() {
     if (!order) fetchLatestOrder();
   }, []);
 
+
+  useEffect(() => {
+    if (!order) return;
+
+    const duration = 2500;
+    const end = Date.now() + duration;
+
+    (function frame() {
+      confetti({
+        particleCount: 4,
+        angle: 60,
+        spread: 60,
+        origin: { x: 0 },
+      });
+
+      confetti({
+        particleCount: 4,
+        angle: 120,
+        spread: 60,
+        origin: { x: 1 },
+      });
+
+      if (Date.now() < end) {
+        requestAnimationFrame(frame);
+      }
+    })();
+  }, [order]);
+
   if (loading) {
     return (
       <div className="d-flex justify-content-center align-items-center vh-100">
@@ -60,6 +89,15 @@ export default function OrderSuccess() {
       </div>
     );
   }
+
+  const paymentReference =
+    order.razorpay_payment_id || order.paypal_payment_id;
+
+  const paymentMethod = order.razorpay_payment_id
+    ? "Razorpay"
+    : order.paypal_payment_id
+      ? "PayPal"
+      : "-";
 
   return (
     <div
@@ -136,10 +174,17 @@ export default function OrderSuccess() {
             <strong>{order.id}</strong>
           </div>
 
+          <div className="d-flex justify-content-between mb-2">
+            <span className="text-muted">Payment Method</span>
+            <strong>{paymentMethod}</strong>
+          </div>
+
           <div className="d-flex justify-content-between mb-3">
             <span className="text-muted">Payment Reference</span>
-            <strong title={order.razorpay_payment_id}>
-              {order.razorpay_payment_id?.slice(0, 12)}...
+            <strong title={paymentReference}>
+              {paymentReference
+                ? `${paymentReference.slice(0, 12)}...`
+                : "-"}
             </strong>
           </div>
 

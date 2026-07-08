@@ -1,6 +1,6 @@
 import React from 'react';
 import logo from "/logo.png";
-import { FaFacebookF, FaInstagram, FaWhatsapp } from "react-icons/fa";
+import { FaFacebookF, FaInstagram, FaWhatsapp, FaPinterest } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { Link } from "react-router-dom";
 import "./Footer.css";
@@ -69,21 +69,52 @@ const Footer = () => {
 
             <div className="d-flex gap-3">
 
-              <div className="footer-social">
+              <a
+                href="https://www.facebook.com/eurasianhouse"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="footer-social"
+                aria-label="Facebook"
+              >
                 <FaFacebookF />
-              </div>
+              </a>
 
-              <div className="footer-social">
+              <a
+                href="https://www.instagram.com/eurasianhouse/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="footer-social"
+                aria-label="Instagram"
+              >
                 <FaInstagram />
-              </div>
+              </a>
 
-              <div className="footer-social">
+              <a
+                href="https://wa.me/917080012972"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="footer-social"
+                aria-label="WhatsApp"
+              >
                 <FaWhatsapp />
-              </div>
+              </a>
 
-              <div className="footer-social">
+              <a
+                href="mailto:contact@eurasianrugs.com"
+                className="footer-social"
+                aria-label="Email"
+              >
                 <MdEmail />
-              </div>
+              </a>
+
+              <a
+                href="https://in.pinterest.com/eurasianhouse/"
+                target="_blank"
+                className="footer-social"
+                aria-label="Pinterest"
+              >
+                <FaPinterest />
+              </a>
 
             </div>
 

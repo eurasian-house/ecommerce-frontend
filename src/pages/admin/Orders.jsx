@@ -97,6 +97,25 @@ export default function Orders() {
             await fetchOrderItems(orderId);
         }
     };
+    // const updateOrderStatus = async (id, newStatus) => {
+    //     const order = orders.find(o => o.id === id);
+    //     if (!order) return;
+
+    //     const allowedNext = getNextStatus(order.status);
+
+    //     if (newStatus !== order.status && newStatus !== allowedNext) {
+    //         alert("Invalid status transition ❌");
+    //         return;
+    //     }
+
+    //     await supabase
+    //         .from("orders")
+    //         .update({ status: newStatus })
+    //         .eq("id", id);
+
+    //     fetchOrders();
+    // };
+
     const updateOrderStatus = async (id, newStatus) => {
         const order = orders.find(o => o.id === id);
         if (!order) return;
@@ -108,13 +127,35 @@ export default function Orders() {
             return;
         }
 
-        await supabase
-            .from("orders")
-            .update({ status: newStatus })
-            .eq("id", id);
+        try {
+            const response = await fetch(
+                `${import.meta.env.VITE_API_URL}/api/orders/${id}/status`,
+                {
+                    method: "PATCH",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        status: newStatus,
+                    }),
+                }
+            );
 
-        fetchOrders();
+            const result = await response.json();
+
+            if (!response.ok) {
+                throw new Error(result.message || "Failed to update order.");
+            }
+
+            fetchOrders();
+        } catch (err) {
+            console.error(err);
+            alert("Failed to update order status.");
+        }
     };
+
+
+
     const getNextStatus = (current) => {
         const index = STATUS_FLOW.indexOf(current);
         return STATUS_FLOW[index + 1] || null;

@@ -12,7 +12,7 @@ export default function Checkout() {
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
-  const [paymentMethod, setPaymentMethod] = useState("razorpay");
+  const [paymentMethod, setPaymentMethod] = useState("paypal");
 
 
   const [form, setForm] = useState({
@@ -105,7 +105,7 @@ export default function Checkout() {
     const options = {
       key: import.meta.env.VITE_RAZORPAY_KEY,
       amount: razorpayOrder.amount,
-      currency: "INR",
+      currency: "USD",
       order_id: razorpayOrder.id,
 
       handler: async function (response) {
@@ -394,6 +394,22 @@ export default function Checkout() {
             Payment Method
           </h5>
 
+          <div className="form-check">
+            <input
+              className="form-check-input"
+              type="radio"
+              id="paypal"
+              checked={paymentMethod === "paypal"}
+              onChange={() => setPaymentMethod("paypal")}
+            />
+
+            <label
+              className="form-check-label"
+              htmlFor="paypal"
+            >
+              PayPal
+            </label>
+          </div>
           <div className="form-check mb-2">
             <input
               className="form-check-input"
@@ -411,22 +427,6 @@ export default function Checkout() {
             </label>
           </div>
 
-          <div className="form-check">
-            <input
-              className="form-check-input"
-              type="radio"
-              id="paypal"
-              checked={paymentMethod === "paypal"}
-              onChange={() => setPaymentMethod("paypal")}
-            />
-
-            <label
-              className="form-check-label"
-              htmlFor="paypal"
-            >
-              PayPal
-            </label>
-          </div>
         </div>
 
         {/* Order Summary */}

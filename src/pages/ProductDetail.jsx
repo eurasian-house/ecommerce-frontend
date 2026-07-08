@@ -9,6 +9,7 @@ import { useSwipeable } from "react-swipeable";
 import ProductCard from "../components/ProductCard";
 import ProductQuestions from "../components/ProductQuestions";
 import ProductReviews from "../components/ProductReviews";
+import { toast } from "react-toastify";
 
 import SEO from "../components/SEO";
 import {
@@ -443,7 +444,7 @@ export default function ProductDetail() {
               <div className="mt-2 text-muted">
                 <i className="bi bi-truck me-2"></i>
                 <strong>Expected Delivery:</strong>{" "}
-                {expectedDelivery.toLocaleDateString("en-IN", {
+                {expectedDelivery.toLocaleDateString("en-US", {
                   day: "numeric",
                   month: "short",
                   year: "numeric",
@@ -487,6 +488,19 @@ export default function ProductDetail() {
                       selectedColor,
                       price: displayPrice.selling,
                     });
+                    toast.success(
+                      <div>
+                        <div className="fw-semibold">Added to Cart</div>
+                        <small>{product.title}</small>
+                      </div>,
+                      {
+                        position: "top-right",
+                        autoClose: 2500,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                      }
+                    );
                   }}
                 >
                   Add to Cart
@@ -610,7 +624,7 @@ export default function ProductDetail() {
                 </li>
 
                 <li className="list-group-item">
-                  <strong>Expected Delivery:</strong>  {expectedDelivery.toLocaleDateString("en-IN", {
+                  <strong>Expected Delivery:</strong>  {expectedDelivery.toLocaleDateString("en-US", {
                     day: "numeric",
                     month: "short",
                     year: "numeric",

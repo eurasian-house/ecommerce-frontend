@@ -109,7 +109,6 @@ export default function CustOrderDetail() {
     }, new Date(order.created_at));
 
 
-
     return (
         <div className="container py-5">
 
@@ -150,7 +149,7 @@ export default function CustOrderDetail() {
 
                             <div className="text-muted small">Expected Delivery</div>
                             <div className="fw-semibold">
-                                {latestExpectedDelivery.toLocaleDateString("en-IN", {
+                                {latestExpectedDelivery.toLocaleDateString("en-US", {
                                     day: "numeric",
                                     month: "short",
                                     year: "numeric",
@@ -294,9 +293,17 @@ export default function CustOrderDetail() {
                                     <div className="flex-grow-1">
 
                                         <h6
+
                                             className="order-title"
                                             style={{ cursor: "pointer" }}
-                                            onClick={() => navigate(`/products/${item.products?.slug}`)}
+                                            onClick={() =>
+                                                navigate(`/products/${item.products.slug}`, {
+                                                    state: {
+                                                        selectedColorId: item.color_id,
+                                                        selectedSizeId: item.size_id,
+                                                    },
+                                                })
+                                            }
                                         >
                                             {item.products?.title}
                                         </h6>
@@ -311,7 +318,7 @@ export default function CustOrderDetail() {
                                             ${item.price}
                                         </div>
 
-                                        <div className="text-muted small mb-2">
+                                        <div className="text-muted small mb-1">
                                             <i className="bi bi-truck me-1"></i>
                                             Expected delivery:{" "}
                                             {new Date(
@@ -320,24 +327,12 @@ export default function CustOrderDetail() {
                                                     (item.production_days || 0) +
                                                     7
                                                 )
-                                            ).toLocaleDateString("en-IN", {
+                                            ).toLocaleDateString("en-US", {
                                                 day: "numeric",
                                                 month: "short",
                                                 year: "numeric",
                                             })}
                                         </div>
-
-                                        {order.status === "delivered" && (
-                                            <button
-                                                className="btn btn-outline-dark btn-sm"
-                                                onClick={() =>
-                                                    navigate(`/write-review/${item.id}`)
-                                                }
-                                            >
-                                                <i className="bi bi-star me-1"></i>
-                                                Write Review
-                                            </button>
-                                        )}
 
                                     </div>
 

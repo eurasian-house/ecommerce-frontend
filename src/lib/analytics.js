@@ -29,7 +29,7 @@ const getItem = (product) => ({
 
 export const trackProductView = (product) => {
   ReactGA.event("view_item", {
-    currency: "INR",
+    currency: "USD",
     value: Number(product.selling_price),
     items: [getItem(product)],
   });
@@ -37,7 +37,7 @@ export const trackProductView = (product) => {
 
 export const trackAddToCart = (product) => {
   ReactGA.event("add_to_cart", {
-    currency: "INR",
+    currency: "USD",
     value: Number(product.selling_price),
     items: [getItem(product)],
   });
@@ -45,7 +45,7 @@ export const trackAddToCart = (product) => {
 
 export const trackRemoveFromCart = (product) => {
   ReactGA.event("remove_from_cart", {
-    currency: "INR",
+    currency: "USD",
     value: Number(product.selling_price),
     items: [getItem(product)],
   });
@@ -53,7 +53,7 @@ export const trackRemoveFromCart = (product) => {
 
 export const trackBeginCheckout = (cart) => {
   ReactGA.event("begin_checkout", {
-    currency: "INR",
+    currency: "USD",
     value: cart.reduce(
       (sum, item) => sum + item.selling_price * item.quantity,
       0
@@ -65,7 +65,7 @@ export const trackBeginCheckout = (cart) => {
 export const trackPurchase = (orderId, cart) => {
   ReactGA.event("purchase", {
     transaction_id: orderId,
-    currency: "INR",
+    currency: "USD",
     value: cart.reduce(
       (sum, item) => sum + item.selling_price * item.quantity,
       0
