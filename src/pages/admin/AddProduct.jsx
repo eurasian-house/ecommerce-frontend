@@ -15,6 +15,7 @@ export default function AddProduct() {
         description: "",
         production_days: "",
         shape: "",
+        pattern: "",
         mrp: "",
         discount_percent: "",
         selling_price: "",
@@ -140,6 +141,7 @@ export default function AddProduct() {
         if (!form.item_type) newErrors.item_type = true;
         if (!form.description) newErrors.description = true;
         if (!form.production_days) newErrors.production_days = true;
+        if (!form.pattern) newErrors.pattern = true;
         if (!form.mrp) newErrors.mrp = true;
         if (!form.discount_percent) newErrors.discount_percent = true;
         if (!form.selling_price) newErrors.selling_price = true;
@@ -195,6 +197,7 @@ export default function AddProduct() {
                 materials: form.materials,
                 primary_color: form.primary_color,
                 shape: form.shape,
+                pattern: form.pattern,
                 other_colors: form.other_colors,
                 tags: form.tags,
                 quality: form.quality,
@@ -229,7 +232,8 @@ export default function AddProduct() {
 
             alert("Product Updated ✅");
         } else {
-            const { data: product } = await supabase
+            // const { data: product } = await supabase
+            const { data: product, error } = await supabase
                 .from("products")
                 .insert([{
                     title: form.title,
@@ -245,6 +249,7 @@ export default function AddProduct() {
                     materials: form.materials,
                     primary_color: form.primary_color,
                     shape: form.shape,
+                    pattern: form.pattern,
                     other_colors: form.other_colors,
                     tags: form.tags,
                     quality: form.quality,
@@ -257,6 +262,15 @@ export default function AddProduct() {
                 }])
                 .select()
                 .single();
+
+            if (error) {
+                console.error(error);
+                alert(error.message);
+                return;
+            }
+
+            console.log(product);
+            
 
             const productId = product.id;
 
@@ -358,6 +372,7 @@ export default function AddProduct() {
                 <input className={`form-control mb-2 ${errors.materials ? "is-invalid" : ""}`} name="materials" value={form.materials} placeholder="Materials" onChange={handleChange} />
                 <input className={`form-control mb-2 ${errors.primary_color ? "is-invalid" : ""}`} name="primary_color" value={form.primary_color} placeholder="Primary Color" onChange={handleChange} />
                 <input className="form-control mb-2" name="shape" value={form.shape} placeholder="Shape" onChange={handleChange} />
+                <input className={`form-control mb-2 ${errors.pattern ? "is-invalid" : ""}`} name="pattern" value={form.pattern} placeholder="Pattern (e.g. Abstract, Persian, Floral)" onChange={handleChange} />
 
                 <input className="form-control mb-2" value={form.other_colors.join(",")} placeholder="Other Colors" onChange={(e) => handleArrayInput(e, "other_colors")} />
                 <input className="form-control mb-2" value={form.tags.join(",")} placeholder="Tags" onChange={(e) => handleArrayInput(e, "tags")} />

@@ -31,41 +31,135 @@ export const websiteSchema = {
 };
 
 
-export const getProductSchema = (product) => ({
-  "@context": "https://schema.org",
-  "@type": "Product",
+export const getProductSchema = (product) => {
+  const hasStock =
+    product.product_sizes?.some((size) => size.stock > 0) ?? false;
 
-  name: product.title,
+  const images = [
+    product.thumbnail,
+    ...(product.images || []),
+  ].filter(Boolean);
 
-  image: [
-    product.primary_image
-  ],
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "Product",
 
-  description: product.description,
+    name: product.title,
 
-  sku: product.sku,
+    description: product.description,
 
-  brand: {
-    "@type": "Brand",
-    name: "Eurasian House"
-  },
+    image: images,
 
-  offers: {
-    "@type": "Offer",
-    priceCurrency: "USD",
-    price: product.selling_price,
-    priceValidUntil: "2027-12-31",
-    availability:
-      product.status === "active"
+    sku: product.product_sizes?.[0]?.sku || "",
+
+    brand: {
+      "@type": "Brand",
+      name: "Eurasian House",
+    },
+
+    manufacturer: {
+      "@type": "Organization",
+      name: "Eurasian House",
+    },
+
+    category: product.main_category,
+
+    material: product.materials,
+
+    color: product.primary_color,
+
+    additionalProperty: [
+      ...(product.other_colors || []).map((color) => ({
+        "@type": "PropertyValue",
+        name: "Additional Color",
+        value: color,
+      })),
+    ],
+
+    pattern: product.pattern,
+
+    countryOfOrigin: {
+      "@type": "Country",
+      name: "India",
+    },
+
+    offers: {
+      "@type": "Offer",
+
+      url: `https://www.eurasianrugs.com/products/${product.slug}`,
+
+      priceCurrency: "USD",
+
+      price: product.selling_price,
+
+      priceValidUntil: "2027-12-31",
+
+      availability: hasStock
         ? "https://schema.org/InStock"
         : "https://schema.org/OutOfStock",
 
-    url: `https://www.eurasianrugs.com/products/${product.slug}`,
+      itemCondition: "https://schema.org/NewCondition",
 
-    itemCondition:
-      "https://schema.org/NewCondition"
+      shippingDetails: {
+        "@type": "OfferShippingDetails",
+
+        shippingRate: {
+          "@type": "MonetaryAmount",
+          value: 0,
+          currency: "USD",
+        },
+
+        shippingDestination: {
+          "@type": "DefinedRegion",
+          addressCountry: "001",
+        },
+
+        deliveryTime: {
+          "@type": "ShippingDeliveryTime",
+          handlingTime: {
+            "@type": "QuantitativeValue",
+            minValue: product.production_days || 7,
+            maxValue: product.production_days || 7,
+            unitCode: "DAY",
+          },
+          transitTime: {
+            "@type": "QuantitativeValue",
+            minValue: 5,
+            maxValue: 10,
+            unitCode: "DAY",
+          },
+        },
+      },
+
+      hasMerchantReturnPolicy: {
+        "@type": "MerchantReturnPolicy",
+
+        applicableCountry: "001",
+
+        returnPolicyCategory:
+          "https://schema.org/MerchantReturnFiniteReturnWindow",
+
+        merchantReturnDays: 30,
+
+        returnMethod:
+          "https://schema.org/ReturnByMail",
+
+        returnFees:
+          "https://schema.org/FreeReturn",
+      },
+    },
+  };
+
+  if (product.review_count > 0) {
+    schema.aggregateRating = {
+      "@type": "AggregateRating",
+      ratingValue: Number(product.average_rating),
+      reviewCount: product.review_count,
+    };
   }
-});
+
+  return schema;
+};
 
 
 export const getBreadcrumbSchema = (items) => ({

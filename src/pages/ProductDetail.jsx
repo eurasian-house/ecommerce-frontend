@@ -439,6 +439,7 @@ export default function ProductDetail() {
               </div>
 
               <p className="mt-3">Shape: {product.shape}</p>
+              <p>Pattern: {product.pattern}</p>
               <p>Material: {product.materials}</p>
 
               <div className="mt-2 text-muted">
@@ -601,6 +602,10 @@ export default function ProductDetail() {
 
                 <li className="list-group-item">
                   <strong>Shape:</strong> {product.shape}
+                </li>
+
+                <li className="list-group-item">
+                  <strong>Pattern:</strong> {product.pattern}
                 </li>
 
                 <li className="list-group-item">
