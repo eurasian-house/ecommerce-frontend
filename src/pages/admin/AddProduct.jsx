@@ -1,8 +1,22 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { supabase } from "../../lib/supabase";
 import axios from "axios";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { compressImage, IMAGE_RULES } from "../../utils/imageCompression";
+import ImageUploadBox from "../../components/common/ImageUploadBox";
+import "./AddProduct.css";
+import ProductSelect from "../../components/common/ProductSelect";
+
+
+import {
+    MAIN_CATEGORIES,
+    SUB_CATEGORIES,
+    MATERIALS,
+    SHAPES,
+    PATTERNS,
+    QUALITIES,
+    COLORS,
+} from "../../data/productOptions";
 
 export default function AddProduct() {
 
@@ -19,7 +33,7 @@ export default function AddProduct() {
         mrp: "",
         discount_percent: "",
         selling_price: "",
-        materials: "",
+        materials: [],
         primary_color: "",
         other_colors: [],
         tags: [],
@@ -37,6 +51,8 @@ export default function AddProduct() {
     const [editingId, setEditingId] = useState(null);
     const [errors, setErrors] = useState({});
     const location = useLocation();
+
+    const isDirty = useRef(false);
     const navData = location.state;
 
     const uploadImage = async (file, folder = "products/misc") => {
@@ -56,6 +72,7 @@ export default function AddProduct() {
         setForm(initialForm);
         setIsEditing(false);
         setEditingId(null);
+        isDirty.current = false;
     };
 
     const createSlug = (text) => {
@@ -67,15 +84,32 @@ export default function AddProduct() {
     };
 
     const handleChange = (e) => {
+        isDirty.current = true;
         const { name, value } = e.target;
 
-        setForm((prev) => ({
-            ...prev,
-            [name]: value,
-            ...(name === "title"
-                ? { slug: createSlug(value) }
-                : {})
-        }));
+        setForm((prev) => {
+            const updated = {
+                ...prev,
+                [name]: value,
+                ...(name === "title"
+                    ? { slug: createSlug(value) }
+                    : {})
+            };
+
+            if (
+                name === "primary_color" &&
+                updated.colors.length &&
+                !updated.colors[0].color_name
+            ) {
+                updated.colors = [...updated.colors];
+                updated.colors[0] = {
+                    ...updated.colors[0],
+                    color_name: value,
+                };
+            }
+
+            return updated;
+        });
 
         setErrors(prev => ({
             ...prev,
@@ -84,16 +118,19 @@ export default function AddProduct() {
     };
 
     const handleArrayInput = (e, field) => {
+        isDirty.current = true;
         setForm({ ...form, [field]: e.target.value.split(",") });
     };
 
     const handleColorChange = (i, e) => {
+        isDirty.current = true;
         const updated = [...form.colors];
         updated[i][e.target.name] = e.target.value;
         setForm({ ...form, colors: updated });
     };
 
     const handleSizeChange = (i, e) => {
+        isDirty.current = true;
         const updated = [...form.sizes];
         updated[i][e.target.name] = e.target.value;
 
@@ -110,10 +147,12 @@ export default function AddProduct() {
     };
 
     const addColor = () => {
+        isDirty.current = true;
         setForm({ ...form, colors: [...form.colors, { color_name: "", color_image: "" }] });
     };
 
     const addSize = () => {
+        isDirty.current = true;
         setForm({
             ...form,
             sizes: [...form.sizes, { size: "", mrp_variation: "", discount_variation: "", selling_price: "", stock: "", sku: "" }]
@@ -121,12 +160,14 @@ export default function AddProduct() {
     };
 
     const removeColor = (index) => {
+        isDirty.current = true;
         const updated = [...form.colors];
         updated.splice(index, 1);
         setForm({ ...form, colors: updated });
     };
 
     const removeSize = (index) => {
+        isDirty.current = true;
         const updated = [...form.sizes];
         updated.splice(index, 1);
         setForm({ ...form, sizes: updated });
@@ -145,7 +186,7 @@ export default function AddProduct() {
         if (!form.mrp) newErrors.mrp = true;
         if (!form.discount_percent) newErrors.discount_percent = true;
         if (!form.selling_price) newErrors.selling_price = true;
-        if (!form.materials) newErrors.materials = true;
+        if (form.materials.length === 0) newErrors.materials = true;
         if (!form.primary_color) newErrors.primary_color = true;
         if (!form.thumbnail) newErrors.thumbnail = true;
 
@@ -270,7 +311,7 @@ export default function AddProduct() {
             }
 
             console.log(product);
-            
+
 
             const productId = product.id;
 
@@ -296,29 +337,52 @@ export default function AddProduct() {
 
             alert("Product Added ✅");
         }
-
+        isDirty.current = false;
         resetForm();
     };
 
     useEffect(() => {
-        if (!navData || !navData.product) return;
+        if (!navData?.product) return;
 
         const { mode, product } = navData;
 
-        setForm({
+        const loadedProduct = {
             ...initialForm,
-            ...product
-        });
+            ...product,
 
-        if (mode === "edit") {
-            setIsEditing(true);
-            setEditingId(product.id);
-        } else {
-            setIsEditing(false);
-            setEditingId(null);
+            thumbnail: product.thumbnail || "",
+            images: product.images || [],
+
+            other_colors: product.other_colors || [],
+            materials: product.materials || [],
+            tags: product.tags || [],
+
+            colors: (product.colors || []).map(c => ({
+                color_name: c.color_name || "",
+                color_image: c.color_image || "",
+            })),
+
+            sizes: (product.sizes || []).map(s => ({
+                size: s.size || "",
+                mrp_variation: s.mrp_variation || "",
+                discount_variation: s.discount_variation || "",
+                selling_price: s.selling_price || "",
+                stock: s.stock || "",
+                sku: mode === "copy" ? "" : (s.sku || ""),
+            })),
+        };
+
+        if (mode === "copy") {
+            loadedProduct.title = `${product.title} (Copy)`;
+            loadedProduct.slug = createSlug(loadedProduct.title);
         }
 
-    }, []);
+        setForm(loadedProduct);
+
+        setIsEditing(mode === "edit");
+        setEditingId(mode === "edit" ? product.id : null);
+
+    }, [navData]);
 
     useEffect(() => {
         const mrp = Number(form.mrp);
@@ -346,137 +410,956 @@ export default function AddProduct() {
         );
     };
 
+    useEffect(() => {
+        const handleBeforeUnload = (e) => {
+            if (!isDirty.current) return;
+
+            e.preventDefault();
+            e.returnValue = "";
+        };
+
+        const handlePopState = () => {
+            if (!isDirty.current) return;
+
+            const leave = window.confirm(
+                "You have unsaved changes. Are you sure you want to leave?"
+            );
+
+            if (!leave) {
+                window.history.pushState(null, "", window.location.href);
+            }
+        };
+
+        window.history.pushState(null, "", window.location.href);
+
+        window.addEventListener("beforeunload", handleBeforeUnload);
+        window.addEventListener("popstate", handlePopState);
+
+        return () => {
+            window.removeEventListener("beforeunload", handleBeforeUnload);
+            window.removeEventListener("popstate", handlePopState);
+        };
+    }, []);
+
+
+
+    /* ---------- Upload Helpers ---------- */
+
+    const handleThumbnailUpload = async (file) => {
+        isDirty.current = true;
+
+        if (!file) return;
+
+        const compressed = await compressImage(
+            file,
+            IMAGE_RULES.thumbnail
+        );
+
+        const url = await uploadImage(
+            compressed,
+            "products/thumbnails"
+        );
+
+        setForm(prev => {
+
+            const colors = [...prev.colors];
+
+            // Automatically use thumbnail for first color image
+            if (colors.length > 0) {
+                colors[0] = {
+                    ...colors[0],
+                    color_image: url
+                };
+            }
+
+            return {
+                ...prev,
+                thumbnail: url,
+                colors
+            };
+
+        });
+
+    };
+
+    const handleGalleryUpload = async (files) => {
+        isDirty.current = true;
+
+        if (!files || files.length === 0) return;
+
+        const urls = await Promise.all(
+
+            [...files].map(async (file) => {
+
+                const compressed = await compressImage(
+                    file,
+                    IMAGE_RULES.gallery
+                );
+
+                return await uploadImage(
+                    compressed,
+                    "products/gallery"
+                );
+
+            })
+
+        );
+
+        setForm(prev => ({
+
+            ...prev,
+
+            // Append new images instead of replacing. Duplicate images will be removed
+            images: [...new Set([...prev.images, ...urls])]
+
+        }));
+
+    };
+
+    const handleColorUpload = async (file, index) => {
+        isDirty.current = true;
+
+        if (!file) return;
+
+        const compressed = await compressImage(
+            file,
+            IMAGE_RULES.variant
+        );
+
+        const url = await uploadImage(
+            compressed,
+            "products/variants"
+        );
+
+        setForm(prev => {
+
+            const colors = [...prev.colors];
+
+            colors[index] = {
+                ...colors[index],
+                color_image: url
+            };
+
+            return {
+                ...prev,
+                colors
+            };
+
+        });
+
+    };
+
     return (
-        <div className="container mt-4">
-            <div className="card p-4">
-                <h3>{isEditing ? "Edit Product" : "Add Product"}</h3>
+        <div className="container-fluid py-4 add-product-page">
+            <div className="card section-card p-4">
+                <div className="d-flex justify-content-between align-items-center mb-4">
 
-                <input className={`form-control mb-2 ${errors.title ? "is-invalid" : ""}`} name="title" value={form.title} placeholder="Title" onChange={handleChange} />
-                <input
-                    className="form-control mb-2"
-                    name="slug"
-                    value={form.slug}
-                    placeholder="Slug"
-                    onChange={handleChange}
-                />
-                <input className={`form-control mb-2 ${errors.main_category ? "is-invalid" : ""}`} name="main_category" value={form.main_category} placeholder="Main Category" onChange={handleChange} />
-                <input className={`form-control mb-2 ${errors.sub_category ? "is-invalid" : ""}`} name="sub_category" value={form.sub_category} placeholder="Sub Category" onChange={handleChange} />
-                <input className={`form-control mb-2 ${errors.item_type ? "is-invalid" : ""}`} name="item_type" value={form.item_type} placeholder="physical/digital" onChange={handleChange} />
-                <textarea className={`form-control mb-2 ${errors.description ? "is-invalid" : ""}`} name="description" value={form.description} placeholder="Description" onChange={handleChange} />
-                <input className={`form-control mb-2 ${errors.production_days ? "is-invalid" : ""}`} name="production_days" type="number" min="1" value={form.production_days} placeholder="Production Time (Days)" onChange={handleChange} />
+                    <div>
 
-                <input className={`form-control mb-2 ${errors.mrp ? "is-invalid" : ""}`} name="mrp" value={form.mrp} placeholder="MRP in $" onChange={handleChange} />
-                <input className={`form-control mb-2 ${errors.discount_percent ? "is-invalid" : ""}`} name="discount_percent" value={form.discount_percent} placeholder="Discount %" onChange={handleChange} />
-                <input className={`form-control mb-2 ${errors.selling_price ? "is-invalid" : ""}`} value={form.selling_price} readOnly placeholder="Selling Price" />
+                        <h2 className="fw-bold mb-1">
+                            {isEditing ? "Edit Product" : "Add New Product"}
+                        </h2>
 
-                <input className={`form-control mb-2 ${errors.materials ? "is-invalid" : ""}`} name="materials" value={form.materials} placeholder="Materials" onChange={handleChange} />
-                <input className={`form-control mb-2 ${errors.primary_color ? "is-invalid" : ""}`} name="primary_color" value={form.primary_color} placeholder="Primary Color" onChange={handleChange} />
-                <input className="form-control mb-2" name="shape" value={form.shape} placeholder="Shape" onChange={handleChange} />
-                <input className={`form-control mb-2 ${errors.pattern ? "is-invalid" : ""}`} name="pattern" value={form.pattern} placeholder="Pattern (e.g. Abstract, Persian, Floral)" onChange={handleChange} />
+                        <p className="text-muted mb-0">
+                            Create premium handcrafted rug listings.
+                        </p>
 
-                <input className="form-control mb-2" value={form.other_colors.join(",")} placeholder="Other Colors" onChange={(e) => handleArrayInput(e, "other_colors")} />
-                <input className="form-control mb-2" value={form.tags.join(",")} placeholder="Tags" onChange={(e) => handleArrayInput(e, "tags")} />
-
-                <input className={`form-control mb-2 ${errors.quality ? "is-invalid" : ""}`} name="quality" value={form.quality} placeholder="Quality" onChange={handleChange} />
-                <input className={`form-control mb-2 ${errors.hsn ? "is-invalid" : ""}`} name="hsn" value={form.hsn} placeholder="HSN Code" onChange={handleChange} />
-
-                <select className={`form-control mb-2 ${errors.status ? "is-invalid" : ""}`} name="status" value={form.status} onChange={handleChange}>
-                    <option value="">Select Status</option>
-                    <option value="active">Active</option>
-                    <option value="inactive">Inactive</option>
-                </select>
-
-                <div>Upload Thumbnail</div>
-                <input type="file" className={`form-control mb-2 ${errors.thumbnail ? "is-invalid" : ""}`} onChange={async e => {
-                    const file = e.target.files[0];
-
-                    const compressed = await compressImage(
-                        file,
-                        IMAGE_RULES.thumbnail
-                    );
-
-                    const url = await uploadImage(
-                        compressed,
-                        "products/thumbnails"
-                    );
-
-                    setForm(prev => ({
-                        ...prev,
-                        thumbnail: optimizeUrl(url)
-                    }));
-                    setForm(prev => ({ ...prev, thumbnail: url }));
-                }} />
-
-                <div>Upload Images</div>
-                <input type="file" multiple className={`form-control mb-2 ${errors.images ? "is-invalid" : ""}`} onChange={async e => {
-                    const files = [...e.target.files];
-
-                    const urls = await Promise.all(
-                        files.map(async (file) => {
-                            const compressed = await compressImage(
-                                file,
-                                IMAGE_RULES.gallery
-                            );
-
-                            const url = await uploadImage(
-                                compressed,
-                                "products/gallery"
-                            );
-
-                            return optimizeUrl(url);
-                        })
-                    );
-
-                    setForm(prev => ({ ...prev, images: urls }));
-                    setForm(prev => ({ ...prev, images: urls }));
-                }} />
-
-                <h5 className="mt-3">Color Variations</h5>
-                {form.colors.map((c, i) => (
-                    <div key={i} className="d-flex gap-2 mb-2">
-                        <input className="form-control" name="color_name" placeholder="Color Name" value={c.color_name} onChange={(e) => handleColorChange(i, e)} />
-                        <input type="file" className="form-control" onChange={async (e) => {
-                            const file = e.target.files[0];
-
-                            const compressed = await compressImage(
-                                file,
-                                IMAGE_RULES.variant
-                            );
-
-                            const url = await uploadImage(
-                                compressed,
-                                "products/variants"
-                            );
-
-                            const updated = [...form.colors];
-                            updated[i].color_image = optimizeUrl(url);
-
-                            setForm({ ...form, colors: updated });
-                            updated[i].color_image = url;
-                            setForm({ ...form, colors: updated });
-                        }} />
-                        <button className="btn btn-danger" onClick={() => removeColor(i)}>X</button>
                     </div>
-                ))}
-                <button className="btn btn-secondary w-100 mb-3" onClick={addColor}>Add Color</button>
 
-                <h5>Size Variations</h5>
-                {form.sizes.map((s, i) => (
-                    <div key={i} className="d-flex gap-2 mb-2">
-                        <input className="form-control" name="size" placeholder="Size" value={s.size} onChange={(e) => handleSizeChange(i, e)} />
-                        <input className="form-control" name="mrp_variation" placeholder="MRP in $" value={s.mrp_variation} onChange={(e) => handleSizeChange(i, e)} />
-                        <input className="form-control" name="discount_variation" placeholder="Discount %" value={s.discount_variation} onChange={(e) => handleSizeChange(i, e)} />
-                        <input className="form-control" name="selling_price" placeholder="Selling Price" value={s.selling_price} readOnly />
-                        <input className="form-control" name="stock" placeholder="Stock" value={s.stock} onChange={(e) => handleSizeChange(i, e)} />
-                        <input className="form-control" name="sku" placeholder="SKU" value={s.sku} onChange={(e) => handleSizeChange(i, e)} />
-                        <button className="btn btn-danger" onClick={() => removeSize(i)}>X</button>
+                    <button
+                        className="btn btn-dark rounded-pill px-4"
+                        onClick={handleSave}
+                    >
+                        <i className="bi bi-check-circle me-2"></i>
+
+                        {isEditing ? "Update Product" : "Save Product"}
+
+                    </button>
+
+                </div>
+
+                {/* Basic Information */}
+
+                <div className="row mb-4">
+
+                    <div className="col-lg-6">
+
+                        <div className="card section-card p-4 h-100">
+
+                            <div className="section-header">
+
+                                <i className="bi bi-card-text"></i>
+
+                                <div>
+                                    <h5 className="mb-0 fw-bold">
+                                        Basic Information
+                                    </h5>
+
+                                    <small className="text-muted">
+                                        General product details
+                                    </small>
+                                </div>
+
+                            </div>
+
+                            <div className="row g-3 mt-1">
+
+                                <div className="col-12">
+
+                                    <label className="form-label">
+                                        Product Title <span className="text-danger">*</span>
+                                    </label>
+
+                                    <input
+                                        className={`form-control ${errors.title ? "is-invalid" : ""}`}
+                                        name="title"
+                                        value={form.title}
+                                        placeholder="Enter product title"
+                                        onChange={handleChange}
+                                    />
+
+                                </div>
+
+                                <div className="col-12">
+
+                                    <label className="form-label">
+                                        Slug
+                                    </label>
+
+                                    <input
+                                        className="form-control"
+                                        name="slug"
+                                        value={form.slug}
+                                        placeholder="Auto Generated"
+                                        onChange={handleChange}
+                                    />
+
+                                </div>
+
+                                <div className="col-md-6">
+
+                                    <ProductSelect
+                                        label="Main Category"
+                                        name="main_category"
+                                        value={form.main_category}
+                                        options={MAIN_CATEGORIES}
+                                        placeholder="Select Main Category"
+                                        required
+                                        error={errors.main_category}
+                                        onChange={handleChange}
+                                    />
+
+                                </div>
+
+                                <div className="col-md-6">
+
+                                    <ProductSelect
+                                        label="Sub Category"
+                                        name="sub_category"
+                                        value={form.sub_category}
+                                        options={SUB_CATEGORIES}
+                                        placeholder="Select Sub Category"
+                                        required
+                                        error={errors.sub_category}
+                                        onChange={handleChange}
+                                    />
+
+                                </div>
+
+                                <div className="col-md-6">
+
+                                    <label className="form-label">
+                                        Item Type <span className="text-danger">*</span>
+                                    </label>
+
+                                    <select
+                                        className={`form-select ${errors.item_type ? "is-invalid" : ""}`}
+                                        name="item_type"
+                                        value={form.item_type}
+                                        onChange={handleChange}
+                                    >
+                                        <option value="">Select Item Type</option>
+                                        <option value="physical">Physical</option>
+                                        <option value="digital">Digital</option>
+                                    </select>
+
+                                </div>
+
+                                <div className="col-md-6">
+
+                                    <label className="form-label">
+                                        Status <span className="text-danger">*</span>
+                                    </label>
+
+                                    <select
+                                        className={`form-select ${errors.status ? "is-invalid" : ""}`}
+                                        name="status"
+                                        value={form.status}
+                                        onChange={handleChange}
+                                    >
+                                        <option value="">Select Status</option>
+                                        <option value="active">Active</option>
+                                        <option value="inactive">Inactive</option>
+                                    </select>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
                     </div>
-                ))}
-                <button className="btn btn-secondary w-100 mb-3" onClick={addSize}>Add Size</button>
 
-                <button className="btn btn-primary mt-3" onClick={handleSave}>
-                    {isEditing ? "Update Product" : "Save Product"}
-                </button>
+
+                    {/* Pricing */}
+
+                    <div className="col-lg-6">
+
+                        <div className="card section-card p-4 h-100">
+
+                            <div className="section-header">
+
+                                <i className="bi bi-cash-coin"></i>
+
+                                <div>
+                                    <h5 className="mb-0 fw-bold">
+                                        Pricing
+                                    </h5>
+
+                                    <small className="text-muted">
+                                        Product pricing information
+                                    </small>
+                                </div>
+
+                            </div>
+
+                            <div className="row g-3 mt-1">
+
+                                <div className="col-md-6">
+
+                                    <label className="form-label">
+                                        Production Days <span className="text-danger">*</span>
+                                    </label>
+
+                                    <input
+                                        type="number"
+                                        min="1"
+                                        className={`form-control ${errors.production_days ? "is-invalid" : ""}`}
+                                        name="production_days"
+                                        value={form.production_days}
+                                        placeholder="e.g. 15"
+                                        onChange={handleChange}
+                                    />
+
+                                </div>
+
+                                <div className="col-md-6">
+
+                                    <label className="form-label">
+                                        MRP ($) <span className="text-danger">*</span>
+                                    </label>
+
+                                    <input
+                                        className={`form-control ${errors.mrp ? "is-invalid" : ""}`}
+                                        name="mrp"
+                                        value={form.mrp}
+                                        placeholder="e.g. 499"
+                                        onChange={handleChange}
+                                    />
+
+                                </div>
+
+                                <div className="col-md-6">
+
+                                    <label className="form-label">
+                                        Discount (%) <span className="text-danger">*</span>
+                                    </label>
+
+                                    <input
+                                        className={`form-control ${errors.discount_percent ? "is-invalid" : ""}`}
+                                        name="discount_percent"
+                                        value={form.discount_percent}
+                                        placeholder="e.g. 20"
+                                        onChange={handleChange}
+                                    />
+
+                                </div>
+
+                                <div className="col-md-6">
+
+                                    <label className="form-label">
+                                        Selling Price
+                                    </label>
+
+                                    <input
+                                        className={`form-control price-output ${errors.selling_price ? "is-invalid" : ""}`}
+                                        value={form.selling_price}
+                                        readOnly
+                                        placeholder="Auto Calculated"
+                                    />
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+
+
+                <div className="card section-card p-4 mb-4">
+
+                    <div className="section-header">
+
+                        <i className="bi bi-text-paragraph"></i>
+
+                        <div>
+                            <h5 className="mb-0 fw-bold">
+                                Product Description
+                            </h5>
+
+                            <small className="text-muted">
+                                Highlight craftsmanship, materials, texture and care instructions.
+                            </small>
+                        </div>
+
+                    </div>
+
+                    <div className="mt-3">
+
+                        <textarea
+                            rows={12}
+                            className={`form-control ${errors.description ? "is-invalid" : ""}`}
+                            name="description"
+                            value={form.description}
+                            placeholder="Product Detailed Description"
+                            onChange={handleChange}
+                        />
+
+                        <div className="d-flex justify-content-between mt-2">
+
+                            <small className="text-muted">
+                                Use blank lines to separate paragraphs and • for bullet points.
+                            </small>
+
+                            <small className="text-muted">
+                                {form.description.length} characters
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+
+                {/* Product Details */}
+
+                <div className="card section-card p-4 mb-4">
+
+                    <div className="section-header">
+
+                        <i className="bi bi-box-seam"></i>
+
+                        <div>
+                            <h5 className="mb-0 fw-bold">
+                                Product Details
+                            </h5>
+
+                            <small className="text-muted">
+                                Product specifications & attributes
+                            </small>
+                        </div>
+
+                    </div>
+
+                    <div className="row g-3 mt-1">
+
+                        <div className="col-md-6">
+
+                            <ProductSelect
+                                label="Materials"
+                                name="materials"
+                                value={form.materials}
+                                options={MATERIALS}
+                                placeholder="Select Materials"
+                                required
+                                error={errors.materials}
+                                isMulti
+                                onChange={(selected) =>
+                                    setForm(prev => ({
+                                        ...prev,
+                                        materials: selected.map(item => item.value),
+                                    }))
+                                }
+                            />
+
+                        </div>
+
+                        <div className="col-md-6">
+
+                            <ProductSelect
+                                label="Primary Color"
+                                name="primary_color"
+                                value={form.primary_color}
+                                options={COLORS}
+                                placeholder="Select Primary Color"
+                                required
+                                error={errors.primary_color}
+                                onChange={handleChange}
+                            />
+
+                        </div>
+
+                        <div className="col-md-6">
+
+                            <ProductSelect
+                                label="Shape"
+                                name="shape"
+                                value={form.shape}
+                                options={SHAPES}
+                                placeholder="Select Shape"
+                                onChange={handleChange}
+                            />
+
+                        </div>
+
+                        <div className="col-md-6">
+
+                            <ProductSelect
+                                label="Pattern"
+                                name="pattern"
+                                value={form.pattern}
+                                options={PATTERNS}
+                                placeholder="Select Pattern"
+                                required
+                                error={errors.pattern}
+                                onChange={handleChange}
+                            />
+
+                        </div>
+
+                        <ProductSelect
+                            label="Other Colors"
+                            name="other_colors"
+                            value={form.other_colors}
+                            options={COLORS}
+                            placeholder="Select Other Colors"
+                            isMulti
+                            onChange={(selected) =>
+                                setForm((prev) => ({
+                                    ...prev,
+                                    other_colors: selected.map((item) => item.value),
+                                }))
+                            }
+                        />
+
+                        <div className="col-md-6">
+
+                            <label className="form-label">
+                                Tags
+                            </label>
+
+                            <input
+                                className="form-control"
+                                value={form.tags.join(",")}
+                                placeholder="Separate with commas"
+                                onChange={(e) => handleArrayInput(e, "tags")}
+                            />
+
+                        </div>
+
+                        <div className="col-md-6">
+
+                            <ProductSelect
+                                label="Quality"
+                                name="quality"
+                                value={form.quality}
+                                options={QUALITIES}
+                                placeholder="Select Quality"
+                                required
+                                error={errors.quality}
+                                onChange={handleChange}
+                            />
+
+                        </div>
+
+                        <div className="col-md-6">
+
+                            <label className="form-label">
+                                HSN Code <span className="text-danger">*</span>
+                            </label>
+
+                            <input
+                                className={`form-control ${errors.hsn ? "is-invalid" : ""}`}
+                                name="hsn"
+                                value={form.hsn}
+                                placeholder="Enter HSN Code"
+                                onChange={handleChange}
+                            />
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+
+                {/* Images */}
+
+                <div className="card section-card p-4 mb-4">
+
+                    <div className="section-header">
+
+                        <i className="bi bi-images"></i>
+
+                        <div>
+                            <h5 className="mb-0 fw-bold">
+                                Product Images
+                            </h5>
+
+                            <small className="text-muted">
+                                Upload thumbnail and gallery images
+                            </small>
+                        </div>
+
+                    </div>
+
+                    <div className="row g-4">
+
+                        {/* Thumbnail */}
+
+                        <div className="col-lg-6">
+
+                            <label className="form-label">
+                                Thumbnail <span className="text-danger">*</span>
+                            </label>
+
+                            <ImageUploadBox
+                                label="Thumbnail"
+                                preview={form.thumbnail}
+                                onSelect={handleThumbnailUpload}
+                            />
+
+                        </div>
+
+                        {/* Gallery */}
+
+                        <div className="col-lg-6">
+
+                            <label className="form-label">
+                                Gallery Images <span className="text-danger">*</span>
+                            </label>
+
+                            <>
+                                <ImageUploadBox
+                                    label="Gallery Images"
+                                    multiple
+                                    onSelect={handleGalleryUpload}
+                                />
+
+                                {form.images.length > 0 && (
+
+                                    <div className="gallery-grid mt-3">
+
+                                        {form.images.map((img, index) => (
+
+                                            <div
+                                                key={index}
+                                                className="gallery-item"
+                                            >
+
+                                                <img
+                                                    src={img}
+                                                    alt=""
+                                                />
+
+                                                <button
+                                                    type="button"
+                                                    className="btn btn-sm btn-danger gallery-remove"
+                                                    onClick={() => {
+
+                                                        const updated = form.images.filter(
+                                                            (_, i) => i !== index
+                                                        );
+
+                                                        setForm(prev => ({
+                                                            ...prev,
+                                                            images: updated
+                                                        }));
+
+                                                    }}
+                                                >
+                                                    <i className="bi bi-x"></i>
+                                                </button>
+
+                                            </div>
+
+                                        ))}
+
+                                    </div>
+
+                                )}
+                            </>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+
+                {/* Color Variations */}
+
+                <div className="card section-card p-4 mb-4">
+
+                    <div className="section-header">
+
+                        <i className="bi bi-palette"></i>
+
+                        <div>
+                            <h5 className="mb-0 fw-bold">
+                                Color Variations
+                            </h5>
+
+                            <small className="text-muted">
+                                Add available product colors
+                            </small>
+                        </div>
+
+                    </div>
+
+                    <div className="row g-3">
+
+                        {form.colors.map((c, i) => (
+
+                            <div className="col-6 col-md-3 col-xl-3">
+
+                                <div key={i} className="border rounded-4 p-4 mb-3 bg-light">
+
+                                    <div className="d-flex flex-column gap-3">
+
+                                        <div>
+
+                                            <ProductSelect
+                                                label="Color Name"
+                                                name="color_name"
+                                                value={c.color_name}
+                                                options={COLORS}
+                                                placeholder="Select Color"
+                                                onChange={(e) => handleColorChange(i, e)}
+                                            />
+
+                                        </div>
+
+                                        <div>
+
+                                            <label className="form-label">
+                                                Color Image
+                                            </label>
+
+                                            <ImageUploadBox
+                                                preview={c.color_image}
+                                                onSelect={(file) => handleColorUpload(file, i)}
+                                            />
+
+                                        </div>
+
+                                        <div className="text-end">
+
+                                            <button
+                                                type="button"
+                                                className="btn btn-outline-danger w-100"
+                                                onClick={() => removeColor(i)}
+                                            >
+                                                <i className="bi bi-trash"></i>
+                                            </button>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        ))}
+                    </div>
+
+                    <button
+                        className="btn btn-outline-dark rounded-pill"
+                        onClick={addColor}
+                    >
+                        <i className="bi bi-plus-circle me-2"></i>
+
+                        Add Another Color
+                    </button>
+
+                </div>
+
+
+
+
+                {/* Size Variations */}
+
+                < div className="card section-card p-4 mb-4" >
+
+                    <div className="section-header">
+
+                        <i className="bi bi-rulers"></i>
+
+                        <div>
+                            <h5 className="mb-0 fw-bold">
+                                Size Variations
+                            </h5>
+
+                            <small className="text-muted">
+                                Configure available sizes, pricing & inventory
+                            </small>
+                        </div>
+
+                    </div>
+
+                    {
+                        form.sizes.map((s, i) => (
+
+                            <div className="card h-100 border-0 shadow-sm section-card p-3">
+
+                                <div className="row g-3">
+
+                                    <div className="col-md-3">
+
+                                        <label className="form-label">
+                                            Size
+                                        </label>
+
+                                        <input
+                                            className="form-control"
+                                            name="size"
+                                            value={s.size}
+                                            placeholder="e.g. 5 × 7 ft"
+                                            onChange={(e) => handleSizeChange(i, e)}
+                                        />
+
+                                    </div>
+
+                                    <div className="col-md-1">
+
+                                        <label className="form-label">
+                                            MRP ($)
+                                        </label>
+
+                                        <input
+                                            className="form-control"
+                                            name="mrp_variation"
+                                            value={s.mrp_variation}
+                                            placeholder="MRP"
+                                            onChange={(e) => handleSizeChange(i, e)}
+                                        />
+
+                                    </div>
+
+                                    <div className="col-md-2">
+
+                                        <label className="form-label">
+                                            Discount (%)
+                                        </label>
+
+                                        <input
+                                            className="form-control"
+                                            name="discount_variation"
+                                            value={s.discount_variation}
+                                            placeholder="Discount"
+                                            onChange={(e) => handleSizeChange(i, e)}
+                                        />
+
+                                    </div>
+
+                                    <div className="col-md-2">
+
+                                        <label className="form-label">
+                                            Selling Price
+                                        </label>
+
+                                        <input
+                                            className="form-control price-output"
+                                            value={s.selling_price}
+                                            readOnly
+                                            placeholder="Auto Calculated"
+                                        />
+
+                                    </div>
+
+                                    <div className="col-md-1">
+
+                                        <label className="form-label">
+                                            Stock
+                                        </label>
+
+                                        <input
+                                            className="form-control"
+                                            name="stock"
+                                            value={s.stock}
+                                            placeholder="Stock"
+                                            onChange={(e) => handleSizeChange(i, e)}
+                                        />
+
+                                    </div>
+
+                                    <div className="col-md-2">
+
+                                        <label className="form-label">
+                                            SKU
+                                        </label>
+
+                                        <input
+                                            className="form-control"
+                                            name="sku"
+                                            value={s.sku}
+                                            placeholder="Unique SKU"
+                                            onChange={(e) => handleSizeChange(i, e)}
+                                        />
+
+                                    </div>
+
+                                    <div className="col-lg-1 d-flex align-items-end">
+
+                                        <button type="button" className="btn w-10" onClick={() => removeSize(i)}>
+                                            <i className="bi bi-trash me-2"></i>
+                                        </button>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        ))
+                    }
+
+                    < button
+                        className="btn btn-outline-dark rounded-pill"
+                        onClick={addSize}
+                    >
+                        <i className="bi bi-plus-circle me-2"></i>
+                        Add Another Size
+                    </button>
+
+                </div>
+
+
+
+
             </div>
         </div>
     );

@@ -11,6 +11,8 @@ import ProductQuestions from "../components/ProductQuestions";
 import ProductReviews from "../components/ProductReviews";
 import { toast } from "react-toastify";
 
+import "./ProductDetail.css";
+
 import SEO from "../components/SEO";
 import {
   getProductSchema,
@@ -589,7 +591,9 @@ export default function ProductDetail() {
                   — The Eurasian House Team
                 </div>
               </div>
-              <p>{product.description}</p>
+              <div className="product-description">
+                {product.description}
+              </div>
             </div>
 
             <div className="col-md-6">
