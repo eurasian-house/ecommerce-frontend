@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";
 import { getOrderById } from "../services/orderService";
+import { getReviewByOrderItem } from "../services/reviewService";
 import "../styles/customer-order.css";
 
 const STATUS_FLOW = [
@@ -31,6 +32,7 @@ export default function CustOrderDetail() {
     const [loading, setLoading] = useState(true);
     const [animatedStep, setAnimatedStep] = useState(-1);
     const [lineProgress, setLineProgress] = useState({});
+    const [reviews, setReviews] = useState({});
 
 
     useEffect(() => {
@@ -74,6 +76,20 @@ export default function CustOrderDetail() {
 
             const data = await getOrderById(id);
             setOrder(data);
+
+            const reviewMap = {};
+
+            await Promise.all(
+                (data.order_items || []).map(async (item) => {
+                    const review = await getReviewByOrderItem(item.id);
+
+                    if (review) {
+                        reviewMap[item.id] = review;
+                    }
+                })
+            );
+
+            setReviews(reviewMap);
 
         } catch (err) {
             console.error("fetchOrder error:", err);
@@ -332,6 +348,34 @@ export default function CustOrderDetail() {
                                                 month: "short",
                                                 year: "numeric",
                                             })}
+
+                                            {order.status === "delivered" && (
+                                                <div className="mt-3">
+
+                                                    {reviews[item.id] ? (
+
+                                                        <Link
+                                                            to={`/write-review/${item.id}`}
+                                                            className="btn btn-outline-dark btn-sm rounded-pill"
+                                                        >
+                                                            <i className="bi bi-pencil-square me-2"></i>
+                                                            Edit Review
+                                                        </Link>
+
+                                                    ) : (
+
+                                                        <Link
+                                                            to={`/write-review/${item.id}`}
+                                                            className="btn btn-dark btn-sm rounded-pill"
+                                                        >
+                                                            <i className="bi bi-star-fill me-2"></i>
+                                                            Write Review
+                                                        </Link>
+
+                                                    )}
+
+                                                </div>
+                                            )}
                                         </div>
 
                                     </div>
