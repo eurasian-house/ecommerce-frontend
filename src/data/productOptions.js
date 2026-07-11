@@ -15,6 +15,7 @@ export const MAIN_CATEGORIES = [
     "Hand Knotted Rugs",
     "Persian Rugs",
     "Tibetan Weave Rugs",
+    "Jute Rugs",
     "Flatweave Rugs/Dhurries",
     "Leather Rugs/Pouffe",
     "Hand Knotted Persian",
@@ -25,7 +26,7 @@ export const MAIN_CATEGORIES = [
 ];
 
 export const SUB_CATEGORIES = [
-    "Jute Rugs",
+    "Braided Jute Rugs",
     "Wool Rugs",
     "Cotton Rugs",
     
