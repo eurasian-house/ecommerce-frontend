@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { supabase } from "../lib/supabase";
+import { assignDefaultAvatar } from "../utils/assignDefaultAvatar";
 
 const AuthContext = createContext();
 
