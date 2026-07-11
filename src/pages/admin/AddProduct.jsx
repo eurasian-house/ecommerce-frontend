@@ -1,4 +1,7 @@
 import { useState, useEffect, useRef } from "react";
+import { DndContext, closestCenter, } from "@dnd-kit/core";
+import { SortableContext, verticalListSortingStrategy, useSortable, arrayMove, } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 import { supabase } from "../../lib/supabase";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -6,6 +9,7 @@ import { compressImage, IMAGE_RULES } from "../../utils/imageCompression";
 import ImageUploadBox from "../../components/common/ImageUploadBox";
 import "./AddProduct.css";
 import ProductSelect from "../../components/common/ProductSelect";
+
 
 
 import {
@@ -19,6 +23,49 @@ import {
     ITEM_TYPES,
     STATUS_OPTIONS,
 } from "../../data/productOptions";
+
+function SortableSizeCard({ id, children }) {
+
+    const {
+        attributes,
+        listeners,
+        setNodeRef,
+        transform,
+        transition,
+    } = useSortable({ id });
+
+    const style = {
+        transform: CSS.Transform.toString(transform),
+        transition,
+    };
+
+    return (
+        <div
+            ref={setNodeRef}
+            style={style}
+            className="position-relative"
+        >
+            <div
+                {...attributes}
+                {...listeners}
+                className="position-absolute"
+                style={{
+                    top: 14,
+                    right: 14,
+                    cursor: "grab",
+                    fontSize: "22px",
+                    color: "#888",
+                    zIndex: 5,
+                    userSelect: "none",
+                }}
+            >
+                <i className="bi bi-grip-vertical"></i>
+            </div>
+
+            {children}
+        </div>
+    );
+}
 
 export default function AddProduct() {
 
@@ -44,8 +91,16 @@ export default function AddProduct() {
         quality: "",
         hsn: "",
         status: "",
-        colors: [{ color_name: "", color_image: "" }],
-        sizes: [{ size: "", mrp_variation: "", discount_variation: "", selling_price: "", stock: "", sku: "" }]
+        colors: [{ id: null, color_name: "", color_image: "" }],
+        sizes: [{
+            id: null,
+            size: "",
+            mrp_variation: "",
+            discount_variation: "",
+            selling_price: "",
+            stock: "",
+            sku: ""
+        }]
     };
 
     const [form, setForm] = useState(initialForm);
@@ -56,6 +111,9 @@ export default function AddProduct() {
 
     const isDirty = useRef(false);
     const navData = location.state;
+
+    const originalColorIds = useRef([]);
+    const originalSizeIds = useRef([]);
 
     const uploadImage = async (file, folder = "products/misc") => {
         const formData = new FormData();
@@ -175,6 +233,31 @@ export default function AddProduct() {
         setForm({ ...form, sizes: updated });
     };
 
+    const handleSizeDragEnd = (event) => {
+
+        const { active, over } = event;
+
+        if (!over || active.id === over.id) return;
+
+        setForm(prev => {
+
+            const oldIndex = prev.sizes.findIndex(
+                s => (s.id || `new-${prev.sizes.indexOf(s)}`) === active.id
+            );
+
+            const newIndex = prev.sizes.findIndex(
+                s => (s.id || `new-${prev.sizes.indexOf(s)}`) === over.id
+            );
+
+            return {
+                ...prev,
+                sizes: arrayMove(prev.sizes, oldIndex, newIndex)
+            };
+        });
+
+        isDirty.current = true;
+    };
+
     const validateForm = () => {
         let newErrors = {};
 
@@ -250,28 +333,164 @@ export default function AddProduct() {
                 images: form.images
             }).eq("id", editingId);
 
-            await supabase.from("product_colors").delete().eq("product_id", editingId);
-            await supabase.from("product_sizes").delete().eq("product_id", editingId);
+            // await supabase.from("product_colors").delete().eq("product_id", editingId);
+            // await supabase.from("product_sizes").delete().eq("product_id", editingId);
 
-            await supabase.from("product_colors").insert(
-                form.colors.map(c => ({
-                    product_id: editingId,
-                    color_name: c.color_name,
-                    color_image: c.color_image
-                }))
+
+
+
+
+
+            // await supabase.from("product_colors").insert(
+            //     form.colors.map(c => ({
+            //         product_id: editingId,
+            //         color_name: c.color_name,
+            //         color_image: c.color_image
+            //     }))
+            // );
+
+            // await supabase.from("product_sizes").insert(
+            //     form.sizes.map(s => ({
+            //         product_id: editingId,
+            //         size: s.size,
+            //         mrp_variation: s.mrp_variation,
+            //         discount_variation: s.discount_variation,
+            //         selling_price: s.selling_price,
+            //         stock: s.stock,
+            //         sku: s.sku
+            //     }))
+            // );
+
+            // Colors
+
+            const existingColors = form.colors.filter(c => c.id);
+
+            if (existingColors.length) {
+                const { error } = await supabase
+                    .from("product_colors")
+                    .upsert(
+                        existingColors.map(c => ({
+                            id: c.id,
+                            product_id: editingId,
+                            color_name: c.color_name,
+                            color_image: c.color_image
+                        }))
+                    );
+
+                if (error) throw error;
+            }
+
+
+            const newColors = form.colors.filter(c => !c.id);
+
+            if (newColors.length) {
+                await supabase
+                    .from("product_colors")
+                    .insert(
+                        newColors.map(c => ({
+                            product_id: editingId,
+                            color_name: c.color_name,
+                            color_image: c.color_image
+                        }))
+                    );
+            }
+
+            // Sizes
+            const existingSizes = form.sizes.filter(s => s.id);
+
+            if (existingSizes.length) {
+                const { error } = await supabase
+                    .from("product_sizes")
+                    .upsert(
+                        existingSizes.map((s, index) => ({
+                            id: s.id,
+                            product_id: editingId,
+                            size: s.size,
+                            mrp_variation: s.mrp_variation,
+                            discount_variation: s.discount_variation,
+                            selling_price: s.selling_price,
+                            stock: s.stock,
+                            sku: s.sku,
+                            sort_order: index
+                        }))
+                    );
+
+                if (error) throw error;
+            }
+
+
+            const newSizes = form.sizes.filter(s => !s.id);
+
+            if (newSizes.length) {
+                await supabase
+                    .from("product_sizes")
+                    .insert(
+                        newSizes.map((s, index) => ({
+                            product_id: editingId,
+                            size: s.size,
+                            mrp_variation: s.mrp_variation,
+                            discount_variation: s.discount_variation,
+                            selling_price: s.selling_price,
+                            stock: s.stock,
+                            sku: s.sku,
+                            sort_order: form.sizes.findIndex(x => x === s)
+                        }))
+                    );
+            }
+
+
+            // Deletion
+
+            const removedColorIds = originalColorIds.current.filter(
+                id => !form.colors.some(c => c.id === id)
             );
 
-            await supabase.from("product_sizes").insert(
-                form.sizes.map(s => ({
-                    product_id: editingId,
-                    size: s.size,
-                    mrp_variation: s.mrp_variation,
-                    discount_variation: s.discount_variation,
-                    selling_price: s.selling_price,
-                    stock: s.stock,
-                    sku: s.sku
-                }))
+            for (const id of removedColorIds) {
+
+                const { count } = await supabase
+                    .from("order_items")
+                    .select("*", { count: "exact", head: true })
+                    .eq("color_id", id);
+
+                if (count > 0) {
+                    alert("One or more removed colors are already used in orders and cannot be deleted.");
+                    continue;
+                }
+
+                await supabase
+                    .from("product_colors")
+                    .delete()
+                    .eq("id", id);
+            }
+
+
+
+            const removedSizeIds = originalSizeIds.current.filter(
+                id => !form.sizes.some(s => s.id === id)
             );
+
+            for (const id of removedSizeIds) {
+
+                const { count } = await supabase
+                    .from("order_items")
+                    .select("*", { count: "exact", head: true })
+                    .eq("size_id", id);
+
+                if (count > 0) {
+                    alert("One or more removed sizes are already used in orders and cannot be deleted.");
+                    continue;
+                }
+
+                await supabase
+                    .from("product_sizes")
+                    .delete()
+                    .eq("id", id);
+            }
+
+
+
+
+
 
             alert("Product Updated ✅");
         } else {
@@ -361,11 +580,13 @@ export default function AddProduct() {
             tags: product.tags || [],
 
             colors: (product.colors || []).map(c => ({
+                id: c.id,
                 color_name: c.color_name || "",
                 color_image: c.color_image || "",
             })),
 
             sizes: (product.sizes || []).map(s => ({
+                id: s.id,
                 size: s.size || "",
                 mrp_variation: s.mrp_variation || "",
                 discount_variation: s.discount_variation || "",
@@ -381,6 +602,18 @@ export default function AddProduct() {
         }
 
         setForm(loadedProduct);
+
+
+
+        originalColorIds.current = loadedProduct.colors
+            .filter(c => c.id)
+            .map(c => c.id);
+
+        originalSizeIds.current = loadedProduct.sizes
+            .filter(s => s.id)
+            .map(s => s.id);
+
+
 
         setIsEditing(mode === "edit");
         setEditingId(mode === "edit" ? product.id : null);
@@ -1231,122 +1464,144 @@ export default function AddProduct() {
 
                     </div>
 
-                    {
-                        form.sizes.map((s, i) => (
+                    <DndContext
+                        collisionDetection={closestCenter}
+                        onDragEnd={handleSizeDragEnd}
+                    >
+                        <SortableContext
+                            items={form.sizes.map(
+                                (s, index) => s.id || `new-${index}`
+                            )}
+                            strategy={verticalListSortingStrategy}
+                        >
 
-                            <div className="card h-100 border-0 shadow-sm section-card p-3">
+                            {
+                                form.sizes.map((s, i) => (
 
-                                <div className="row g-3">
+                                    <SortableSizeCard
+                                        key={s.id || `new-${i}`}
+                                        id={s.id || `new-${i}`}
+                                    >
 
-                                    <div className="col-md-3">
+                                        <div className="card h-100 border-0 shadow-sm section-card p-3">
 
-                                        <label className="form-label">
-                                            Size
-                                        </label>
+                                            <div className="row g-3">
 
-                                        <input
-                                            className="form-control"
-                                            name="size"
-                                            value={s.size}
-                                            placeholder="e.g. 5 × 7 ft"
-                                            onChange={(e) => handleSizeChange(i, e)}
-                                        />
+                                                <div className="col-md-3">
 
-                                    </div>
+                                                    <label className="form-label">
+                                                        Size
+                                                    </label>
 
-                                    <div className="col-md-1">
+                                                    <input
+                                                        className="form-control"
+                                                        name="size"
+                                                        value={s.size}
+                                                        placeholder="e.g. 5 × 7 ft"
+                                                        onChange={(e) => handleSizeChange(i, e)}
+                                                    />
 
-                                        <label className="form-label">
-                                            MRP ($)
-                                        </label>
+                                                </div>
 
-                                        <input
-                                            className="form-control"
-                                            name="mrp_variation"
-                                            value={s.mrp_variation}
-                                            placeholder="MRP"
-                                            onChange={(e) => handleSizeChange(i, e)}
-                                        />
+                                                <div className="col-md-1">
 
-                                    </div>
+                                                    <label className="form-label">
+                                                        MRP ($)
+                                                    </label>
 
-                                    <div className="col-md-2">
+                                                    <input
+                                                        className="form-control"
+                                                        name="mrp_variation"
+                                                        value={s.mrp_variation}
+                                                        placeholder="MRP"
+                                                        onChange={(e) => handleSizeChange(i, e)}
+                                                    />
 
-                                        <label className="form-label">
-                                            Discount (%)
-                                        </label>
+                                                </div>
 
-                                        <input
-                                            className="form-control"
-                                            name="discount_variation"
-                                            value={s.discount_variation}
-                                            placeholder="Discount"
-                                            onChange={(e) => handleSizeChange(i, e)}
-                                        />
+                                                <div className="col-md-2">
 
-                                    </div>
+                                                    <label className="form-label">
+                                                        Discount (%)
+                                                    </label>
 
-                                    <div className="col-md-2">
+                                                    <input
+                                                        className="form-control"
+                                                        name="discount_variation"
+                                                        value={s.discount_variation}
+                                                        placeholder="Discount"
+                                                        onChange={(e) => handleSizeChange(i, e)}
+                                                    />
 
-                                        <label className="form-label">
-                                            Selling Price
-                                        </label>
+                                                </div>
 
-                                        <input
-                                            className="form-control price-output"
-                                            value={s.selling_price}
-                                            readOnly
-                                            placeholder="Auto Calculated"
-                                        />
+                                                <div className="col-md-2">
 
-                                    </div>
+                                                    <label className="form-label">
+                                                        Selling Price
+                                                    </label>
 
-                                    <div className="col-md-1">
+                                                    <input
+                                                        className="form-control price-output"
+                                                        value={s.selling_price}
+                                                        readOnly
+                                                        placeholder="Auto Calculated"
+                                                    />
 
-                                        <label className="form-label">
-                                            Stock
-                                        </label>
+                                                </div>
 
-                                        <input
-                                            className="form-control"
-                                            name="stock"
-                                            value={s.stock}
-                                            placeholder="Stock"
-                                            onChange={(e) => handleSizeChange(i, e)}
-                                        />
+                                                <div className="col-md-1">
 
-                                    </div>
+                                                    <label className="form-label">
+                                                        Stock
+                                                    </label>
 
-                                    <div className="col-md-2">
+                                                    <input
+                                                        className="form-control"
+                                                        name="stock"
+                                                        value={s.stock}
+                                                        placeholder="Stock"
+                                                        onChange={(e) => handleSizeChange(i, e)}
+                                                    />
 
-                                        <label className="form-label">
-                                            SKU
-                                        </label>
+                                                </div>
 
-                                        <input
-                                            className="form-control"
-                                            name="sku"
-                                            value={s.sku}
-                                            placeholder="Unique SKU"
-                                            onChange={(e) => handleSizeChange(i, e)}
-                                        />
+                                                <div className="col-md-2">
 
-                                    </div>
+                                                    <label className="form-label">
+                                                        SKU
+                                                    </label>
 
-                                    <div className="col-lg-1 d-flex align-items-end">
+                                                    <input
+                                                        className="form-control"
+                                                        name="sku"
+                                                        value={s.sku}
+                                                        placeholder="Unique SKU"
+                                                        onChange={(e) => handleSizeChange(i, e)}
+                                                    />
 
-                                        <button type="button" className="btn w-10" onClick={() => removeSize(i)}>
-                                            <i className="bi bi-trash me-2"></i>
-                                        </button>
+                                                </div>
 
-                                    </div>
+                                                <div className="col-lg-1 d-flex align-items-end">
 
-                                </div>
+                                                    <button type="button" className="btn w-10" onClick={() => removeSize(i)}>
+                                                        <i className="bi bi-trash me-2"></i>
+                                                    </button>
 
-                            </div>
+                                                </div>
 
-                        ))
-                    }
+                                            </div>
+
+                                        </div>
+
+                                    </SortableSizeCard>
+
+                                ))
+                            }
+
+                        </SortableContext>
+
+                    </DndContext>
 
                     < button
                         className="btn btn-outline-dark rounded-pill"

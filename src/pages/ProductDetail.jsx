@@ -93,7 +93,17 @@ export default function ProductDetail() {
   const fetchProduct = async () => {
     const { data } = await supabase
       .from("products")
-      .select(`*, product_colors (*), product_sizes (*)`)
+      .select(`
+  *,
+  product_colors (*),
+  product_sizes (
+    *
+  )
+`)
+      .order("sort_order", {
+        foreignTable: "product_sizes",
+        ascending: true,
+      })
       .eq("slug", slug)
       .single();
 
@@ -113,8 +123,14 @@ export default function ProductDetail() {
         .select(`
     *,
     product_colors (*),
-    product_sizes (*)
-  `)
+    product_sizes (
+      *
+    )
+`)
+        .order("sort_order", {
+          foreignTable: "product_sizes",
+          ascending: true,
+        })
         .eq("main_category", data.main_category)
         .eq("shape", data.shape)
         .neq("id", data.id)
@@ -270,7 +286,8 @@ export default function ProductDetail() {
                   style={{
                     flex: 1,
                     position: "relative",
-                    textAlign: "center"
+                    maxWidth: "700px",
+                    margin: "0 auto",
                   }}
                 >
                   <button
@@ -291,17 +308,28 @@ export default function ProductDetail() {
                     <i className="bi bi-chevron-left"></i>
                   </button>
 
-                  <img
-                    src={optimizeUrl(selectedImage)}
-                    alt={product.title}
-                    onClick={() => setPreviewImage(optimizeUrl(selectedImage))}
+                  <div
                     style={{
                       width: "100%",
-                      maxHeight: window.innerWidth < 768 ? "300px" : "500px",
-                      objectFit: "contain",
-                      cursor: "zoom-in"
+                      aspectRatio: "1 / 1",
+                      borderRadius: "20px",
+                      overflow: "hidden",
+                      background: "#f8f8f8",
                     }}
-                  />
+                  >
+                    <img
+                      src={optimizeUrl(selectedImage)}
+                      alt={product.title}
+                      onClick={() => setPreviewImage(optimizeUrl(selectedImage))}
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover",
+                        display: "block",
+                        cursor: "zoom-in",
+                      }}
+                    />
+                  </div>
 
                   <button
                     onClick={nextImage}
@@ -391,6 +419,7 @@ export default function ProductDetail() {
                       src={optimizeUrl(c.color_image)}
                       alt={`${product.title} - ${c.color_name}`}
                       loading="lazy"
+                      title={c.color_name}
                       onClick={() => {
                         setSelectedImage(c.color_image);
                         setSelectedColor(c);
@@ -410,7 +439,10 @@ export default function ProductDetail() {
               {/* SIZES */}
               <div className="mt-3">
                 <strong>Sizes:</strong>
-                <div className="d-flex gap-2 mt-2 overflow-auto pb-2">
+                <div
+                  className="d-flex flex-nowrap gap-2 mt-2 overflow-auto pb-2"
+                  style={{ whiteSpace: "nowrap" }}
+                >
                   {product.product_sizes?.map((s, i) => (
                     <button
                       key={i}
@@ -431,8 +463,7 @@ export default function ProductDetail() {
                           discount: discount || Number(product.discount_percent)
                         });
                       }}
-                      className={`size-btn ${selectedSize === s ? "active" : ""
-                        }`}
+                      className={`size-btn flex-shrink-0 ${selectedSize === s ? "active" : ""}`}
                     >
                       {s.size}
                     </button>
@@ -442,7 +473,12 @@ export default function ProductDetail() {
 
               <p className="mt-3">Shape: {product.shape}</p>
               <p>Pattern: {product.pattern}</p>
-              <p>Material: {product.materials}</p>
+              <p>
+                Materials:{" "}
+                {Array.isArray(product.materials)
+                  ? product.materials.join(", ")
+                  : product.materials}
+              </p>
 
               <div className="mt-2 text-muted">
                 <i className="bi bi-truck me-2"></i>
@@ -613,7 +649,10 @@ export default function ProductDetail() {
                 </li>
 
                 <li className="list-group-item">
-                  <strong>Material:</strong> {product.materials}
+                  <strong>Materials:</strong>{" "}
+                  {Array.isArray(product.materials)
+                    ? product.materials.join(", ")
+                    : product.materials}
                 </li>
 
                 <li className="list-group-item">

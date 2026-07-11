@@ -127,6 +127,7 @@ export default function Checkout() {
 
           if (!verifyRes.ok || !verifyData.success) {
             alert("Payment verification failed");
+            setLoading(false);
             return;
           }
 
@@ -141,6 +142,7 @@ export default function Checkout() {
 
         } catch (err) {
           alert("Payment verification error");
+          setLoading(false);
         }
       },
 
@@ -165,6 +167,9 @@ export default function Checkout() {
     }
 
     const rzp = new window.Razorpay(options);
+    rzp.on("payment.failed", function () {
+      setLoading(false);
+    });
     rzp.open();
 
   };
@@ -215,7 +220,6 @@ export default function Checkout() {
     } catch (err) {
       console.error(err);
       alert("Error processing payment");
-    } finally {
       setLoading(false);
     }
   };

@@ -146,11 +146,14 @@ export default function ProductList({ colorFilter }) { // ✅ receive prop
     }
 
     if (category) {
-      data = data.filter(
-        (p) =>
-          p.main_category?.toLowerCase() === category.toLowerCase() ||
-          p.sub_category?.toLowerCase() === category.toLowerCase() ||
-          p.shape?.toLowerCase() === category.toLowerCase()
+      data = data.filter((p) =>
+        p.main_category?.toLowerCase() === category.toLowerCase() ||
+
+        (p.sub_category || []).some(
+          (sub) => sub.toLowerCase().includes(category.toLowerCase())
+        ) ||
+
+        p.shape?.toLowerCase() === category.toLowerCase()
       );
     }
 
