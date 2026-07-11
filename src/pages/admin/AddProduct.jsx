@@ -16,6 +16,8 @@ import {
     PATTERNS,
     QUALITIES,
     COLORS,
+    ITEM_TYPES,
+    STATUS_OPTIONS,
 } from "../../data/productOptions";
 
 export default function AddProduct() {
@@ -24,7 +26,7 @@ export default function AddProduct() {
         title: "",
         slug: "",
         main_category: "",
-        sub_category: "",
+        sub_category: [],
         item_type: "",
         description: "",
         production_days: "",
@@ -178,7 +180,7 @@ export default function AddProduct() {
 
         if (!form.title) newErrors.title = true;
         if (!form.main_category) newErrors.main_category = true;
-        if (!form.sub_category) newErrors.sub_category = true;
+        if (form.sub_category.length === 0) newErrors.sub_category = true;
         if (!form.item_type) newErrors.item_type = true;
         if (!form.description) newErrors.description = true;
         if (!form.production_days) newErrors.production_days = true;
@@ -355,6 +357,7 @@ export default function AddProduct() {
 
             other_colors: product.other_colors || [],
             materials: product.materials || [],
+            sub_category: product.sub_category || [],
             tags: product.tags || [],
 
             colors: (product.colors || []).map(c => ({
@@ -654,13 +657,34 @@ export default function AddProduct() {
                                 <div className="col-md-6">
 
                                     <ProductSelect
-                                        label="Sub Category"
+                                        label="Sub Categories"
                                         name="sub_category"
                                         value={form.sub_category}
                                         options={SUB_CATEGORIES}
-                                        placeholder="Select Sub Category"
+                                        placeholder="Select Sub Categories"
                                         required
                                         error={errors.sub_category}
+                                        isMulti
+                                        onChange={(selected) =>
+                                            setForm(prev => ({
+                                                ...prev,
+                                                sub_category: selected.map(item => item.value),
+                                            }))
+                                        }
+                                    />
+
+                                </div>
+
+                                <div className="col-md-6">
+
+                                    <ProductSelect
+                                        label="Item Type"
+                                        name="item_type"
+                                        value={form.item_type}
+                                        options={ITEM_TYPES}
+                                        placeholder="Select Item Type"
+                                        required
+                                        error={errors.item_type}
                                         onChange={handleChange}
                                     />
 
@@ -668,39 +692,16 @@ export default function AddProduct() {
 
                                 <div className="col-md-6">
 
-                                    <label className="form-label">
-                                        Item Type <span className="text-danger">*</span>
-                                    </label>
-
-                                    <select
-                                        className={`form-select ${errors.item_type ? "is-invalid" : ""}`}
-                                        name="item_type"
-                                        value={form.item_type}
-                                        onChange={handleChange}
-                                    >
-                                        <option value="">Select Item Type</option>
-                                        <option value="physical">Physical</option>
-                                        <option value="digital">Digital</option>
-                                    </select>
-
-                                </div>
-
-                                <div className="col-md-6">
-
-                                    <label className="form-label">
-                                        Status <span className="text-danger">*</span>
-                                    </label>
-
-                                    <select
-                                        className={`form-select ${errors.status ? "is-invalid" : ""}`}
+                                    <ProductSelect
+                                        label="Status"
                                         name="status"
                                         value={form.status}
+                                        options={STATUS_OPTIONS}
+                                        placeholder="Select Status"
+                                        required
+                                        error={errors.status}
                                         onChange={handleChange}
-                                    >
-                                        <option value="">Select Status</option>
-                                        <option value="active">Active</option>
-                                        <option value="inactive">Inactive</option>
-                                    </select>
+                                    />
 
                                 </div>
 

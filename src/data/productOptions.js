@@ -10,23 +10,33 @@ export const STATUS_OPTIONS = [
 ];
 
 export const MAIN_CATEGORIES = [
-    "Handmade Rugs",
     "Hand Tufted Rugs",
     "Hand Loom Rugs",
-    "Flatweave Rugs",
-    "Outdoor Rugs",
-    "Carpets",
+    "Hand Knotted Rugs",
+    "Persian Rugs",
+    "Tibetan Weave Rugs",
+    "Flatweave Rugs/Dhurries",
+    "Leather Rugs/Pouffe",
+    "Hand Knotted Persian",
+    "Hand Knotted Kashmiri",
+    "Indo-Gabbeh Rugs",
+    "Turkish Rugs",
+    
 ];
 
 export const SUB_CATEGORIES = [
     "Jute Rugs",
     "Wool Rugs",
     "Cotton Rugs",
-    "Persian Rugs",
-    "Modern Rugs",
-    "Vintage Rugs",
-    "Runner Rugs",
-    "Round Rugs",
+    
+    "Isfahan Rugs",
+    "Tabriz Rugs",
+    "Heriz Rugs",
+    "Oushak Rugs",
+
+    "Dhurrie",
+    "Kilim",
+    "Soumak",
 ];
 
 export const MATERIALS = [
@@ -58,10 +68,10 @@ export const PATTERNS = [
 ];
 
 export const QUALITIES = [
-    "Basic",
     "Standard",
-    "Premium",
     "Luxury",
+    "Premium",
+    "Antique",
 ];
 
 export const COLORS = [
