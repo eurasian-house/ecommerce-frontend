@@ -10,6 +10,8 @@ import ProductCard from "../components/ProductCard";
 import ProductQuestions from "../components/ProductQuestions";
 import ProductReviews from "../components/ProductReviews";
 import { toast } from "react-toastify";
+import { sortSizes } from "../utils/sortSizes";
+
 
 import "./ProductDetail.css";
 
@@ -30,6 +32,7 @@ export default function ProductDetail() {
 
   const [product, setProduct] = useState(null);
   const [selectedImage, setSelectedImage] = useState("");
+  const [selectedImages, setSelectedImages] = useState({});
   const [previewImage, setPreviewImage] = useState(null);
   const [images, setImages] = useState([]);
   const [selectedSize, setSelectedSize] = useState(null);
@@ -44,6 +47,8 @@ export default function ProductDetail() {
   });
   // From Cart
   const { addToCart } = useCart();
+
+
 
 
 
@@ -94,16 +99,13 @@ export default function ProductDetail() {
     const { data } = await supabase
       .from("products")
       .select(`
-  *,
-  product_colors (*),
-  product_sizes (
-    *
-  )
-`)
-      .order("sort_order", {
-        foreignTable: "product_sizes",
-        ascending: true,
-      })
+    *,
+    product_colors (*),
+    product_sizes (
+      *
+    )
+  `)
+
       .eq("slug", slug)
       .single();
 
@@ -121,26 +123,37 @@ export default function ProductDetail() {
       const { data: relatedData } = await supabase
         .from("products")
         .select(`
-    *,
-    product_colors (*),
-    product_sizes (
-      *
-    )
-`)
-        .order("sort_order", {
-          foreignTable: "product_sizes",
-          ascending: true,
-        })
+      *,
+      product_colors (*),
+      product_sizes (
+        *
+      )
+  `)
         .eq("main_category", data.main_category)
         .eq("shape", data.shape)
         .neq("id", data.id)
         .limit(10);
 
-      setRelated(relatedData || []);
+      setRelated(
+        (relatedData || []).map(product => ({
+          ...product,
+          product_sizes: sortSizes(product.product_sizes || []),
+        }))
+      );
     }
 
+    if (data?.product_sizes) {
+      data.product_sizes = sortSizes(data.product_sizes);
+    }
     setProduct(data);
   };
+
+
+
+
+
+
+
 
   const nextImage = () => {
     const index = images.indexOf(selectedImage);
@@ -411,7 +424,7 @@ export default function ProductDetail() {
 
               {/* COLORS */}
               <div className="mt-3">
-                <strong>Colors:</strong>
+                <strong>Colors:</strong><p className="text-muted mb-2">Didn't find the color you want? worry not, we customize it with zero additional cost...</p>
                 <div className="d-flex gap-2 mt-2 flex-wrap">
                   {product.product_colors?.map((c, i) => (
                     <img
@@ -438,7 +451,7 @@ export default function ProductDetail() {
 
               {/* SIZES */}
               <div className="mt-3">
-                <strong>Sizes:</strong>
+                <strong>Sizes:</strong><p className="text-muted mb-2">Didn't found your size? worry not, we customize it with zero additional cost...</p>
                 <div
                   className="d-flex flex-nowrap gap-2 mt-2 overflow-auto pb-2"
                   style={{ whiteSpace: "nowrap" }}
@@ -488,6 +501,12 @@ export default function ProductDetail() {
                   month: "short",
                   year: "numeric",
                 })}
+              </div>
+
+              <div className="mt-2 text-muted">
+                <i className="bi bi-airplane"></i>
+                <strong> Shipping:</strong> <span className="text-muted mb-2"> <span style={{ color: "#198754", fontWeight: "bold" }}>Free</span> All around the globe</span>
+
               </div>
 
 
@@ -583,6 +602,13 @@ export default function ProductDetail() {
               <ProductCard
                 key={product.id}
                 product={product}
+                selectedImage={selectedImages[product.id]}
+                onColorClick={(productId, image) =>
+                  setSelectedImages((prev) => ({
+                    ...prev,
+                    [productId]: image,
+                  }))
+                }
               />
             ))}
           </div>

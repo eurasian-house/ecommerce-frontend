@@ -7,7 +7,6 @@ import { loadRazorpay } from "../utils/loadRazorpay";
 import { trackBeginCheckout, trackPurchase } from "../lib/analytics";
 
 export default function Checkout() {
-  console.log("NEW BUILD LOADED");
   const { cart, clearCart } = useCart();
   const navigate = useNavigate();
 
@@ -177,7 +176,6 @@ export default function Checkout() {
 
   const handlePlaceOrder = async () => {
     trackBeginCheckout(cart);
-    // console.log("Payment Method:", paymentMethod);
     if (
       !form.name ||
       !form.phone ||
@@ -223,6 +221,7 @@ export default function Checkout() {
       setLoading(false);
     }
   };
+  
   return (
     <div className="container py-5">
       <div

@@ -22,14 +22,16 @@ export const MAIN_CATEGORIES = [
     "Hand Knotted Kashmiri",
     "Indo-Gabbeh Rugs",
     "Turkish Rugs",
-    
+
 ];
 
 export const SUB_CATEGORIES = [
     "Braided Jute Rugs",
     "Wool Rugs",
+    "Runner Rugs",
+    "Runner Rugs",
     "Cotton Rugs",
-    
+
     "Isfahan Rugs",
     "Tabriz Rugs",
     "Heriz Rugs",
@@ -42,11 +44,12 @@ export const SUB_CATEGORIES = [
 
 export const MATERIALS = [
     "Jute",
-    "Wool",
+    "Premium Natural Wool",
     "Cotton",
     "Silk",
     "Viscose",
     "Leather",
+    "Natural Dyes(Where applicable)",
 ];
 
 export const SHAPES = [
@@ -55,6 +58,7 @@ export const SHAPES = [
     "Square",
     "Oval",
     "Runner",
+    "Irregular",
 ];
 
 export const PATTERNS = [
@@ -100,3 +104,28 @@ export const COLORS = [
     "White",
     "Yellow",
 ];
+
+export const CATEGORY_CODES = {
+    "Hand Tufted Rugs": "HTR",
+    "Hand Loom Rugs": "HLR",
+    "Hand Knotted Rugs": "HKR",
+    "Persian Rugs": "PRG",
+    "Tibetan Weave Rugs": "TWR",
+    "Jute Rugs": "JTR",
+    "Flatweave Rugs/Dhurries": "FWR",
+    "Leather Rugs/Pouffe": "LRP",
+    "Hand Knotted Persian": "HKP",
+    "Hand Knotted Kashmiri": "HKK",
+    "Indo-Gabbeh Rugs": "IGR",
+    "Turkish Rugs": "TRG",
+};
+
+export const SHAPE_CODES = {
+    Rectangle: "REC",
+    Round: "RND",
+    Square: "SQR",
+    Runner: "RUN",
+    Oval: "OVL",
+    Irregular: "IRR",
+};
+

@@ -9,10 +9,10 @@ export const compressImage = (file, { maxWidth, quality }) => {
 
         img.onload = () => {
             const canvas = document.createElement("canvas");
-            const scale = maxWidth / img.width;
+            const scale = Math.min(1, maxWidth / img.width);
 
-            canvas.width = maxWidth;
-            canvas.height = img.height * scale;
+            canvas.width = Math.round(img.width * scale);
+            canvas.height = Math.round(img.height * scale);
 
             const ctx = canvas.getContext("2d");
             ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
@@ -36,7 +36,7 @@ export const compressImage = (file, { maxWidth, quality }) => {
 
 // RULES (single source of truth)
 export const IMAGE_RULES = {
-    thumbnail: { maxWidth: 600, quality: 0.7 },
+    thumbnail: { maxWidth: 1200, quality: 0.75 },
     gallery: { maxWidth: 1200, quality: 0.75 },
     variant: { maxWidth: 800, quality: 0.7 },
 

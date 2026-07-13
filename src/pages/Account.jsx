@@ -33,6 +33,7 @@ export default function Account() {
   const [originalProfile, setOriginalProfile] = useState(null);
   const navigate = useNavigate();
   const [visibleOrders, setVisibleOrders] = useState(10);
+  const [saving, setSaving] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -154,6 +155,7 @@ export default function Account() {
       toast.error("Please correct the highlighted fields.");
       return;
     }
+    setSaving(true);
     try {
       const { error } = await supabase
         .from("profiles")
@@ -167,6 +169,8 @@ export default function Account() {
           country: profile.country,
         })
         .eq("id", profile.id);
+
+      if (error) throw error;
 
       // Update reviewer name in all previous reviews
       const { error: reviewNameError } = await supabase
@@ -198,6 +202,8 @@ export default function Account() {
     } catch (err) {
       console.error(err);
       toast.error("Unable to update your profile. Please try again.");
+    } finally {
+      setSaving(false);
     }
   };
 
@@ -298,9 +304,23 @@ export default function Account() {
                       <button
                         className="btn btn-dark btn-sm rounded-pill px-3"
                         onClick={handleSave}
+                        disabled={saving}
                       >
-                        <i className="bi bi-check-lg me-1"></i>
-                        Save
+                        {saving ? (
+                          <>
+                            <span
+                              className="spinner-border spinner-border-sm me-2"
+                              role="status"
+                              aria-hidden="true"
+                            ></span>
+                            Saving...
+                          </>
+                        ) : (
+                          <>
+                            <i className="bi bi-check-lg me-1"></i>
+                            Save
+                          </>
+                        )}
                       </button>
 
                       <button

@@ -8,9 +8,9 @@
   --color-primary: #8d6c2f;
 }
 
-html {
+/* html {
   scroll-behavior: smooth;
-}
+} */
 
 * {
   margin: 0;

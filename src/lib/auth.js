@@ -4,7 +4,7 @@ import { supabase } from "./supabase";
 
 // SIGN UP
 export async function signUp({ email, password, options }) {
-    console.log("signUp called:", email);
+    // console.log("signUp called:", email);
     const { data, error } = await supabase.auth.signUp({
         email,
         password,
@@ -35,7 +35,7 @@ export async function signUp({ email, password, options }) {
     }
 
     // ✅ SUCCESS
-    console.log("signUp response:", data);
+    // console.log("signUp response:", data);
     return data;
 }
 

@@ -9,8 +9,6 @@ export async function createOrder(cartItems, customerData) {
     return { success: false, error: "User not logged in" };
   }
 
-  console.log("Cart Items Received:", cartItems);
-
   const totalAmount = cartItems.reduce(
     (sum, item) => sum + item.price * item.quantity,
     0
@@ -77,13 +75,6 @@ export async function createOrder(cartItems, customerData) {
     state: customerData.state,
     country: customerData.country,
   }));
-
-
-  // For Debugging
-  // console.log(
-  //   "Items going into order_items:",
-  //   JSON.stringify(items, null, 2)
-  // );
 
   const { error: itemsError } = await supabase
     .from("order_items")

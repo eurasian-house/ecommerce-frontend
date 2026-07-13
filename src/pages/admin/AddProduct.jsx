@@ -1,7 +1,4 @@
 import { useState, useEffect, useRef } from "react";
-import { DndContext, closestCenter, } from "@dnd-kit/core";
-import { SortableContext, verticalListSortingStrategy, useSortable, arrayMove, } from "@dnd-kit/sortable";
-import { CSS } from "@dnd-kit/utilities";
 import { supabase } from "../../lib/supabase";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -9,8 +6,6 @@ import { compressImage, IMAGE_RULES } from "../../utils/imageCompression";
 import ImageUploadBox from "../../components/common/ImageUploadBox";
 import "./AddProduct.css";
 import ProductSelect from "../../components/common/ProductSelect";
-
-
 
 import {
     MAIN_CATEGORIES,
@@ -22,50 +17,41 @@ import {
     COLORS,
     ITEM_TYPES,
     STATUS_OPTIONS,
+    CATEGORY_CODES,
+    SHAPE_CODES,
 } from "../../data/productOptions";
 
-function SortableSizeCard({ id, children }) {
+const generateProductCode = async () => {
 
-    const {
-        attributes,
-        listeners,
-        setNodeRef,
-        transform,
-        transition,
-    } = useSortable({ id });
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
-    const style = {
-        transform: CSS.Transform.toString(transform),
-        transition,
-    };
+    while (true) {
 
-    return (
-        <div
-            ref={setNodeRef}
-            style={style}
-            className="position-relative"
-        >
-            <div
-                {...attributes}
-                {...listeners}
-                className="position-absolute"
-                style={{
-                    top: 14,
-                    right: 14,
-                    cursor: "grab",
-                    fontSize: "22px",
-                    color: "#888",
-                    zIndex: 5,
-                    userSelect: "none",
-                }}
-            >
-                <i className="bi bi-grip-vertical"></i>
-            </div>
+        const code = Array.from(
+            { length: 4 },
+            () => chars[Math.floor(Math.random() * chars.length)]
+        ).join("");
 
-            {children}
-        </div>
-    );
-}
+        const { data } = await supabase
+            .from("product_sizes")
+            .select("id")
+            .ilike("sku", `%-${code}-%`)
+            .limit(1);
+
+        if (!data || data.length === 0) {
+            return code;
+        }
+    }
+};
+
+const formatSizeCode = (size = "") => {
+
+    const match = size.match(/(\d+(?:\.\d+)?)\s*[x×]\s*(\d+(?:\.\d+)?)\s*ft/i);
+
+    if (!match) return "";
+
+    return `${match[1]}X${match[2]}`;
+};
 
 export default function AddProduct() {
 
@@ -104,6 +90,7 @@ export default function AddProduct() {
     };
 
     const [form, setForm] = useState(initialForm);
+    const [productCode, setProductCode] = useState("");
     const [isEditing, setIsEditing] = useState(false);
     const [editingId, setEditingId] = useState(null);
     const [errors, setErrors] = useState({});
@@ -156,6 +143,14 @@ export default function AddProduct() {
                     : {})
             };
 
+            if (name === "main_category" || name === "shape") {
+                updated.sizes = regenerateSkus(
+                    updated.sizes,
+                    name === "main_category" ? value : updated.main_category,
+                    name === "shape" ? value : updated.shape
+                );
+            }
+
             if (
                 name === "primary_color" &&
                 updated.colors.length &&
@@ -203,7 +198,14 @@ export default function AddProduct() {
             updated[i].selling_price = "";
         }
 
-        setForm({ ...form, sizes: updated });
+        setForm({
+            ...form,
+            sizes: regenerateSkus(
+                updated,
+                form.main_category,
+                form.shape
+            ),
+        });
     };
 
     const addColor = () => {
@@ -213,9 +215,27 @@ export default function AddProduct() {
 
     const addSize = () => {
         isDirty.current = true;
+
+        const updated = [
+            ...form.sizes,
+            {
+                id: null,
+                size: "",
+                mrp_variation: "",
+                discount_variation: "",
+                selling_price: "",
+                stock: "",
+                sku: "",
+            },
+        ];
+
         setForm({
             ...form,
-            sizes: [...form.sizes, { size: "", mrp_variation: "", discount_variation: "", selling_price: "", stock: "", sku: "" }]
+            sizes: regenerateSkus(
+                updated,
+                form.main_category,
+                form.shape
+            ),
         });
     };
 
@@ -230,32 +250,26 @@ export default function AddProduct() {
         isDirty.current = true;
         const updated = [...form.sizes];
         updated.splice(index, 1);
-        setForm({ ...form, sizes: updated });
+        setForm({
+            ...form,
+            sizes: regenerateSkus(
+                updated,
+                form.main_category,
+                form.shape
+            ),
+        });
     };
 
-    const handleSizeDragEnd = (event) => {
 
-        const { active, over } = event;
+    const regenerateSkus = (sizes, category, shape) => {
 
-        if (!over || active.id === over.id) return;
+        const categoryCode = CATEGORY_CODES[category] || "UNK";
+        const shapeCode = SHAPE_CODES[shape] || "UNK";
 
-        setForm(prev => {
-
-            const oldIndex = prev.sizes.findIndex(
-                s => (s.id || `new-${prev.sizes.indexOf(s)}`) === active.id
-            );
-
-            const newIndex = prev.sizes.findIndex(
-                s => (s.id || `new-${prev.sizes.indexOf(s)}`) === over.id
-            );
-
-            return {
-                ...prev,
-                sizes: arrayMove(prev.sizes, oldIndex, newIndex)
-            };
-        });
-
-        isDirty.current = true;
+        return sizes.map((size, index) => ({
+            ...size,
+            sku: `${categoryCode}${formatSizeCode(size.size)}${shapeCode}-${productCode}-${String(index + 1).padStart(3, "0")}`,
+        }));
     };
 
     const validateForm = () => {
@@ -333,36 +347,6 @@ export default function AddProduct() {
                 images: form.images
             }).eq("id", editingId);
 
-            // await supabase.from("product_colors").delete().eq("product_id", editingId);
-            // await supabase.from("product_sizes").delete().eq("product_id", editingId);
-
-
-
-
-
-
-            // await supabase.from("product_colors").insert(
-            //     form.colors.map(c => ({
-            //         product_id: editingId,
-            //         color_name: c.color_name,
-            //         color_image: c.color_image
-            //     }))
-            // );
-
-            // await supabase.from("product_sizes").insert(
-            //     form.sizes.map(s => ({
-            //         product_id: editingId,
-            //         size: s.size,
-            //         mrp_variation: s.mrp_variation,
-            //         discount_variation: s.discount_variation,
-            //         selling_price: s.selling_price,
-            //         stock: s.stock,
-            //         sku: s.sku
-            //     }))
-            // );
-
-            // Colors
-
             const existingColors = form.colors.filter(c => c.id);
 
             if (existingColors.length) {
@@ -411,7 +395,6 @@ export default function AddProduct() {
                             selling_price: s.selling_price,
                             stock: s.stock,
                             sku: s.sku,
-                            sort_order: index
                         }))
                     );
 
@@ -433,7 +416,6 @@ export default function AddProduct() {
                             selling_price: s.selling_price,
                             stock: s.stock,
                             sku: s.sku,
-                            sort_order: form.sizes.findIndex(x => x === s)
                         }))
                     );
             }
@@ -599,9 +581,17 @@ export default function AddProduct() {
         if (mode === "copy") {
             loadedProduct.title = `${product.title} (Copy)`;
             loadedProduct.slug = createSlug(loadedProduct.title);
+            generateProductCode().then(setProductCode);
         }
 
         setForm(loadedProduct);
+        const firstSku = loadedProduct.sizes?.[0]?.sku || "";
+
+        const match = firstSku.match(/-([A-Z0-9]{4})-/);
+
+        if (match) {
+            setProductCode(match[1]);
+        }
 
 
 
@@ -637,6 +627,19 @@ export default function AddProduct() {
         }
 
     }, [form.mrp, form.discount_percent]);
+
+
+    const shouldCompressImages = () => {
+        const main = form.main_category?.toLowerCase() || "";
+
+        const hasHandKnottedMain = main.includes("hand knotted");
+
+        const hasHandKnottedSub = (form.sub_category || []).some((sub) =>
+            sub.toLowerCase().includes("hand knotted")
+        );
+
+        return !(hasHandKnottedMain || hasHandKnottedSub);
+    };
 
 
     const optimizeUrl = (url) => {
@@ -678,6 +681,17 @@ export default function AddProduct() {
     }, []);
 
 
+    useEffect(() => {
+
+        if (!isEditing) {
+
+            generateProductCode().then(setProductCode);
+
+        }
+
+    }, [isEditing]);
+
+
 
     /* ---------- Upload Helpers ---------- */
 
@@ -686,13 +700,12 @@ export default function AddProduct() {
 
         if (!file) return;
 
-        const compressed = await compressImage(
-            file,
-            IMAGE_RULES.thumbnail
-        );
+        const fileToUpload = shouldCompressImages()
+            ? await compressImage(file, IMAGE_RULES.thumbnail)
+            : file;
 
         const url = await uploadImage(
-            compressed,
+            fileToUpload,
             "products/thumbnails"
         );
 
@@ -727,13 +740,12 @@ export default function AddProduct() {
 
             [...files].map(async (file) => {
 
-                const compressed = await compressImage(
-                    file,
-                    IMAGE_RULES.gallery
-                );
+                const fileToUpload = shouldCompressImages()
+                    ? await compressImage(file, IMAGE_RULES.gallery)
+                    : file;
 
                 return await uploadImage(
-                    compressed,
+                    fileToUpload,
                     "products/gallery"
                 );
 
@@ -757,13 +769,12 @@ export default function AddProduct() {
 
         if (!file) return;
 
-        const compressed = await compressImage(
-            file,
-            IMAGE_RULES.variant
-        );
+        const fileToUpload = shouldCompressImages()
+            ? await compressImage(file, IMAGE_RULES.variant)
+            : file;
 
         const url = await uploadImage(
-            compressed,
+            fileToUpload,
             "products/variants"
         );
 
@@ -1463,145 +1474,134 @@ export default function AddProduct() {
                         </div>
 
                     </div>
+                    <div>
 
-                    <DndContext
-                        collisionDetection={closestCenter}
-                        onDragEnd={handleSizeDragEnd}
-                    >
-                        <SortableContext
-                            items={form.sizes.map(
-                                (s, index) => s.id || `new-${index}`
-                            )}
-                            strategy={verticalListSortingStrategy}
-                        >
 
-                            {
-                                form.sizes.map((s, i) => (
 
-                                    <SortableSizeCard
-                                        key={s.id || `new-${i}`}
-                                        id={s.id || `new-${i}`}
-                                    >
 
-                                        <div className="card h-100 border-0 shadow-sm section-card p-3">
+                        {
+                            form.sizes.map((s, i) => (
 
-                                            <div className="row g-3">
+                                <div
+                                    key={s.id || `new-${i}`}
+                                >
 
-                                                <div className="col-md-3">
+                                    <div className="card h-100 border-0 shadow-sm section-card p-3">
 
-                                                    <label className="form-label">
-                                                        Size
-                                                    </label>
+                                        <div className="row g-3">
 
-                                                    <input
-                                                        className="form-control"
-                                                        name="size"
-                                                        value={s.size}
-                                                        placeholder="e.g. 5 × 7 ft"
-                                                        onChange={(e) => handleSizeChange(i, e)}
-                                                    />
+                                            <div className="col-md-3">
 
-                                                </div>
+                                                <label className="form-label">
+                                                    Size
+                                                </label>
 
-                                                <div className="col-md-1">
+                                                <input
+                                                    className="form-control"
+                                                    name="size"
+                                                    value={s.size}
+                                                    placeholder="e.g. 5 × 7 ft"
+                                                    onChange={(e) => handleSizeChange(i, e)}
+                                                />
 
-                                                    <label className="form-label">
-                                                        MRP ($)
-                                                    </label>
+                                            </div>
 
-                                                    <input
-                                                        className="form-control"
-                                                        name="mrp_variation"
-                                                        value={s.mrp_variation}
-                                                        placeholder="MRP"
-                                                        onChange={(e) => handleSizeChange(i, e)}
-                                                    />
+                                            <div className="col-md-1">
 
-                                                </div>
+                                                <label className="form-label">
+                                                    MRP ($)
+                                                </label>
 
-                                                <div className="col-md-2">
+                                                <input
+                                                    className="form-control"
+                                                    name="mrp_variation"
+                                                    value={s.mrp_variation}
+                                                    placeholder="MRP"
+                                                    onChange={(e) => handleSizeChange(i, e)}
+                                                />
 
-                                                    <label className="form-label">
-                                                        Discount (%)
-                                                    </label>
+                                            </div>
 
-                                                    <input
-                                                        className="form-control"
-                                                        name="discount_variation"
-                                                        value={s.discount_variation}
-                                                        placeholder="Discount"
-                                                        onChange={(e) => handleSizeChange(i, e)}
-                                                    />
+                                            <div className="col-md-2">
 
-                                                </div>
+                                                <label className="form-label">
+                                                    Discount (%)
+                                                </label>
 
-                                                <div className="col-md-2">
+                                                <input
+                                                    className="form-control"
+                                                    name="discount_variation"
+                                                    value={s.discount_variation}
+                                                    placeholder="Discount"
+                                                    onChange={(e) => handleSizeChange(i, e)}
+                                                />
 
-                                                    <label className="form-label">
-                                                        Selling Price
-                                                    </label>
+                                            </div>
 
-                                                    <input
-                                                        className="form-control price-output"
-                                                        value={s.selling_price}
-                                                        readOnly
-                                                        placeholder="Auto Calculated"
-                                                    />
+                                            <div className="col-md-2">
 
-                                                </div>
+                                                <label className="form-label">
+                                                    Selling Price
+                                                </label>
 
-                                                <div className="col-md-1">
+                                                <input
+                                                    className="form-control price-output"
+                                                    value={s.selling_price}
+                                                    readOnly
+                                                    placeholder="Auto Calculated"
+                                                />
 
-                                                    <label className="form-label">
-                                                        Stock
-                                                    </label>
+                                            </div>
 
-                                                    <input
-                                                        className="form-control"
-                                                        name="stock"
-                                                        value={s.stock}
-                                                        placeholder="Stock"
-                                                        onChange={(e) => handleSizeChange(i, e)}
-                                                    />
+                                            <div className="col-md-1">
 
-                                                </div>
+                                                <label className="form-label">
+                                                    Stock
+                                                </label>
 
-                                                <div className="col-md-2">
+                                                <input
+                                                    className="form-control"
+                                                    name="stock"
+                                                    value={s.stock}
+                                                    placeholder="Stock"
+                                                    onChange={(e) => handleSizeChange(i, e)}
+                                                />
 
-                                                    <label className="form-label">
-                                                        SKU
-                                                    </label>
+                                            </div>
 
-                                                    <input
-                                                        className="form-control"
-                                                        name="sku"
-                                                        value={s.sku}
-                                                        placeholder="Unique SKU"
-                                                        onChange={(e) => handleSizeChange(i, e)}
-                                                    />
+                                            <div className="col-md-2">
 
-                                                </div>
+                                                <label className="form-label">
+                                                    SKU
+                                                </label>
 
-                                                <div className="col-lg-1 d-flex align-items-end">
+                                                <input
+                                                    className="form-control"
+                                                    name="sku"
+                                                    value={s.sku}
+                                                    placeholder="Unique SKU"
+                                                    onChange={(e) => handleSizeChange(i, e)}
+                                                />
 
-                                                    <button type="button" className="btn w-10" onClick={() => removeSize(i)}>
-                                                        <i className="bi bi-trash me-2"></i>
-                                                    </button>
+                                            </div>
 
-                                                </div>
+                                            <div className="col-lg-1 d-flex align-items-end">
+
+                                                <button type="button" className="btn w-10" onClick={() => removeSize(i)}>
+                                                    <i className="bi bi-trash me-2"></i>
+                                                </button>
 
                                             </div>
 
                                         </div>
 
-                                    </SortableSizeCard>
+                                    </div>
 
-                                ))
-                            }
+                                </div>
 
-                        </SortableContext>
-
-                    </DndContext>
+                            ))
+                        }
+                    </div>
 
                     < button
                         className="btn btn-outline-dark rounded-pill"

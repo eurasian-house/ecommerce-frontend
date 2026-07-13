@@ -72,7 +72,7 @@ export const getReviews = async () => {
 };
 
 export const approveReview = async (review) => {
-    console.log(review);
+    // console.log(review);
     const { error } = await supabase
         .from("product_reviews")
         .update({

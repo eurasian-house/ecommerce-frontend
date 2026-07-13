@@ -194,6 +194,7 @@ export default function ProductReviews({ productId }) {
                     return (
 
                         <div
+                            key={star}
                             className="d-flex align-items-center mb-4"
                         >
 

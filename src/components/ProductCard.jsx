@@ -104,15 +104,16 @@ export default function ProductCard({
                   width: 20,
                   height: 20,
                   borderRadius: "50%",
-                  backgroundColor:
-                    c.color_name?.toLowerCase(),
+                  background:
+                    c.color_name?.toLowerCase() === "multicolor"
+                      ? "conic-gradient(red, orange, yellow, green, cyan, blue, violet, red)"
+                      : c.color_name?.toLowerCase(),
                   border:
                     selectedImage === c.color_image
                       ? "3px solid black"
                       : "2px solid #cfcfcf",
                   cursor: "pointer",
-                  boxShadow:
-                    "0 1px 3px rgba(0,0,0,.15)",
+                  boxShadow: "0 1px 3px rgba(0,0,0,.15)",
                 }}
               />
             ))}

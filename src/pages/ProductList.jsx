@@ -82,8 +82,6 @@ export default function ProductList({ colorFilter }) { // ✅ receive prop
       budget ||
       discount ||
       colorFilter ||
-      // shape ||
-      // quality ||
       autoShapes?.length ||
       autoQuality ||
       sort;
@@ -147,7 +145,7 @@ export default function ProductList({ colorFilter }) { // ✅ receive prop
 
     if (category) {
       data = data.filter((p) =>
-        p.main_category?.toLowerCase() === category.toLowerCase() ||
+        p.main_category?.toLowerCase().includes(category.toLowerCase()) ||
 
         (p.sub_category || []).some(
           (sub) => sub.toLowerCase().includes(category.toLowerCase())

@@ -65,8 +65,8 @@ export default function RefundPolicy() {
 
         <h2>8. Cancellation</h2>
         <p>
-          Orders may be cancelled before 48 hours of order placement. After 48 hours of an order has been
-          placed, cancellation may not be possible and the customer have to bear the cost of product.
+          Orders may be cancelled before 48 hours of order placement or before the order is processed. After 48 hours of an order has been
+          placed or order has been processed, cancellation may not be possible.
         </p>
 
         <h2>9. Contact Us</h2>

@@ -26,7 +26,7 @@ export default function Wholesale() {
                             <div className="d-flex flex-wrap gap-3 mt-4">
 
                                 <a
-                                    href="/contact"
+                                    href="/wholesale-contact"
                                     className="btn btn-dark px-4 py-3"
                                 >
                                     Contact Wholesale Team
@@ -66,6 +66,91 @@ export default function Wholesale() {
                 </div>
 
             </section>
+            {/* Free Sampling */}
+
+            <section className="free-sampling">
+
+                <div className="container">
+
+                    <div className="row align-items-center g-5">
+
+                        <div className="col-lg-6 order-lg-2">
+
+                            <div className="partner-image">
+
+                                <img
+                                    src="/images/rug-samples.jpg"
+                                    alt="Free rug samples"
+                                    className="img-fluid"
+                                />
+
+                            </div>
+
+                        </div>
+
+                        <div className="col-lg-6 order-lg-1">
+
+                            <span className="partner-label">
+                                EXPERIENCE BEFORE YOU ORDER
+                            </span>
+
+                            <h2>
+                                Complimentary Rug Samples for Serious Wholesale Buyers
+                            </h2>
+
+                            <p>
+                                Choosing the right manufacturing partner should never involve
+                                guesswork. We offer complimentary rug samples so you can
+                                personally evaluate our craftsmanship, materials, colors,
+                                weaving quality, and finishing before placing a production order.
+                            </p>
+
+                            <p>
+                                Simply cover the international shipping cost, and we'll prepare
+                                and dispatch your samples with the same attention to detail that
+                                goes into every rug we manufacture.
+                            </p>
+
+                            <div className="sampling-card">
+
+                                <div className="sampling-item">
+                                    <i className="bi bi-check-circle-fill"></i>
+                                    <span>Free handcrafted rug samples</span>
+                                </div>
+
+                                <div className="sampling-item">
+                                    <i className="bi bi-check-circle-fill"></i>
+                                    <span>Only shipping charges apply</span>
+                                </div>
+
+                                <div className="sampling-item">
+                                    <i className="bi bi-check-circle-fill"></i>
+                                    <span>Evaluate quality before bulk production</span>
+                                </div>
+
+                                <div className="sampling-item">
+                                    <i className="bi bi-check-circle-fill"></i>
+                                    <span>Ideal for wholesalers, retailers, importers & interior designers</span>
+                                </div>
+
+                            </div>
+
+                            <a
+                                href="wholesale-contact"
+                                className="btn btn-dark rounded-pill px-5 py-3 mt-4"
+                            >
+                                Request Free Samples
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
             {/* Trusted Manufacturing Partner */}
 
             <section className="manufacturing-partner">

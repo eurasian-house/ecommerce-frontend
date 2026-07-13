@@ -4,8 +4,8 @@ const slides = [
     {
         id: 1,
         image: "/heroimages/hero1.jpg",
-        title: "Timeless Hand-Knotted Masterpieces",
-        subtitle: "Crafted by master artisans to bring warmth, elegance, and enduring beauty to every home."
+        title: "Eurasian House : Free Worldwide Delivery",
+        subtitle: "Experience uncompromising luxury with zero shipping fees on all global orders."
     },
     {
         id: 2,
@@ -28,8 +28,8 @@ const slides = [
     {
         id: 5,
         image: "/heroimages/hero5.jpg",
-        title: "Designed to Last for Generations",
-        subtitle: "Invest in heirloom-quality rugs that become more beautiful with time."
+        title: "Eurasian House: Scaled Pricing, Free Global Shipping",
+        subtitle: "Premium craftsmanship that becomes more rewarding the larger the size you choose."
     },
 ];
 

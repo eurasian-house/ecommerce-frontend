@@ -1064,3 +1064,52 @@ Wholesale CTA
     }
 
 }
+
+
+/* ==========================================================
+   FREE SAMPLING
+========================================================== */
+
+.free-sampling {
+    padding: 90px 0;
+    background: #faf8f5;
+}
+
+.sampling-card {
+    margin-top: 30px;
+    background: #fff;
+    border-radius: 22px;
+    padding: 28px;
+    box-shadow: 0 15px 45px rgba(0, 0, 0, .06);
+    border: 1px solid rgba(0, 0, 0, .05);
+}
+
+.sampling-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 18px;
+}
+
+.sampling-item:last-child {
+    margin-bottom: 0;
+}
+
+.sampling-item i {
+    color: #b48a2c;
+    font-size: 1.15rem;
+}
+
+.sampling-item span {
+    color: #555;
+    font-weight: 500;
+    line-height: 1.6;
+}
+
+.free-sampling .btn {
+    transition: .3s;
+}
+
+.free-sampling .btn:hover {
+    transform: translateY(-2px);
+}

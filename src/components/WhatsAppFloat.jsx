@@ -12,16 +12,20 @@ export default function WhatsAppFloat() {
     message = "Hi, I am facing an issue while logging in.";
   } else if (path.includes("/signup")) {
     message = "Hi, I need help creating my account.";
+  } else if (path.includes("/account")) {
+    message = "Hi, I need help setting up my account.";
   } else if (path.includes("/forgot-password")) {
     message = "Hi, I need help resetting my password.";
   } else if (path.includes("/cart")) {
     message = "Hi, I need help with my cart/order.";
+  } else if (path.includes("/blogs")) {
+    message = "Hi, I need help with your blogs.";
   } else if (path.includes("/products")) {
     message = `Hi, I need help regarding this product/page: ${window.location.href}`;
   }
 
   const whatsappLink =
-    `https://wa.me/917054763786?text=${encodeURIComponent(message)}`;
+    `https://wa.me/917080012972?text=${encodeURIComponent(message)}`;
 
   return (
     <a

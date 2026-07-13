@@ -24,13 +24,16 @@ export default function ShippingPolicy() {
         <h2>2. Delivery Timeline</h2>
         <p>
           Estimated delivery times vary by destination and shipping method.
-          Delivery dates are estimates and are not guaranteed.
+          Delivery dates are estimates and are not guaranteed. Delivery date will be displayed during checkout or in Product Detail page.
         </p>
 
         <h2>3. Shipping Charges</h2>
         <p>
-          We offer <strong>Free Shipping</strong> to all over the world. Shipping charges, if applicable, will be displayed during checkout or in Product Detail page,
-          before you complete your purchase.
+          We offer <strong>Free Shipping</strong> to all over the world. Shipping charges, if applicable, will be displayed during checkout or on the Product Detail page, before you complete your purchase. We try our best to ensure worry-free delivery all around the globe without any extra cost.<br/><br/>
+
+          Please note that customs charges etc are not included in the item price or shipping cost. 
+          Because these fees vary widely from country to country and are set by your local government, they are the responsibility of the buyer. <br/><br/>
+          We deeply care about your shopping experience, so we recommend checking your local customs website to anticipate any additional fees upon arrival.
         </p>
 
         <h2>4. Order Tracking</h2>
@@ -53,7 +56,7 @@ export default function ShippingPolicy() {
 
         <h2>7. International Shipping</h2>
         <p>
-          International shipping may be available for selected destinations.
+          International shipping is available and its completely free.
           Customers are responsible for any customs duties etc
           imposed by their country. But Shipping charge/Delivery charge is completely free.
         </p>
