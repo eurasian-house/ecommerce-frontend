@@ -57,3 +57,33 @@
     border-color:#d4b06a;
     box-shadow:0 12px 30px rgba(212,176,106,.35);
 }
+
+.payment-badge{
+    display:flex;
+    align-items:center;
+    gap:8px;
+
+    padding:8px 14px;
+
+    border:1px solid rgba(255,255,255,.12);
+
+    border-radius:10px;
+
+    background:rgba(255,255,255,.04);
+
+    color:#fff;
+
+    font-size:.9rem;
+
+    transition:.25s;
+}
+
+.payment-badge:hover{
+    background:rgba(255,255,255,.08);
+    transform:translateY(-2px);
+}
+
+.payment-badge i{
+    font-size:1rem;
+    color:#d4af37;
+}

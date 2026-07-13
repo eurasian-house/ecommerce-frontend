@@ -351,7 +351,6 @@ const Footer = () => {
 
 
           {/* Contact */}
-          {/* Contact */}
           <div className="col-lg-3">
 
             <h6
@@ -405,10 +404,61 @@ const Footer = () => {
                   Worldwide Shipping
                 </span>
               </div>
+              <div className="d-flex">
+                <i class="bi bi-truck me-3"></i>
+                <span className="text-secondary">
+                  Free Shipping Available
+                </span>
+              </div>
+              <div className="d-flex">
+                <i className="bi bi-shield me-3"></i>
+                <span className="text-secondary">
+                  Secure Payments
+                </span>
+              </div>
 
             </div>
 
           </div>
+
+          {/* Accepted Payments */}
+
+          <div className="col-lg-3 col-md-6 mb-4">
+            <h6 className="text-uppercase fw-bold mb-4">
+              Accepted Payments
+            </h6>
+
+            <div className="d-flex flex-wrap gap-2">
+
+              <span className="payment-badge">
+                <i className="bi bi-credit-card-2-front"></i>
+                Visa
+              </span>
+
+              <span className="payment-badge">
+                <i className="bi bi-credit-card"></i>
+                Mastercard
+              </span>
+
+              <span className="payment-badge">
+                <i className="bi bi-paypal"></i>
+                PayPal
+              </span>
+
+              <span className="payment-badge">
+                <i className="bi bi-wallet2"></i>
+                Razorpay
+              </span>
+
+              <span className="payment-badge">
+                <i className="bi bi-credit-card-fill"></i>
+                AmEx
+              </span>
+
+            </div>
+          </div>
+
+
 
         </div>
 

@@ -372,8 +372,6 @@ const Contact = () => {
                         }}
                       >
                         contact@eurasianrugs.com
-                        <br />
-                        contacteurasianhouse@gmail.com
                       </p>
                     </div>
 
