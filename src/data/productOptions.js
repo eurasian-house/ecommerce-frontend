@@ -100,6 +100,7 @@ export const COLORS = [
     "Red",
     "Rust",
     "Silver",
+    "Sky Blue",
     "Tan",
     "Teal",
     "White",
