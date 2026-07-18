@@ -29,7 +29,6 @@ export const SUB_CATEGORIES = [
     "Braided Jute Rugs",
     "Wool Rugs",
     "Runner Rugs",
-    "Runner Rugs",
     "Cotton Rugs",
 
     "Isfahan Rugs",
@@ -50,6 +49,7 @@ export const MATERIALS = [
     "Viscose",
     "Leather",
     "Natural Dyes(Where applicable)",
+    "Natural Latex (Edge Finishing)",
 ];
 
 export const SHAPES = [
@@ -94,6 +94,7 @@ export const COLORS = [
     "Multicolor",
     "Navy",
     "Orange",
+    "Olive",
     "Pink",
     "Purple",
     "Red",

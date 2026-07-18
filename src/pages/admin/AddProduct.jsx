@@ -799,7 +799,7 @@ export default function AddProduct() {
     return (
         <div className="container-fluid py-4 add-product-page">
             <div className="card section-card p-4">
-                <div className="d-flex justify-content-between align-items-center mb-4">
+                <div className="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3 mb-4">
 
                     <div>
 
@@ -814,13 +814,11 @@ export default function AddProduct() {
                     </div>
 
                     <button
-                        className="btn btn-dark rounded-pill px-4"
+                        className="btn btn-dark rounded-pill px-4 align-self-start align-self-md-auto"
                         onClick={handleSave}
                     >
                         <i className="bi bi-check-circle me-2"></i>
-
                         {isEditing ? "Update Product" : "Save Product"}
-
                     </button>
 
                 </div>
@@ -1389,7 +1387,7 @@ export default function AddProduct() {
 
                         {form.colors.map((c, i) => (
 
-                            <div className="col-6 col-md-3 col-xl-3">
+                            <div className="col-12 col-sm-6 col-lg-4 col-xl-3">
 
                                 <div key={i} className="border rounded-4 p-4 mb-3 bg-light">
 
@@ -1442,7 +1440,7 @@ export default function AddProduct() {
                     </div>
 
                     <button
-                        className="btn btn-outline-dark rounded-pill"
+                        className="btn btn-outline-dark rounded-pill w-100 w-sm-auto"
                         onClick={addColor}
                     >
                         <i className="bi bi-plus-circle me-2"></i>
