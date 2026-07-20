@@ -9,7 +9,30 @@ export async function getProductQuestions(productId) {
 
     if (error) throw error;
 
-    return data;
+    const userIds = [...new Set(
+        (data || []).map((question) => question.user_id).filter(Boolean)
+    )];
+
+    if (!userIds.length) return data;
+
+    const { data: profiles, error: profilesError } = await supabase
+        .from("profiles")
+        .select("id, avatar_url")
+        .in("id", userIds);
+
+    if (profilesError) {
+        console.error("Failed to load current question avatars:", profilesError);
+        return data;
+    }
+
+    const avatarsByUserId = new Map(
+        (profiles || []).map((profile) => [profile.id, profile.avatar_url])
+    );
+
+    return data.map((question) => ({
+        ...question,
+        current_avatar: avatarsByUserId.get(question.user_id),
+    }));
 }
 
 export async function createQuestion(payload) {

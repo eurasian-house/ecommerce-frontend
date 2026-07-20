@@ -53,6 +53,8 @@ const formatSizeCode = (size = "") => {
     return `${match[1]}X${match[2]}`;
 };
 
+const roundPrice = (value) => Math.round(Number(value));
+
 export default function AddProduct() {
 
     const initialForm = {
@@ -193,7 +195,9 @@ export default function AddProduct() {
         const discount = Number(updated[i].discount_variation || 0);
 
         if (mrp && discount) {
-            updated[i].selling_price = mrp - (mrp * discount) / 100;
+            updated[i].selling_price = Math.round(
+                mrp * (100 - discount) / 100
+            );
         } else {
             updated[i].selling_price = "";
         }
@@ -333,7 +337,7 @@ export default function AddProduct() {
                 production_days: form.production_days,
                 mrp: form.mrp,
                 discount_percent: form.discount_percent,
-                selling_price: form.selling_price,
+                selling_price: roundPrice(form.selling_price),
                 materials: form.materials,
                 primary_color: form.primary_color,
                 shape: form.shape,
@@ -392,7 +396,7 @@ export default function AddProduct() {
                             size: s.size,
                             mrp_variation: s.mrp_variation,
                             discount_variation: s.discount_variation,
-                            selling_price: s.selling_price,
+                            selling_price: roundPrice(s.selling_price),
                             stock: s.stock,
                             sku: s.sku,
                         }))
@@ -413,7 +417,7 @@ export default function AddProduct() {
                             size: s.size,
                             mrp_variation: s.mrp_variation,
                             discount_variation: s.discount_variation,
-                            selling_price: s.selling_price,
+                            selling_price: roundPrice(s.selling_price),
                             stock: s.stock,
                             sku: s.sku,
                         }))
@@ -489,7 +493,7 @@ export default function AddProduct() {
                     production_days: form.production_days,
                     mrp: form.mrp,
                     discount_percent: form.discount_percent,
-                    selling_price: form.selling_price,
+                    selling_price: roundPrice(form.selling_price),
                     materials: form.materials,
                     primary_color: form.primary_color,
                     shape: form.shape,
@@ -532,7 +536,7 @@ export default function AddProduct() {
                     size: s.size,
                     mrp_variation: s.mrp_variation,
                     discount_variation: s.discount_variation,
-                    selling_price: s.selling_price,
+                    selling_price: roundPrice(s.selling_price),
                     stock: s.stock,
                     sku: s.sku
                 }))
@@ -555,6 +559,7 @@ export default function AddProduct() {
 
             thumbnail: product.thumbnail || "",
             images: product.images || [],
+            selling_price: product.selling_price ? roundPrice(product.selling_price) : "",
 
             other_colors: product.other_colors || [],
             materials: product.materials || [],
@@ -572,7 +577,7 @@ export default function AddProduct() {
                 size: s.size || "",
                 mrp_variation: s.mrp_variation || "",
                 discount_variation: s.discount_variation || "",
-                selling_price: s.selling_price || "",
+                selling_price: s.selling_price ? roundPrice(s.selling_price) : "",
                 stock: s.stock || "",
                 sku: mode === "copy" ? "" : (s.sku || ""),
             })),
@@ -616,7 +621,7 @@ export default function AddProduct() {
 
         if (!mrp || !discount) return;
 
-        const sp = mrp - (mrp * discount) / 100;
+        const sp = Math.round(mrp - (mrp * discount) / 100);
 
         // prevent unnecessary state updates
         if (sp !== form.selling_price) {

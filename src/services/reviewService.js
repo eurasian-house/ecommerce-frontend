@@ -108,7 +108,30 @@ export const getProductReviews = async (productId) => {
 
     if (error) throw error;
 
-    return data;
+    const userIds = [...new Set(
+        (data || []).map((review) => review.user_id).filter(Boolean)
+    )];
+
+    if (!userIds.length) return data;
+
+    const { data: profiles, error: profilesError } = await supabase
+        .from("profiles")
+        .select("id, avatar_url")
+        .in("id", userIds);
+
+    if (profilesError) {
+        console.error("Failed to load current review avatars:", profilesError);
+        return data;
+    }
+
+    const avatarsByUserId = new Map(
+        (profiles || []).map((profile) => [profile.id, profile.avatar_url])
+    );
+
+    return data.map((review) => ({
+        ...review,
+        current_avatar: avatarsByUserId.get(review.user_id),
+    }));
 };
 
 export const markReviewHelpful = async (reviewId, helpful) => {

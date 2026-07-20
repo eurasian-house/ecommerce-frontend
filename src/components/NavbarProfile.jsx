@@ -34,6 +34,25 @@ export default function NavbarProfile({ user }) {
         .eq("id", user.id)
         .single();
 
+      if (!data) return;
+
+      if (!data.avatar_url) {
+        const { assignDefaultAvatar } = await import("../utils/assignDefaultAvatar");
+        const avatar = assignDefaultAvatar();
+
+        const { error } = await supabase
+          .from("profiles")
+          .update({ avatar_url: avatar })
+          .eq("id", user.id);
+
+        if (error) {
+          console.error("Failed to assign default avatar:", error);
+          return;
+        }
+
+        data.avatar_url = avatar;
+      }
+
       setProfile(data);
     }
 

@@ -61,7 +61,7 @@ export default function Checkout() {
   }, []);
 
   const total = cart.reduce(
-    (sum, item) => sum + (item.price || item.selling_price) * item.quantity,
+    (sum, item) => sum + Math.round(Number(item.price || item.selling_price)) * item.quantity,
     0
   );
 
@@ -447,7 +447,7 @@ export default function Checkout() {
             </span>
 
             <h4 className="fw-bold mb-0">
-              ${total}
+              ${Math.round(total)}
             </h4>
           </div>
 

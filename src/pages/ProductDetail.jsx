@@ -72,7 +72,7 @@ export default function ProductDetail() {
   useEffect(() => {
     if (product) {
       setDisplayPrice({
-        selling: product.selling_price,
+        selling: Math.round(Number(product.selling_price)),
         mrp: product.mrp,
         discount: product.discount_percent
       });
@@ -251,10 +251,10 @@ export default function ProductDetail() {
         ]),
       ]}
     />
-      <div className="container-fluid px-0 mt-3">
+      <div className="product-detail-page container-fluid px-0 mt-3">
 
         <div
-          className="bg-white p-3 p-md-5"
+          className="product-detail-card bg-white p-3 p-md-5"
           style={{
             borderRadius: "24px",
             boxShadow: "0 10px 40px rgba(0,0,0,0.06)"
@@ -265,7 +265,7 @@ export default function ProductDetail() {
             <div style={{ flex: 1, minWidth: 0 }}>
               <div className="d-flex flex-column-reverse flex-md-row gap-3">
 
-                <div className="thumbnail-strip d-flex flex-row flex-md-column gap-2" style={{
+                <div className="product-thumbnail-strip thumbnail-strip d-flex flex-row flex-md-column gap-2" style={{
                   maxHeight: window.innerWidth < 768
                     ? "300px"
                     : "500px",
@@ -290,12 +290,14 @@ export default function ProductDetail() {
                         cursor: "pointer",
                         border: selectedImage === img ? "2px solid black" : "1px solid #ccc"
                       }}
+                      className="product-thumbnail"
                     />
                   ))}
                 </div>
 
                 <div
                   {...handlers}
+                  className="product-image-panel"
                   style={{
                     flex: 1,
                     position: "relative",
@@ -366,7 +368,7 @@ export default function ProductDetail() {
               </div>
             </div>
 
-            <div style={{ flex: 1, minWidth: 0 }}>
+            <div className="product-detail-info" style={{ flex: 1, minWidth: 0 }}>
 
               <p className="text-muted mb-1">{product.main_category}</p>
               <h1
@@ -379,9 +381,9 @@ export default function ProductDetail() {
                 {product.title}
               </h1>
 
-              <div className="d-flex align-items-center gap-3 flex-wrap">
+              <div className="product-price-row d-flex align-items-center gap-3 flex-wrap">
                 <h3 className="mb-0 fw-bold" style={{ color: "#198754" }}>
-                  ${displayPrice.selling}
+                  ${Math.round(Number(displayPrice.selling))}
                 </h3>
 
                 <span
@@ -444,6 +446,7 @@ export default function ProductDetail() {
                         cursor: "pointer",
                         border: selectedColor === c ? "2px solid black" : "1px solid #ccc"
                       }}
+                      className="product-color-swatch"
                     />
                   ))}
                 </div>
@@ -451,37 +454,44 @@ export default function ProductDetail() {
 
               {/* SIZES */}
               <div className="mt-3">
-                <strong>Sizes:</strong><p className="text-muted mb-2">Didn't found your size? worry not, we customize it with zero additional cost...</p>
-                <div
-                  className="d-flex flex-nowrap gap-2 mt-2 overflow-auto pb-2"
-                  style={{ whiteSpace: "nowrap" }}
+                <label htmlFor="size-select" className="form-label fw-bold mb-1">
+                  Size
+                </label>
+                <p className="text-muted mb-2">
+                  Didn't find your size? Worry not, we customize it with zero additional cost.
+                </p>
+                <select
+                  id="size-select"
+                  className="product-size-select"
+                  value={selectedSize?.id ?? ""}
+                  onChange={(e) => {
+                    const size = product.product_sizes?.find(
+                      (s) => String(s.id) === e.target.value
+                    );
+
+                    if (!size) return;
+
+                    setSelectedSize(size);
+
+                    setDisplayPrice({
+                      selling: Math.round(
+                        Number(size.selling_price ?? product.selling_price)
+                      ),
+                      mrp: size.mrp_variation || product.mrp,
+                      discount:
+                        size.discount_variation || Number(product.discount_percent),
+                    });
+                  }}
                 >
+                  <option value="" disabled>
+                    Select a size
+                  </option>
                   {product.product_sizes?.map((s, i) => (
-                    <button
-                      key={i}
-                      onClick={() => {
-                        setSelectedSize(s);
-
-                        const mrp = s.mrp_variation || 0;
-                        const discount = s.discount_variation || 0;
-
-                        const selling =
-                          mrp && discount
-                            ? mrp - (mrp * discount) / 100
-                            : s.selling_price || Number(product.selling_price);
-
-                        setDisplayPrice({
-                          selling,
-                          mrp: mrp || product.mrp,
-                          discount: discount || Number(product.discount_percent)
-                        });
-                      }}
-                      className={`size-btn flex-shrink-0 ${selectedSize === s ? "active" : ""}`}
-                    >
+                    <option key={s.id || i} value={s.id}>
                       {s.size}
-                    </button>
+                    </option>
                   ))}
-                </div>
+                </select>
               </div>
 
               <p className="mt-3">Shape: {product.shape}</p>

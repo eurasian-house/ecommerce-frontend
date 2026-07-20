@@ -71,7 +71,7 @@ export default function Cart() {
                             </h6>
 
                             <p className="mb-1">
-                                ${item.price || item.selling_price}
+                                ${Math.round(Number(item.price || item.selling_price))}
                             </p>
 
                             {item.selectedSize && (
@@ -156,7 +156,7 @@ export default function Cart() {
                     className="btn clear-cart-btn"
                     onClick={clearCart}
                 >
-                    Clear Cart
+                    Clear Cart Now
                 </button>
             </div>
 

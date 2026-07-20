@@ -4,3 +4,100 @@
     font-size: 1.05rem;
     color: #444;
 }
+
+.product-size-select {
+    width: 100%;
+    min-height: 52px;
+    padding: 0 48px 0 16px;
+    appearance: none;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    background-color: #fff;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%23111' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.8' d='m3 6 5 5 5-5'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 17px center;
+    color: #111;
+    cursor: pointer;
+    font-weight: 600;
+    transition: border-color .2s ease, box-shadow .2s ease;
+}
+
+.product-size-select:hover {
+    border-color: #111;
+}
+
+.product-size-select:focus {
+    outline: none;
+    border-color: #111;
+    box-shadow: 0 0 0 3px rgba(17, 17, 17, .1);
+}
+
+.product-size-select option {
+    color: #111;
+    background: #fff;
+}
+
+@media (max-width: 576px) {
+    .product-detail-page {
+        margin-top: .75rem !important;
+    }
+
+    .product-detail-card {
+        padding: .5rem !important;
+        border-radius: 16px !important;
+        box-shadow: 0 6px 24px rgba(0, 0, 0, .05) !important;
+    }
+
+    .product-detail-page .product-thumbnail-strip {
+        gap: .5rem !important;
+    }
+
+    .product-detail-page .product-thumbnail {
+        width: 56px !important;
+        height: 56px !important;
+        border-radius: 10px;
+    }
+
+    .product-detail-page .product-image-panel > div {
+        border-radius: 14px !important;
+    }
+
+    .product-detail-info {
+        font-size: .94rem;
+    }
+
+    .product-detail-info h1 {
+        font-size: 1.6rem !important;
+        line-height: 1.15 !important;
+    }
+
+    .product-price-row {
+        gap: .65rem !important;
+    }
+
+    .product-price-row h3 {
+        font-size: 1.35rem;
+    }
+
+    .product-color-swatch {
+        width: 42px !important;
+        height: 42px !important;
+        border-radius: 10px;
+    }
+
+    .product-size-select {
+        min-height: 48px;
+        font-size: .94rem;
+    }
+
+    .product-detail-page .review-card,
+    .product-detail-page .border.rounded-4.p-4 {
+        padding: 1rem !important;
+        margin-bottom: 1rem !important;
+        border-radius: 14px !important;
+    }
+
+    .product-detail-page .review-card .fs-5 {
+        font-size: 1rem !important;
+    }
+}

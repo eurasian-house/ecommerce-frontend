@@ -90,7 +90,7 @@ export const getProductSchema = (product) => {
 
       priceCurrency: "USD",
 
-      price: product.selling_price,
+      price: Math.round(Number(product.selling_price)),
 
       priceValidUntil: "2027-12-31",
 

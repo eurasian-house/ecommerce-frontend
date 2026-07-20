@@ -23,14 +23,14 @@ const getItem = (product) => ({
   ]
     .filter(Boolean)
     .join(" / "),
-  price: Number(product.selling_price),
+  price: Math.round(Number(product.selling_price)),
   quantity: product.quantity || 1,
 });
 
 export const trackProductView = (product) => {
   ReactGA.event("view_item", {
     currency: "USD",
-    value: Number(product.selling_price),
+    value: Math.round(Number(product.selling_price)),
     items: [getItem(product)],
   });
 };
@@ -38,7 +38,7 @@ export const trackProductView = (product) => {
 export const trackAddToCart = (product) => {
   ReactGA.event("add_to_cart", {
     currency: "USD",
-    value: Number(product.selling_price),
+    value: Math.round(Number(product.selling_price)),
     items: [getItem(product)],
   });
 };
@@ -46,7 +46,7 @@ export const trackAddToCart = (product) => {
 export const trackRemoveFromCart = (product) => {
   ReactGA.event("remove_from_cart", {
     currency: "USD",
-    value: Number(product.selling_price),
+    value: Math.round(Number(product.selling_price)),
     items: [getItem(product)],
   });
 };

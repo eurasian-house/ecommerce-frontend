@@ -72,7 +72,7 @@ export default function ProductCard({
 
           <div className="d-flex align-items-center gap-2">
             <span className="fw-bold fs-6" style={{ color: "#198754" }}>
-              ${product.selling_price}
+              ${Math.round(Number(product.selling_price))}
             </span>
 
             <span className="text-muted text-decoration-line-through small">
@@ -133,7 +133,7 @@ export default function ProductCard({
                   cartItemId: crypto.randomUUID(),
                   selectedColor: firstColor,
                   selectedSize: firstSize,
-                  price: product.selling_price,
+                  price: Math.round(Number(product.selling_price)),
                   quantity: 1,
                 });
 
@@ -159,7 +159,7 @@ export default function ProductCard({
                   cartItemId: crypto.randomUUID(),
                   selectedColor: firstColor,
                   selectedSize: firstSize,
-                  price: product.selling_price,
+                  price: Math.round(Number(product.selling_price)),
                 });
                 toast.success(
                   <div>

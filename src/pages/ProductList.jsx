@@ -361,7 +361,7 @@ export default function ProductList({ colorFilter }) { // ✅ receive prop
         </div>
 
         {/* PRODUCTS */}
-        <div className="row g-4">
+        <div className="row g-3 g-md-4">
           {filtered?.length === 0 ? (
             <div className="text-center mt-5">
               <h5>No products in this category</h5>
@@ -370,7 +370,7 @@ export default function ProductList({ colorFilter }) { // ✅ receive prop
             filtered.slice(0, visibleCount).map((p) => (
               <div
                 key={p.id}
-                className="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 mb-4"
+                className="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-2 mb-3 mb-md-4"
               >
                 <ProductCard
                   product={p}

@@ -109,7 +109,7 @@ export default function TopDeals() {
                                 </h6>
 
                                 <div className="d-flex align-items-center gap-2">
-                                    <span className="fw-bold" style={{ color: "#0F5132" }}>${p.selling_price}</span>
+                                    <span className="fw-bold" style={{ color: "#0F5132" }}>${Math.round(Number(p.selling_price))}</span>
                                     <span className="text-muted text-decoration-line-through small">
                                         ${p.mrp}
                                     </span>

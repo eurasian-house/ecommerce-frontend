@@ -13,6 +13,7 @@ export default function UserAvatar({
         width: size,
         height: size,
         objectFit: "cover",
+        flexShrink: 0,
       }}
       onError={(e) => {
         e.currentTarget.src = "/avatars/avatar-01.webp";

@@ -38,35 +38,34 @@ export default function Inspiration() {
     const applyFilter = () => {
         if (activeTab === "All") {
             setFiltered(products);
-        } else {
-            const data = products.filter((p) => {
-                if (!p.sub_category) return false;
-
-                const subs = p.sub_category
-                    .split(",")
-                    .map((s) => s.trim().toLowerCase());
-
-                return subs.includes(activeTab.toLowerCase());
-            });
-
-            setFiltered(data);
+            setVisibleCount(6);
+            return;
         }
 
+        const tab = activeTab.toLowerCase();
+
+        const data = products.filter((p) => {
+            const qualityMatch =
+                p.quality &&
+                p.quality.toLowerCase() === tab;
+
+            const patternMatch =
+                p.pattern &&
+                p.pattern.toLowerCase() === tab;
+
+            return qualityMatch || patternMatch;
+        });
+
+        setFiltered(data);
         setVisibleCount(6);
     };
 
-    const subCategories = [
+    const tabs = [
         "All",
-        "Bedroom",
-        "Living room",
-        "Kitchen",
-        "Workspace",
-        "Outdoor",
-        "Bathroom",
-        "Baby & children room",
-        "Dining",
-        "Hallway",
-        "Laundry",
+        ...new Set([
+            ...products.map(p => p.quality).filter(Boolean),
+            ...products.map(p => p.pattern).filter(Boolean),
+        ]),
     ];
 
     const handleClick = (id) => {
@@ -108,15 +107,15 @@ export default function Inspiration() {
 
             <div className="d-flex justify-content-center flex-wrap gap-3 mb-5">
 
-                {subCategories.map((cat, i) => (
+                {tabs.map((qlt, i) => (
 
                     <button
                         key={i}
-                        onClick={() => setActiveTab(cat)}
-                        className={`premium-chip ${activeTab === cat ? "active" : ""
+                        onClick={() => setActiveTab(qlt)}
+                        className={`premium-chip ${activeTab === qlt ? "active" : ""
                             }`}
                     >
-                        {cat}
+                        {qlt}
                     </button>
 
                 ))}
@@ -169,12 +168,11 @@ export default function Inspiration() {
                 <div className="text-center mt-5">
 
                     <button
-                        className="btn premium-load-btn"
-                        onClick={() =>
-                            setVisibleCount((prev) => prev + 6)
-                        }
+                        className="btn premium-load-btn px-4 py-2 rounded-pill shadow-sm d-inline-flex align-items-center gap-2"
+                        onClick={() => setVisibleCount((prev) => prev + 6)}
                     >
-                        Explore More
+                        View More Collections
+                        <i className="bi bi-grid"></i>
                     </button>
 
                 </div>

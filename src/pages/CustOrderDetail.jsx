@@ -331,7 +331,7 @@ export default function CustOrderDetail() {
                                         </div>
 
                                         <div className="order-price">
-                                            ${item.price}
+                                            ${Math.round(Number(item.price))}
                                         </div>
 
                                         <div className="text-muted small mb-1">

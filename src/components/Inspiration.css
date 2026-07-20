@@ -141,3 +141,27 @@
 
     transform:translateY(-3px);
 }
+
+.premium-load-btn {
+    background: #1f1f1f;
+    color: #fff;
+    border: none;
+    transition: all .3s ease;
+    font-weight: 500;
+    letter-spacing: .3px;
+}
+
+.premium-load-btn:hover {
+    background: #000;
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0,0,0,.15);
+}
+
+.premium-load-btn i {
+    transition: transform .3s ease;
+}
+
+.premium-load-btn:hover i {
+    transform: translateX(4px);
+}

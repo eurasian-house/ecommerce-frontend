@@ -188,7 +188,8 @@ export default function ProductQuestions({ productId }) {
 
                                 <UserAvatar
                                     src={getAvatar({
-                                        avatar_url: q.customer_avatar
+                                        avatar_url:
+                                            q.current_avatar || q.customer_avatar
                                     })}
                                     alt={q.customer_name}
                                     size={42}

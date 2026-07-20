@@ -285,7 +285,12 @@ export default function ProductReviews({ productId }) {
                                     <div className="d-flex align-items-center flex-grow-1">
 
                                         <UserAvatar
-                                            src={review.reviewer_avatar || review.avatar_url}
+                                            src={getAvatar({
+                                                avatar_url:
+                                                    review.current_avatar ||
+                                                    review.reviewer_avatar ||
+                                                    review.avatar_url,
+                                            })}
                                             alt={review.reviewer_name}
                                             size={48}
                                             className="me-3"
@@ -414,7 +419,8 @@ export default function ProductReviews({ productId }) {
                                                     width: 38,
                                                     height: 38,
                                                     fontSize: ".9rem",
-                                                    fontWeight: 600
+                                                    fontWeight: 600,
+                                                    flexShrink: 0,
                                                 }}
                                             >
                                                 EH

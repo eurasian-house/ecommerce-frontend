@@ -86,7 +86,7 @@ export default function OrderDetails() {
                         </div>
 
 
-                        <div>${item.price}</div>
+                        <div>${Math.round(Number(item.price))}</div>
                     </div>
                 ))}
             </div>

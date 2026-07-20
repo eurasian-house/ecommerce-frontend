@@ -405,7 +405,7 @@ const Footer = () => {
                 </span>
               </div>
               <div className="d-flex">
-                <i class="bi bi-truck me-3"></i>
+                <i className="bi bi-truck me-3"></i>
                 <span className="text-secondary">
                   Free Shipping Available
                 </span>
