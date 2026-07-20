@@ -86,7 +86,7 @@ export default function Inspiration() {
                 </span>
 
                 <h2 className="mt-3 fw-semibold display-6">
-                    Shop by Space
+                    Shop by Quality & Design
                 </h2>
 
                 <p
@@ -97,8 +97,7 @@ export default function Inspiration() {
                         lineHeight: 1.8
                     }}
                 >
-                    Discover handcrafted rugs selected for every interior,
-                    from cozy living spaces to luxurious master suites.
+                    Discover a curated selection of handcrafted carpets, defined by exceptional quality and intricate, signature designs that elevate any interior.
                 </p>
 
             </div>

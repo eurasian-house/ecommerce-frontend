@@ -1,5 +1,6 @@
+import { COLORS } from "../data/productOptions";
+
 export default function Colors({ colorFilter, setColorFilter }) {
-  const COLORS = ["Maroon", "Gold", "Navy Blue", "Green", "Beige", "Brown", "Grey", "White", "Black", "Teal", "Pink", "Orange", "Multi"];
 
   return (
     <div className="mb-4">
@@ -40,17 +41,29 @@ export default function Colors({ colorFilter, setColorFilter }) {
               background:
                 c === "Maroon" ? "#7A1F3D" :
                   c === "Gold" ? "#D4AF37" :
-                    c === "Navy Blue" ? "#1E3A8A" :
-                      c === "Green" ? "#2E8B57" :
-                        c === "Beige" ? "#DCC9A3" :
-                          c === "Brown" ? "#7B4A2F" :
-                            c === "Grey" ? "#8B8B8B" :
-                              c === "White" ? "#FFFFFF" :
-                                c === "Black" ? "#1F1F1F" :
-                                  c === "Teal" ? "#0F766E" :
-                                    c === "Pink" ? "#EC4899" :
-                                      c === "Orange" ? "#EA580C" :
-                                        "linear-gradient(135deg, #ff8707, #ff0000, #1E3A8A, #008138, #ffaa00, #eb5200, #ff00e6)",
+                    c === "Navy" ? "#1E3A8A" :
+                      c === "Blue" ? "#2563EB" :
+                        c === "Sky Blue" ? "#38BDF8" :
+                          c === "Green" ? "#2E8B57" :
+                            c === "Olive" ? "#6B8E23" :
+                              c === "Beige" ? "#DCC9A3" :
+                                c === "Cream" ? "#FFFDD0" :
+                                  c === "Ivory" ? "#FFFFF0" :
+                                    c === "Brown" ? "#7B4A2F" :
+                                      c === "Grey" ? "#8B8B8B" :
+                                        c === "Silver" ? "#C0C0C0" :
+                                          c === "White" ? "#FFFFFF" :
+                                            c === "Black" ? "#1F1F1F" :
+                                              c === "Teal" ? "#0F766E" :
+                                                c === "Pink" ? "#EC4899" :
+                                                  c === "Purple" ? "#7C3AED" :
+                                                    c === "Orange" ? "#EA580C" :
+                                                      c === "Red" ? "#DC2626" :
+                                                        c === "Rust" ? "#B7410E" :
+                                                          c === "Mustard" ? "#D4A017" :
+                                                            c === "Tan" ? "#D2B48C" :
+                                                              c === "Yellow" ? "#FACC15" :
+                                                                "conic-gradient(red, orange, yellow, green, cyan, blue, violet, red)",
 
               border:
                 c === "White"

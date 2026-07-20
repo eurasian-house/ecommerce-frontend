@@ -105,9 +105,33 @@ export default function ProductCard({
                   height: 20,
                   borderRadius: "50%",
                   background:
-                    c.color_name?.toLowerCase() === "multicolor"
-                      ? "conic-gradient(red, orange, yellow, green, cyan, blue, violet, red)"
-                      : c.color_name?.toLowerCase(),
+                    c.color_name === "Maroon" ? "#7A1F3D" :
+                      c.color_name === "Gold" ? "#D4AF37" :
+                        c.color_name === "Navy" ? "#1E3A8A" :
+                          c.color_name === "Blue" ? "#2563EB" :
+                            c.color_name === "Sky Blue" ? "#38BDF8" :
+                              c.color_name === "Green" ? "#2E8B57" :
+                                c.color_name === "Olive" ? "#6B8E23" :
+                                  c.color_name === "Beige" ? "#DCC9A3" :
+                                    c.color_name === "Cream" ? "#FFFDD0" :
+                                      c.color_name === "Ivory" ? "#FFFFF0" :
+                                        c.color_name === "Brown" ? "#7B4A2F" :
+                                          c.color_name === "Grey" ? "#8B8B8B" :
+                                            c.color_name === "Silver" ? "#C0C0C0" :
+                                              c.color_name === "White" ? "#FFFFFF" :
+                                                c.color_name === "Black" ? "#1F1F1F" :
+                                                  c.color_name === "Teal" ? "#0F766E" :
+                                                    c.color_name === "Pink" ? "#EC4899" :
+                                                      c.color_name === "Purple" ? "#7C3AED" :
+                                                        c.color_name === "Orange" ? "#EA580C" :
+                                                          c.color_name === "Red" ? "#DC2626" :
+                                                            c.color_name === "Rust" ? "#B7410E" :
+                                                              c.color_name === "Mustard" ? "#D4A017" :
+                                                                c.color_name === "Tan" ? "#D2B48C" :
+                                                                  c.color_name === "Yellow" ? "#FACC15" :
+                                                                    c.color_name === "Multicolor"
+                                                                      ? "conic-gradient(red, orange, yellow, green, cyan, blue, violet, red)"
+                                                                      : "#ccc",
                   border:
                     selectedImage === c.color_image
                       ? "3px solid black"

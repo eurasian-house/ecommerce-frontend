@@ -27,9 +27,12 @@ import { applyActiveFilter } from "../utils/productQueries";
 import SEO from "../components/SEO";
 import { organizationSchema, websiteSchema } from "../seo/schemas";
 
+
 export default function Products() {
   const [products, setProducts] = useState([]);
+  const [allProducts, setAllProducts] = useState([]);
   const [colorFilter, setColorFilter] = useState("");
+  const displayProducts = colorFilter ? allProducts : products;
   const [selectedImages, setSelectedImages] = useState({});
   const navigate = useNavigate();
 
@@ -41,7 +44,7 @@ export default function Products() {
 
   useEffect(() => {
     fetchProducts();
-  }, [page]);
+  }, [page, colorFilter]);
 
   const fetchProducts = async () => {
     const from = (page - 1) * limit;
@@ -58,21 +61,28 @@ export default function Products() {
 
     query = applyActiveFilter(query); // ✅ active only
 
-    const { data, count, error } = await query
-      .range(from, to);
+    if (colorFilter) {
+      const { data, error } = await query;
 
-    if (error) return alert(error.message);
+      if (error) return alert(error.message);
 
-    setProducts(data || []);
-    setTotal(count || 0);
+      setAllProducts(data || []);
+    } else {
+      const { data, count, error } = await query.range(from, to);
 
-    const imgs = {};
+      if (error) return alert(error.message);
 
-    (data || []).forEach((p) => {
-      imgs[p.id] = p.thumbnail;
-    });
+      setProducts(data || []);
+      setTotal(count || 0);
 
-    setSelectedImages(imgs);
+      const imgs = {};
+
+      (data || []).forEach((p) => {
+        imgs[p.id] = p.thumbnail;
+      });
+
+      setSelectedImages(imgs);
+    }
   };
 
   const handleCarouselClick = (value) => {
@@ -106,16 +116,16 @@ export default function Products() {
 
         {/* PRODUCT LIST */}
         <div className="d-flex overflow-auto gap-3 pb-2">
-          {products
-            .filter((p) =>
-              colorFilter
-                ? p.product_colors?.some(
-                  (c) =>
-                    c.color_name?.toLowerCase() ===
-                    colorFilter.toLowerCase()
-                )
-                : true
-            )
+          {displayProducts
+            .filter((product) => {
+              if (!colorFilter) return true;
+
+              return product.product_colors?.some(
+                (color) =>
+                  color.color_name?.trim().toLowerCase() ===
+                  colorFilter.trim().toLowerCase()
+              );
+            })
             .map((p) => (
               <ProductCard
                 key={p.id}
@@ -131,25 +141,27 @@ export default function Products() {
               />
             ))}
         </div>
-        <div className="d-flex justify-content-center align-items-center gap-3 mt-4 mb-5">
-          <button
-            className="btn pagination-btn pagination-btn-light"
-            disabled={page === 1}
-            onClick={() => setPage((p) => Math.max(p - 1, 1))}
-          >
-            <i className="bi bi-arrow-left me-2"></i>
-            Previous
-          </button>
+        {!colorFilter && (
+          <div className="d-flex justify-content-center align-items-center gap-3 mt-4 mb-5">
+            <button
+              className="btn pagination-btn pagination-btn-light"
+              disabled={page === 1}
+              onClick={() => setPage((p) => Math.max(p - 1, 1))}
+            >
+              <i className="bi bi-arrow-left me-2"></i>
+              Previous
+            </button>
 
-          <button
-            className="btn pagination-btn pagination-btn-dark"
-            disabled={page >= totalPages}
-            onClick={() => setPage((p) => p + 1)}
-          >
-            Next
-            <i className="bi bi-arrow-right ms-2"></i>
-          </button>
-        </div>
+            <button
+              className="btn pagination-btn pagination-btn-dark"
+              disabled={page >= totalPages}
+              onClick={() => setPage((p) => p + 1)}
+            >
+              Next
+              <i className="bi bi-arrow-right ms-2"></i>
+            </button>
+          </div>
+        )}
 
         {/* EXTRA SECTIONS */}
         <LazySection minHeight={350}>
