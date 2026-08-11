@@ -74,28 +74,6 @@
     pointer-events: none;
 }
 
-/* .hero-content {
-    position: relative;
-
-    max-width: 560px;
-
-    padding: 2rem;
-
-    border-radius: var(--radius-xl);
-
-    background: rgba(255, 255, 255, .12);
-
-    border: 1px solid rgba(255, 255, 255, .18);
-
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
-
-    box-shadow: 0 12px 40px rgba(0, 0, 0, .18);
-
-    color: #fff;
-
-    z-index: 2;
-} */
 .hero-content {
     position: relative;
 
@@ -105,9 +83,6 @@
 
     border-radius: var(--radius-xl);
 
-    /* Keep the actual element mostly transparent */
-    background: rgba(255, 255, 255, .08);
-
     border: 1px solid rgba(255, 255, 255, .22);
 
     color: #fff;
@@ -116,7 +91,6 @@
 
     overflow: hidden;
 
-    /* Helps Android browsers create a proper compositing layer */
     isolation: isolate;
 
     box-shadow:
@@ -124,20 +98,52 @@
         inset 0 1px 0 rgba(255, 255, 255, .15);
 }
 
-/* Actual glass / blur layer */
+
+/* ==========================================================
+   REAL GLASS BLUR
+   Uses a blurred copy of the current hero image.
+   Does NOT depend on backdrop-filter.
+========================================================== */
+
 .hero-content::before {
+
+    content: "";
+
+    position: absolute;
+
+    inset: -30px;
+
+    background-image: var(--hero-image);
+
+    background-size: cover;
+
+    background-position: center;
+
+    background-repeat: no-repeat;
+
+    filter: blur(18px);
+
+    transform: scale(1.08);
+
+    z-index: -2;
+
+    pointer-events: none;
+}
+
+
+/* Glass tint */
+
+.hero-content::after {
+
     content: "";
 
     position: absolute;
 
     inset: 0;
 
+    background: rgba(255, 255, 255, .12);
+
     border-radius: inherit;
-
-    background: rgba(255, 255, 255, .10);
-
-    backdrop-filter: blur(18px) saturate(120%);
-    -webkit-backdrop-filter: blur(18px) saturate(120%);
 
     z-index: -1;
 

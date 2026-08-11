@@ -82,7 +82,13 @@ export default function HeroCarousel({ onSlideClick }) {
 
           <div className="hero-glow"></div>
 
-          <div className="hero-content">
+          {/* <div className="hero-content"> */}
+          <div
+            className="hero-content"
+            style={{
+              "--hero-image": `url(${slides[current].image})`,
+            }}
+          >
 
             <span className="hero-badge">
               Crafted in India
