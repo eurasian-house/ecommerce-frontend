@@ -74,7 +74,7 @@
     pointer-events: none;
 }
 
-.hero-content {
+/* .hero-content {
     position: relative;
 
     max-width: 560px;
@@ -95,6 +95,53 @@
     color: #fff;
 
     z-index: 2;
+} */
+.hero-content {
+    position: relative;
+
+    max-width: 560px;
+
+    padding: 2rem;
+
+    border-radius: var(--radius-xl);
+
+    /* Keep the actual element mostly transparent */
+    background: rgba(255, 255, 255, .08);
+
+    border: 1px solid rgba(255, 255, 255, .22);
+
+    color: #fff;
+
+    z-index: 2;
+
+    overflow: hidden;
+
+    /* Helps Android browsers create a proper compositing layer */
+    isolation: isolate;
+
+    box-shadow:
+        0 12px 40px rgba(0, 0, 0, .18),
+        inset 0 1px 0 rgba(255, 255, 255, .15);
+}
+
+/* Actual glass / blur layer */
+.hero-content::before {
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    border-radius: inherit;
+
+    background: rgba(255, 255, 255, .10);
+
+    backdrop-filter: blur(18px) saturate(120%);
+    -webkit-backdrop-filter: blur(18px) saturate(120%);
+
+    z-index: -1;
+
+    pointer-events: none;
 }
 
 .hero-badge {
@@ -107,12 +154,12 @@
 
     border-radius: var(--radius-full);
 
-    background: rgba(255, 255, 255, .16);
+    background: rgba(255, 255, 255, .10);
 
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, .20);
 
-    border: 1px solid rgba(255, 255, 255, .18);
+    backdrop-filter: blur(12px) saturate(120%);
+    -webkit-backdrop-filter: blur(12px) saturate(120%);
 
     font-size: var(--fs-xs);
 
@@ -328,6 +375,9 @@
         padding: 1.25rem;
 
         border-radius: var(--radius-lg);
+        isolation: isolate;
+
+        overflow: hidden;
     }
 
     .hero-badge {
