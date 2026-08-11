@@ -39,7 +39,7 @@ export default function Wholesale() {
                                     to="/products"
                                     className="btn px-4 py-3 brows-btn"
                                 >
-                                    Browse Collection
+                                    Browse Our Collection
                                 </Link>
 
                             </div>
@@ -82,7 +82,7 @@ export default function Wholesale() {
                             <div className="partner-image">
 
                                 <img
-                                    src="/images/rug-samples.png"
+                                    src="/images/samplenew.jpeg"
                                     alt="Free rug samples"
                                     className="img-fluid"
                                 />
@@ -97,7 +97,7 @@ export default function Wholesale() {
                                 EXPERIENCE BEFORE YOU ORDER
                             </span>
 
-                            <h2>
+                            <h2 className="heading">
                                 Complimentary Rug Samples for Serious Wholesale Buyers
                             </h2>
 

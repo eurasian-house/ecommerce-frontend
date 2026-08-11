@@ -371,7 +371,7 @@ export default function ProductList({ colorFilter }) { // ✅ receive prop
 
         </div>
 
-        {/* PRODUCTS */}
+        {/* PRODUCTS  */}
         <div className="row products-grid">
 
           {filtered?.length === 0 ? (
@@ -394,7 +394,7 @@ export default function ProductList({ colorFilter }) { // ✅ receive prop
 
               <div
                 key={p.id}
-                className="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-2 mb-4"
+                className="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-2 mb-4 cards-body"
               >
                 <ProductCard
                   product={p}

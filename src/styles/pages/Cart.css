@@ -43,9 +43,9 @@
 .cart-summary-actions .app-btn-primary,
 .cart-summary-actions .app-btn-secondary { min-height: 38px; padding: .45rem .85rem; border-radius: var(--radius-sm); font-size: .76rem; }
 .checkout { color: #fff !important; height:2rem; }
-.clear { color: #fff !important; height:2rem; }
+.clear { color: #000000 !important; height:2rem; }
 
-/* Tablet and mobile: image left, information/actions right, title underneath. */
+/* Tablet and mobile: image left, information/actions right, title underneath.  */
 @media (max-width: 991.98px) {
     .cart-page { padding-block: 1.75rem 2.5rem; }
     .cart-header { margin-bottom: 1.25rem; }

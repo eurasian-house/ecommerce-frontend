@@ -194,6 +194,8 @@
 
     gap: 1rem;
 
+    align-items: stretch;
+
     margin-bottom: 1rem;
 }
 
@@ -223,25 +225,36 @@
 
     background: var(--surface);
 
-    transition: .3s;
+    position: relative;
+    z-index: 3;
+    box-shadow: 0 5px 14px rgba(18, 72, 49, .12);
+    transition: background .3s ease, border-color .3s ease,
+        box-shadow .3s ease, transform .3s ease;
 }
 
 .customer-status-dot.completed {
 
-    background: #2E7D32;
+    background: #237a3d;
 
-    border-color: #2E7D32;
+    border-color: #237a3d;
 
     color: #fff;
+
+    box-shadow: 0 5px 15px rgba(35, 122, 61, .24);
 }
 
 .customer-status-dot.current {
 
-    border-color: #B68D40;
+    border-color: #174a35;
 
-    background: #B68D40;
+    background: #174a35;
 
     color: #fff;
+
+    box-shadow: 0 0 0 5px rgba(23, 74, 53, .12),
+        0 7px 18px rgba(23, 74, 53, .28);
+
+    transform: translateY(-1px);
 }
 
 .customer-status-line {
@@ -261,11 +274,11 @@
 
 .customer-timeline-track {
     position: absolute;
-    /* roughly align with the center of the status dot; tweak left as needed */
-    left: 28px;
-    top: 18px;
-    bottom: 18px;
-    width: 4px;
+    /* Keep the connector centered beneath every node at every breakpoint. */
+    left: 15px;
+    top: 17px;
+    bottom: 17px;
+    width: 5px;
     z-index: 0;
     pointer-events: none;
 }
@@ -278,10 +291,10 @@
     transform: translateX(-50%);
     top: 0;
     height: 100%;
-    width: 4px;
-    background: var(--border);
-    border-radius: 3px;
-    opacity: .9;
+    width: 5px;
+    background: rgba(23, 74, 53, .11);
+    border: 1px solid rgba(23, 74, 53, .12);
+    border-radius: 999px;
 }
 
 /* progress fill */
@@ -291,17 +304,19 @@
     left: 50%;
     transform: translateX(-50%);
     top: 0;
-    width: 4px;
+    width: 5px;
     /* height is controlled by inline CSS var --progress */
     height: var(--progress, 0%);
-    background: var(--color-primary);
-    border-radius: 3px;
-    transition: height .36s linear;
+    background: linear-gradient(180deg, #0f422d 0%, #1f6b45 48%, #174a35 100%);
+    background-size: 100% 180px;
+    border-radius: 999px;
+    box-shadow: 0 0 8px rgba(23, 74, 53, .2);
+    transition: height .55s cubic-bezier(.22, 1, .36, 1);
+    will-change: height;
 }
 
 /* make sure dots sit above the track */
-.customer-timeline .customer-timeline-left,
-.customer-timeline .customer-status-dot {
+.customer-timeline .customer-timeline-left {
     position: relative;
     z-index: 2;
 }
@@ -314,16 +329,19 @@
     margin-top: 4px;
 }
 
-/* completed dot style unchanged but ensure z-index */
-.customer-status-dot {
-    z-index: 3;
-}
-
 .customer-timeline-title {
 
     font-weight: 500;
 
+    line-height: 1.35;
+
     color: var(--text);
+}
+
+.customer-timeline-content {
+    min-width: 0;
+    flex: 1;
+    padding: .2rem 0;
 }
 
 .customer-timeline-content small {
@@ -600,7 +618,7 @@
 
         .customer-timeline-item {
             gap: .7rem;
-            margin-bottom: .75rem;
+            margin-bottom: .85rem;
         }
 
         .customer-status-dot {
@@ -609,8 +627,21 @@
             font-size: .7rem;
         }
 
+        .customer-timeline-track {
+            left: 11px;
+            top: 13px;
+            bottom: 13px;
+            width: 4px;
+        }
+
+        .customer-timeline-track::before,
+        .customer-timeline-track::after {
+            width: 4px;
+        }
+
         .customer-timeline-title {
             font-size: .88rem;
+            line-height: 1.4;
         }
 
         .customer-timeline-content small {
