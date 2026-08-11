@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import "./ShopWithConfidence.css";
+import "../styles/components/ShopWithConfidence.css";
 
 
 
@@ -14,13 +14,13 @@ const items = [
     icon: "bi-shield-check",
     title: "Secure Payments",
     text: "Trusted payment methods help ensure every transaction is safe from checkout to confirmation.",
-    url: "/secure-payments",
+    url: "/payment-policy",
   },
   {
     icon: "bi-box-seam",
     title: "Carefully Packed",
     text: "Every order is professionally packed to help it arrive in excellent condition.",
-    url: "/packaging",
+    url: "/packaging-policy",
   },
   {
     icon: "bi-arrow-repeat",
@@ -43,10 +43,18 @@ export default function ShopWithConfidence() {
     <section className="shop-confidence">
       <div className="container">
 
-        <div className="text-center confidence-header">
-          <span className="confidence-label">
-            SHOP WITH CONFIDENCE
-          </span>
+        <div className="text-center mb-5">
+          <div className="discount-ornament mt-4">
+
+            <span className="ornament-line"></span>
+
+            <span className="ornament-text">
+              SHOP WITH CONFIDENCE
+            </span>
+
+            <span className="ornament-line"></span>
+
+          </div>
 
           <h2>Everything You Need for a Worry-Free Purchase</h2>
 

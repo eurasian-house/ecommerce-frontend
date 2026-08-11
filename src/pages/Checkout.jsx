@@ -5,6 +5,7 @@ import { useCart } from "../context/CartContext";
 import { useNavigate, Link } from "react-router-dom";
 import { loadRazorpay } from "../utils/loadRazorpay";
 import { trackBeginCheckout, trackPurchase } from "../lib/analytics";
+import "../styles/pages/Checkout.css";
 
 export default function Checkout() {
   const { cart, clearCart } = useCart();
@@ -74,8 +75,19 @@ export default function Checkout() {
   }
 
   const handleRazorpay = async (orderId) => {
-    // ✅ Step 2: create Razorpay order
-    const res = await fetch(`${import.meta.env.VITE_API_URL}/create-razorpay-order`, {
+    const apiUrl = import.meta.env.VITE_API_URL;
+
+    if (!apiUrl) {
+      alert("Payment service is not configured. Please contact support.");
+      setLoading(false);
+      return;
+    }
+
+    let res;
+
+    try {
+      // Create the Razorpay order through the secure backend.
+      res = await fetch(`${apiUrl}/create-razorpay-order`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -84,7 +96,13 @@ export default function Checkout() {
         amount: Number(total),
         orderId,
       }),
-    });
+      });
+    } catch (error) {
+      console.error("Razorpay order request failed:", error);
+      alert("Payment service is unavailable. Please try again in a moment.");
+      setLoading(false);
+      return;
+    }
 
     if (!res.ok) {
       alert("Backend error (Razorpay order failed)");
@@ -109,7 +127,7 @@ export default function Checkout() {
 
       handler: async function (response) {
         try {
-          const verifyRes = await fetch(`${import.meta.env.VITE_API_URL}/verify-payment`, {
+          const verifyRes = await fetch(`${apiUrl}/verify-payment`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -221,257 +239,539 @@ export default function Checkout() {
       setLoading(false);
     }
   };
-  
+
+  // return (
+  //   <div className="container py-5">
+  //     <div
+  //       className="mx-auto shadow-sm"
+  //       style={{
+  //         maxWidth: "720px",
+  //         background: "#fff",
+  //         borderRadius: "24px",
+  //         padding: "2rem",
+  //         border: "1px solid #ece8e2",
+  //       }}
+  //     >
+  //       {/* Header */}
+  //       <div className="text-center mb-4">
+  //         <span
+  //           className="text-uppercase"
+  //           style={{
+  //             fontSize: ".75rem",
+  //             letterSpacing: "2px",
+  //             color: "#8b7355",
+  //             fontWeight: 600,
+  //           }}
+  //         >
+  //           Secure Checkout
+  //         </span>
+
+  //         <h2 className="fw-bold mt-2 mb-2">
+  //           Complete Your Order
+  //         </h2>
+
+  //         <p className="text-muted mb-0">
+  //           You're just one step away from bringing handcrafted luxury into your home.
+  //         </p>
+  //       </div>
+
+  //       {/* Shipping */}
+  //       <div
+  //         className="mb-4"
+  //         style={{
+  //           background: "#faf8f5",
+  //           borderRadius: "18px",
+  //           padding: "20px",
+  //         }}
+  //       >
+  //         <h5 className="fw-semibold mb-3">
+  //           Shipping Information
+  //         </h5>
+
+  //         <p className="text-muted small mb-0">
+  //           Save time on future purchases by completing your{" "}
+  //           <Link
+  //             to="/account"
+  //             className="fw-semibold text-decoration-none"
+  //           >
+  //             account profile
+  //           </Link>
+  //           . Your contact and shipping information will be filled in
+  //           automatically during checkout.
+  //         </p>
+  //       </div>
+
+  //       {/* Form */}
+  //       <div className="row g-3">
+
+  //         <div className="col-12">
+  //           <input
+  //             className="form-control"
+  //             placeholder="Full Name"
+  //             id="full_name"
+  //             value={form.name}
+  //             onChange={(e) =>
+  //               setForm({ ...form, name: e.target.value })
+  //             }
+  //           />
+  //         </div>
+
+  //         <div className="col-md-6">
+  //           <input
+  //             className="form-control"
+  //             placeholder="Email Address"
+  //             id="email"
+  //             value={form.email}
+  //             onChange={(e) =>
+  //               setForm({ ...form, email: e.target.value })
+  //             }
+  //           />
+  //         </div>
+
+  //         <div className="col-md-6">
+  //           <input
+  //             className="form-control"
+  //             placeholder="Phone Number"
+  //             id="phone"
+  //             value={form.phone}
+  //             onChange={(e) =>
+  //               setForm({ ...form, phone: e.target.value })
+  //             }
+  //           />
+  //         </div>
+
+  //         <div className="col-12">
+  //           <input
+  //             className="form-control"
+  //             placeholder="Street Address"
+  //             id="address"
+  //             value={form.address}
+  //             onChange={(e) =>
+  //               setForm({ ...form, address: e.target.value })
+  //             }
+  //           />
+  //         </div>
+
+  //         <div className="col-md-6">
+  //           <input
+  //             className="form-control"
+  //             placeholder="City"
+  //             id="city"
+  //             value={form.city}
+  //             onChange={(e) =>
+  //               setForm({ ...form, city: e.target.value })
+  //             }
+  //           />
+  //         </div>
+
+  //         <div className="col-md-6">
+  //           <input
+  //             className="form-control"
+  //             placeholder="State / Province"
+  //             id="state"
+  //             value={form.state}
+  //             onChange={(e) =>
+  //               setForm({ ...form, state: e.target.value })
+  //             }
+  //           />
+  //         </div>
+
+  //         <div className="col-md-6">
+  //           <input
+  //             className="form-control"
+  //             placeholder="Country"
+  //             id="country"
+  //             value={form.country}
+  //             onChange={(e) =>
+  //               setForm({ ...form, country: e.target.value })
+  //             }
+  //           />
+  //         </div>
+
+  //         <div className="col-md-6">
+  //           <input
+  //             className="form-control"
+  //             placeholder="Postal / ZIP Code"
+  //             id="pincode"
+  //             value={form.pincode}
+  //             onChange={(e) =>
+  //               setForm({ ...form, pincode: e.target.value })
+  //             }
+  //           />
+  //         </div>
+
+  //       </div>
+
+  //       {/* Payment Method */}
+  //       <div
+  //         className="mt-4"
+  //         style={{
+  //           background: "#faf8f5",
+  //           borderRadius: "18px",
+  //           padding: "20px",
+  //         }}
+  //       >
+  //         <h5 className="fw-semibold mb-3">
+  //           Payment Method
+  //         </h5>
+
+  //         <div className="form-check">
+  //           <input
+  //             className="form-check-input"
+  //             type="radio"
+  //             id="paypal"
+  //             checked={paymentMethod === "paypal"}
+  //             onChange={() => setPaymentMethod("paypal")}
+  //           />
+
+  //           <label
+  //             className="form-check-label"
+  //             htmlFor="paypal"
+  //           >
+  //             PayPal
+  //           </label>
+  //         </div>
+  //         <div className="form-check mb-2">
+  //           <input
+  //             className="form-check-input"
+  //             type="radio"
+  //             id="razorpay"
+  //             checked={paymentMethod === "razorpay"}
+  //             onChange={() => setPaymentMethod("razorpay")}
+  //           />
+
+  //           <label
+  //             className="form-check-label"
+  //             htmlFor="razorpay"
+  //           >
+  //             Razorpay (Cards, UPI, Net Banking)
+  //           </label>
+  //         </div>
+
+  //       </div>
+
+  //       {/* Order Summary */}
+  //       <div
+  //         className="mt-4"
+  //         style={{
+  //           background: "#faf8f5",
+  //           borderRadius: "18px",
+  //           padding: "20px",
+  //         }}
+  //       >
+  //         <div className="d-flex justify-content-between align-items-center mb-2">
+  //           <span className="fw-semibold">
+  //             Order Total
+  //           </span>
+
+  //           <h4 className="fw-bold mb-0">
+  //             ${Math.round(total)}
+  //           </h4>
+  //         </div>
+
+  //         <p className="text-muted small mb-0">
+  //           Payments are securely processed. Opening the payment gateway may
+  //           take up to one minute. Please do not refresh or close your browser
+  //           while your secure payment session is being prepared.
+  //         </p>
+  //       </div>
+
+  //       {/* Button */}
+  //       <button
+  //         className="btn btn-dark w-100 mt-4 py-3 fw-semibold"
+  //         style={{
+  //           borderRadius: "999px",
+  //           fontSize: "1.05rem",
+  //           letterSpacing: ".5px",
+  //         }}
+  //         onClick={handlePlaceOrder}
+  //         disabled={loading}
+  //       >
+  //         {loading ? "Processing Secure Payment..." : "Proceed to Secure Payment"}
+  //       </button>
+  //     </div>
+  //   </div>
+  // );
   return (
-    <div className="container py-5">
-      <div
-        className="mx-auto shadow-sm"
-        style={{
-          maxWidth: "720px",
-          background: "#fff",
-          borderRadius: "24px",
-          padding: "2rem",
-          border: "1px solid #ece8e2",
-        }}
-      >
-        {/* Header */}
-        <div className="text-center mb-4">
-          <span
-            className="text-uppercase"
-            style={{
-              fontSize: ".75rem",
-              letterSpacing: "2px",
-              color: "#8b7355",
-              fontWeight: 600,
-            }}
-          >
-            Secure Checkout
-          </span>
+    <div className="checkout-page">
 
-          <h2 className="fw-bold mt-2 mb-2">
-            Complete Your Order
-          </h2>
+      <div className="container">
 
-          <p className="text-muted mb-0">
-            You're just one step away from bringing handcrafted luxury into your home.
-          </p>
-        </div>
+        {cart.length === 0 ? (
 
-        {/* Shipping */}
-        <div
-          className="mb-4"
-          style={{
-            background: "#faf8f5",
-            borderRadius: "18px",
-            padding: "20px",
-          }}
-        >
-          <h5 className="fw-semibold mb-3">
-            Shipping Information
-          </h5>
+          <section className="checkout-empty">
 
-          <p className="text-muted small mb-0">
-            Save time on future purchases by completing your{" "}
-            <Link
-              to="/account"
-              className="fw-semibold text-decoration-none"
+            <div className="checkout-empty-icon">
+              <i className="bi bi-bag"></i>
+            </div>
+
+            <h2>Your cart is empty</h2>
+
+            <p>
+              Add a handmade rug to your cart before proceeding to checkout.
+            </p>
+
+            <button
+              className="app-btn-primary"
+              onClick={() => navigate("/products")}
             >
-              account profile
-            </Link>
-            . Your contact and shipping information will be filled in
-            automatically during checkout.
-          </p>
-        </div>
+              Explore Collection
+            </button>
 
-        {/* Form */}
-        <div className="row g-3">
+          </section>
 
-          <div className="col-12">
-            <input
-              className="form-control"
-              placeholder="Full Name"
-              id="full_name"
-              value={form.name}
-              onChange={(e) =>
-                setForm({ ...form, name: e.target.value })
-              }
-            />
-          </div>
+        ) : (
 
-          <div className="col-md-6">
-            <input
-              className="form-control"
-              placeholder="Email Address"
-              id="email"
-              value={form.email}
-              onChange={(e) =>
-                setForm({ ...form, email: e.target.value })
-              }
-            />
-          </div>
+          <div className="checkout-card">
 
-          <div className="col-md-6">
-            <input
-              className="form-control"
-              placeholder="Phone Number"
-              id="phone"
-              value={form.phone}
-              onChange={(e) =>
-                setForm({ ...form, phone: e.target.value })
-              }
-            />
-          </div>
+            {/* HEADER */}
 
-          <div className="col-12">
-            <input
-              className="form-control"
-              placeholder="Street Address"
-              id="address"
-              value={form.address}
-              onChange={(e) =>
-                setForm({ ...form, address: e.target.value })
-              }
-            />
-          </div>
+            <div className="checkout-header">
 
-          <div className="col-md-6">
-            <input
-              className="form-control"
-              placeholder="City"
-              id="city"
-              value={form.city}
-              onChange={(e) =>
-                setForm({ ...form, city: e.target.value })
-              }
-            />
-          </div>
+              <span className="checkout-subtitle">
+                SECURE CHECKOUT
+              </span>
 
-          <div className="col-md-6">
-            <input
-              className="form-control"
-              placeholder="State / Province"
-              id="state"
-              value={form.state}
-              onChange={(e) =>
-                setForm({ ...form, state: e.target.value })
-              }
-            />
-          </div>
+              <h1 className="checkout-title">
+                Complete Your Order
+              </h1>
 
-          <div className="col-md-6">
-            <input
-              className="form-control"
-              placeholder="Country"
-              id="country"
-              value={form.country}
-              onChange={(e) =>
-                setForm({ ...form, country: e.target.value })
-              }
-            />
-          </div>
+              <p className="checkout-description">
+                You're one step away from bringing handcrafted luxury into your home.
+              </p>
 
-          <div className="col-md-6">
-            <input
-              className="form-control"
-              placeholder="Postal / ZIP Code"
-              id="pincode"
-              value={form.pincode}
-              onChange={(e) =>
-                setForm({ ...form, pincode: e.target.value })
-              }
-            />
-          </div>
+            </div>
 
-        </div>
+            {/* SHIPPING NOTICE */}
 
-        {/* Payment Method */}
-        <div
-          className="mt-4"
-          style={{
-            background: "#faf8f5",
-            borderRadius: "18px",
-            padding: "20px",
-          }}
-        >
-          <h5 className="fw-semibold mb-3">
-            Payment Method
-          </h5>
+            <div className="checkout-notice">
 
-          <div className="form-check">
-            <input
-              className="form-check-input"
-              type="radio"
-              id="paypal"
-              checked={paymentMethod === "paypal"}
-              onChange={() => setPaymentMethod("paypal")}
-            />
+              <h5>
+                Shipping Information
+              </h5>
 
-            <label
-              className="form-check-label"
-              htmlFor="paypal"
+              <p>
+                Save time on future purchases by completing your{" "}
+                <Link
+                  to="/account"
+                  className="checkout-link"
+                >
+                  account profile
+                </Link>.
+                Your contact and shipping information will automatically appear during checkout.
+              </p>
+
+            </div>
+
+            {/* FORM */}
+
+            <div className="row g-4">
+
+              <div className="col-12">
+
+                <label className="checkout-label">
+                  Full Name
+                </label>
+
+                <input
+                  className="app-input"
+                  value={form.name}
+                  onChange={(e) =>
+                    setForm({ ...form, name: e.target.value })
+                  }
+                />
+
+              </div>
+
+              <div className="col-md-6">
+
+                <label className="checkout-label">
+                  Email
+                </label>
+
+                <input
+                  className="app-input"
+                  value={form.email}
+                  readOnly
+                />
+
+              </div>
+
+              <div className="col-md-6">
+
+                <label className="checkout-label">
+                  Phone
+                </label>
+
+                <input
+                  className="app-input"
+                  value={form.phone}
+                  onChange={(e) =>
+                    setForm({ ...form, phone: e.target.value })
+                  }
+                />
+
+              </div>
+
+              <div className="col-12">
+
+                <label className="checkout-label">
+                  Street Address
+                </label>
+
+                <input
+                  className="app-input"
+                  value={form.address}
+                  onChange={(e) =>
+                    setForm({ ...form, address: e.target.value })
+                  }
+                />
+
+              </div>
+
+              <div className="col-md-6">
+
+                <label className="checkout-label">
+                  City
+                </label>
+
+                <input
+                  className="app-input"
+                  value={form.city}
+                  onChange={(e) =>
+                    setForm({ ...form, city: e.target.value })
+                  }
+                />
+
+              </div>
+
+              <div className="col-md-6">
+
+                <label className="checkout-label">
+                  State / Province
+                </label>
+
+                <input
+                  className="app-input"
+                  value={form.state}
+                  onChange={(e) =>
+                    setForm({ ...form, state: e.target.value })
+                  }
+                />
+
+              </div>
+
+              <div className="col-md-6">
+
+                <label className="checkout-label">
+                  Country
+                </label>
+
+                <input
+                  className="app-input"
+                  value={form.country}
+                  onChange={(e) =>
+                    setForm({ ...form, country: e.target.value })
+                  }
+                />
+
+              </div>
+
+              <div className="col-md-6">
+
+                <label className="checkout-label">
+                  Postal / ZIP Code
+                </label>
+
+                <input
+                  className="app-input"
+                  value={form.pincode}
+                  onChange={(e) =>
+                    setForm({ ...form, pincode: e.target.value })
+                  }
+                />
+
+              </div>
+
+            </div>
+
+            {/* PAYMENT */}
+
+            <section className="checkout-payment">
+
+              <h5>
+                Payment Method
+              </h5>
+
+              <label className="payment-option">
+
+                <input
+                  type="radio"
+                  checked={paymentMethod === "paypal"}
+                  onChange={() => setPaymentMethod("paypal")}
+                />
+
+                <span>PayPal</span>
+
+              </label>
+
+              <label className="payment-option">
+
+                <input
+                  type="radio"
+                  checked={paymentMethod === "razorpay"}
+                  onChange={() => setPaymentMethod("razorpay")}
+                />
+
+                <span>
+                  Razorpay (Cards, UPI & Net Banking)
+                </span>
+
+              </label>
+
+            </section>
+
+            {/* SUMMARY */}
+
+            <section className="checkout-summary">
+
+              <div className="checkout-total-row">
+
+                <span>
+                  Order Total
+                </span>
+
+                <h2>
+                  ${Math.round(total)}
+                </h2>
+
+              </div>
+
+              <p>
+                Payments are securely processed.
+                Please don't refresh or close your browser while your secure payment session is being prepared.
+              </p>
+
+            </section>
+
+            {/* BUTTON */}
+
+            <button
+              className="app-btn-primary checkout-button"
+              onClick={handlePlaceOrder}
+              disabled={loading}
             >
-              PayPal
-            </label>
-          </div>
-          <div className="form-check mb-2">
-            <input
-              className="form-check-input"
-              type="radio"
-              id="razorpay"
-              checked={paymentMethod === "razorpay"}
-              onChange={() => setPaymentMethod("razorpay")}
-            />
+              {loading
+                ? "Processing Secure Payment..."
+                : "Proceed to Secure Payment"}
+            </button>
 
-            <label
-              className="form-check-label"
-              htmlFor="razorpay"
-            >
-              Razorpay (Cards, UPI, Net Banking)
-            </label>
           </div>
 
-        </div>
+        )}
 
-        {/* Order Summary */}
-        <div
-          className="mt-4"
-          style={{
-            background: "#faf8f5",
-            borderRadius: "18px",
-            padding: "20px",
-          }}
-        >
-          <div className="d-flex justify-content-between align-items-center mb-2">
-            <span className="fw-semibold">
-              Order Total
-            </span>
-
-            <h4 className="fw-bold mb-0">
-              ${Math.round(total)}
-            </h4>
-          </div>
-
-          <p className="text-muted small mb-0">
-            Payments are securely processed. Opening the payment gateway may
-            take up to one minute. Please do not refresh or close your browser
-            while your secure payment session is being prepared.
-          </p>
-        </div>
-
-        {/* Button */}
-        <button
-          className="btn btn-dark w-100 mt-4 py-3 fw-semibold"
-          style={{
-            borderRadius: "999px",
-            fontSize: "1.05rem",
-            letterSpacing: ".5px",
-          }}
-          onClick={handlePlaceOrder}
-          disabled={loading}
-        >
-          {loading ? "Processing Secure Payment..." : "Proceed to Secure Payment"}
-        </button>
       </div>
+
     </div>
   );
 }

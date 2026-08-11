@@ -1,11 +1,41 @@
 import { useEffect, useState, useRef } from "react";
 import { supabase } from "../lib/supabase";
-import { useNavigate } from "react-router-dom";
+import ProductCard from "./ProductCard";
+import "../styles/components/SmallComponent.css";
+
 
 export default function TopDeals() {
     const [products, setProducts] = useState([]);
-    const navigate = useNavigate();
     const scrollRef = useRef(null);
+
+    useEffect(() => {
+        fetchTopDeals();
+    }, []);
+
+    const fetchTopDeals = async () => {
+        const { data, error } = await supabase
+            .from("products")
+            .select("*")
+            .eq("status", "active") // recommended
+            .order("clicks", { ascending: false })
+            .limit(10);
+
+        if (error) {
+            console.log(error);
+            return;
+        }
+
+        setProducts(data || []);
+    };
+
+    const optimizeUrl = (url) => {
+        if (!url.includes("/upload/")) return url;
+
+        return url.replace(
+            "/upload/",
+            "/upload/f_auto,q_auto,dpr_auto,c_limit,w_auto/"
+        );
+    };
 
     const scrollLeft = () => {
         scrollRef.current?.scrollBy({
@@ -21,152 +51,74 @@ export default function TopDeals() {
         });
     };
 
-
-    useEffect(() => {
-        fetchTopDeals();
-    }, []);
-
-    const fetchTopDeals = async () => {
-        const { data, error } = await supabase
-            .from("products")
-            .select("*")
-            // .order("clicks", { ascending: false })
-            .limit(10);
-
-        if (error) {
-            console.log(error);
-            return;
-        }
-
-        setProducts(data || []);
-    };
-
-
-    const optimizeUrl = (url) => {
-        if (!url.includes("/upload/")) return url;
-
-        return url.replace(
-            "/upload/",
-            "/upload/f_auto,q_auto,dpr_auto,c_limit,w_auto/"
-        );
-    };
-
     return (
-        <div className="mb-4">
-            <div className="text-center mb-5 mt-5">
-                <span
-                    className="badge rounded-pill section-title"
-                    style={{
-                        backgroundColor: "#F3E8C8",
-                        color: "#8B6B2E",
-                    }}
-                >
-                    Featured Deals
-                </span>
+        <section className="top-deals-section">
 
-                <h2 className="mt-3 fw-semibold display-6">
-                    Exceptional Finds, Exceptional Value
-                </h2>
+            <div className="container-fluid">
 
-                <p
-                    className="mx-auto mt-3"
-                    style={{
-                        maxWidth: 620,
-                        color: "#777",
-                        lineHeight: 1.8,
-                    }}
-                >
-                    Discover the <strong style={{ color: "#8B6B2E" }}>Top 10</strong> handcrafted rugs that are capturing the attention of homeowners around the world. Explore the styles our customers are choosing most.
-                </p>
-            </div>
-            {/* 🔥 SAME STYLE AS COLOR FILTER */}
-            <div className="position-relative">
+                <div className="text-center top-deals-header">
 
-                <button
-                    className="category-arrow category-arrow-left d-none d-md-flex"
-                    onClick={scrollLeft}
-                    type="button"
-                >
-                    ‹
-                </button>
+                    <div className="discount-ornament mt-4">
 
-                <div
-                    ref={scrollRef}
-                    className="d-flex overflow-auto gap-3 pb-2 category-scroll"
-                >
-                    {products.map((p) => (
-                        <div
-                            key={p.id}
-                            style={{ width: "200px", flex: "0 0 auto", cursor: "pointer" }}
-                            onClick={() => navigate(`/products/${p.slug}`)}
-                        >
-                            <div className="card h-100">
+                        <span className="ornament-line"></span>
 
-                                <img
-                                    src={optimizeUrl(p.thumbnail)}
-                                    alt={p.title}
-                                    loading="lazy"
-                                    decoding="async"
-                                    className="card-img-top"
-                                    style={{
-                                        aspectRatio: "4 / 3",
-                                        height: "auto",
-                                        objectFit: "cover",
-                                        width: "100%"
-                                    }}
-                                />
+                        <span className="ornament-text">
+                            Featured Deal
+                        </span>
 
-                                <div className="card-body p-3">
-                                    <p className="text-muted small mb-1">
-                                        {p.main_category}
-                                    </p>
+                        <span className="ornament-line"></span>
 
-                                    <h6
-                                        className="mb-0 fw-semibold"
-                                        style={{
-                                            display: "-webkit-box",
-                                            WebkitBoxOrient: "vertical",
-                                            WebkitLineClamp: 2,
-                                            overflow: "hidden",
-                                            lineHeight: "1.3",
-                                            height: "2.6em", // 2 × 1.3
-                                            wordBreak: "break-word",
-                                            fontSize: "0.95rem",
-                                        }}
-                                    >
-                                        {p.title}
-                                    </h6>
+                    </div>
 
-                                    <div className="d-flex align-items-center gap-2">
-                                        <span className="fw-bold" style={{ color: "#0F5132" }}>${Math.round(Number(p.selling_price))}</span>
-                                        <span className="text-muted text-decoration-line-through small">
-                                            ${p.mrp}
-                                        </span>
-                                    </div>
+                    <h2 className="mt-3 fw-semibold for-user-heading">
+                        Exceptional Finds, Exceptional Value
+                    </h2>
 
-                                    <span className="badge bg-dark mt-1">
-                                        {p.discount_percent}% OFF
-                                    </span>
-                                    {/* <div className="small text-muted mt-2">
-                                    {p.clicks} clicks this week
-                                </div> */}
-                                </div>
+                    <p className="for-user-subheading mx-auto my-4">
+                        Discover our <span className="top-10">Top 10</span> handcrafted rugs loved by
+                        customers worldwide.
+                    </p>
 
-                            </div>
-                        </div>
-                    ))}
                 </div>
-            <button
-                className="category-arrow category-arrow-right d-none d-md-flex"
-                onClick={scrollRight}
-                type="button"
-            >
-                ›
-            </button>
+
+                <div className="position-relative">
+
+                    <button
+                        className="category-arrow category-arrow-left d-none d-md-flex"
+                        onClick={scrollLeft}
+                        type="button"
+                    >
+                        ‹
+                    </button>
+
+                    <div
+                        ref={scrollRef}
+                        className="d-flex overflow-auto gap-3 pb-2 category-scroll"
+                    >
+                        {products.map((product) => (
+                            <ProductCard
+                                key={product.id}
+                                product={{
+                                    ...product,
+                                    thumbnail: optimizeUrl(product.thumbnail),
+                                }}
+                                cardWidth="185px"
+                            />
+                        ))}
+                    </div>
+
+                    <button
+                        className="category-arrow category-arrow-right d-none d-md-flex"
+                        onClick={scrollRight}
+                        type="button"
+                    >
+                        ›
+                    </button>
+
+                </div>
+
             </div>
 
-
-
-        </div>
+        </section>
     );
 }

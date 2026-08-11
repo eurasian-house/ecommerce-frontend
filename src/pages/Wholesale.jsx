@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import "./Wholesale.css";
 
 export default function Wholesale() {
@@ -25,19 +26,21 @@ export default function Wholesale() {
 
                             <div className="d-flex flex-wrap gap-3 mt-4">
 
-                                <a
-                                    href="/wholesale-contact"
+                                <Link
+                                    to="/wholesale-contact"
                                     className="btn btn-dark px-4 py-3"
                                 >
                                     Contact Wholesale Team
-                                </a>
+                                </Link>
 
-                                <a
-                                    href="/products"
-                                    className="btn btn-outline-dark px-4 py-3"
+                                {/* Browse collection  */}
+
+                                <Link
+                                    to="/products"
+                                    className="btn px-4 py-3 brows-btn"
                                 >
                                     Browse Collection
-                                </a>
+                                </Link>
 
                             </div>
 
@@ -79,7 +82,7 @@ export default function Wholesale() {
                             <div className="partner-image">
 
                                 <img
-                                    src="/images/rug-samples.jpg"
+                                    src="/images/rug-samples.png"
                                     alt="Free rug samples"
                                     className="img-fluid"
                                 />
@@ -135,12 +138,12 @@ export default function Wholesale() {
 
                             </div>
 
-                            <a
-                                href="wholesale-contact"
+                            <Link
+                                to="/wholesale-contact"
                                 className="btn btn-dark rounded-pill px-5 py-3 mt-4"
                             >
                                 Request Free Samples
-                            </a>
+                            </Link>
 
                         </div>
 
@@ -164,7 +167,7 @@ export default function Wholesale() {
                             <div className="partner-image">
 
                                 <img
-                                    src="/images/manufacturing.jpg"
+                                    src="us.jpg"
                                     alt="Handmade rug manufacturing"
                                     className="img-fluid"
                                 />
@@ -786,12 +789,12 @@ export default function Wholesale() {
                             requirements.
                         </p>
 
-                        <a
-                            href="/products"
+                        <Link
+                            to="/products"
                             className="btn btn-dark px-4 py-3 mt-3"
                         >
                             Browse Retail Collection
-                        </a>
+                        </Link>
 
                     </div>
 
@@ -907,24 +910,23 @@ export default function Wholesale() {
 
                         <div className="d-flex justify-content-center flex-wrap gap-3">
 
-                            <a
-                                href="/wholesale-contact"
+                            <Link
+                                to="/wholesale-contact"
                                 className="btn btn-dark btn-lg px-5"
                             >
 
                                 Contact Wholesale Team
 
-                            </a>
+                            </Link>
 
-                            <a
-                                href="/products"
-                                className="btn btn-outline-dark btn-lg px-5"
-                                style={{ color: "#8d6b45", borderColor: "#8d6b45" }}
+                            <Link
+                                to="/products"
+                                className="btn btn-outline-dark btn-lg px-5 wholesale-cta-outline"
                             >
 
                                 Browse Collection
 
-                            </a>
+                            </Link>
 
                         </div>
 

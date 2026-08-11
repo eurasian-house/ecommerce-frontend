@@ -1,0 +1,37 @@
+/* Theme-aware review presentation for the product page. */
+.product-reviews { max-width: 920px; }
+.product-reviews .product-feedback-shell,
+.product-reviews .card,
+.product-reviews .bg-white { background: var(--surface) !important; color: var(--text-primary); border: 1px solid var(--border) !important; box-shadow: var(--shadow-sm) !important; }
+.product-reviews .product-feedback-shell { padding: clamp(1rem, 3vw, 1.75rem) !important; }
+.product-reviews h3 { color: var(--text-primary); font-size: clamp(1.25rem, 2.5vw, 1.65rem); }
+.product-reviews h5 { color: var(--text-primary); font-size: .94rem; }
+.product-reviews p { color: var(--text-secondary); font-size: .8rem; }
+.product-reviews .text-muted, .product-reviews .text-secondary { color: var(--text-secondary) !important; }
+.product-reviews hr { border-color: var(--border); opacity: 1; }
+.product-reviews .fw-bold[style] { color: var(--text-primary); font-size: clamp(2.1rem, 6vw, 2.7rem) !important; }
+.product-reviews .progress { background: var(--bg-tertiary) !important; }
+.product-reviews .progress-bar { background: var(--color-primary) !important; }
+.product-reviews .product-review-item { margin-bottom: 1rem !important; padding: clamp(.9rem, 2.5vw, 1.25rem) !important; border-radius: var(--radius-md) !important; transition: box-shadow var(--transition), transform var(--transition); }
+.product-reviews .product-review-item:hover { box-shadow: var(--shadow-md) !important; transform: translateY(-2px); }
+.product-reviews .product-review-item .fs-5 { color: var(--text-primary); font-size: .9rem !important; }
+.product-reviews .product-review-item .text-warning { color: var(--color-accent) !important; }
+.product-reviews .review-card > .mt-3 { margin-top: .7rem !important; }
+.product-reviews .review-card h5 { margin-top: .7rem !important; font-size: .9rem; }
+.product-reviews .review-card p { line-height: 1.65 !important; }
+.product-reviews .rounded-pill[style] { margin: .5rem 0 !important; padding: .3rem .55rem !important; border: 1px solid color-mix(in srgb, var(--success) 30%, var(--border)); background: color-mix(in srgb, var(--success) 10%, var(--surface)) !important; color: var(--success) !important; font-size: .66rem !important; }
+.product-reviews .btn-light, .product-reviews .btn-dark, .product-reviews .btn-outline-secondary { border-color: var(--border); border-radius: var(--radius-full); font-size: .72rem; font-weight: var(--fw-semibold); }
+.product-reviews .btn-light, .product-reviews .btn-outline-secondary { background: transparent; color: var(--text-primary); }
+.product-reviews .btn-dark { border-color: var(--color-primary); background: var(--color-primary); color: #fff; }
+.product-reviews .btn-dark:hover { background: var(--color-primary-hover); border-color: var(--color-primary-hover); }
+.product-reviews .btn-link { color: var(--color-primary); font-size: .72rem; font-weight: var(--fw-semibold); }
+.product-reviews .seller-reply { margin-block: .8rem !important; padding: .8rem !important; border: 1px solid var(--border); border-left: 3px solid var(--color-primary); border-radius: var(--radius-sm) !important; background: var(--bg-secondary); }
+.product-reviews .seller-reply .bg-dark { background: var(--color-primary) !important; }
+.product-reviews .seller-reply .text-secondary { font-size: .8rem !important; line-height: 1.65 !important; }
+.product-reviews .review-image { width: 112px !important; height: 112px !important; border-color: var(--border) !important; }
+.product-feedback-grid .product-reviews { max-width: none; margin-top: 0 !important; padding-inline: 0 !important; }
+.product-feedback-grid .product-reviews .product-feedback-shell { padding: 1rem !important; }
+.product-feedback-grid .product-reviews .mb-5 { margin-bottom: 1.25rem !important; }
+.product-feedback-grid .product-reviews .my-5 { margin-block: 1.25rem !important; }
+.product-feedback-grid .product-reviews .mb-4 { margin-bottom: .85rem !important; }
+@media (max-width: 575.98px) { .product-reviews { margin-top: 2.5rem !important; padding-inline: .5rem !important; } .product-reviews .product-feedback-shell { padding: .85rem !important; } .product-reviews .product-review-item { margin-bottom: .75rem !important; } .product-reviews .review-image { width: 96px !important; height: 96px !important; } }

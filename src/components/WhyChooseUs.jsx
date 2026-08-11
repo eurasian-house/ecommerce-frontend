@@ -1,4 +1,4 @@
-import "./WhyChooseUs.css";
+import "../styles/components/WhyChooseUs.css";
 
 const features = [
   {
@@ -30,33 +30,51 @@ const features = [
 
 export default function WhyChooseUs() {
   return (
-    <section className="why-choose-us py-5">
+    <section className="why-choose-us">
+
       <div className="container">
 
         <div className="text-center mb-5">
-          <span className="why-label">WHY EURASIAN HOUSE</span>
 
-          <h2 className="why-title mt-3">
+          <div className="discount-ornament mt-4">
+
+            <span className="ornament-line"></span>
+
+            <span className="ornament-text">
+              WHY CHOOSE US
+            </span>
+
+            <span className="ornament-line"></span>
+
+          </div>
+
+          <h2 className="mt-3 fw-semibold for-user-heading">
             Why Choose Eurasian House
           </h2>
 
-          <p className="why-subtitle mx-auto">
+          <p className="for-user-subheading mx-auto pt-3">
             Beautiful homes deserve thoughtful craftsmanship. Every rug is
             carefully selected, fairly priced, and delivered with the attention
             your home deserves.
           </p>
+
         </div>
 
-        <div className="row justify-content-center g-4">
+        <div className="row justify-content-center g-5">
+
           {features.map((item, index) => (
+
             <div
               key={index}
               className={`col-lg-${index < 3 ? "4" : "5"} col-md-6`}
             >
-              <div className="why-card h-100 text-center">
+
+              <div className="why-card h-100">
 
                 <div className="icon-circle">
+
                   <i className={`bi ${item.icon}`}></i>
+
                 </div>
 
                 <h5>{item.title}</h5>
@@ -64,11 +82,15 @@ export default function WhyChooseUs() {
                 <p>{item.text}</p>
 
               </div>
+
             </div>
+
           ))}
+
         </div>
 
       </div>
+
     </section>
   );
 }

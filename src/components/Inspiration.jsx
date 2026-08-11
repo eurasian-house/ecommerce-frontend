@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { supabase } from "../lib/supabase";
 import { useNavigate } from "react-router-dom";
-import { applyActiveFilter } from '../utils/productQueries'
-import "./Inspiration.css";
+import { applyActiveFilter } from "../utils/productQueries";
+import "../styles/components/Inspiration.css";
+
 
 export default function Inspiration() {
     const [products, setProducts] = useState([]);
@@ -11,7 +12,6 @@ export default function Inspiration() {
     const [visibleCount, setVisibleCount] = useState(6);
 
     const navigate = useNavigate();
-    const isMobile = window.innerWidth < 576;
 
     useEffect(() => {
         fetchProducts();
@@ -26,7 +26,6 @@ export default function Inspiration() {
             .from("products")
             .select("*");
 
-        // ✅ ADD THIS
         query = applyActiveFilter(query);
 
         const { data } = await query;
@@ -63,130 +62,144 @@ export default function Inspiration() {
     const tabs = [
         "All",
         ...new Set([
-            ...products.map(p => p.quality).filter(Boolean),
-            ...products.map(p => p.pattern).filter(Boolean),
+            ...products.map((p) => p.quality).filter(Boolean),
+            ...products.map((p) => p.pattern).filter(Boolean),
         ]),
     ];
 
     const handleClick = (id) => {
         const product = products.find((p) => p.id === id);
+
         if (product) {
             navigate(`/products/${product.slug}`);
         }
     };
 
     return (
-        <section className="container py-5">
+        <section className="inspiration-section">
 
-            {/* Heading */}
-            <div className="text-center mb-5">
+            <div className="container">
 
-                <span className="premium-badge">
-                    Curated Collection
-                </span>
+                {/* Heading */}
 
-                <h2 className="mt-3 fw-semibold display-6">
-                    Shop by Quality & Design
-                </h2>
+                <div className="text-center mb-5">
+                    <div className="discount-ornament">
 
-                <p
-                    className="mx-auto mt-3"
-                    style={{
-                        maxWidth: 620,
-                        color: "#777",
-                        lineHeight: 1.8
-                    }}
-                >
-                    Discover a curated selection of handcrafted carpets, defined by exceptional quality and intricate, signature designs that elevate any interior.
-                </p>
+                        <span className="ornament-line"></span>
 
-            </div>
+                        <span className="ornament-text">
+                            Curated Collection
+                        </span>
 
-            {/* Category Chips */}
-
-            <div className="d-flex justify-content-center flex-wrap gap-3 mb-5">
-
-                {tabs.map((qlt, i) => (
-
-                    <button
-                        key={i}
-                        onClick={() => setActiveTab(qlt)}
-                        className={`premium-chip ${activeTab === qlt ? "active" : ""
-                            }`}
-                    >
-                        {qlt}
-                    </button>
-
-                ))}
-
-            </div>
-
-            {/* Masonry */}
-
-            <div
-                style={{
-                    columns: isMobile ? "1" : "260px",
-                    columnGap: "22px"
-                }}
-            >
-                {filtered.slice(0, visibleCount).map((p) => (
-
-                    <div
-                        key={p.id}
-                        className="premium-masonry-card"
-                        onClick={() => handleClick(p.id)}
-                    >
-
-                        <img
-                            src={p.thumbnail}
-                            alt={p.title}
-                            className="premium-masonry-image"
-                        />
-
-                        <div className="premium-overlay">
-
-                            <h6 className="fw-semibold mb-1">
-                                {p.title}
-                            </h6>
-
-                            <small>
-                                View Collection →
-                            </small>
-
-                        </div>
+                        <span className="ornament-line"></span>
 
                     </div>
 
-                ))}
+                    <h2 className="mt-3 fw-semibold for-user-heading">
+                        Shop by Quality & Design
+                    </h2>
+
+                    <p className="pt-4 mx-auto">
+                        Discover a curated selection of handcrafted carpets,
+                        defined by exceptional quality and intricate, signature
+                        designs that elevate any interior.
+                    </p>
+
+                </div>
+
+                {/* Filter Chips */}
+
+                <div className="inspiration-chips">
+
+                    {tabs.map((tab, index) => (
+
+                        <button
+                            key={index}
+                            onClick={() => setActiveTab(tab)}
+                            className={`inspiration-chip ${activeTab === tab ? "active" : ""
+                                }`}
+                        >
+                            {tab}
+                        </button>
+
+                    ))}
+
+                </div>
+
+                {/* Masonry */}
+
+                <div className="inspiration-gallery">
+
+                    {filtered.slice(0, visibleCount).map((product) => (
+
+                        <div
+                            key={product.id}
+                            className="inspiration-card"
+                            onClick={() => handleClick(product.id)}
+                        >
+
+                            <img
+                                src={product.thumbnail}
+                                alt={product.title}
+                                className="inspiration-image"
+                                loading="lazy"
+                                decoding="async"
+                            />
+
+                            <div className="inspiration-overlay">
+
+                                <h6>
+                                    {product.title}
+                                </h6>
+
+                                <span>
+                                    View Details
+                                    <i className="bi bi-arrow-right ms-2"></i>
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    ))}
+
+                </div>
+
+                {/* Load More */}
+
+                {visibleCount < filtered.length && (
+
+                    <div className="text-center mt-5">
+
+                        <button
+                            className="inspiration-load-btn"
+                            onClick={() =>
+                                setVisibleCount((prev) => prev + 6)
+                            }
+                        >
+                            View More Collections
+                            <i className="bi bi-arrow-right"></i>
+                        </button>
+
+                    </div>
+
+                )}
+
+                {/* Empty */}
+
+                {filtered.length === 0 && (
+
+                    <div className="text-center py-5">
+
+                        <h5 className="text-secondary">
+                            No products found.
+                        </h5>
+
+                    </div>
+
+                )}
+
             </div>
-
-            {/* Load More */}
-
-            {visibleCount < filtered.length && (
-
-                <div className="text-center mt-5">
-
-                    <button
-                        className="btn premium-load-btn px-4 py-2 rounded-pill shadow-sm d-inline-flex align-items-center gap-2"
-                        onClick={() => setVisibleCount((prev) => prev + 6)}
-                    >
-                        View More Collections
-                        <i className="bi bi-grid"></i>
-                    </button>
-
-                </div>
-
-            )}
-
-            {filtered.length === 0 && (
-
-                <div className="text-center py-5">
-
-                    <h5>No products found.</h5>
-
-                </div>
-
-            )}
 
         </section>
     );

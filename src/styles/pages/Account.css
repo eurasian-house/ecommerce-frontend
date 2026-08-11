@@ -1,0 +1,740 @@
+/* ==========================================================
+   ACCOUNT PAGE
+========================================================== */
+
+.account-page {
+    background: var(--bg);
+    min-height: 100vh;
+    padding: 1.25rem 0 3rem;
+}
+
+/* ==========================================================
+   COMMON CARD
+========================================================== */
+
+.account-card,
+.account-orders-card {
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+
+    border-radius: 18px;
+
+    padding: .9rem;
+    /* reduced padding for compactness */
+
+    box-shadow: 0 6px 18px rgba(0, 0, 0, .035);
+}
+
+[data-theme="dark"] .account-card,
+[data-theme="dark"] .account-orders-card {
+
+    box-shadow: 0 10px 28px rgba(0, 0, 0, .28);
+}
+
+/* ==========================================================
+   LEFT
+========================================================== */
+
+.account-profile-card {
+
+    position: sticky;
+
+    top: 82px;
+}
+
+.account-profile-actions {
+
+    display: flex;
+
+    justify-content: flex-end;
+
+    margin-bottom: 1rem;
+}
+
+.account-edit-actions {
+
+    display: flex;
+
+    gap: .6rem;
+
+    /* keep actions on a single row for all screen sizes as requested */
+    flex-wrap: nowrap;
+}
+
+/* Force Save/Cancel buttons to have consistent minimum width so they appear equal-sized */
+.account-edit-actions .app-btn-primary,
+.account-edit-actions .app-btn-secondary {
+    min-width: 120px;
+    text-align: center;
+}
+
+.account-avatar-wrapper {
+
+    text-align: center;
+}
+
+.account-avatar-circle {
+
+    width: 64px;
+
+    height: 64px;
+
+    margin: 0 auto .6rem;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: var(--surface-2);
+
+    border: 1px solid var(--border);
+}
+
+.account-edit-actions .app-btn-primary,
+.account-edit-actions .app-btn-secondary,
+.account-profile-actions .app-btn-secondary {
+    padding: .46rem .6rem;
+    font-size: .86rem;
+    border-radius: 20px;
+}
+.app-btn-primary{
+    color: #fff !important;
+}
+.account-edit-btn{
+    white-space: nowrap;
+    border: 0
+}
+.account-name {
+
+    margin-bottom: .15rem;
+
+    font-size: 1.12rem;
+    /* smaller name */
+
+    font-weight: 500;
+
+    color: var(--text);
+}
+
+.account-subtitle {
+
+    font-size: .78rem;
+
+    color: var(--text-muted);
+
+    margin-bottom: .6rem;
+}
+
+.account-photo-btn {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: .35rem;
+
+    padding: .36rem .7rem;
+    /* tighter */
+
+    border-radius: 999px;
+
+    border: 1px solid var(--border);
+
+    background: var(--surface-2);
+
+    cursor: pointer;
+
+    transition: .18s;
+
+    font-size: .78rem;
+
+    color: var(--text);
+}
+
+.account-photo-btn:hover {
+
+    background: var(--text);
+
+    color: var(--bg);
+}
+
+.account-divider {
+
+    height: 1px;
+
+    background: var(--border);
+
+    margin: .9rem 0;
+    /* reduced */
+}
+
+.account-profile-card .row {
+
+    --bs-gutter-x: .5rem;
+    /* tighter gutters */
+
+    --bs-gutter-y: .5rem;
+}
+
+.account-profile-card label {
+
+    font-size: .84rem;
+
+    margin-bottom: .3rem;
+}
+
+.account-profile-card input,
+.account-profile-card select {
+
+    height: 42px !important;
+
+    border-radius: 10px;
+
+    background: var(--surface-2) !important;
+
+    color: var(--text) !important;
+
+    border: 1px solid var(--border) !important;
+
+    box-shadow: none !important;
+    font-size: .92rem;
+}
+
+.account-profile-card input::placeholder {
+
+    color: var(--text-muted);
+}
+
+.account-profile-card input:focus,
+.account-profile-card select:focus {
+
+    background: var(--surface) !important;
+
+    border-color: #B68D40 !important;
+
+    box-shadow: 0 0 0 3px rgba(182, 141, 64, .08) !important;
+}
+
+.account-email-display {
+
+    display: flex;
+
+    align-items: center;
+
+    height: 46px;
+
+    padding: 0 14px;
+
+    border-radius: 12px;
+
+    background: var(--surface-2);
+
+    border: 1px solid var(--border);
+
+    color: var(--text);
+
+    font-size: .9rem;
+    overflow-wrap:anywhere;
+}
+
+/* ==========================================================
+   RIGHT
+========================================================== */
+
+.account-orders-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 1.2rem;
+
+    gap: 1rem;
+}
+
+.account-section-subtitle {
+
+    display: block;
+
+    margin-bottom: .35rem;
+
+    color: #B68D40;
+
+    text-transform: uppercase;
+
+    letter-spacing: .22em;
+
+    font-size: .72rem;
+
+    font-weight: 600;
+}
+
+.account-section-title {
+
+    margin: 0;
+
+    font-size: 1.75rem;
+
+    font-weight: 500;
+}
+
+.account-order-count {
+
+    padding: .35rem .9rem;
+
+    border-radius: 999px;
+
+    background: var(--surface-2);
+
+    border: 1px solid var(--border);
+
+    font-size: .78rem;
+}
+
+/* ==========================================================
+   ORDER LIST
+========================================================== */
+
+.account-orders-list {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: .6rem;
+    /* slightly tighter */
+}
+
+.account-order-card {
+
+    display: flex;
+
+    align-items: flex-start;
+    /* allow wrapping */
+
+    justify-content: space-between;
+
+    padding: .7rem .75rem;
+    /* reduced padding */
+
+    border-radius: 12px;
+
+    border: 1px solid var(--border);
+
+    background: var(--surface-2);
+
+    cursor: pointer;
+
+    transition: .2s;
+
+    overflow: hidden;
+    /* prevent overflow */
+
+}
+
+.account-order-card:hover {
+
+    transform: translateY(-2px);
+
+    border-color: rgba(182, 141, 64, .22);
+
+    box-shadow: 0 6px 14px rgba(0, 0, 0, .04);
+}
+
+.account-order-top {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: flex-start;
+
+    width: 100%;
+    gap: .6rem;
+}
+
+.account-order-title-row {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: .5rem;
+    /* tighter */
+
+    margin-bottom: .35rem;
+
+    flex-wrap: wrap;
+}
+
+.account-order-id {
+
+    margin: 0;
+
+    font-size: .95rem;
+    /* slightly smaller */
+
+    font-weight: 600;
+}
+
+.account-status-badge {
+
+    padding: .22rem .6rem;
+    /* smaller badge */
+
+    border-radius: 999px;
+
+    font-size: .64rem;
+
+    font-weight: 600;
+
+    color: #fff;
+
+    text-transform: capitalize;
+}
+
+.status-pending {
+    background: #9E9E9E;
+}
+
+.status-paid {
+    background: #1976D2;
+}
+
+.status-processed {
+    background: #5E35B1;
+}
+
+.status-manufacturing {
+    background: #F57C00;
+}
+
+.status-manufactured {
+    background: #FB8C00;
+}
+
+.status-shipped {
+    background: #00897B;
+}
+
+.status-delivered {
+    background: #2E7D32;
+}
+
+.status-cancelled {
+    background: #C62828;
+}
+
+.account-order-meta {
+
+    display: grid;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    /* avoid min width to prevent overflow */
+
+    gap: .45rem 1rem;
+    /* smaller gaps */
+
+    margin-top: .35rem;
+}
+
+.account-order-meta>div {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: .45rem;
+
+    font-size: .8rem;
+
+    color: var(--text-muted);
+}
+
+.account-order-meta i {
+
+    width: 18px;
+
+    color: #B68D40;
+
+    flex-shrink: 0;
+}
+
+.account-order-meta span {
+
+    color: var(--text-muted);
+}
+
+.account-order-meta strong {
+
+    margin-left: auto;
+
+    font-weight: 500;
+
+    color: var(--text);
+}
+
+.account-order-summary {
+
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: .7rem;
+
+    margin-top: .6rem;
+
+    padding-top: .6rem;
+
+    border-top: 1px solid var(--border);
+}
+
+.account-order-summary>div {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: .35rem;
+
+    font-size: .8rem;
+
+}
+
+.account-order-summary i {
+
+    color: #B68D40;
+
+    width: 16px;
+
+    flex-shrink: 0;
+}
+
+.account-order-summary span {
+
+    color: var(--text-muted);
+}
+
+.account-order-summary strong {
+
+    margin-left: 2rem;
+
+    color: var(--text);
+
+    font-weight: 600;
+}
+
+.account-order-right {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: .6rem;
+
+    margin-left: .6rem;
+}
+
+.account-order-price {
+
+    font-size: 1rem;
+    /* smaller */
+
+    font-weight: 600;
+
+    color: #2E7D32;
+
+    white-space: nowrap;
+}
+
+.account-order-arrow {
+
+    width: 30px;
+
+    height: 30px;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border: 1px solid var(--border);
+
+    background: var(--surface);
+
+    transition: .18s;
+}
+
+.account-order-card:hover .account-order-arrow {
+
+    transform: translateX(4px);
+
+    border-color: #B68D40;
+
+    color: #B68D40;
+}
+
+/* ==========================================================
+   EMPTY
+========================================================== */
+
+.account-empty-orders {
+
+    text-align: center;
+
+    padding: 2.5rem 1rem;
+}
+
+.account-empty-orders i {
+
+    font-size: 2.5rem;
+
+    color: #B68D40;
+
+    margin-bottom: .8rem;
+}
+
+.account-empty-orders p {
+
+    color: var(--text-muted);
+}
+
+/* ==========================================================
+   MOBILE
+========================================================== */
+
+@media(max-width:992px) {
+
+    .account-profile-card {
+
+        position: static;
+    }
+
+}
+
+@media(max-width:768px) {
+
+    .account-orders-header {
+
+        flex-direction: column;
+
+        align-items: flex-start;
+    }
+
+    .account-order-top {
+
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: .6rem;
+    }
+
+    .account-order-right {
+
+        width: 100%;
+
+        justify-content: space-between;
+
+        margin-left: 0;
+    }
+
+    .account-order-meta {
+
+        grid-template-columns: 1fr;
+        /* stack meta on small screens */
+
+        gap: .5rem 0;
+    }
+
+    .account-order-summary {
+
+        grid-template-columns: 1fr;
+
+        gap: .45rem;
+    }
+
+}
+
+@media(max-width:576px) {
+
+    .account-page {
+
+        padding: .6rem 0 1.5rem;
+        /* tighter */
+    }
+
+    .account-card,
+    .account-orders-card {
+
+        padding: .7rem;
+        /* tighter */
+
+        border-radius: 14px;
+    }
+
+    .account-edit-actions {
+
+        width: 100%;
+
+        flex-direction: column;
+    }
+
+    .account-edit-actions>* {
+
+        width: 100%;
+    }
+
+    /* Reduce input size on small screens */
+    .account-profile-card input,
+    .account-profile-card select {
+        height: 38px !important;
+        font-size: .9rem;
+    }
+
+    /* Make name and subtitle smaller */
+    .account-name {
+        font-size: 1rem
+    }
+
+    .account-subtitle {
+        font-size: .75rem
+    }
+
+    /* Buttons full width and smaller */
+    .account-edit-actions .app-btn-primary,
+    .account-edit-actions .app-btn-secondary,
+    .account-profile-actions .app-btn-secondary {
+        padding: .46rem .6rem;
+        font-size: .86rem;
+        border-radius: 12px;
+    }
+
+    /* Order card compact */
+    .account-order-card {
+        padding: .6rem .6rem
+    }
+
+    .account-order-price {
+        font-size: .95rem
+    }
+
+    .account-order-arrow {
+        width: 28px;
+        height: 28px
+    }
+
+}

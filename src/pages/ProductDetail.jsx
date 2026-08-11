@@ -11,15 +11,49 @@ import ProductQuestions from "../components/ProductQuestions";
 import ProductReviews from "../components/ProductReviews";
 import { toast } from "react-toastify";
 import { sortSizes } from "../utils/sortSizes";
+import "../styles/pages/ProductDetail.css";
 
 
-import "./ProductDetail.css";
 
 import SEO from "../components/SEO";
 import {
   getProductSchema,
   getBreadcrumbSchema,
 } from "../seo/schemas";
+
+function renderDescription(description) {
+  const lines = String(description || "").split(/\r?\n/);
+  const content = [];
+  let list = [];
+
+  const flushList = () => {
+    if (!list.length) return;
+    content.push(
+      <ul key={`list-${content.length}`}>
+        {list.map((item, index) => <li key={index}>{item}</li>)}
+      </ul>
+    );
+    list = [];
+  };
+
+  lines.forEach((line) => {
+    const value = line.trim();
+    const bullet = value.match(/^(?:•|-|\*)\s+(.+)$/);
+
+    if (!value) {
+      flushList();
+    } else if (bullet) {
+      list.push(bullet[1]);
+    } else {
+      flushList();
+      content.push(<p key={`paragraph-${content.length}`}>{value}</p>);
+    }
+  });
+
+  flushList();
+
+  return content.length ? content : <p>No description available.</p>;
+}
 
 export default function ProductDetail() {
   const { slug } = useParams();
@@ -156,15 +190,36 @@ export default function ProductDetail() {
 
 
   const nextImage = () => {
-    const index = images.indexOf(selectedImage);
-    const next = (index + 1) % images.length;
-    setSelectedImage(images[next]);
+    // navigate only through the main gallery images (thumbnail + product images)
+    if (!product) {
+      const index = images.indexOf(selectedImage);
+      const next = (index + 1) % images.length;
+      setSelectedImage(images[next]);
+      return;
+    }
+
+    const gallery = [product.thumbnail, ...(product.images || [])].filter(Boolean);
+    let index = gallery.indexOf(selectedImage);
+    // if selectedImage is a color image (not in gallery), jump to first gallery image
+    if (index === -1) index = 0;
+    const next = (index + 1) % gallery.length;
+    setSelectedImage(gallery[next]);
   };
 
   const prevImage = () => {
-    const index = images.indexOf(selectedImage);
-    const prev = (index - 1 + images.length) % images.length;
-    setSelectedImage(images[prev]);
+    // navigate only through the main gallery images (thumbnail + product images)
+    if (!product) {
+      const index = images.indexOf(selectedImage);
+      const prev = (index - 1 + images.length) % images.length;
+      setSelectedImage(images[prev]);
+      return;
+    }
+
+    const gallery = [product.thumbnail, ...(product.images || [])].filter(Boolean);
+    let index = gallery.indexOf(selectedImage);
+    if (index === -1) index = 0;
+    const prev = (index - 1 + gallery.length) % gallery.length;
+    setSelectedImage(gallery[prev]);
   };
   const handlers = useSwipeable({
     onSwipedLeft: nextImage,
@@ -194,6 +249,10 @@ export default function ProductDetail() {
 
 
   const isSelectionValid = selectedSize && selectedColor;
+
+  const showSelectionMessage = () => {
+    toast.info("Kindly choose a Color & Size");
+  };
 
   const productSchema = product && {
     "@context": "https://schema.org",
@@ -253,218 +312,180 @@ export default function ProductDetail() {
     />
       <div className="product-detail-page container-fluid px-0 mt-3">
 
-        <div
-          className="product-detail-card bg-white p-3 p-md-5"
-          style={{
-            borderRadius: "24px",
-            boxShadow: "0 10px 40px rgba(0,0,0,0.06)"
-          }}
-        >
-          <div className="d-flex flex-column flex-lg-row gap-4">
+        <div className="product-detail-card">
 
-            <div style={{ flex: 1, minWidth: 0 }}>
-              <div className="d-flex flex-column-reverse flex-md-row gap-3">
+          <div className="product-detail-layout">
 
-                <div className="product-thumbnail-strip thumbnail-strip d-flex flex-row flex-md-column gap-2" style={{
-                  maxHeight: window.innerWidth < 768
-                    ? "300px"
-                    : "500px",
-                  overflowY: "auto",
-                  overflowX: "auto",
-                  maxWidth: "100%",
-                  scrollbarWidth: "none"
-                }}>
+            {/* LEFT SIDE */}
+            <div className="product-gallery">
+
+              <div className="product-gallery-wrapper">
+
+                <div className="product-thumbnail-strip">
+
                   {images.map((img, i) => (
                     <img
                       key={i}
-                      // src={img}
                       src={optimizeUrl(img)}
                       onClick={() => setSelectedImage(img)}
                       alt={product.title}
                       fetchPriority="high"
                       loading="lazy"
-                      style={{
-                        width: "70px",
-                        height: "70px",
-                        objectFit: "cover",
-                        cursor: "pointer",
-                        border: selectedImage === img ? "2px solid black" : "1px solid #ccc"
-                      }}
-                      className="product-thumbnail"
+                      className={`product-thumbnail ${selectedImage === img ? "active" : ""
+                        }`}
                     />
                   ))}
+
                 </div>
 
                 <div
                   {...handlers}
                   className="product-image-panel"
-                  style={{
-                    flex: 1,
-                    position: "relative",
-                    maxWidth: "700px",
-                    margin: "0 auto",
-                  }}
                 >
+
                   <button
                     onClick={prevImage}
-                    className="btn btn-light image-nav-btn"
-                    style={{
-                      position: "absolute",
-                      left: "15px",
-                      top: "50%",
-                      transform: "translateY(-50%)",
-                      zIndex: 5,
-                      width: "48px",
-                      height: "48px",
-                      borderRadius: "50%",
-                      boxShadow: "0 4px 15px rgba(0,0,0,.15)"
-                    }}
+                    className="image-nav-btn image-nav-left"
                   >
                     <i className="bi bi-chevron-left"></i>
                   </button>
 
-                  <div
-                    style={{
-                      width: "100%",
-                      aspectRatio: "1 / 1",
-                      borderRadius: "20px",
-                      overflow: "hidden",
-                      background: "#f8f8f8",
-                    }}
-                  >
+                  <div className="product-main-image">
+
                     <img
                       src={optimizeUrl(selectedImage)}
                       alt={product.title}
-                      onClick={() => setPreviewImage(optimizeUrl(selectedImage))}
-                      style={{
-                        width: "100%",
-                        height: "100%",
-                        objectFit: "cover",
-                        display: "block",
-                        cursor: "zoom-in",
-                      }}
+                      onClick={() =>
+                        setPreviewImage(optimizeUrl(selectedImage))
+                      }
+                      className="product-main-image-img"
                     />
+
                   </div>
 
                   <button
                     onClick={nextImage}
-                    className="btn btn-light image-nav-btn"
-                    style={{
-                      position: "absolute",
-                      right: "15px",
-                      top: "50%",
-                      transform: "translateY(-50%)",
-                      zIndex: 5,
-                      width: "48px",
-                      height: "48px",
-                      borderRadius: "50%",
-                      boxShadow: "0 4px 15px rgba(0,0,0,.15)"
-                    }}
+                    className="image-nav-btn image-nav-right"
                   >
                     <i className="bi bi-chevron-right"></i>
                   </button>
+
                 </div>
 
               </div>
+
             </div>
 
-            <div className="product-detail-info" style={{ flex: 1, minWidth: 0 }}>
+            {/* RIGHT SIDE */}
 
-              <p className="text-muted mb-1">{product.main_category}</p>
-              <h1
-                className="fw-semibold"
-                style={{
-                  fontSize: "clamp(1.2rem,4vw,2.8rem)",
-                  lineHeight: 1
-                }}
-              >
+            {/* <div className="product-detail-info"></div> */}
+
+
+
+
+            <div className="product-detail-info">
+
+              <p className="product-category">
+                {product.main_category}
+              </p>
+
+              <h1 className="product-title">
                 {product.title}
               </h1>
 
-              <div className="product-price-row d-flex align-items-center gap-3 flex-wrap">
-                <h3 className="mb-0 fw-bold" style={{ color: "#198754" }}>
+              <div className="product-price-row">
+
+                <h3 className="product-price">
                   ${Math.round(Number(displayPrice.selling))}
                 </h3>
 
-                <span
-                  className="text-muted text-decoration-line-through"
-                >
+                <span className="product-mrp">
                   ${displayPrice.mrp}
                 </span>
 
-                <span
-                  className="badge rounded-pill bg-danger"
-                >
+                <span className="product-discount">
                   {displayPrice.discount}% OFF
                 </span>
+
               </div>
 
-              <div className="mt-1">
-                <p
-                  className="text-muted mb-2"
-                  style={{
-                    display: "-webkit-box",
-                    WebkitLineClamp: 2,
-                    WebkitBoxOrient: "vertical",
-                    overflow: "hidden"
-                  }}
-                >
+              <div className="product-short-description">
+
+                <p className="product-short-text">
                   {product.description}
                 </p>
 
                 <button
-                  className="btn btn-link p-0 text-dark fw-semibold"
+                  className="product-show-more"
                   onClick={() =>
                     detailsRef.current?.scrollIntoView({
-                      behavior: "smooth"
+                      behavior: "smooth",
                     })
                   }
                 >
-                  Show More
+                  Read Full Description
+                  <i className="bi bi-arrow-down ms-2"></i>
                 </button>
+
               </div>
 
               {/* COLORS */}
-              <div className="mt-3">
-                <strong>Colors:</strong><p className="text-muted mb-2">Didn't find the color you want? worry not, we customize it with zero additional cost...</p>
-                <div className="d-flex gap-2 mt-2 flex-wrap">
+
+              <div className="product-option-section">
+
+                <h6 className="product-option-title">
+                  Colors
+                </h6>
+
+                <p className="product-option-note">
+                  Didn't find the color you want? We customize it at no additional cost.
+                </p>
+
+                <div className="product-color-list">
+
                   {product.product_colors?.map((c, i) => (
+
                     <img
                       key={i}
                       src={optimizeUrl(c.color_image)}
                       alt={`${product.title} - ${c.color_name}`}
                       loading="lazy"
                       title={c.color_name}
+                      className={`product-color-swatch ${selectedColor === c ? "active" : ""
+                        }`}
                       onClick={() => {
                         setSelectedImage(c.color_image);
                         setSelectedColor(c);
                       }}
-                      style={{
-                        width: "50px",
-                        height: "50px",
-                        objectFit: "cover",
-                        cursor: "pointer",
-                        border: selectedColor === c ? "2px solid black" : "1px solid #ccc"
-                      }}
-                      className="product-color-swatch"
                     />
+
                   ))}
+
                 </div>
+
               </div>
 
-              {/* SIZES */}
-              <div className="mt-3">
-                <label htmlFor="size-select" className="form-label fw-bold mb-1">
+              {/* SIZE */}
+
+              <div className="product-option-section">
+
+                <label
+                  htmlFor="size-select"
+                  className="product-option-title"
+                >
                   Size
                 </label>
-                <p className="text-muted mb-2">
-                  Didn't find your size? Worry not, we customize it with zero additional cost.
+
+                <p className="product-option-note">
+                  Didn't find your size? We customize it at no additional cost.
                 </p>
+
                 <select
                   id="size-select"
                   className="product-size-select"
                   value={selectedSize?.id ?? ""}
                   onChange={(e) => {
+
                     const size = product.product_sizes?.find(
                       (s) => String(s.id) === e.target.value
                     );
@@ -479,55 +500,93 @@ export default function ProductDetail() {
                       ),
                       mrp: size.mrp_variation || product.mrp,
                       discount:
-                        size.discount_variation || Number(product.discount_percent),
+                        size.discount_variation ||
+                        Number(product.discount_percent),
                     });
+
                   }}
                 >
+
                   <option value="" disabled>
-                    Select a size
+                    Select a Size
                   </option>
+
                   {product.product_sizes?.map((s, i) => (
-                    <option key={s.id || i} value={s.id}>
+
+                    <option
+                      key={s.id || i}
+                      value={s.id}
+                    >
                       {s.size}
                     </option>
+
                   ))}
+
                 </select>
+
               </div>
 
-              <p className="mt-3">Shape: {product.shape}</p>
-              <p>Pattern: {product.pattern}</p>
-              <p>
-                Materials:{" "}
-                {Array.isArray(product.materials)
-                  ? product.materials.join(", ")
-                  : product.materials}
-              </p>
+              <div className="product-spec-list">
 
-              <div className="mt-2 text-muted">
-                <i className="bi bi-truck me-2"></i>
-                <strong>Expected Delivery:</strong>{" "}
-                {expectedDelivery.toLocaleDateString("en-US", {
-                  day: "numeric",
-                  month: "short",
-                  year: "numeric",
-                })}
+                <p>
+                  <strong>Shape:</strong> {product.shape}
+                </p>
+
+                <p>
+                  <strong>Pattern:</strong> {product.pattern}
+                </p>
+
+                <p>
+                  <strong>Materials:</strong>{" "}
+                  {Array.isArray(product.materials)
+                    ? product.materials.join(", ")
+                    : product.materials}
+                </p>
+
               </div>
 
-              <div className="mt-2 text-muted">
+              <div className="product-info-item">
+                <i className="bi bi-truck"></i>
+
+                <span>
+                  <strong>Expected Delivery:</strong>{" "}
+                  {expectedDelivery.toLocaleDateString("en-US", {
+                    day: "numeric",
+                    month: "short",
+                    year: "numeric",
+                  })}
+                </span>
+              </div>
+
+              <div className="product-info-item">
                 <i className="bi bi-airplane"></i>
-                <strong> Shipping:</strong> <span className="text-muted mb-2"> <span style={{ color: "#198754", fontWeight: "bold" }}>Free</span> All around the globe</span>
 
+                <span>
+                  <strong>Shipping:</strong>
+
+                  <span className="product-free-shipping">
+                    Free Worldwide
+                  </span>
+                </span>
               </div>
 
 
 
-              {/* BUTTONS */}
-              <div className="mt-4 d-flex flex-column flex-sm-row gap-3">
+
+
+              {/* ACTION BUTTONS */}
+
+              <div className="product-action-buttons">
+
                 <button
-                  className="btn btn-dark w-100"
-                  disabled={!isSelectionValid}
+                  className="app-btn-primary flex-fill"m
+                  aria-disabled={!isSelectionValid}
                   onClick={() => {
-                    if (!isSelectionValid) return;
+
+                    if (!isSelectionValid) {
+                      showSelectionMessage();
+                      return;
+                    }
 
                     addToCart({
                       ...product,
@@ -538,16 +597,22 @@ export default function ProductDetail() {
                     });
 
                     navigate("/cart");
+
                   }}
                 >
+                  <i className="bi bi-lightning-charge-fill me-2"></i>
                   Buy Now
                 </button>
 
                 <button
-                  className="btn btn-outline-dark w-100"
-                  disabled={!isSelectionValid}
+                  className="app-btn-secondary flex-fill"
+                  aria-disabled={!isSelectionValid}
                   onClick={() => {
-                    if (!isSelectionValid) return;
+
+                    if (!isSelectionValid) {
+                      showSelectionMessage();
+                      return;
+                    }
 
                     addToCart({
                       ...product,
@@ -556,9 +621,12 @@ export default function ProductDetail() {
                       selectedColor,
                       price: displayPrice.selling,
                     });
+
                     toast.success(
                       <div>
-                        <div className="fw-semibold">Added to Cart</div>
+                        <div className="fw-semibold">
+                          Added to Cart
+                        </div>
                         <small>{product.title}</small>
                       </div>,
                       {
@@ -569,49 +637,50 @@ export default function ProductDetail() {
                         pauseOnHover: true,
                       }
                     );
+
                   }}
                 >
+                  <i className="bi bi-bag me-2"></i>
                   Add to Cart
                 </button>
+
               </div>
 
             </div>
 
           </div>
+
         </div>
 
         {/* RELATED PRODUCTS */}
-        <hr
-          className="my-5"
-          style={{
-            opacity: 0.1
-          }}
-        />
 
-        <div className="related-products-section mt-1">
+        <section className="related-products-section">
 
-          <div className="text-center mb-5">
+          <div className="section-heading">
 
-            <span className="related-subtitle">
+            <span className="section-subtitle">
               YOU MAY ALSO LIKE
             </span>
 
-            <h2 className="related-title mt-2">
-              Similar Handcrafted Items
+            <h2 className="section-title">
+              Similar Handcrafted Pieces
             </h2>
 
-            <p className="related-description">
-              Discover premium handmade items carefully selected
-              to complement this design.
+            <p className="section-description">
+              Carefully selected handmade rugs crafted with the same
+              attention to detail.
             </p>
 
           </div>
 
-          <div className="row g-4 justify-content-center">
+          <div className="related-products-grid">
+
             {related.map((product) => (
+
               <ProductCard
                 key={product.id}
                 product={product}
+                cardWidth="100%"
                 selectedImage={selectedImages[product.id]}
                 onColorClick={(productId, image) =>
                   setSelectedImages((prev) => ({
@@ -620,151 +689,146 @@ export default function ProductDetail() {
                   }))
                 }
               />
+
             ))}
+
           </div>
 
-        </div>
-        <hr
-          className="my-5"
-          style={{
-            opacity: 0.1
-          }}
-        />
+        </section>
 
-        {/* PRODUCT DETAILS */}
-        <div
+        <section
           ref={detailsRef}
-          className="mt-5 p-4 p-md-5 bg-light rounded-4"
+          className="product-details-section"
         >
-          <h2 className="mb-4 fw-bold">
-            Product Details
-          </h2>
 
-          <div className="row g-4">
+          <div className="row g-5">
 
-            <div className="col-md-6">
-              <h6 className="fw-bold" style={{
-                borderBottom: "3px solid #111",
-                paddingBottom: "8px"
-              }}>Description</h6>
+            <div className="col-lg-6">
+
+              <h2 className="details-heading">
+                Product Description
+              </h2>
+
               <div className="trust-quote">
-                <div className="trust-quote-icon">❝</div>
 
-                <p className="mb-0">
+                <div className="trust-quote-icon">
+                  ❝
+                </div>
+
+                <p>
+
                   We understand that ordering a handmade rug online requires trust.
-                  That's why we stand behind every order we ship. If any disruption
-                  occurs from our side on orders up to <strong>$499</strong>, we will
-                  compensate you with <strong>50% of your order value</strong>.
-                  Your satisfaction matters to us, and we believe you should shop with
-                  complete peace of mind. We've got your back—every step of the way.
+                  That's why we stand behind every order we ship.
+                  If any disruption occurs from our side on orders up to
+                  <strong> $499</strong>,
+                  we will compensate you with
+                  <strong> 50% of your order value</strong>.
+
+                  Your satisfaction matters to us, and we believe shopping
+                  should always feel safe and worry-free.
+
                 </p>
 
                 <div className="trust-quote-signature">
                   — The Eurasian House Team
                 </div>
+
               </div>
+
               <div className="product-description">
-                {product.description}
+                {renderDescription(product.description)}
               </div>
+
             </div>
 
-            <div className="col-md-6">
-              <h6 className="fw-bold" style={{
-                borderBottom: "3px solid #111",
-                paddingBottom: "8px"
-              }}>Specifications</h6>
+            <div className="col-lg-6">
 
-              <ul className="list-group">
+              <h2 className="details-heading">
+                Specifications
+              </h2>
 
-                <li className="list-group-item">
+              <ul className="product-specifications">
+
+                <li>
                   <strong>Shape:</strong> {product.shape}
                 </li>
 
-                <li className="list-group-item">
+                <li>
                   <strong>Pattern:</strong> {product.pattern}
                 </li>
 
-                <li className="list-group-item">
+                <li>
                   <strong>Materials:</strong>{" "}
                   {Array.isArray(product.materials)
                     ? product.materials.join(", ")
                     : product.materials}
                 </li>
 
-                <li className="list-group-item">
+                <li>
                   <strong>Category:</strong> {product.main_category}
                 </li>
 
-                <li className="list-group-item">
-                  <strong>Color:</strong> {product.primary_color}
+                <li>
+                  <strong>Primary Color:</strong> {product.primary_color}
                 </li>
 
-                <li className="list-group-item">
+                <li>
                   <strong>Other Colors:</strong>{" "}
                   {product.other_colors?.join(", ")}
                 </li>
-                <li className="list-group-item">
+
+                <li>
                   <strong>Quality:</strong> {product.quality}
                 </li>
 
-                <li className="list-group-item">
-                  <strong>Expected Delivery:</strong>  {expectedDelivery.toLocaleDateString("en-US", {
+                <li>
+                  <strong>Expected Delivery:</strong>{" "}
+                  {expectedDelivery.toLocaleDateString("en-US", {
                     day: "numeric",
                     month: "short",
                     year: "numeric",
                   })}
                 </li>
 
-                <li className="list-group-item">
-                  <strong>Shapes Availability:</strong> Custom shapes are available, kindly <Link
-                    to="/contact"
-                    className="fw-bold text-decoration-underline"
-                  >
+                <li>
+                  <strong>Custom Shapes:</strong>{" "}
+                  <Link to="/contact">
                     Contact Us
                   </Link>
                 </li>
 
-                <li className="list-group-item">
-                  <strong>Sizes Availability:</strong> Custom Sizes are available, kindly <Link
-                    to="/contact"
-                    className="fw-bold text-decoration-underline"
-                  >
+                <li>
+                  <strong>Custom Sizes:</strong>{" "}
+                  <Link to="/contact">
                     Contact Us
                   </Link>
                 </li>
 
-                <li className="list-group-item">
-                  <strong>Colors Availability:</strong> Custom Colors are available, kindly <Link
-                    to="/contact"
-                    className="fw-bold text-decoration-underline"
-                  >
+                <li>
+                  <strong>Custom Colors:</strong>{" "}
+                  <Link to="/contact">
                     Contact Us
                   </Link>
                 </li>
 
-                <li className="list-group-item">
-                  <strong>Shipping:</strong> Free all over the world. Kindly refer to our <Link
-                    to="/shipping-policy"
-                    className="fw-bold text-decoration-underline"
-                  >
+                <li>
+                  <strong>Shipping:</strong>{" "}
+                  <Link to="/shipping-policy">
                     Shipping Policy
                   </Link>
                 </li>
 
-                <li className="list-group-item">
-                  <strong>Return Policy:</strong>{" "}
-                  Yes, kindly read our{" "}
-                  <Link
-                    to="/refund-policy"
-                    className="fw-bold text-decoration-underline"
-                  >
+                <li>
+                  <strong>Returns:</strong>{" "}
+                  <Link to="/refund-policy">
                     Refund & Return Policy
-                  </Link>{" "}
-                  for more details.
+                  </Link>
                 </li>
 
               </ul>
+
               <div className="referral-card">
+
                 <div className="referral-icon">
                   🎁
                 </div>
@@ -773,53 +837,65 @@ export default function ProductDetail() {
                   Share the Comfort, Earn Rewards
                 </h5>
 
-                <p className="mb-0">
-                  If you love your experience with Eurasian House, share it with
-                  someone close to you. When a friend or family member places
-                  their very first order using your referral, both of you receive
+                <p>
+
+                  Refer a friend and when they place their first order,
+                  both of you receive
                   <strong> $15 in rewards.</strong>
 
-                  Your friend gets <strong>$15 off</strong> their first purchase,
-                  and you receive <strong>$15 in store credit</strong> to use on
-                  your next order.
-
-                  A small thank you from us for helping our family grow.
                 </p>
 
                 <div className="referral-signature">
-                  — With gratitude, The Eurasian House Team
+                  — The Eurasian House Team
                 </div>
+
               </div>
 
             </div>
 
           </div>
-        </div>
-        <ProductReviews productId={product.id} />
-        <ProductQuestions productId={product.id} />
+
+        </section>
+
+
+        <section className="product-feedback-grid">
+          <ProductReviews productId={product.id} />
+          <ProductQuestions productId={product.id} />
+        </section>
 
       </div>
       {previewImage && (
+
         <div
-          className="modal fade show"
-          style={{
-            display: "block",
-            background: "rgba(0,0,0,.88)",
-            backdropFilter: "blur(6px)"
-          }}
+          className="product-preview-modal"
           onClick={() => setPreviewImage(null)}
         >
-          <div className="modal-dialog modal-dialog-centered modal-lg">
-            <div className="modal-content border-0 bg-transparent shadow-none">
+
+          <div className="product-preview-dialog">
+
+            <div className="product-preview-content">
+
               <img
                 src={previewImage}
-                className="img-fluid rounded-4 shadow-lg"
                 alt={product?.title}
+                className="product-preview-image"
                 onClick={(e) => e.stopPropagation()}
               />
+
+              <button
+                className="product-preview-close"
+                onClick={() => setPreviewImage(null)}
+                aria-label="Close Preview"
+              >
+                <i className="bi bi-x-lg"></i>
+              </button>
+
             </div>
+
           </div>
+
         </div>
+
       )}
     </>
   );

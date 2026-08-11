@@ -2,13 +2,16 @@ import { useCart } from "../context/CartContext";
 import { useNavigate } from "react-router-dom";
 import StarRating from "../components/common/StarRating";
 import { toast } from "react-toastify";
+import "../styles/components/ProductCard.css";
+import { sortSizes } from "../utils/sortSizes";
+
 
 export default function ProductCard({
   product,
   onClick,
   selectedImage,
   onColorClick,
-  cardWidth = "200px",
+  cardWidth = "168px",
 }) {
 
 
@@ -23,45 +26,26 @@ export default function ProductCard({
         flex: "0 0 auto",
         cursor: "pointer",
       }}
-      onClick={
-        onClick ||
-        (() => navigate(`/products/${product.slug}`))
-      }
+      onClick={onClick || (() => navigate(`/products/${product.slug}`))}
     >
-      <div className="card product-card h-100 shadow-sm border-0 overflow-hidden">
+      <div className="card product-card h-100">
 
-        <img
-          className="card-img-top product-card-image"
-          src={selectedImage || product.thumbnail}
-          alt={`${product.title} - Handmade ${product.main_category} Rug`}
-          style={{
-            width: "100%",
-            aspectRatio: "4  / 3",
-            objectFit: "cover",
-          }}
-          loading="lazy"
-        />
+        <div className="product-card-image-wrapper">
+          <img
+            src={selectedImage || product.thumbnail}
+            alt={`${product.title} - Handmade ${product.main_category} Rug`}
+            className="product-card-image"
+            loading="lazy"
+          />
+        </div>
 
-        <div className="card-body d-flex flex-column p-3">
+        <div className="card-body product-card-body">
 
-          <p className="text-muted small" style={{ marginBottom: "1px" }}>
+          <small className="product-category">
             {product.main_category}
-          </p>
+          </small>
 
-          <h6
-            className="fw-semibold mb-0"
-            style={{
-              overflow: "hidden",
-              textOverflow: "ellipsis",
-              display: "-webkit-box",
-              WebkitBoxOrient: "vertical",
-              WebkitLineClamp: 2,
-              height: "2.6em",
-              lineHeight: "1.3",
-              fontSize: "0.95rem",
-              wordBreak: "break-word",
-            }}
-          >
+          <h6 className="product-title">
             {product.title}
           </h6>
 
@@ -70,40 +54,31 @@ export default function ProductCard({
             reviewCount={product.review_count}
           />
 
-          <div className="d-flex align-items-center gap-2">
-            <span className="fw-bold fs-6" style={{ color: "#198754" }}>
+          <div className="product-price-row">
+
+            <span className="product-price">
               ${Math.round(Number(product.selling_price))}
             </span>
 
-            <span className="text-muted text-decoration-line-through small">
+            <span className="product-old-price">
               ${product.mrp}
+            </span>
+            <span className="product-discount">
+              {product.discount_percent}% OFF
             </span>
           </div>
 
-          <span
-            className="badge bg-dark align-self-start mb-3"
-          >
-            {product.discount_percent}% OFF
-          </span>
-
-          <div className="d-flex gap-2 mb-1 flex-wrap">
+          <div className="product-colors">
             {product.product_colors?.slice(0, 5).map((c) => (
               <div
-                className="product-color-dot"
                 key={c.id}
                 title={c.color_name}
+                className="product-color-dot"
                 onClick={(e) => {
                   e.stopPropagation();
-
-                  onColorClick?.(
-                    product.id,
-                    c.color_image
-                  );
+                  onColorClick?.(product.id, c.color_image);
                 }}
                 style={{
-                  width: 20,
-                  height: 20,
-                  borderRadius: "50%",
                   background:
                     c.color_name === "Maroon" ? "#7A1F3D" :
                       c.color_name === "Gold" ? "#D4AF37" :
@@ -130,79 +105,76 @@ export default function ProductCard({
                                                                 c.color_name === "Tan" ? "#D2B48C" :
                                                                   c.color_name === "Yellow" ? "#FACC15" :
                                                                     c.color_name === "Multicolor"
-                                                                      ? "conic-gradient(red, orange, yellow, green, cyan, blue, violet, red)"
+                                                                      ? "conic-gradient(red, orange, yellow, green, cyan, blue, violet)"
                                                                       : "#ccc",
+
                   border:
                     selectedImage === c.color_image
-                      ? "3px solid black"
-                      : "2px solid #cfcfcf",
-                  cursor: "pointer",
-                  boxShadow: "0 1px 3px rgba(0,0,0,.15)",
+                      ? "2px solid var(--text-primary)"
+                      : "1px solid var(--border)",
                 }}
               />
             ))}
           </div>
 
-          <div className="mt-auto d-grid gap-1">
+          <div className="product-card-buttons mt-auto">
 
             <button
-              onClick={(e) => {
-                e.stopPropagation();
+                className="btn app-btn-outline btn-sm"
+                onClick={(e) => {
+                  e.stopPropagation();
 
-                const firstColor = product.product_colors?.[0];
-                const firstSize = product.product_sizes?.[0];
+                  const sizes = sortSizes(product.product_sizes || []);
+                  const chosenSize = sizes[0] || product.product_sizes?.[0] || null;
+                  const chosenColor = product.product_colors?.[0] || null;
+                  const chosenPrice = Math.round(Number(chosenSize?.selling_price ?? product.selling_price));
 
-                addToCart({
-                  ...product,
-                  cartItemId: crypto.randomUUID(),
-                  selectedColor: firstColor,
-                  selectedSize: firstSize,
-                  price: Math.round(Number(product.selling_price)),
-                  quantity: 1,
-                });
+                  addToCart({
+                    ...product,
+                    cartItemId: crypto.randomUUID(),
+                    selectedColor: chosenColor,
+                    selectedSize: chosenSize,
+                    price: chosenPrice,
+                    quantity: 1,
+                  });
 
-                navigate("/cart");
-              }}
-              className="btn btn-outline-dark btn-sm"
-            >
-              Buy it now
-            </button>
+                  navigate("/cart");
+                }}
+              >
+                Buy Now
+              </button>
 
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
+              <button
+                className="btn app-btn-primary btn-sm addCart"
+                onClick={(e) => {
+                  e.stopPropagation();
 
-                const firstColor =
-                  product.product_colors?.[0];
+                  const sizes = sortSizes(product.product_sizes || []);
+                  const chosenSize = sizes[0] || product.product_sizes?.[0] || null;
+                  const chosenColor = product.product_colors?.[0] || null;
+                  const chosenPrice = Math.round(Number(chosenSize?.selling_price ?? product.selling_price));
 
-                const firstSize =
-                  product.product_sizes?.[0];
+                  addToCart({
+                    ...product,
+                    cartItemId: crypto.randomUUID(),
+                    selectedColor: chosenColor,
+                    selectedSize: chosenSize,
+                    price: chosenPrice,
+                  });
 
-                addToCart({
-                  ...product,
-                  cartItemId: crypto.randomUUID(),
-                  selectedColor: firstColor,
-                  selectedSize: firstSize,
-                  price: Math.round(Number(product.selling_price)),
-                });
-                toast.success(
-                  <div>
-                    <div className="fw-semibold">Added to Cart</div>
-                    <small>{product.title}</small>
-                  </div>,
-                  {
-                    position: "top-right",
-                    autoClose: 2500,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                  }
-                );
-              }}
-              className="btn btn-dark btn-sm"
-            >
-              Add to cart
-            </button>
+                  toast.success(
+                    <>
+                      <div className="fw-semibold">Added to Cart</div>
+                      <small>{product.title}</small>
+                    </>,
+                    {
+                      autoClose: 2500,
+                    }
+                  );
+                }}
+              >
+                Add to Cart
+              </button>
 
           </div>
 

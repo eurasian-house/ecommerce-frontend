@@ -1,187 +1,209 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import "../styles/components/SmallComponent.css";
 
-const priceUnderStyles = {
-    overlay: {
-        background:
-            "linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 50%)",
-    },
-    textShadow: {
-        textShadow: "0 1px 3px rgba(0,0,0,0.8)",
-    },
-};
 
 const PriceUnder = () => {
+  const navigate = useNavigate();
 
+  const images = {
+    leftLarge: "/priceunder/left.jpg",
+    topRightAdventure: "/priceunder/tr.jpg",
+    orangeWhatsNew: "/priceunder/tc.jpg",
+    middleRightPlant: "/priceunder/bc.jpg",
+    bottomRightRoom: "/priceunder/br.jpg",
+  };
 
+  return (
+    <section className="container-fluid py-5">
 
-    const navigate = useNavigate();
+      <div className="row g-3">
 
-    // ✅ FIXED IMAGE PATHS (NO process.env)
-    const images = {
-        leftLarge: "/priceunder/left.jpg",
-        topRightAdventure: "/priceunder/tr.jpg",
-        orangeWhatsNew: "/priceunder/tc.jpg",
-        middleRightPlant: "/priceunder/bc.jpg",
-        bottomRightRoom: "/priceunder/br.jpg",
-    };
+        {/* LEFT BIG CARD */}
 
-    return (
-        <div className="container py-5">
-            <div className="row g-3">
+        <div className="col-lg-6">
 
-                {/* LEFT */}
-                <div className="col-lg-6">
-                    <div
-                        className="card premium-grid-card border-0 position-relative h-100 overflow-hidden"
-                        style={{ cursor: "pointer" }}
-                        onClick={() =>
-                            navigate("/products?sort=new")
-                        }
-                    >
-                        <img
-                            src={images.leftLarge}
-                            className="card-img h-100 premium-grid-image"
-                            style={{ objectFit: "cover" }}
-                            loading="lazy"
-                            alt="What's new!"
-                        />
-                        <div
-                            className="card-img-overlay d-flex flex-column justify-content-end text-white p-4"
-                            style={priceUnderStyles.overlay}
-                        >
-                            <div style={priceUnderStyles.textShadow}>
-                                <span className="badge bg-danger mb-2">New</span>
-                                <h3 className="fw-bold">
-                                    What's new!
-                                </h3>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+          <div
+            className="premium-grid-card h-100"
+            onClick={() => navigate("/products?sort=new")}
+          >
 
-                {/* RIGHT */}
-                <div className="col-lg-6">
-                    <div className="row g-3 h-100">
+            <img
+              src={images.leftLarge}
+              alt="New Collection"
+              className="premium-grid-image"
+              loading="lazy"
+            />
 
-                        {/* TOP MIDDLE */}
-                        <div className="col-6">
-                            <div
-                                className="card premium-grid-card border-0 position-relative h-100 overflow-hidden"
-                                style={{ cursor: "pointer" }}
-                                onClick={() =>
-                                    navigate("/products?budget=1")
-                                }
-                            >
-                                <img
-                                    src={images.orangeWhatsNew}
-                                    className="card-img h-100 premium-grid-image"
-                                    style={{ objectFit: "cover" }}
-                                    loading="lazy"
-                                    alt="Under Price $299"
-                                />
+            <div className="premium-grid-overlay">
 
-                                <div
-                                    className="card-img-overlay d-flex align-items-end text-white p-3"
-                                    style={priceUnderStyles.overlay}
-                                >
-                                    <h6 style={priceUnderStyles.textShadow}>
-                                        Under $299
-                                    </h6>
-                                </div>
-                            </div>
-                        </div>
+              <span className="premium-grid-badge">
+                New Collection
+              </span>
 
-                        {/* TOP RIGHT */}
-                        <div className="col-6">
-                            <div
-                                className="card premium-grid-card border-0 position-relative h-100 overflow-hidden"
-                                style={{ cursor: "pointer" }}
-                                onClick={() =>
-                                    navigate("/products?shape=round,oval")
-                                }
-                            >
-                                <img
-                                    src={images.topRightAdventure}
-                                    className="card-img h-100 premium-grid-image"
-                                    style={{ objectFit: "cover" }}
-                                    alt="Round and Oval Rugs"
-                                    loading="lazy"
-                                />
+              <h2 className="premium-grid-title">
+                What's New
+              </h2>
 
-                                <div
-                                    className="card-img-overlay d-flex align-items-end text-white p-3"
-                                    style={priceUnderStyles.overlay}
-                                >
-                                    <h6 style={priceUnderStyles.textShadow}>
-                                        Round and Oval Rugs
-                                    </h6>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* MIDDLE */}
-                        <div className="col-6">
-                            <div
-                                className="card premium-grid-card border-0 position-relative h-100 overflow-hidden"
-                                style={{ cursor: "pointer" }}
-                                onClick={() =>
-                                    navigate("/products?shape=irregular")
-                                }
-                            >
-                                <img
-                                    src={images.middleRightPlant}
-                                    loading="lazy"
-                                    className="card-img h-100 premium-grid-image"
-                                    style={{ objectFit: "cover" }}
-                                    alt="Irregular Shape Rugs"
-                                />
-
-                                <div
-                                    className="card-img-overlay d-flex align-items-end text-white p-3"
-                                    style={priceUnderStyles.overlay}
-                                >
-                                    <h6 style={priceUnderStyles.textShadow}>
-                                        Irregular Shape
-                                    </h6>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* BOTTOM */}
-                        <div className="col-6">
-                            <div
-                                className="card premium-grid-card border-0 position-relative h-100 overflow-hidden"
-                                style={{ cursor: "pointer" }}
-                                onClick={() =>
-                                    navigate("/products?quality=premium")
-                                }
-                            >
-                                <img
-                                    src={images.bottomRightRoom}
-                                    loading="lazy"
-                                    className="card-img h-100 premium-grid-image"
-                                    style={{ objectFit: "cover" }}
-                                    alt="Only Premium Carpets/Rugs"
-                                />
-
-                                <div
-                                    className="card-img-overlay d-flex align-items-end text-white p-3"
-                                    style={priceUnderStyles.overlay}
-                                >
-                                    <h6 style={priceUnderStyles.textShadow}>
-                                        Premium Rugs
-                                    </h6>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
+              <p className="premium-grid-subtitle">
+                Discover our latest handcrafted arrivals.
+              </p>
 
             </div>
+
+          </div>
+
         </div>
-    );
+
+        {/* RIGHT */}
+
+        <div className="col-lg-6">
+
+          <div className="row g-3 h-100">
+
+            {/* CARD */}
+
+            <div className="col-6">
+
+              <div
+                className="premium-grid-card"
+                onClick={() => navigate("/products?budget=1")}
+              >
+
+                <img
+                  src={images.orangeWhatsNew}
+                  alt="Under $299"
+                  className="premium-grid-image"
+                  loading="lazy"
+                />
+
+                <div className="premium-grid-overlay small">
+
+                  <span className="premium-grid-label">
+                    Budget
+                  </span>
+
+                  <h6>
+                    Under $299
+                  </h6>
+
+                </div>
+
+              </div>
+
+            </div>
+
+            {/* CARD */}
+
+            <div className="col-6">
+
+              <div
+                className="premium-grid-card"
+                onClick={() =>
+                  navigate("/products?shape=round,oval")
+                }
+              >
+
+                <img
+                  src={images.topRightAdventure}
+                  alt="Round Rugs"
+                  className="premium-grid-image"
+                  loading="lazy"
+                />
+
+                <div className="premium-grid-overlay small">
+
+                  <span className="premium-grid-label">
+                    Shape
+                  </span>
+
+                  <h6>
+                    Round & Oval
+                  </h6>
+
+                </div>
+
+              </div>
+
+            </div>
+
+            {/* CARD */}
+
+            <div className="col-6">
+
+              <div
+                className="premium-grid-card"
+                onClick={() =>
+                  navigate("/products?shape=irregular")
+                }
+              >
+
+                <img
+                  src={images.middleRightPlant}
+                  alt="Irregular Rugs"
+                  className="premium-grid-image"
+                  loading="lazy"
+                />
+
+                <div className="premium-grid-overlay small">
+
+                  <span className="premium-grid-label">
+                    Shape
+                  </span>
+
+                  <h6>
+                    Irregular
+                  </h6>
+
+                </div>
+
+              </div>
+
+            </div>
+
+            {/* CARD */}
+
+            <div className="col-6">
+
+              <div
+                className="premium-grid-card"
+                onClick={() =>
+                  navigate("/products?quality=antique")
+
+                }
+              >
+
+                <img
+                  src={images.bottomRightRoom}
+                  alt="Premium Rugs"
+                  className="premium-grid-image"
+                  loading="lazy"
+                />
+
+                <div className="premium-grid-overlay small">
+
+                  <span className="premium-grid-label">
+                    Quality
+                  </span>
+
+                  <h6>
+                    Antique Rugs
+                  </h6>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+  );
 };
 
 export default PriceUnder;

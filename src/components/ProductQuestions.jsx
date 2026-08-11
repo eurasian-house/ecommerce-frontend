@@ -8,6 +8,7 @@ import {
     createQuestion,
     getProductQuestions,
 } from "../services/questionService";
+import "../styles/components/ProductQuestions.css";
 
 export default function ProductQuestions({ productId }) {
     const { user } = useAuth();
@@ -17,7 +18,7 @@ export default function ProductQuestions({ productId }) {
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
     const [showAskBox, setShowAskBox] = useState(false);
-    const [showAll, setShowAll] = useState(false);
+    const [visibleCount, setVisibleCount] = useState(3);
 
     useEffect(() => {
         fetchQuestions();
@@ -73,7 +74,7 @@ export default function ProductQuestions({ productId }) {
     if (loading) return null;
 
     return (
-        <div className="card border-0 shadow-sm rounded-4 p-4 mt-5 bg-white">
+        <div className="product-questions card border-0 shadow-sm rounded-4 p-4 mt-5 bg-white">
 
             <div className="d-flex justify-content-between align-items-center mb-4">
 
@@ -177,7 +178,7 @@ export default function ProductQuestions({ productId }) {
             ) : (
                 <>
 
-                    {(showAll ? questions : questions.slice(0, 3)).map((q) => (
+                    {questions.slice(0, visibleCount).map((q) => (
 
                         <div
                             key={q.id}
@@ -192,19 +193,19 @@ export default function ProductQuestions({ productId }) {
                                             q.current_avatar || q.customer_avatar
                                     })}
                                     alt={q.customer_name}
-                                    size={42}
+                                    size={35}
                                     className="me-3"
                                 />
 
                                 <div>
 
+                                    <div className="small text-muted mt-1">
+                                        {q.customer_name || "Customer"}
+                                    </div>
                                     <div className="fw-semibold">
                                         {q.question}
                                     </div>
 
-                                    <div className="small text-muted mt-1">
-                                        {q.customer_name || "Customer"}
-                                    </div>
 
                                 </div>
 
@@ -252,11 +253,17 @@ export default function ProductQuestions({ productId }) {
 
                             <button
                                 className="btn btn-sm btn-outline-secondary rounded-pill px-4"
-                                onClick={() => setShowAll(!showAll)}
+                                onClick={() => {
+                                    if (visibleCount < questions.length) {
+                                        setVisibleCount((count) => Math.min(count + 3, questions.length));
+                                    } else {
+                                        setVisibleCount(3);
+                                    }
+                                }}
                             >
-                                {showAll
+                                {visibleCount >= questions.length
                                     ? "Show Less"
-                                    : `View All Questions (${questions.length})`}
+                                    : `Show 3 More (${questions.length - visibleCount})`}
                             </button>
 
                         </div>

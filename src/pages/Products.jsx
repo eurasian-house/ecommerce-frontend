@@ -142,24 +142,36 @@ export default function Products() {
             ))}
         </div>
         {!colorFilter && (
-          <div className="d-flex justify-content-center align-items-center gap-3 mt-4 mb-5">
-            <button
-              className="btn pagination-btn pagination-btn-light"
-              disabled={page === 1}
-              onClick={() => setPage((p) => Math.max(p - 1, 1))}
-            >
-              <i className="bi bi-arrow-left me-2"></i>
-              Previous
-            </button>
+          <div className="d-flex justify-content-center align-items-center gap-3 mb-4">
+            <div className="d-flex justify-content-center align-items-center gap-3 mb-4">
+              <button
+                className="btn rounded-4 px-4 d-flex align-items-center gap-2"
+                style={{
+                  background: "var(--surface-1)",
+                  color: "var(--text-primary)",
+                  border: "1px solid var(--border-color)",
+                }}
+                disabled={page === 1}
+                onClick={() => setPage((p) => Math.max(p - 1, 1))}
+              >
+                <i className="bi bi-arrow-left"></i>
+                Previous
+              </button>
 
-            <button
-              className="btn pagination-btn pagination-btn-dark"
-              disabled={page >= totalPages}
-              onClick={() => setPage((p) => p + 1)}
-            >
-              Next
-              <i className="bi bi-arrow-right ms-2"></i>
-            </button>
+              <button
+                className="btn px-2 d-flex align-items-center gap-2"
+                style={{
+                  color: "var(--color-primary)",
+                  border: "none",
+                  background: "transparent",
+                }}
+                disabled={page >= totalPages}
+                onClick={() => setPage((p) => p + 1)}
+              >
+                Next
+                <i className="bi bi-arrow-right"></i>
+              </button>
+            </div>
           </div>
         )}
 

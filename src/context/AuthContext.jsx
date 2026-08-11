@@ -1,6 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { supabase } from "../lib/supabase";
-import { assignDefaultAvatar } from "../utils/assignDefaultAvatar";
 
 const AuthContext = createContext();
 
@@ -36,7 +35,6 @@ export function AuthProvider({ children }) {
                             user.user_metadata?.name ||
                             "",
                         email: user.email,
-                        avatar_url: assignDefaultAvatar(),
                     });
                 }
             }

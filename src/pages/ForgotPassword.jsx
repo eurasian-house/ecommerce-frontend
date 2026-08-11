@@ -1,158 +1,303 @@
 import { useState } from "react";
 import { supabase } from "../lib/supabase";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import SEO from "../components/SEO";
+import "../styles/pages/Auth.css";
 
 export default function ForgotPassword() {
-  const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
-  const [email, setEmail] = useState("");
+    const navigate = useNavigate();
 
-  const sendReset = async () => {
-    if (!email) {
-      toast.error("Please enter your email address.");
-      return;
-    }
+    const [loading, setLoading] = useState(false);
+    const [email, setEmail] = useState("");
 
-    setLoading(true);
+    const sendReset = async () => {
 
-    const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: "https://www.eurasianrugs.com/reset-password",
-    });
+        if (!email) {
+            toast.error("Please enter your email address.");
+            return;
+        }
 
-    setLoading(false);
+        setLoading(true);
 
-    if (error) {
-      toast.error(error.message);
-    } else {
-      toast.success("Password reset link sent. Please check your email.");
-    }
-  };
+        const { error } =
+            await supabase.auth.resetPasswordForEmail(email, {
+                redirectTo: "https://www.eurasianrugs.com/reset-password",
+            });
 
-  return (
-    <>
-      <SEO
-        title="Forgot Password | Eurasian House"
-        description="Reset your Eurasian House account password securely."
-        canonical="https://www.eurasianrugs.com/forgot-password"
-      />
-      <div className="container py-4">
-        <button
-          className="btn btn-link text-decoration-none p-0"
-          onClick={() => navigate("/")}
-        >
-          <i className="bi bi-arrow-left me-2"></i>
-          Back to Home
-        </button>
-      </div>
+        setLoading(false);
 
-      <div
-        className="container-fluid"
-        style={{ background: "#FAF8F5", minHeight: "100vh" }}
-      >
-        <div className="row min-vh-100 g-0">
+        if (error) {
+            toast.error(error.message);
+        } else {
+            toast.success("Password reset link sent. Please check your email.");
+        }
+    };
 
-          {/* Left Side */}
-
-          <div className="col-lg-6 d-none d-lg-block p-0 signup-image">
-
-            <img
-              src="/signup.jpg"
-              alt="Hand Knotted Carpet"
-              className="signup-img"
+    return (
+        <>
+            <SEO
+                title="Forgot Password | Eurasian House"
+                description="Reset your Eurasian House account password securely."
+                canonical="https://www.eurasianrugs.com/forgot-password"
             />
 
-            <div className="signup-overlay">
+            <section className="auth-page">
 
-              <div className="signup-content">
+                <div className="container-fluid px-0">
 
-                <span className="signup-tag">
-                  Secure Password Recovery
-                </span>
+                    <div className="row min-vh-100 g-0">
 
-                <h1>
-                  Reset Your Password
-                </h1>
+                        {/* =====================================================
+                            LEFT PANEL
+                        ====================================================== */}
 
-                <p>
-                  Enter your registered email address and we'll send you a secure link to reset your password.
-                </p>
+                        <div className="col-xl-5 col-lg-5 d-none d-lg-block">
 
-              </div>
+                            <div className="auth-image-column">
 
-            </div>
+                                <img
+                                    src="/signup.jpg"
+                                    alt="Handcrafted Rugs"
+                                    className="auth-image"
+                                />
 
-          </div>
+                                <div className="auth-overlay">
 
-          {/* Right Side */}
+                                    <div className="auth-overlay-content">
 
-          <div className="col-lg-6 d-flex align-items-center justify-content-center auth-form-column">
+                                        <span className="auth-tag">
 
-            <div
-              className="bg-white rounded-4 p-4 p-md-5"
-              style={{
-                width: "100%",
-                maxWidth: "520px",
-                boxShadow: "0 12px 40px rgba(0,0,0,.06)",
-              }}
-            >
+                                            <i className="bi bi-shield-lock me-2"></i>
 
-              <h2 className="fw-bold mb-2">
-                Forgot Password?
-              </h2>
+                                            Secure Password Recovery
 
-              <p className="text-muted mb-4">
-                No worries. Enter your email and we'll send you a password reset link.
-              </p>
+                                        </span>
 
-              <label className="form-label fw-medium">
-                Email Address
-              </label>
+                                        <h1 className="auth-overlay-title">
+                                            Forgot
+                                            <br />
+                                            Your Password?
+                                        </h1>
 
-              <input
-                type="email"
-                className="form-control mb-4"
-                placeholder="Enter your email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
+                                        <p className="auth-overlay-text">
+                                            Reset your password securely in just
+                                            a few steps. Your account is
+                                            protected using encrypted password
+                                            recovery and trusted authentication.
+                                        </p>
 
-              <button
-                className="btn btn-dark w-100"
-                onClick={sendReset}
-                disabled={loading}
-                style={{
-                  height: "52px",
-                  borderRadius: "12px",
-                  fontWeight: 600,
-                }}
-              >
-                {loading ? "Sending..." : "Send Reset Link"}
-              </button>
+                                        <div className="auth-feature-list">
 
-              <div className="text-center mt-4">
+                                            <div className="auth-feature">
 
-                <span className="text-muted">
-                  Remember your password?{" "}
-                </span>
+                                                <i className="bi bi-check-circle-fill"></i>
 
-                <button
-                  type="button"
-                  className="btn btn-link text-decoration-none p-0"
-                  onClick={() => navigate("/login")}
-                >
-                  Back to Login
-                </button>
+                                                <span>
+                                                    Secure encrypted reset link
+                                                </span>
 
-              </div>
+                                            </div>
 
-            </div>
+                                            <div className="auth-feature">
 
-          </div>
+                                                <i className="bi bi-check-circle-fill"></i>
 
-        </div>
-      </div>
-    </>
-  );
+                                                <span>
+                                                    Trusted account protection
+                                                </span>
+
+                                            </div>
+
+                                            <div className="auth-feature">
+
+                                                <i className="bi bi-check-circle-fill"></i>
+
+                                                <span>
+                                                    Fast password recovery
+                                                </span>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        {/* =====================================================
+                            RIGHT PANEL
+                        ====================================================== */}
+
+                        <div className="col-xl-7 col-lg-7 auth-form-column">
+
+                            <div className="auth-card-wrapper">
+
+                                <div className="auth-card">
+
+                                    <button
+                                        className="auth-back"
+                                        onClick={() => navigate("/")}
+                                    >
+
+                                        <i className="bi bi-arrow-left"></i>
+
+                                        <span>
+                                            Back to Home
+                                        </span>
+
+                                    </button>
+
+                                    <div className="auth-header">
+
+                                        <div className="auth-icon">
+
+                                            <img
+                                                src="/logobw.png"
+                                                alt="Eurasian House Logo"
+                                                className="auth-logo"
+                                            />
+
+                                        </div>
+
+                                        <h2 className="auth-title">
+                                            Reset Password
+                                        </h2>
+
+                                        <p className="auth-subtitle">
+                                            Enter the email address associated
+                                            with your account and we'll send you
+                                            a secure password reset link.
+                                        </p>
+
+                                    </div>
+
+                                    <div className="auth-form">
+
+                                        <div className="mb-4">
+
+                                            <label className="form-label">
+                                                Email Address
+                                            </label>
+
+                                            <div className="auth-input-group">
+
+                                                <i className="bi bi-envelope"></i>
+
+                                                <input
+                                                    type="email"
+                                                    className="form-control auth-input"
+                                                    placeholder="Enter your email address"
+                                                    value={email}
+                                                    onChange={(e) =>
+                                                        setEmail(e.target.value)
+                                                    }
+                                                />
+
+                                            </div>
+
+                                        </div>
+
+                                        <button
+                                            className="btn auth-btn w-100"
+                                            disabled={loading}
+                                            onClick={sendReset}
+                                        >
+                                            {loading
+                                                ? (
+                                                    <>
+                                                        <span
+                                                            className="spinner-border spinner-border-sm me-2"
+                                                            role="status"
+                                                            aria-hidden="true"
+                                                        ></span>
+
+                                                        Sending Link...
+                                                    </>
+                                                )
+                                                : (
+                                                    <>
+                                                        <i className="bi bi-send me-2"></i>
+
+                                                        Send Reset Link
+                                                    </>
+                                                )}
+                                        </button>
+
+                                    </div>
+
+                                    <div className="auth-divider">
+
+                                        <span>
+                                            Need to sign in?
+                                        </span>
+
+                                    </div>
+
+                                    <div className="auth-footer">
+
+                                        <span>
+                                            Remember your password?
+                                        </span>
+
+                                        <Link
+                                            to="/login"
+                                            className="auth-link"
+                                        >
+                                            Back to Login
+                                        </Link>
+
+                                    </div>
+
+                                    <div className="auth-bottom-features">
+
+                                        <div className="auth-bottom-item">
+
+                                            <i className="bi bi-shield-check"></i>
+
+                                            <small>
+                                                Secure
+                                            </small>
+
+                                        </div>
+
+                                        <div className="auth-bottom-item">
+
+                                            <i className="bi bi-lightning-charge"></i>
+
+                                            <small>
+                                                Fast
+                                            </small>
+
+                                        </div>
+
+                                        <div className="auth-bottom-item" onClick={() => navigate("/contact")}>
+
+                                            <i className="bi bi-headset"></i>
+
+                                            <small>
+                                                Support
+                                            </small>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+        </>
+    );
 }

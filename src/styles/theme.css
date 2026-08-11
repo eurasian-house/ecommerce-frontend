@@ -1,0 +1,360 @@
+/* @import "./global01.css"; */
+
+/* ==========================================================================
+   EURASIAN HOUSE DESIGN TOKENS
+   Version 1.0
+   ========================================================================== */
+
+
+/* ==========================================================================
+   LIGHT THEME
+   ========================================================================== */
+
+:root {
+
+
+    /* =========================
+   THEME TOGGLE
+    ========================= */
+
+    --theme-toggle-size: 40px;
+    --theme-toggle-font-size: 1rem;
+
+    --theme-toggle-bg: transparent;
+    --theme-toggle-hover: var(--surface-hover);
+    --theme-toggle-color: var(--text-primary);
+
+    --theme-toggle-border: var(--border);
+
+    /* Light Theme */
+    --navbar-toggler-filter: none;
+
+    --navbar-toggler-color: var(--text-primary);
+
+
+    /* Compatibility Variables */
+
+    --section-bg: var(--bg-primary);
+    --card-bg: var(--surface);
+
+    --primary-color: var(--color-primary);
+    --primary-light: var(--color-primary-light);
+
+    --text-color: var(--text-primary);
+
+
+    /* =========================
+     BRAND
+  ========================= */
+
+    --color-primary: #8B6A46;
+    --color-primary-hover: #765739;
+    --color-primary-light: #F5EEE6;
+
+    --color-secondary: #5E6D63;
+    --color-accent: #C49A6C;
+
+    /* =========================
+     BACKGROUNDS
+  ========================= */
+
+    --bg-primary: #FAF8F5;
+    --bg-secondary: #F4F1EC;
+    --bg-tertiary: #ECE7E0;
+
+    /* =========================
+     SURFACES
+  ========================= */
+
+    --surface: #FFFFFF;
+    --surface-hover: #F8F8F8;
+    --surface-muted: #F3F3F3;
+
+    /* =========================
+     TEXT
+  ========================= */
+
+    --text-primary: #222222;
+    --text-secondary: #555555;
+    --text-muted: #777777;
+    --text-disabled: #B3B3B3;
+    --text-inverse: #FFFFFF;
+
+    /* =========================
+     BORDER
+  ========================= */
+
+    --border: #E5E5E5;
+    --border-light: #EFEFEF;
+    --divider: #ECECEC;
+
+    /* =========================
+     STATUS
+  ========================= */
+
+    --success: #2E7D32;
+    --warning: #ED6C02;
+    --danger: #D32F2F;
+    --info: #0288D1;
+
+    /* =========================
+     SHADOW
+  ========================= */
+
+    --shadow-xs: 0 1px 2px rgba(0, 0, 0, .04);
+    --shadow-sm: 0 2px 6px rgba(0, 0, 0, .06);
+    --shadow-md: 0 6px 18px rgba(0, 0, 0, .08);
+    --shadow-lg: 0 12px 30px rgba(0, 0, 0, .12);
+    --shadow-xl: 0 24px 48px rgba(0, 0, 0, .15);
+
+    /* =========================
+     TYPOGRAPHY
+  ========================= */
+
+    --font-primary: "Inter", sans-serif;
+    --font-heading: "Cardo", serif;
+
+    --fs-display: 4rem;
+    --fs-h1: 3rem;
+    --fs-h2: 2.5rem;
+    --fs-h3: 2rem;
+    --fs-h4: 1.5rem;
+    --fs-h5: 1.25rem;
+    --fs-h6: 1rem;
+
+    --fs-xl: 1.25rem;
+    --fs-lg: 1.125rem;
+    --fs-md: 1rem;
+    --fs-sm: .875rem;
+    --fs-xs: .75rem;
+
+    --fw-light: 300;
+    --fw-normal: 400;
+    --fw-medium: 500;
+    --fw-semibold: 600;
+    --fw-bold: 700;
+
+    --lh-tight: 1.2;
+    --lh-normal: 1.5;
+    --lh-loose: 1.8;
+
+    /* =========================
+     SPACING
+  ========================= */
+
+    --space-0: 0;
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-5: 20px;
+    --space-6: 24px;
+    --space-7: 32px;
+    --space-8: 40px;
+    --space-9: 48px;
+    --space-10: 64px;
+    --space-11: 80px;
+    --space-12: 96px;
+
+    /* =========================
+     BORDER RADIUS
+  ========================= */
+
+    --radius-none: 0;
+    --radius-xs: 4px;
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 24px;
+    --radius-full: 9999px;
+
+    /* =========================
+     COMPONENT RADII
+  ========================= */
+
+    --button-radius: var(--radius-md);
+    --card-radius: var(--radius-lg);
+    --form-radius: var(--radius-md);
+    --image-radius: var(--radius-md);
+    --modal-radius: var(--radius-xl);
+
+    /* =========================
+     BORDERS
+  ========================= */
+
+    --border-width: 1px;
+
+    /* =========================
+     TRANSITIONS
+  ========================= */
+
+    --transition-fast: .15s ease;
+    --transition: .25s ease;
+    --transition-slow: .4s ease;
+
+    /* =========================
+     OPACITY
+  ========================= */
+
+    --opacity-disabled: .5;
+    --opacity-overlay: .55;
+
+    /* =========================
+     Z INDEX
+  ========================= */
+
+    --z-dropdown: 1000;
+    --z-sticky: 1020;
+    --z-fixed: 1030;
+    --z-offcanvas: 1045;
+    --z-modal: 1055;
+    --z-toast: 1080;
+    --z-tooltip: 1090;
+
+    /* =========================
+     LAYOUT
+  ========================= */
+
+    --container-width: 1320px;
+    --footer-padding: 64px;
+
+
+    /* =========================
+     NAVBAR
+  ========================= */
+
+    --navbar-height: 58px;
+    --navbar-height-mobile: 58px;
+    --navbar-logo-size: 40px;
+
+    --navbar-search-height: 45px;
+    --navbar-search-btn-size: 40px;
+    --navbar-mobile-search-btn-size: 42px;
+
+    --navbar-search-width: clamp(120px, 30vw, 700px);
+
+    --navbar-search-bg: var(--bg-secondary);
+    --navbar-search-border: var(--border);
+
+    --navbar-link-color: var(--text-primary);
+    --navbar-link-active: var(--color-primary);
+
+    --navbar-cart-badge-size: 20px;
+    --navbar-cart-bg: var(--text-primary);
+    --navbar-cart-color: var(--text-inverse);
+
+    --navbar-icon-color: var(--text-primary);
+    --navbar-icon-hover: var(--color-primary);
+    --navbar-action-bg: var(--surface);
+    --navbar-action-bg-hover: var(--surface-hover);
+    --navbar-action-border: var(--border);
+    --navbar-action-size: 40px;
+
+    --navbar-focus-ring: var(--color-primary);
+
+    --navbar-icon-size: 1rem;
+    --navbar-search-icon-size: 0.95rem;
+    --navbar-toggler-icon-size: 1rem;
+
+
+    /* Input Placeholder */
+    --input-placeholder: var(--text-secondary);
+
+
+}
+
+
+/* ==========================================================================
+   DARK THEME
+   ========================================================================== */
+
+[data-theme="dark"] {
+
+    /* Dark Theme */
+    --navbar-toggler-filter: invert(1);
+    --navbar-toggler-color: #ffffff;
+
+    --bg-primary: #121212;
+    --bg-secondary: #1A1A1A;
+    --bg-tertiary: #222222;
+
+    --surface: #1F1F1F;
+    --surface-hover: #262626;
+    --surface-muted: #2E2E2E;
+
+    --text-primary: #F7F7F7;
+    --text-secondary: #D2D2D2;
+    --text-muted: #A5A5A5;
+    --text-disabled: #666666;
+    --text-inverse: #111111;
+
+    --border: #303030;
+    --border-light: #3B3B3B;
+    --divider: #2A2A2A;
+
+    --shadow-xs: 0 1px 2px rgba(0, 0, 0, .35);
+    --shadow-sm: 0 2px 6px rgba(0, 0, 0, .45);
+    --shadow-md: 0 8px 20px rgba(0, 0, 0, .55);
+    --shadow-lg: 0 16px 32px rgba(0, 0, 0, .60);
+    --shadow-xl: 0 24px 48px rgba(0, 0, 0, .70);
+
+    --input-placeholder: var(--text-muted);
+
+    --theme-toggle-bg: transparent;
+    --theme-toggle-hover: var(--surface-hover);
+    --theme-toggle-border: var(--border);
+
+    --navbar-toggler-filter: invert(1);
+
+    --input-placeholder: var(--text-muted);
+
+    --navbar-icon-color: var(--text-primary);
+    --navbar-icon-hover: var(--color-primary);
+
+    --navbar-shadow: var(--shadow-sm);
+
+}
+
+
+/* ==========================================================================
+   AUTO SYSTEM THEME
+   ========================================================================== */
+
+@media (prefers-color-scheme: dark) {
+
+    :root:not([data-theme="light"]) {
+
+        /* Dark Theme */
+        --navbar-toggler-filter: invert(1);
+
+        --navbar-toggler-color: #ffffff;
+
+        --bg-primary: #121212;
+        --bg-secondary: #1A1A1A;
+        --bg-tertiary: #222222;
+
+        --surface: #1F1F1F;
+        --surface-hover: #262626;
+        --surface-muted: #2E2E2E;
+
+        --text-primary: #F7F7F7;
+        --text-secondary: #D2D2D2;
+        --text-muted: #A5A5A5;
+        --text-disabled: #666666;
+        --text-inverse: #111111;
+
+        --border: #303030;
+        --border-light: #3B3B3B;
+        --divider: #2A2A2A;
+
+        --shadow-xs: 0 1px 2px rgba(0, 0, 0, .35);
+        --shadow-sm: 0 2px 6px rgba(0, 0, 0, .45);
+        --shadow-md: 0 8px 20px rgba(0, 0, 0, .55);
+        --shadow-lg: 0 16px 32px rgba(0, 0, 0, .60);
+        --shadow-xl: 0 24px 48px rgba(0, 0, 0, .70);
+
+    }
+
+
+
+}

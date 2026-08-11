@@ -1,7 +1,7 @@
 import { supabase } from "../lib/supabase";
 
 export const getOrderById = async (id) => {
-    // 1. get order
+    // 1. Get order
     const { data: order, error: orderError } = await supabase
         .from("orders")
         .select("*")
@@ -10,31 +10,25 @@ export const getOrderById = async (id) => {
 
     if (orderError) throw orderError;
 
-    // 2. get profile manually
-    const { data: profile } = await supabase
-        .from("profiles")
-        .select("full_name, phone, email, address, city, pincode, state, country")
-        .eq("id", order.user_id)
-        .single();
-
-    // 3. get items
-    const { data: items } = await supabase
+    // 2. Get order items
+    const { data: items, error: itemsError } = await supabase
         .from("order_items")
         .select(`
-        *,
-        products (
-            id,
-            slug,
-            title,
-            thumbnail
-        )
-    `)
+            *,
+            products (
+                id,
+                slug,
+                title,
+                thumbnail
+            )
+        `)
         .eq("order_id", id);
+
+    if (itemsError) throw itemsError;
 
     return {
         ...order,
-        profiles: profile,
-        order_items: items || []
+        order_items: items || [],
     };
 };
 

@@ -3,7 +3,8 @@ import logo from "/logo.png";
 import { FaFacebookF, FaInstagram, FaWhatsapp, FaPinterest } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { Link } from "react-router-dom";
-import "./Footer.css";
+import "../styles/components/Footer.css";
+
 
 const Footer = () => {
   return (
@@ -46,7 +47,7 @@ const Footer = () => {
             </div>
 
             <h4
-              className="fw-semibold mb-3"
+              className="heading mb-3"
               style={{
                 letterSpacing: ".08em"
               }}
@@ -186,6 +187,11 @@ const Footer = () => {
                       Contact
                     </Link>
                   </li>
+                  <li>
+                    <Link to="/wholesale-contact" className="footer-link">
+                      Wholesale Contact
+                    </Link>
+                  </li>
 
                 </ul>
 
@@ -255,6 +261,24 @@ const Footer = () => {
                       className="footer-link"
                     >
                       Cancellation Policy
+                    </Link>
+                  </li>
+
+                  <li>
+                    <Link
+                      to="/payment-policy"
+                      className="footer-link"
+                    >
+                      Payment Policy
+                    </Link>
+                  </li>
+
+                  <li>
+                    <Link
+                      to="/packaging-policy"
+                      className="footer-link"
+                    >
+                      Packaging Policy
                     </Link>
                   </li>
 
@@ -464,8 +488,7 @@ const Footer = () => {
 
         <hr
           style={{
-            borderColor: "rgba(255,255,255,.08)",
-            marginTop: "4rem",
+            borderColor: "rgb(255,255,255)",
             marginBottom: "2rem"
           }}
         />

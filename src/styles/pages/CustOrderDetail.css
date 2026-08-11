@@ -1,0 +1,746 @@
+/* ==========================================================
+   CUSTOMER ORDER PAGE
+========================================================== */
+
+.customer-order-page {
+    background: var(--bg);
+    min-height: 100vh;
+    padding: 1.5rem 0 3rem;
+}
+
+/* ==========================================================
+   BACK BUTTON
+========================================================== */
+
+.customer-back-btn {
+
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+
+    margin-bottom: 1.5rem;
+
+    padding: 0;
+
+    border: none;
+    background: none;
+
+    color: var(--text-muted);
+
+    font-size: .95rem;
+    font-weight: 500;
+
+    transition: .25s;
+}
+
+.customer-back-btn:hover {
+
+    color: var(--text);
+
+    transform: translateX(-4px);
+}
+
+/* ==========================================================
+   COMMON CARD
+========================================================== */
+
+.customer-card,
+.customer-order-header {
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+
+    border-radius: 22px;
+
+    box-shadow: 0 8px 24px rgba(0, 0, 0, .04);
+}
+
+[data-theme="dark"] .customer-card,
+[data-theme="dark"] .customer-order-header {
+
+    box-shadow: 0 12px 30px rgba(0, 0, 0, .28);
+}
+
+.customer-card {
+
+    padding: 1.4rem;
+}
+
+.customer-card-title {
+
+    margin-bottom: 1.25rem;
+
+    font-size: 1.25rem;
+
+    font-weight: 500;
+
+    color: var(--text);
+}
+
+/* ==========================================================
+   HEADER
+========================================================== */
+
+.customer-order-header {
+
+    padding: 1.5rem;
+
+    margin-bottom: 1.5rem;
+}
+
+.customer-order-header-content {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: flex-start;
+
+    gap: 1rem;
+}
+
+.customer-order-title-row {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: .8rem;
+
+    flex-wrap: wrap;
+
+    margin-bottom: .75rem;
+}
+
+.customer-order-title {
+
+    margin: 0;
+
+    font-size: 2rem;
+
+    font-weight: 500;
+
+    color: var(--text);
+}
+
+.customer-order-status {
+
+    padding: .35rem .8rem;
+
+    border-radius: 999px;
+
+    font-size: .72rem;
+
+    font-weight: 600;
+
+    color: #fff;
+
+    text-transform: capitalize;
+}
+
+.customer-order-meta {
+
+    display: flex;
+
+    gap: 2rem;
+
+    flex-wrap: wrap;
+}
+
+.customer-order-meta>div {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: .55rem;
+
+    color: var(--text-muted);
+
+    font-size: .9rem;
+}
+
+.customer-order-meta strong {
+
+    color: var(--text);
+
+    font-weight: 500;
+}
+
+.customer-order-meta i {
+
+    color: #B68D40;
+}
+
+.customer-order-total {
+
+    font-size: 2rem;
+
+    font-weight: 600;
+
+    color: #2E7D32;
+
+    white-space: nowrap;
+}
+
+/* ==========================================================
+   TIMELINE
+========================================================== */
+
+.customer-timeline-item {
+
+    display: flex;
+
+    gap: 1rem;
+
+    margin-bottom: 1rem;
+}
+
+.customer-timeline-left {
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+}
+
+.customer-status-dot {
+
+    width: 34px;
+    height: 34px;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border: 2px solid var(--border);
+
+    background: var(--surface);
+
+    transition: .3s;
+}
+
+.customer-status-dot.completed {
+
+    background: #2E7D32;
+
+    border-color: #2E7D32;
+
+    color: #fff;
+}
+
+.customer-status-dot.current {
+
+    border-color: #B68D40;
+
+    background: #B68D40;
+
+    color: #fff;
+}
+
+.customer-status-line {
+    /* hide per-segment lines — using a single continuous track instead */
+    width: 2px;
+    flex: 1;
+    background: transparent;
+    margin-top: 4px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* the continuous track that runs behind the dots */
+.customer-timeline {
+    position: relative;
+}
+
+.customer-timeline-track {
+    position: absolute;
+    /* roughly align with the center of the status dot; tweak left as needed */
+    left: 28px;
+    top: 18px;
+    bottom: 18px;
+    width: 4px;
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* background rail */
+.customer-timeline-track::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 0;
+    height: 100%;
+    width: 4px;
+    background: var(--border);
+    border-radius: 3px;
+    opacity: .9;
+}
+
+/* progress fill */
+.customer-timeline-track::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 0;
+    width: 4px;
+    /* height is controlled by inline CSS var --progress */
+    height: var(--progress, 0%);
+    background: var(--color-primary);
+    border-radius: 3px;
+    transition: height .36s linear;
+}
+
+/* make sure dots sit above the track */
+.customer-timeline .customer-timeline-left,
+.customer-timeline .customer-status-dot {
+    position: relative;
+    z-index: 2;
+}
+
+/* reduce space used by per-item status-line (we still keep it for layout) */
+.customer-status-line {
+    width: 2px;
+    flex: 1;
+    background: transparent;
+    margin-top: 4px;
+}
+
+/* completed dot style unchanged but ensure z-index */
+.customer-status-dot {
+    z-index: 3;
+}
+
+.customer-timeline-title {
+
+    font-weight: 500;
+
+    color: var(--text);
+}
+
+.customer-timeline-content small {
+
+    color: #B68D40;
+}
+
+/* ==========================================================
+   PRODUCTS
+========================================================== */
+
+.customer-product-card {
+
+    display: flex;
+
+    gap: 1rem;
+
+    padding: 1rem;
+
+    border: 1px solid var(--border);
+
+    border-radius: 18px;
+
+    background: var(--surface-2);
+
+    margin-bottom: 1rem;
+
+    transition: .25s;
+}
+
+.customer-product-card:hover {
+
+    transform: translateY(-2px);
+
+    box-shadow: 0 8px 18px rgba(0, 0, 0, .05);
+}
+
+.customer-product-image {
+
+    width: 90px;
+
+    height: 90px;
+
+    border-radius: 14px;
+
+    object-fit: cover;
+
+    flex-shrink: 0;
+}
+
+.customer-product-content {
+
+    flex: 1;
+}
+
+.customer-product-title {
+
+    margin-bottom: .75rem;
+
+    font-size: 1.05rem;
+
+    font-weight: 600;
+
+    color: var(--text);
+
+    cursor: pointer;
+
+    transition: .25s;
+}
+
+.customer-product-title:hover {
+
+    color: #B68D40;
+}
+
+.customer-product-badges {
+
+    display: flex;
+
+    gap: .45rem;
+
+    flex-wrap: wrap;
+
+    margin-bottom: .9rem;
+}
+
+.customer-badge {
+
+    padding: .3rem .65rem;
+
+    border-radius: 999px;
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+
+    font-size: .72rem;
+}
+
+.customer-product-bottom {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 1rem;
+
+    flex-wrap: wrap;
+}
+
+.customer-product-price {
+
+    font-size: 1.2rem;
+
+    font-weight: 600;
+
+    color: #2E7D32;
+}
+
+.customer-product-delivery {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: .45rem;
+
+    color: var(--text-muted);
+
+    font-size: .82rem;
+}
+
+.customer-product-delivery strong {
+
+    color: var(--text);
+
+    font-weight: 500;
+}
+
+.customer-review-action {
+
+    margin-top: 1rem;
+}
+
+/* ==========================================================
+   ADDRESS
+========================================================== */
+
+.customer-address-list {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 1rem;
+}
+
+.customer-address-item {
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: .8rem;
+
+    color: var(--text);
+}
+
+.customer-address-item i {
+
+    color: #B68D40;
+
+    margin-top: 3px;
+}
+
+.address-block div {
+
+    line-height: 1.7;
+}
+
+/* ==========================================================
+   SUMMARY
+========================================================== */
+
+.customer-summary-row,
+.customer-summary-total {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    padding: .75rem 0;
+}
+
+.customer-summary-row {
+
+    color: var(--text-muted);
+}
+
+.customer-summary-total {
+
+    font-size: 1.1rem;
+
+    font-weight: 600;
+
+    color: var(--text);
+}
+
+.customer-summary-divider {
+
+    height: 1px;
+
+    background: var(--border);
+
+    margin: .35rem 0;
+}
+
+.customer-summary-actions {
+
+    display: flex;
+
+    gap: 1rem;
+
+    margin-top: 1.5rem;
+
+    flex-wrap: wrap;
+}
+
+.customer-summary-actions>* {
+
+    flex: 1;
+}
+
+/* ==========================================================
+   MOBILE
+========================================================== */
+
+    @media (max-width:576px) {
+
+        .customer-order-page {
+            padding: .75rem 0 1.5rem;
+        }
+
+        .customer-card,
+        .customer-order-header {
+            padding: .85rem;
+            border-radius: 16px;
+        }
+
+        .customer-card-title {
+            font-size: 1rem;
+            margin-bottom: .8rem;
+        }
+
+        .customer-order-title {
+            font-size: 1.15rem;
+        }
+
+        .customer-order-total {
+            font-size: 1.3rem;
+        }
+
+        .customer-order-meta {
+            gap: .45rem;
+        }
+
+        .customer-order-meta>div {
+            font-size: .75rem;
+        }
+
+        .customer-timeline-item {
+            gap: .7rem;
+            margin-bottom: .75rem;
+        }
+
+        .customer-status-dot {
+            width: 26px;
+            height: 26px;
+            font-size: .7rem;
+        }
+
+        .customer-timeline-title {
+            font-size: .88rem;
+        }
+
+        .customer-timeline-content small {
+            font-size: .72rem;
+        }
+
+        /* ---------- Product Card ---------- */
+
+        .customer-product-card {
+
+            flex-direction: row;
+
+            align-items: flex-start;
+
+            gap: .75rem;
+
+            padding: .75rem;
+        }
+
+        .customer-product-image {
+
+            width: 72px;
+
+            height: 72px;
+
+            border-radius: 10px;
+
+            flex-shrink: 0;
+        }
+
+        .customer-product-content {
+
+            min-width: 0;
+
+            flex: 1;
+        }
+
+        .customer-product-title {
+
+            font-size: .9rem;
+
+            line-height: 1.35;
+
+            margin-bottom: .45rem;
+
+            display: -webkit-box;
+
+            -webkit-box-orient: vertical;
+
+            -webkit-line-clamp: 4;
+
+            overflow: hidden;
+        }
+
+        .customer-product-badges {
+
+            gap: .3rem;
+
+            margin-bottom: .45rem;
+        }
+
+        .customer-badge {
+
+            font-size: .66rem;
+
+            padding: .18rem .45rem;
+        }
+
+        .customer-product-bottom {
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: flex-start;
+
+            gap: .3rem;
+        }
+
+        .customer-product-price {
+
+            font-size: .95rem;
+        }
+
+        .customer-product-delivery {
+
+            font-size: .68rem;
+
+            line-height: 1.4;
+        }
+
+        .customer-review-action {
+
+            margin-top: .6rem;
+        }
+
+        .customer-review-action .app-btn-primary,
+        .customer-review-action .app-btn-secondary {
+
+            width: 100%;
+
+            min-height: 42px;
+
+            font-size: .78rem;
+        }
+
+        /* ---------- Address ---------- */
+
+        .customer-address-item {
+
+            gap: .55rem;
+
+            font-size: .82rem;
+        }
+
+        /* ---------- Summary ---------- */
+
+        .customer-summary-row,
+        .customer-summary-total {
+
+            padding: .55rem 0;
+
+            font-size: .85rem;
+        }
+
+        .customer-summary-actions {
+
+            margin-top: 1rem;
+
+            gap: .6rem;
+        }
+
+    }

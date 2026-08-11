@@ -11,7 +11,7 @@ import { compressImage, IMAGE_RULES } from "../utils/imageCompression";
 import { uploadCustomerImage } from "../lib/customerCloudinary";
 import UserAvatar from "../components/common/UserAvatar";
 import { getAvatar } from "../utils/getAvatar";
-import "../styles/account.css";
+import "../styles/pages/Account.css";
 import {
   validateName,
   validatePhone,
@@ -50,19 +50,6 @@ export default function Account() {
           .select("*")
           .eq("id", user.id)
           .single();
-
-        if (!profileData.avatar_url) {
-          const { assignDefaultAvatar } = await import("../utils/assignDefaultAvatar");
-
-          const avatar = assignDefaultAvatar();
-
-          await supabase
-            .from("profiles")
-            .update({ avatar_url: avatar })
-            .eq("id", user.id);
-
-          profileData.avatar_url = avatar;
-        }
 
         setProfile(profileData);
 
@@ -273,36 +260,41 @@ export default function Account() {
   }
 
   return (
-    <div className="container mt-5">
-      <div className="row">
+    <div className="account-page">
 
-        {/* LEFT PROFILE */}
-        <div className="col-lg-4">
-          <div
-            className="card border-0 shadow-lg rounded-4 p-3 account-card"
-            style={{ position: "sticky", top: "100px" }}
-          >
-            <div className="text-center position-relative mb-3">
+      <div className="container">
 
-              <div className="position-absolute top-0 end-0 d-flex gap-2">
+        <div className="row g-3">
 
-                {!editMode ? (
-                  <button
-                    className="btn btn-light btn-sm rounded-pill px-3 border"
-                    onClick={() => {
-                      setOriginalProfile({ ...profile });
-                      setEditMode(true);
-                    }}
-                  >
-                    <i className="bi bi-pencil me-1"></i>
-                    Edit
-                  </button>
-                ) : (
-                  <>
-                    <div className="d-flex flex-column gap-2">
+          {/* LEFT PROFILE */}
+
+          <div className="col-xl-4 col-lg-5 m-0">
+
+            <div className="account-card account-profile-card">
+
+              <div className="account-profile-header">
+
+                <div className="account-profile-actions">
+
+                  {!editMode ? (
+
+                    <button
+                      className="app-btn-secondary account-edit-btn"
+                      onClick={() => {
+                        setOriginalProfile({ ...profile });
+                        setEditMode(true);
+                      }}
+                    >
+                      <i className="bi bi-pencil me-2"></i>
+                      Edit Profile
+                    </button>
+
+                  ) : (
+
+                    <div className="account-edit-actions">
 
                       <button
-                        className="btn btn-dark btn-sm rounded-pill px-3"
+                        className="app-btn-primary"
                         onClick={handleSave}
                         disabled={saving}
                       >
@@ -317,274 +309,441 @@ export default function Account() {
                           </>
                         ) : (
                           <>
-                            <i className="bi bi-check-lg me-1"></i>
+                            <i className="bi bi-check-lg me-2"></i>
                             Save
                           </>
                         )}
                       </button>
 
                       <button
-                        className="btn btn-outline-secondary btn-sm rounded-pill px-3"
+                        className="app-btn-secondary"
                         onClick={() => {
                           setProfile(originalProfile);
                           setEditMode(false);
                         }}
                       >
-                        <i className="bi bi-x-lg me-1"></i>
+                        <i className="bi bi-x-lg me-2"></i>
                         Cancel
                       </button>
 
                     </div>
-                  </>
-                )}
 
-              </div>
-
-              <div
-                className="mx-auto rounded-circle d-flex align-items-center justify-content-center mb-3"
-                style={{
-                  width: "80px",
-                  height: "80px",
-                  background: "#f8f8f8",
-                  border: "1px solid #ececec"
-                }}
-              >
-                <UserAvatar
-                  src={getAvatar(profile)}
-                  alt={profile.full_name}
-                  size={70}
-                />
-              </div>
-
-              <h5 className="fw-semibold mb-1">
-                {profile.full_name || "Your Name"}
-              </h5>
-
-              <p className="text-muted small mb-3">
-                Manage your account information
-              </p>
-
-              <label className="btn btn-light border rounded-pill btn-sm px-3">
-                <i className="bi bi-camera me-2"></i>
-                Change Photo
-                <input
-                  type="file"
-                  accept="image/*"
-                  hidden
-                  onChange={handleAvatarUpload}
-                />
-              </label>
-
-              <hr className="mt-4 mb-0" />
-
-            </div>
-
-            <div className="row g-2">
-
-              <div className="col-12">
-                <FormInput
-                  label="Name"
-                  id="full_name"
-                  value={profile?.full_name || ""}
-                  disabled={!editMode}
-                  error={errors.full_name}
-                  onChange={(e) => handleChange("full_name", e.target.value)}
-                />
-              </div>
-
-              <div className="col-12">
-                <FormField label="Email" htmlFor="email">
-                  <div className="form-control bg-light border-0">
-                    <i className="bi bi-envelope me-2"></i>
-                    {userEmail}
-                  </div>
-                </FormField>
-              </div>
-
-              <div className="col-md-6">
-                <FormInput
-                  label="Phone"
-                  id="phone"
-                  value={profile?.phone || ""}
-                  disabled={!editMode}
-                  error={errors.phone}
-                  onChange={(e) => handleChange("phone", e.target.value)}
-                />
-              </div>
-
-              <div className="col-md-6">
-                <FormSelect
-                  label="Country"
-                  id="country"
-                  value={profile?.country || ""}
-                  disabled={!editMode}
-                  error={errors.country}
-                  onChange={(e) => handleChange("country", e.target.value)}
-                >
-                  <option value="">Select Country</option>
-
-                  {countries.map((country, index) =>
-                    country.value === "" ? (
-                      <option key={`divider-${index}`} disabled>
-                        {country.label}
-                      </option>
-                    ) : (
-                      <option
-                        key={country.value}
-                        value={country.label}
-                      >
-                        {country.label}
-                      </option>
-                    )
                   )}
-                </FormSelect>
+
+                </div>
+
+                <div className="account-avatar-wrapper">
+
+                  <div className="account-avatar-circle">
+
+                    <UserAvatar
+                      src={getAvatar(profile)}
+                      alt={profile.full_name}
+                      size={64}
+                    />
+
+                  </div>
+
+                  <h4 className="account-name">
+
+                    {profile.full_name || "Your Name"}
+
+                  </h4>
+
+                  <p className="account-subtitle">
+
+                    Manage your account information
+
+                  </p>
+
+                  <label className="account-photo-btn">
+
+                    <i className="bi bi-camera me-2"></i>
+
+                    Change Photo
+
+                    <input
+                      type="file"
+                      accept="image/*"
+                      hidden
+                      onChange={handleAvatarUpload}
+                    />
+
+                  </label>
+
+                </div>
+
+                <div className="account-divider"></div>
+
               </div>
 
-              <div className="col-md-6">
-                <FormInput
-                  label="Pincode"
-                  id="pincode"
-                  value={profile?.pincode || ""}
-                  disabled={!editMode}
-                  error={errors.pincode}
-                  onChange={(e) => handleChange("pincode", e.target.value)}
-                  onBlur={handlePostalLookup}
-                />
-              </div>
+              <div className="row g-2">
 
-              <div className="col-md-6">
-                <FormInput
-                  label="State"
-                  id="state"
-                  value={profile?.state || ""}
-                  disabled={!editMode}
-                  error={errors.state}
-                  onChange={(e) => handleChange("state", e.target.value)}
-                />
-              </div>
+                <div className="col-12">
 
-              <div className="col-md-6">
-                <FormInput
-                  label="City"
-                  id="city"
-                  value={profile?.city || ""}
-                  disabled={!editMode}
-                  error={errors.city}
-                  onChange={(e) => handleChange("city", e.target.value)}
-                />
-              </div>
+                  <FormInput
+                    label="Name"
+                    id="full_name"
+                    value={profile?.full_name || ""}
+                    disabled={!editMode}
+                    error={errors.full_name}
+                    onChange={(e) =>
+                      handleChange("full_name", e.target.value)
+                    }
+                  />
 
-              <div className="col-12">
-                <FormInput
-                  label="Address"
-                  id="address"
-                  value={profile?.address || ""}
-                  disabled={!editMode}
-                  error={errors.address}
-                  onChange={(e) => handleChange("address", e.target.value)}
-                />
-              </div>
+                </div>
 
-            </div>
-          </div>
-        </div>
+                <div className="col-12">
 
-        {/* RIGHT ORDERS */}
-        <div className="col-md-8 mt-4 mt-md-0">
-          <h4 className="mb-3">My Orders</h4>
-
-          {orders.length === 0 ? (
-            <p>No orders found</p>
-          ) : (
-            <div className="d-flex flex-column gap-3">
-
-              {orders.slice(0, visibleOrders).map((order) => {
-
-                const maxProductionDays = Math.max(
-                  ...(order.order_items?.map(item => item.production_days || 0) || [0])
-                );
-
-                const expectedDelivery = new Date(order.created_at);
-                expectedDelivery.setDate(
-                  expectedDelivery.getDate() + maxProductionDays + 7
-                );
-
-                return (
-
-                  <div
-                    key={order.id}
-                    className="card border-0 shadow-sm rounded-4 p-3 account-order-card"
-                    style={{ cursor: "pointer" }}
-                    onClick={() => navigate(`/account/orders/${order.id}`)}
+                  <FormField
+                    label="Email"
+                    htmlFor="email"
                   >
 
-                    <div className="d-flex justify-content-between align-items-start">
+                    <div className="account-email-display">
 
-                      <div className="flex-grow-1">
+                      <i className="bi bi-envelope me-2"></i>
 
-                        <div className="d-flex align-items-center gap-2 mb-2 flex-wrap">
-
-                          <h6 className="fw-bold mb-0">
-                            Order #{order.id.slice(0, 8)}
-                          </h6>
-
-                          <span className={`order-status-badge status-${order.status}`}>
-                            {order.status || "pending"}
-                          </span>
-
-                        </div>
-
-                        <div className="text-muted small mb-1">
-                          <i className="bi bi-calendar3 me-1"></i>
-                          Ordered On:
-                          <strong className="ms-1">
-                            {new Date(order.created_at).toLocaleDateString()}
-                          </strong>
-                        </div>
-
-                        <div className="text-muted small">
-                          <i className="bi bi-truck me-1"></i>
-                          Expected Delivery:
-                          <strong className="ms-1">
-                            {expectedDelivery.toLocaleDateString()}
-                          </strong>
-                        </div>
-
-                      </div>
-
-                      <div className="text-end ms-4">
-
-                        <h5 className="fw-bold text-success mb-1">
-                          ${order.total_amount}
-                        </h5>
-
-                        <i className="bi bi-chevron-right text-secondary fs-5"></i>
-
-                      </div>
+                      {userEmail}
 
                     </div>
 
-                  </div>
+                  </FormField>
 
-                );
-              })}
-              {visibleOrders < orders.length && (
-                <div className="text-center mt-4">
-                  <button
-                    className="btn btn-outline-dark px-4 rounded-pill"
-                    onClick={() => setVisibleOrders((prev) => prev + 10)}
-                  >
-                    Show More Orders
-                  </button>
                 </div>
+
+                <div className="col-md-6">
+
+                  <FormInput
+                    label="Phone"
+                    id="phone"
+                    value={profile?.phone || ""}
+                    disabled={!editMode}
+                    error={errors.phone}
+                    onChange={(e) =>
+                      handleChange("phone", e.target.value)
+                    }
+                  />
+
+                </div>
+
+                <div className="col-md-6">
+
+                  <FormSelect
+                    label="Country"
+                    id="country"
+                    value={profile?.country || ""}
+                    disabled={!editMode}
+                    error={errors.country}
+                    onChange={(e) =>
+                      handleChange("country", e.target.value)
+                    }
+                  >
+
+                    <option value="">
+                      Select Country
+                    </option>
+
+                    {countries.map((country, index) =>
+                      country.value === "" ? (
+                        <option
+                          key={`divider-${index}`}
+                          disabled
+                        >
+                          {country.label}
+                        </option>
+                      ) : (
+                        <option
+                          key={country.value}
+                          value={country.label}
+                        >
+                          {country.label}
+                        </option>
+                      )
+                    )}
+
+                  </FormSelect>
+
+                </div>
+
+                <div className="col-md-6">
+
+                  <FormInput
+                    label="Pincode"
+                    id="pincode"
+                    value={profile?.pincode || ""}
+                    disabled={!editMode}
+                    error={errors.pincode}
+                    onChange={(e) =>
+                      handleChange("pincode", e.target.value)
+                    }
+                    onBlur={handlePostalLookup}
+                  />
+
+                </div>
+
+                <div className="col-md-6">
+
+                  <FormInput
+                    label="State"
+                    id="state"
+                    value={profile?.state || ""}
+                    disabled={!editMode}
+                    error={errors.state}
+                    onChange={(e) =>
+                      handleChange("state", e.target.value)
+                    }
+                  />
+
+                </div>
+
+                <div className="col-md-6">
+
+                  <FormInput
+                    label="City"
+                    id="city"
+                    value={profile?.city || ""}
+                    disabled={!editMode}
+                    error={errors.city}
+                    onChange={(e) =>
+                      handleChange("city", e.target.value)
+                    }
+                  />
+
+                </div>
+
+                <div className="col-12">
+
+                  <FormInput
+                    label="Address"
+                    id="address"
+                    value={profile?.address || ""}
+                    disabled={!editMode}
+                    error={errors.address}
+                    onChange={(e) =>
+                      handleChange("address", e.target.value)
+                    }
+                  />
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+
+
+          {/* RIGHT ORDERS */}
+
+          <div className="col-xl-8 col-lg-7 mt-4 mt-lg-0">
+
+            <div className="account-orders-card">
+
+              <div className="account-orders-header">
+
+                <div>
+
+                  <span className="account-section-subtitle">
+                    Order History
+                  </span>
+
+                  <h2 className="account-section-title">
+                    My Orders
+                  </h2>
+
+                </div>
+
+                <div className="account-order-count">
+                  {orders.length} Orders
+                </div>
+
+              </div>
+
+              {orders.length === 0 ? (
+
+                <div className="account-empty-orders">
+
+                  <i className="bi bi-bag"></i>
+
+                  <h4>No Orders Yet</h4>
+
+                  <p>
+                    Once you place your first order, it will appear here.
+                  </p>
+
+                </div>
+
+              ) : (
+
+                <div className="account-orders-list">
+
+                  {orders.slice(0, visibleOrders).map((order) => {
+
+                    const maxProductionDays = Math.max(
+                      ...(order.order_items?.map(
+                        item => item.production_days || 0
+                      ) || [0])
+                    );
+
+                    const expectedDelivery = new Date(order.created_at);
+
+                    expectedDelivery.setDate(
+                      expectedDelivery.getDate() +
+                      maxProductionDays +
+                      7
+                    );
+
+                    return (
+
+                      <div
+                        key={order.id}
+                        className="account-order-card"
+                        onClick={() =>
+                          navigate(`/account/orders/${order.id}`)
+                        }
+                      >
+
+                        <div className="account-order-top">
+
+                          <div>
+
+                            <div className="account-order-title-row">
+
+                              <h6 className="account-order-id">
+                                Order #{order.id.slice(0, 8)}
+                              </h6>
+
+                              <span
+                                className={`account-status-badge status-${order.status}`}
+                              >
+                                {order.status || "pending"}
+                              </span>
+
+                            </div>
+
+                            <div className="account-order-meta">
+
+                              <div>
+
+                                <i className="bi bi-calendar3"></i>
+
+                                <span>Ordered On</span>
+
+                                <strong>
+                                  {new Date(
+                                    order.created_at
+                                  ).toLocaleDateString()}
+                                </strong>
+
+                              </div>
+
+                              <div>
+
+                                <i className="bi bi-truck"></i>
+
+                                <span>
+                                  Expected Delivery
+                                </span>
+
+                                <strong>
+                                  {expectedDelivery.toLocaleDateString()}
+                                </strong>
+
+                              </div>
+
+                            </div>
+                            <div className="account-order-summary">
+
+                              <div>
+
+                                <i className="bi bi-credit-card"></i>
+
+                                <span>Payment</span>
+
+                                <strong>
+                                  {order.razorpay_payment_id
+                                    ? "Razorpay"
+                                    : order.paypal_payment_id
+                                      ? "PayPal"
+                                      : "Pending"}
+                                </strong>
+
+                              </div>
+
+                              <div>
+
+                                <i className="bi bi-box-seam"></i>
+
+                                <span>Items</span>
+
+                                <strong>
+                                  {order.order_items?.length || 0}
+                                </strong>
+
+                              </div>
+
+                            </div>
+
+                          </div>
+
+                          <div className="account-order-right">
+
+                            <div className="account-order-price">
+
+                              ${order.total_amount}
+
+                            </div>
+
+                            <div className="account-order-arrow">
+
+                              <i className="bi bi-chevron-right"></i>
+
+                            </div>
+
+                          </div>
+
+                        </div>
+
+                      </div>
+
+                    );
+
+                  })}
+
+                  {visibleOrders < orders.length && (
+
+                    <div className="text-center mt-3">
+
+                      <button
+                        className="app-btn-secondary"
+                        onClick={() =>
+                          setVisibleOrders(prev => prev + 10)
+                        }
+                      >
+
+                        Show More Orders
+
+                      </button>
+
+                    </div>
+
+                  )}
+
+                </div>
+
               )}
 
             </div>
-          )}
 
+          </div>
         </div>
 
       </div>
     </div>
   );
+
 }

@@ -1,40 +1,105 @@
 import { Link } from "react-router-dom";
-import { FaHome, FaShoppingBag } from "react-icons/fa";
+import SEO from "../components/SEO";
+import {
+    FaHome,
+    FaShoppingBag,
+    FaCompass,
+} from "react-icons/fa";
+
+import "../styles/pages/NotFound.css";
 
 export default function NotFound() {
-  return (
-    <div
-      className="container text-center d-flex flex-column justify-content-center align-items-center"
-      style={{ minHeight: "75vh" }}
-    >
-      <h1
-        style={{
-          fontSize: "6rem",
-          fontWeight: "700",
-          color: "#0d6efd",
-        }}
-      >
-        404
-      </h1>
 
-      <h2 className="fw-bold mb-3">Oops! Page Not Found</h2>
+    return (
+        <>
+            <SEO
+                title="404 - Page Not Found | Eurasian House"
+                description="The page you're looking for could not be found."
+                canonical="https://www.eurasianrugs.com/404"
+            />
 
-      <p className="text-muted mb-4" style={{ maxWidth: "550px" }}>
-        The page you're looking for may have been moved, deleted, or the URL
-        might be incorrect.
-      </p>
+            <section className="not-found-page">
 
-      <div className="d-flex flex-wrap justify-content-center gap-3">
-        <Link to="/" className="btn btn-primary">
-          <FaHome className="me-2" />
-          Go Home
-        </Link>
+                <div className="container">
 
-        <Link to="/products" className="btn btn-outline-primary">
-          <FaShoppingBag className="me-2" />
-          Continue Shopping
-        </Link>
-      </div>
-    </div>
-  );
+                    <div className="not-found-wrapper">
+
+                        <span className="not-found-badge">
+
+                            <FaCompass />
+
+                            Lost?
+
+                        </span>
+
+                        <h1 className="not-found-code">
+
+                            404
+
+                        </h1>
+
+                        <h2 className="not-found-title">
+
+                            Oops! Page Not Found
+
+                        </h2>
+
+                        <p className="not-found-text">
+
+                            The page you're looking for may have been moved,
+                            removed, renamed, or the URL may be incorrect.
+                            Let's help you get back on track.
+
+                        </p>
+
+                        <div className="not-found-actions">
+
+                            <Link
+                                to="/"
+                                className="btn not-found-btn-primary"
+                            >
+
+                                <FaHome />
+
+                                Home
+
+                            </Link>
+
+                            <Link
+                                to="/products"
+                                className="btn not-found-btn-secondary"
+                            >
+
+                                <FaShoppingBag />
+
+                                Continue Shopping
+
+                            </Link>
+
+                        </div>
+
+                        <div className="not-found-help">
+
+                            <span>
+                                Need assistance?
+                            </span>
+
+                            <Link
+                                to="/contact"
+                                className="not-found-link"
+                            >
+                                Contact Support
+                            </Link>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </>
+    );
+
 }

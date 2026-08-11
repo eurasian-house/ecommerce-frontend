@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import "./WholesaleHeroCTA.css";
+import "../styles/components/WholesaleHeroCTA.css";
 
 const features = [
     "Factory-Direct Manufacturing",
@@ -10,124 +10,185 @@ const features = [
     "Strict Quality Control",
 ];
 
+const stats = [
+    {
+        icon: "bi-award",
+        value: "25+",
+        label: "Years",
+    },
+    {
+        icon: "bi-flower1",
+        value: "1000+",
+        label: "Designs",
+    },
+    {
+        icon: "bi-globe2",
+        value: "Global",
+        label: "Export",
+    },
+];
+
 export default function WholesaleHeroCTA() {
     return (
-        <section className="wholesale-section"
-            style={{ "paddingTop": "0px" }}
-        >
-            <div className="container">
+        <section className="wholesale-section">
+
+            <div className="container-fluid px-2">
 
                 <div className="wholesale-wrapper">
 
-                    {/* Decorative Elements */}
                     <span className="shape shape-1"></span>
                     <span className="shape shape-2"></span>
 
-                    <div className="row align-items-center g-5">
+                    <div className="row align-items-start g-5">
 
                         {/* LEFT */}
+
                         <div className="col-lg-6">
 
                             <div className="retail-content">
+
+                                <div className="hero-crown">
+                                    <i className="bi bi-stars"></i>
+                                </div>
 
                                 <span className="section-tag">
                                     Luxury Handmade Rugs
                                 </span>
 
-                                <h2>
+                                <h2 className="retail-title">
                                     Crafted in India's
-                                    <span> Carpet City.</span>
+                                    <br />
+                                    <span>Carpet City.</span>
                                 </h2>
 
-                                <p>
-                                    Discover heirloom-quality handmade rugs woven by
-                                    master artisans in Bhadohi. Every piece blends
-                                    timeless craftsmanship, premium natural materials,
-                                    and refined design for homes, hospitality, and
-                                    commercial interiors around the world.
+                                <div className="title-divider">
+                                    <span></span>
+                                    <i className="bi bi-diamond-fill"></i>
+                                    <span></span>
+                                </div>
+
+                                <p className="retail-description">
+                                    Discover heirloom-quality handmade rugs woven by master
+                                    artisans in Bhadohi. Every piece blends timeless
+                                    craftsmanship, premium natural materials and refined design
+                                    for homes, hospitality and commercial interiors around the
+                                    world.
                                 </p>
 
                                 <div className="retail-actions">
 
                                     <Link
                                         to="/products"
-                                        className="btn btn-dark btn-lg explore-btn"
+                                        className="explore-btn"
                                     >
                                         Explore Collection
+                                        <i className="bi bi-arrow-right"></i>
                                     </Link>
 
                                     <div className="retail-note">
-                                        Premium Handmade Rugs
-                                        <span>•</span>
-                                        Worldwide Delivery
+
+                                        <div className="note-item">
+                                            <i className="bi bi-patch-check"></i>
+                                            <span>Premium Handmade Rugs</span>
+                                        </div>
+
+                                        <div className="note-divider"></div>
+
+                                        <div className="note-item">
+                                            <i className="bi bi-globe2"></i>
+                                            <span>Worldwide Delivery</span>
+                                        </div>
+
                                     </div>
 
                                 </div>
+
+                                {/* It was here */}
 
                             </div>
 
                         </div>
 
+                        {/* CENTER DIVIDER */}
+
+                        {/* <div className="col-lg-1 d-none d-lg-flex justify-content-center">
+                            <div className="section-divider">
+
+                                <span></span>
+
+                                <div className="divider-icon">
+                                    <i className="bi bi-diamond"></i>
+                                </div>
+
+                                <span></span>
+
+                            </div>
+                        </div> */}
+
                         {/* RIGHT */}
 
-                        <div className="col-lg-6">
+                        <div className="col-lg-6 px-4 px-lg-2">
 
                             <div className="wholesale-card">
 
-                                <div className="card-top">
+                                <div className="card-badge">
+                                    <i className="bi bi-buildings"></i>
 
-                                    <div className="card-badge">
-                                        <i className="bi bi-buildings"></i>
-
-                                        <span>
-                                            Manufacturer • Wholesale • Export
-                                        </span>
-                                    </div>
-
-                                    <h3>
-                                        Source Directly from the Manufacturer
-                                    </h3>
-
-                                    <p className="card-description">
-                                        Eurasian House manufactures handcrafted rugs
-                                        for importers, retailers, hospitality groups,
-                                        interior designers and private-label brands
-                                        seeking dependable production, exceptional
-                                        quality and worldwide export support.
-                                    </p>
+                                    <span>
+                                        Manufacturer • Wholesale • Export
+                                    </span>
 
                                 </div>
 
+                                <h3 className="card-title">
+                                    Source Directly from the Manufacturer
+                                </h3>
+
+                                <p className="card-description">
+                                    Eurasian House manufactures handcrafted rugs for
+                                    importers, retailers, hospitality groups, interior
+                                    designers and private-label brands seeking dependable
+                                    production, exceptional quality and worldwide export
+                                    support.
+                                </p>
+
                                 <div className="stats-row">
 
-                                    <div>
-                                        <h4>25+</h4>
-                                        <span>Years</span>
-                                    </div>
+                                    {stats.map((item) => (
 
-                                    <div>
-                                        <h4>1000+</h4>
-                                        <span>Designs</span>
-                                    </div>
+                                        <div
+                                            key={item.label}
+                                            className="stat-item"
+                                        >
 
-                                    <div>
-                                        <h4>Global</h4>
-                                        <span>Export</span>
-                                    </div>
+                                            <i className={`bi ${item.icon}`}></i>
+
+                                            <div>
+
+                                                <h4>{item.value}</h4>
+
+                                                <span>{item.label}</span>
+
+                                            </div>
+
+                                        </div>
+
+                                    ))}
 
                                 </div>
 
                                 <div className="feature-grid">
 
-                                    {features.map((item) => (
+                                    {features.map((feature) => (
 
                                         <div
-                                            key={item}
+                                            key={feature}
                                             className="feature-item"
                                         >
+
                                             <i className="bi bi-check2-circle"></i>
 
-                                            <span>{item}</span>
+                                            <span>{feature}</span>
 
                                         </div>
 
@@ -137,15 +198,17 @@ export default function WholesaleHeroCTA() {
 
                                 <Link
                                     to="/wholesale"
-                                    className="btn wholesale-btn"
+                                    className="wholesale-btn"
                                 >
                                     Request Wholesale Catalogue
-                                    <i className="bi bi-arrow-right ms-2"></i>
+
+                                    <i className="bi bi-arrow-right"></i>
+
                                 </Link>
 
                                 <p className="small-note">
-                                    Download our latest catalogue or discuss your
-                                    sourcing requirements with our export specialists.
+                                    Download our latest catalogue or discuss your sourcing
+                                    requirements with our export specialists.
                                 </p>
 
                             </div>

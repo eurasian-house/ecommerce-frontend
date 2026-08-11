@@ -1,6 +1,8 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import SEO from "../components/SEO";
+import "../styles/pages/Blogs.css";
+
 
 
 const Blogs = () => {
@@ -21,206 +23,141 @@ const Blogs = () => {
         canonical="https://www.eurasianrugs.com/blogs"
       />
 
-      <div
-        className="py-5"
-        style={{
-          background: "#FAF8F5",
-          minHeight: "100vh",
-        }}
-      >
+      <div className="blogs-page">
+
         <div className="container">
 
-          {/* Hero */}
-          <section
-            className="text-center rounded-4 shadow-sm overflow-hidden mb-5"
-            style={{
-              background:
-                "linear-gradient(135deg,#2F241F 0%,#6B5748 100%)",
-              color: "#fff",
-              padding: "5rem 1.5rem",
-            }}
-          >
-            <small
-              className="text-uppercase"
-              style={{
-                letterSpacing: "4px",
-                opacity: ".8",
-              }}
-            >
-              Eurasian House Journal
-            </small>
+          {/* HERO */}
 
-            <h1
-              className="fw-bold mt-3 mb-3"
-              style={{
-                fontSize: "clamp(2.2rem,5vw,4.2rem)",
-                lineHeight: 1.15,
-              }}
-            >
+          <section className="blogs-hero">
+
+            <span className="blogs-eyebrow">
+              Eurasian House Journal
+            </span>
+
+            <h1 className="blogs-title">
               Stories Behind Every
               <br />
               Handmade Rug
             </h1>
 
-            <p
-              className="mx-auto"
-              style={{
-                maxWidth: "760px",
-                fontSize: "1.1rem",
-                opacity: ".9",
-                lineHeight: 1.8,
-              }}
-            >
-              Discover buying guides, interior inspiration, weaving traditions,
-              craftsmanship from Bhadohi, and expert advice to help you choose a
-              rug that becomes part of your family's story.
+            <p className="blogs-description">
+              Discover buying guides, timeless interiors, weaving traditions,
+              craftsmanship from Bhadohi, and practical advice that helps you
+              choose a rug your family will treasure for generations.
             </p>
 
             <button
-              className="btn btn-light rounded-pill px-5 py-3 mt-3 fw-semibold"
+              className="app-btn-luxury mt-4"
               onClick={() => navigate("/contact")}
             >
               Speak With Our Experts
             </button>
+
           </section>
 
-          {/* Section Heading */}
-          <div className="text-center mb-5">
-            <h2
-              className="fw-bold"
-              style={{
-                fontSize: "clamp(1.8rem,4vw,3rem)",
-                color: "#2F241F",
-              }}
-            >
-              Latest Articles
-            </h2>
+          {/* SECTION */}
 
-            <div
-              className="mx-auto mt-3"
-              style={{
-                width: "80px",
-                height: "3px",
-                background: "#B68D40",
-                borderRadius: "50px",
-              }}
-            ></div>
+          <section className="blogs-section">
 
-            <p
-              className="text-muted mt-3"
-              style={{
-                maxWidth: "650px",
-                margin: "auto",
-              }}
-            >
-              Carefully written guides to help you understand handmade rugs,
-              timeless interiors and artisan craftsmanship.
-            </p>
-          </div>
+            <div className="section-heading">
 
-          {/* Blog Cards */}
-          <div className="row g-4">
-            {blogPosts.map((post) => (
-              <div
-                key={post.id}
-                className="col-md-6 col-lg-4"
-              >
+              <span className="section-subtitle">
+                INSIGHTS
+              </span>
+
+              <h2 className="section-title">
+                Latest Articles
+              </h2>
+
+              <p className="section-description">
+                Carefully written guides to help you understand handmade rugs,
+                timeless interiors, artisan craftsmanship and buying decisions.
+              </p>
+
+            </div>
+
+            <div className="row g-4">
+
+              {blogPosts.map((post) => (
+
                 <div
-                  className="h-100 border-0 rounded-4 shadow-sm"
-                  style={{
-                    background: "#fff",
-                    transition: ".35s",
-                    overflow: "hidden",
-                  }}
+                  key={post.id}
+                  className="col-md-6 col-lg-4"
                 >
-                  <div className="p-4 d-flex flex-column h-100">
 
-                    <span
-                      className="mb-3"
-                      style={{
-                        color: "#B68D40",
-                        fontWeight: 600,
-                        letterSpacing: "2px",
-                        fontSize: ".78rem",
-                      }}
-                    >
-                      EURASIAN HOUSE
-                    </span>
+                  <article className="blog-card">
 
-                    <h3
-                      className="fw-bold mb-3"
-                      style={{
-                        color: "#2F241F",
-                        fontSize: "1.45rem",
-                        lineHeight: 1.4,
-                      }}
-                    >
-                      {post.title}
-                    </h3>
+                    <div className="blog-card-content">
 
-                    <p
-                      className="text-muted flex-grow-1"
-                      style={{
-                        lineHeight: 1.8,
-                      }}
-                    >
-                      {post.excerpt}
-                    </p>
+                      <span className="blog-tag">
+                        EURASIAN HOUSE
+                      </span>
 
-                    <button
-                      className="btn btn-outline-dark rounded-pill px-4 mt-3 align-self-start"
-                      onClick={() => navigate(`/blogs/${post.id}`)}
-                    >
-                      Read Article →
-                    </button>
-                  </div>
+                      <h3 className="blog-card-title">
+                        {post.title}
+                      </h3>
+
+                      <p className="blog-card-excerpt">
+                        {post.excerpt}
+                      </p>
+
+                      <button
+                        className="blog-read-btn"
+                        onClick={() => navigate(`/blogs/${post.id}`)}
+                      >
+                        Read Article
+                        <i className="bi bi-arrow-right ms-2"></i>
+                      </button>
+
+                    </div>
+
+                  </article>
+
                 </div>
-              </div>
-            ))}
-          </div>
 
-          {/* Bottom CTA */}
-          <section
-            className="text-center rounded-4 mt-5"
-            style={{
-              background: "#fff",
-              padding: "4rem 2rem",
-              border: "1px solid rgba(0,0,0,.06)",
-            }}
-          >
-            <h2
-              className="fw-bold mb-3"
-              style={{
-                color: "#2F241F",
-              }}
-            >
+              ))}
+
+            </div>
+
+          </section>
+
+          {/* CTA */}
+
+          <section className="blogs-cta">
+
+            <span className="blogs-cta-subtitle">
+              Need Personal Guidance?
+            </span>
+
+            <h2 className="blogs-cta-title">
               Looking for the Perfect Handmade Rug?
             </h2>
 
-            <p
-              className="text-muted mx-auto mb-4"
-              style={{
-                maxWidth: "700px",
-              }}
-            >
-              Our specialists can help you choose the ideal rug based on your
-              interior, lifestyle, colour palette and budget.
+            <p className="blogs-cta-description">
+              Our specialists can recommend the perfect rug according to your
+              space, colours, lifestyle and budget.
             </p>
 
             <button
-              className="btn btn-dark rounded-pill px-5 py-3"
+              className="app-btn-luxury"
               onClick={() => navigate("/contact")}
             >
               Contact Our Team
             </button>
+
           </section>
 
-          {/* Footer */}
-          <footer className="text-center pt-5 text-muted">
-            <small>© 2026 Eurasian House • Handmade Rugs from Bhadohi, India</small>
+          <footer className="blogs-footer">
+
+            © 2026 Eurasian House • Handmade Rugs from Bhadohi, India
+
           </footer>
+
         </div>
+
       </div>
+
     </>
   );
 };

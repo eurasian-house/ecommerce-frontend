@@ -3,6 +3,8 @@ import { supabase } from "../lib/supabase";
 import { useNavigate } from "react-router-dom";
 import UserAvatar from "../components/common/UserAvatar";
 import { getAvatar } from "../utils/getAvatar";
+import "../styles/components/CustomerInspiration.css";
+
 
 export default function CustomerInspiration() {
     const [reviews, setReviews] = useState([]);
@@ -38,133 +40,113 @@ export default function CustomerInspiration() {
     }
 
     return (
-        <div className="container mt-5">
+        <section className="customer-inspiration">
 
-            <div className="text-center mb-5">
+            <div className="container">
 
-                <span
-                    className="badge rounded-pill section-title"
-                    style={{
-                        backgroundColor: "#F3E8C8",
-                        color: "#8B6B2E",
-                    }}
-                >
-                    Styled by Our Customers
-                </span>
+                <div className="text-center mb-5">
+                    <div className="discount-ornament">
 
-                <h2 className="fw-bold mt-3">
-                    Real Homes. Real Stories.
-                </h2>
+                        <span className="ornament-line"></span>
 
-                <p className="text-muted">
-                    See how our handcrafted rugs look in homes around the world.
-                </p>
+                        <span className="ornament-text">
+                            STYLED BY OUR CUSTOMERS
+                        </span>
 
-            </div>
+                        <span className="ornament-line"></span>
 
-            <div
-                style={{
-                    columns: "220px",
-                    columnGap: "16px",
-                }}
-            >
+                    </div>
 
-                {reviews.slice(0, visibleCount).map((r) => (
+                    <h2 className="mt-3 fw-semibold for-user-heading">
+                        Real Homes. Real Stories.
+                    </h2>
 
-                    <div
-                        key={r.id}
-                        style={{
-                            breakInside: "avoid",
-                            marginBottom: isMobile ? 12 : 16,
-                            cursor: "pointer",
-                        }}
-                        onClick={() =>
-                            navigate(`/products/${r.products.slug}`)
-                        }
-                    >
+                    <p className="for-user-subheading mx-auto">
+                        See how our handcrafted rugs look in homes around the world.
+                    </p>
 
-                        <div className="card border-0 shadow-sm rounded-4 overflow-hidden customer-gallery-card">
+                </div>
 
-                            <img
-                                src={r.image_url}
-                                alt={r.products.title}
-                                style={{
-                                    width: "100%",
-                                    display: "block",
-                                }}
-                            />
+                <div className="customer-gallery">
 
-                            <div className="p-3">
+                    {reviews.slice(0, visibleCount).map((r) => (
 
-                                <div className="d-flex align-items-center mb-2">
+                        <div
+                            key={r.id}
+                            className="customer-gallery-item"
+                            onClick={() => navigate(`/products/${r.products.slug}`)}
+                        >
 
-                                    <UserAvatar
-                                        src={getAvatar({
-                                            avatar_url: r.reviewer_avatar,
-                                        })}
-                                        alt={r.reviewer_name}
-                                        size={38}
-                                        className="me-2"
-                                    />
+                            <div className="customer-gallery-card">
 
-                                    <div>
+                                <img
+                                    src={r.image_url}
+                                    alt={r.products.title}
+                                    className="customer-gallery-image"
+                                />
 
-                                        <div className="fw-semibold small">
-                                            {r.reviewer_name}
-                                        </div>
+                                <div className="customer-gallery-body">
 
-                                        <div
-                                            className="text-warning small"
-                                            style={{ letterSpacing: 1 }}
-                                        >
-                                            {"★".repeat(r.rating)}
+                                    <div className="customer-reviewer">
+
+                                        <UserAvatar
+                                            src={getAvatar({
+                                                avatar_url: r.reviewer_avatar,
+                                            })}
+                                            alt={r.reviewer_name}
+                                            size={30}
+                                            className="me-2"
+                                        />
+
+                                        <div>
+
+                                            <div className="customer-name">
+                                                {r.reviewer_name}
+                                            </div>
+
+                                            <div className="customer-rating">
+                                                {"★".repeat(r.rating)}
+                                            </div>
+
                                         </div>
 
                                     </div>
 
-                                </div>
+                                    <div className="customer-review">
+                                        "{r.review}"
+                                    </div>
 
-                                <div
-                                    className="text-muted small mb-2"
-                                    style={{
-                                        display: "-webkit-box",
-                                        WebkitLineClamp: 2,
-                                        WebkitBoxOrient: "vertical",
-                                        overflow: "hidden",
-                                    }}
-                                >
-                                    "{r.review}"
-                                </div>
+                                    <div className="customer-product">
+                                        {r.products.title}
+                                    </div>
 
-                                <div className="small fw-semibold">
-                                    {r.products.title}
                                 </div>
 
                             </div>
 
                         </div>
 
-                    </div>
-
-                ))}
-
-            </div>
-
-            {visibleCount < reviews.length && (
-
-                <div className="text-center mt-4">
-
-                    <button
-                        className="btn btn-dark rounded-pill px-4"
-                        onClick={() => setVisibleCount((v) => v + 10)}
-                    >
-                        Show More
-                    </button>
+                    ))}
 
                 </div>
 
-            )}
+                {visibleCount < reviews.length && (
 
-        </div>
+                    <div className="text-center mt-5">
+
+                        <button
+                            className="app-btn-primary"
+                            onClick={() => setVisibleCount(v => v + 10)}
+                        >
+                            Show More
+                        </button>
+
+                    </div>
+
+                )}
+
+            </div>
+
+        </section>
     );
 }

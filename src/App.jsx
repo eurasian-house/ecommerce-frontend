@@ -44,6 +44,8 @@ const RefundPolicy = lazy(() => import("./pages/RefundPolicy"));
 const ShippingPolicy = lazy(() => import("./pages/ShippingPolicy"));
 const CancellationPolicy = lazy(() => import("./pages/CancellationPolicy"));
 const FAQ = lazy(() => import("./pages/FAQ"));
+const PaymentPolicy = lazy(() => import("./pages/PaymentPolicy"));
+const PackagingPolicy = lazy(() => import("./pages/PackagingPolicy"));
 
 const NotFound = lazy(() => import("./pages/NotFound"));
 
@@ -150,6 +152,8 @@ export default function App() {
               <Route path="/shipping-policy" element={<ShippingPolicy />} />
               <Route path="/cancellation-policy" element={<CancellationPolicy />} />
               <Route path="/faq" element={<FAQ />} />
+              <Route path="/payment-policy" element={<PaymentPolicy />} />
+              <Route path="/packaging-policy" element={<PackagingPolicy />} />
               <Route path="*" element={<NotFound />} />
               <Route path="/account/orders/:id" element={<ProtectedRoute> <CustOrderDetail /></ProtectedRoute>} />
               <Route path="/write-review/:orderItemId" element={<WriteReview />} />

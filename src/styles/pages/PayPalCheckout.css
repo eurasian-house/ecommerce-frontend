@@ -1,0 +1,268 @@
+/* ==========================================================
+   PAYPAL PAGE
+========================================================== */
+
+.paypal-page{
+    background:var(--bg);
+    min-height:100vh;
+    padding:3rem 0 5rem;
+}
+
+/* ==========================================================
+   CARD
+========================================================== */
+
+.paypal-card{
+
+    max-width:680px;
+
+    margin:auto;
+
+    padding:2.25rem;
+
+    background:var(--surface);
+
+    border:1px solid var(--border);
+
+    border-radius:28px;
+
+    box-shadow:0 10px 35px rgba(0,0,0,.05);
+}
+
+[data-theme="dark"] .paypal-card{
+
+    box-shadow:0 15px 40px rgba(0,0,0,.30);
+}
+
+/* ==========================================================
+   HEADER
+========================================================== */
+
+.paypal-header{
+
+    text-align:center;
+
+    margin-bottom:2.25rem;
+}
+
+.paypal-subtitle{
+
+    display:block;
+
+    margin-bottom:.8rem;
+
+    color:#B68D40;
+
+    text-transform:uppercase;
+
+    letter-spacing:.24em;
+
+    font-size:.8rem;
+
+    font-weight:600;
+}
+
+.paypal-title{
+
+    margin-bottom:.8rem;
+
+    color:var(--text);
+
+    font-size:clamp(2rem,4vw,3rem);
+
+    font-weight:500;
+
+    line-height:1.1;
+}
+
+.paypal-description{
+
+    max-width:520px;
+
+    margin:auto;
+
+    color:var(--text-muted);
+
+    line-height:1.8;
+}
+
+/* ==========================================================
+   SUMMARY
+========================================================== */
+
+.paypal-summary{
+
+    padding:1.5rem;
+
+    background:var(--surface-2);
+
+    border:1px solid var(--border);
+
+    border-radius:18px;
+
+    margin-bottom:1.75rem;
+}
+
+.paypal-summary-row{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:.6rem 0;
+}
+
+.paypal-summary-row:not(:last-child){
+
+    border-bottom:1px solid var(--border);
+}
+
+.paypal-summary-row span{
+
+    color:var(--text-muted);
+
+    font-size:.95rem;
+}
+
+.paypal-summary-row strong{
+
+    color:var(--text);
+
+    font-weight:600;
+}
+
+.paypal-summary-row h2{
+
+    margin:0;
+
+    color:var(--text);
+
+    font-size:2rem;
+
+    font-weight:600;
+}
+
+/* ==========================================================
+   SECURITY
+========================================================== */
+
+.paypal-security{
+
+    display:flex;
+
+    align-items:flex-start;
+
+    gap:1rem;
+
+    padding:1.4rem;
+
+    margin-bottom:2rem;
+
+    border-radius:18px;
+
+    background:rgba(182,141,64,.06);
+
+    border:1px solid rgba(182,141,64,.18);
+}
+
+.paypal-security i{
+
+    font-size:1.4rem;
+
+    color:#B68D40;
+
+    margin-top:2px;
+}
+
+.paypal-security h6{
+
+    margin-bottom:.4rem;
+
+    color:var(--text);
+
+    font-weight:600;
+}
+
+.paypal-security p{
+
+    margin:0;
+
+    color:var(--text-muted);
+
+    line-height:1.75;
+
+    font-size:.92rem;
+}
+
+/* ==========================================================
+   PAYPAL BUTTONS
+========================================================== */
+
+.paypal-buttons-wrapper{
+
+    margin-top:2rem;
+
+    padding:1rem;
+
+    border-radius:18px;
+
+    background:var(--surface);
+
+    border:1px dashed var(--border);
+}
+
+/* ==========================================================
+   MOBILE
+========================================================== */
+
+@media(max-width:768px){
+
+    .paypal-page{
+
+        padding:2rem 0 3rem;
+    }
+
+    .paypal-card{
+
+        padding:1.5rem;
+
+        border-radius:22px;
+    }
+
+    .paypal-summary-row{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+        gap:.35rem;
+    }
+
+}
+
+@media(max-width:576px){
+
+    .paypal-card{
+
+        padding:1.2rem;
+
+        border-radius:18px;
+    }
+
+    .paypal-summary,
+    .paypal-security,
+    .paypal-buttons-wrapper{
+
+        padding:1rem;
+
+        border-radius:14px;
+    }
+
+    .paypal-title{
+
+        font-size:1.8rem;
+    }
+
+}

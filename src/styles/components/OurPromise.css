@@ -1,0 +1,181 @@
+/* ==========================================================
+   OUR PROMISE
+========================================================== */
+
+.our-promise{
+
+    /* padding:6rem 0; */
+
+    background:
+        radial-gradient(
+            circle at center,
+            var(--bg-secondary) 0%,
+            var(--bg-primary) 70%
+        );
+}
+
+/* ==========================================================
+   PROMISE BOX
+========================================================== */
+
+.promise-box{
+
+    position:relative;
+
+    max-width:900px;
+
+    margin:auto;
+
+    padding:3rem;
+
+    text-align:center;
+
+    overflow:hidden;
+
+    border-radius:28px;
+
+    background:
+        linear-gradient(
+            160deg,
+            var(--surface),
+            var(--bg-secondary)
+        );
+
+    border:1px solid var(--border);
+
+    box-shadow:var(--shadow-md);
+
+    transition:.4s ease;
+}
+
+.promise-box::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:-140px;
+
+    right:-140px;
+
+    width:260px;
+
+    height:260px;
+
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            rgba(139,106,70,.15),
+            transparent 72%
+        );
+
+    transition:.4s;
+}
+
+.promise-box::after{
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+
+    bottom:0;
+
+    width:100%;
+
+    height:4px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            var(--color-primary),
+            var(--color-accent),
+            var(--color-primary),
+            transparent
+        );
+
+    transform:scaleX(0);
+
+    transition:.35s;
+}
+
+.promise-box:hover{
+
+    transform:translateY(-8px);
+
+    border-color:var(--color-primary);
+
+    box-shadow:var(--shadow-xl);
+}
+
+.promise-box:hover::before{
+
+    transform:scale(1.2);
+}
+
+.promise-box:hover::after{
+
+    transform:scaleX(1);
+}
+
+/* ==========================================================
+   CONTENT
+========================================================== */
+
+.promise-box>*{
+
+    position:relative;
+
+    z-index:2;
+}
+
+.promise-box .for-user-subheading{
+
+    max-width:760px;
+
+    margin:1.5rem auto 0;
+
+    line-height:1.9;
+}
+
+/* ==========================================================
+   MOBILE
+========================================================== */
+
+@media(max-width:768px){
+
+.our-promise{
+
+    padding:5rem 0;
+}
+
+.promise-box{
+
+    padding:2.25rem;
+}
+
+}
+
+@media(max-width:576px){
+
+.our-promise{
+
+    padding:4rem 0;
+}
+
+.promise-box{
+
+    padding:1.75rem;
+
+    border-radius:22px;
+}
+
+.promise-box .for-user-subheading{
+
+    line-height:1.8;
+}
+
+}

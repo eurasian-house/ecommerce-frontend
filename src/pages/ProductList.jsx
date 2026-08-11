@@ -5,12 +5,13 @@ import { useCart } from "../context/CartContext";
 import { applyActiveFilter } from '../utils/productQueries'
 import SEO from "../components/SEO";
 import ProductCard from "../components/ProductCard";
+import "../styles/pages/ProductList.css";
 
 import { trackFilters } from "../lib/analytics";
 
 export default function ProductList({ colorFilter }) { // ✅ receive prop
   // Pagination state
-  const [visibleCount, setVisibleCount] = useState(20);
+  const [visibleCount, setVisibleCount] = useState(10);
 
   const [products, setProducts] = useState([]);
   const [filtered, setFiltered] = useState([]);
@@ -44,7 +45,7 @@ export default function ProductList({ colorFilter }) { // ✅ receive prop
   const hasCountedViews = useRef(false);
 
   useEffect(() => {
-    setVisibleCount(20);
+    setVisibleCount(18);
   }, [search, category, sort, budget, discount, colorFilter, autoShapes, autoQuality]);
 
   useEffect(() => {
@@ -263,38 +264,38 @@ export default function ProductList({ colorFilter }) { // ✅ receive prop
 
       <div className="container mt-4">
 
-        {/* FILTERS */}
-        <div
-          className="mb-4 p-4 rounded-4 border bg-white shadow-sm"
-          style={{
-            borderColor: "#e9ecef",
-          }}
-        >
-          <div className="d-flex align-items-center justify-content-between mb-3">
-            <h5 className="mb-0 fw-semibold">
-              Filter Products
-            </h5>
+        {/* FILTER PANEL */}
+        <div className="filter-panel">
 
-            <span className="text-muted small">
+          <div className="filter-header">
+            <h4 className="filter-title">
+              Explore Our Collection
+            </h4>
+
+            <span className="filter-count">
               {filtered.length} Products
             </span>
           </div>
+
           <button
-            className="btn btn-dark w-100 d-md-none mb-3 rounded-pill"
+            className="filter-toggle-btn d-md-none"
             onClick={() => setShowFilters(!showFilters)}
           >
+            <i className="bi bi-sliders me-2"></i>
             {showFilters ? "Hide Filters" : "Filter & Sort"}
           </button>
-          <div className={`${showFilters ? "d-block" : "d-none"} d-md-block`}>
-            <div className="row g-4">
 
+          <div className={`${showFilters ? "d-block" : "d-none"} d-md-block`}>
+            <div className="row g-3">
+
+              {/* Search */}
               <div className="col-md-3">
                 <input
                   type="text"
                   id="search"
                   name="search"
-                  className="form-control rounded-pill"
-                  placeholder="Search..."
+                  className="app-input"
+                  placeholder="Search rugs..."
                   value={search}
                   onChange={(e) => {
                     setSearch(e.target.value);
@@ -303,9 +304,10 @@ export default function ProductList({ colorFilter }) { // ✅ receive prop
                 />
               </div>
 
+              {/* Category */}
               <div className="col-md-3">
                 <select
-                  className="form-control rounded-pill"
+                  className="app-select"
                   value={category}
                   onChange={(e) => {
                     setCategory(e.target.value);
@@ -313,15 +315,22 @@ export default function ProductList({ colorFilter }) { // ✅ receive prop
                   }}
                 >
                   <option value="">All Categories</option>
+
                   {uniqueCategories.map((c, i) => (
-                    <option key={i} value={c}>{c}</option>
+                    <option
+                      key={i}
+                      value={c}
+                    >
+                      {c}
+                    </option>
                   ))}
                 </select>
               </div>
 
+              {/* Sort */}
               <div className="col-md-3">
                 <select
-                  className="form-control rounded-pill"
+                  className="app-select"
                   value={sort}
                   onChange={(e) => {
                     setSort(e.target.value);
@@ -329,18 +338,19 @@ export default function ProductList({ colorFilter }) { // ✅ receive prop
                   }}
                 >
                   <option value="">Sort By</option>
-                  <option value="az">A-Z</option>
-                  <option value="za">Z-A</option>
-                  <option value="new">Date: New → Old</option>
-                  <option value="old">Date: Old → New</option>
-                  <option value="low">Price: Low → High</option>
-                  <option value="high">Price: High → Low</option>
+                  <option value="az">A → Z</option>
+                  <option value="za">Z → A</option>
+                  <option value="new">Newest First</option>
+                  <option value="old">Oldest First</option>
+                  <option value="low">Price: Low to High</option>
+                  <option value="high">Price: High to Low</option>
                 </select>
               </div>
 
+              {/* Budget */}
               <div className="col-md-3">
                 <select
-                  className="form-control rounded-pill"
+                  className="app-select"
                   value={budget}
                   onChange={(e) => {
                     setBudget(e.target.value);
@@ -358,19 +368,33 @@ export default function ProductList({ colorFilter }) { // ✅ receive prop
 
             </div>
           </div>
+
         </div>
 
         {/* PRODUCTS */}
-        <div className="row g-3 g-md-4">
+        <div className="row products-grid">
+
           {filtered?.length === 0 ? (
-            <div className="text-center mt-5">
-              <h5>No products in this category</h5>
+
+            <div className="col-12">
+              <div className="empty-products">
+                <i className="bi bi-search display-4 mb-3"></i>
+
+                <h3>No Products Found</h3>
+
+                <p>
+                  Try adjusting your search or filters to discover more beautiful rugs.
+                </p>
+              </div>
             </div>
+
           ) : (
+
             filtered.slice(0, visibleCount).map((p) => (
+
               <div
                 key={p.id}
-                className="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-2 mb-3 mb-md-4"
+                className="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-2 mb-4"
               >
                 <ProductCard
                   product={p}
@@ -384,20 +408,29 @@ export default function ProductList({ colorFilter }) { // ✅ receive prop
                   cardWidth="100%"
                 />
               </div>
+
             ))
+
           )}
+
         </div>
 
       </div>
+
       {visibleCount < filtered.length && (
-        <div className="text-center my-4">
+
+        <div className="load-more-wrapper">
+
           <button
-            className="btn btn-outline-dark px-4"
-            onClick={() => setVisibleCount(prev => prev + 10)}
+            className="app-btn-luxury"
+            onClick={() => setVisibleCount((prev) => prev + 10)}
           >
-            Show 10 More
+            <span>View More Collections</span>
+            <i className="bi bi-arrow-right ms-2"></i>
           </button>
+
         </div>
+
       )}
     </>
   );

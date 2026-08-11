@@ -140,7 +140,7 @@ export default function WholesaleContact() {
                         className="card border-0 shadow-sm p-4"
                     >
 
-                        {/* ================= Company Information ================= */}
+                        {/* ================= Company Information ================== */}
 
                         <div className="card border-0 shadow-sm mb-4">
                             <div className="card-body p-4">
@@ -423,6 +423,7 @@ export default function WholesaleContact() {
                                     <label htmlFor="message">
                                         Tell us about your project, preferred sizes,
                                         quantity, timeline or any custom requirements
+
                                     </label>
                                 </div>
 

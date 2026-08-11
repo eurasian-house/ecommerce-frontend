@@ -1,4 +1,6 @@
 import { useNavigate } from "react-router-dom";
+import "../styles/components/IdeasSection.css";
+
 
 export default function IdeasSection() {
   const navigate = useNavigate();
@@ -25,99 +27,92 @@ export default function IdeasSection() {
   ];
 
   return (
-    <div className="mb-5">
-      <div className="text-center mb-5">
-        <span
-          className="badge rounded-pill section-title"
-          style={{
-            backgroundColor: "#F3E8C8",
-            color: "#8B6B2E",
-          }}
-        >
-          Inspired Living
-        </span>
+    <section className="ideas-section">
 
-        <h2 className="mt-3 fw-semibold display-6">
-          Bring Character to Every Room
-        </h2>
+      <div className="container">
 
-        <p
-          className="mx-auto mt-3"
-          style={{
-            maxWidth: 620,
-            color: "#777",
-            lineHeight: 1.8,
-          }}
-        >
-          Discover thoughtfully designed interiors where handcrafted rugs add warmth, texture, and timeless elegance to everyday living.
-        </p>
-      </div>
+        <div className="text-center mb-5">
+            <div className="discount-ornament">
 
-      <div
-        className="d-flex overflow-auto gap-3 pb-2 justify-content-md-center justify-content-start align-items-center"
-      >
-        {ideas.map((item, i) => (
-          <div
-            key={i}
-            style={{
-              width: "300px",
-              flex: "0 0 auto",
-              cursor: "pointer"
-            }}
-            onClick={() => navigate(`/blogs/${item.id}`)}
-          >
-            <div className="card inspiration-card bg-light h-100 overflow-hidden">
+              <span className="ornament-line"></span>
 
-              <img
-                src={item.img}
-                alt={item.title}
-                loading="lazy"
-                decoding="async"
-                className="card-img-top"
-                style={{
-                  height: "270px",
-                  objectFit: "cover"
-                }}
-              />
+              <span className="ornament-text">
+                Inspired Living
+              </span>
 
-              <div className="card-body">
-                <h5
-                  className="fw-bold mb-2"
-                  style={{
-                    fontSize: "1.15rem",
-                    display: "-webkit-box",
-                    WebkitBoxOrient: "vertical",
-                    WebkitLineClamp: 3,
-                    overflow: "hidden",
-                    lineHeight: "1.3",
-                    height: "3.9em",
-                  }}
-                >
-                  {item.title}
-                </h5>
-                <p
-                  className="text-muted small mb-3"
-                  style={{
-                    display: "-webkit-box",
-                    WebkitBoxOrient: "vertical",
-                    WebkitLineClamp: 2,
-                    overflow: "hidden",
-                    lineHeight: "1.4",
-                    height: "2.8em",
-                  }}
-                >{item.desc}</p>
+              <span className="ornament-line"></span>
 
-                <div className="mt-3 mb-3">
-                  <span className="border border-1.5 border-black rounded-circle px-3 py-3">
-                    →
-                  </span>
+            </div>
+
+          <h2 className="mt-3 fw-semibold for-user-heading">
+            Bring Character to Every Room
+          </h2>
+
+          <p className="pt-4 mx-auto">
+            Discover thoughtfully designed interiors where handcrafted rugs add
+            warmth, texture, and timeless elegance to everyday living.
+          </p>
+
+        </div>
+
+        <div className="ideas-slider">
+
+          {ideas.map((item) => (
+
+            <div
+              key={item.id}
+              className="idea-item"
+              onClick={() => navigate(`/blogs/${item.id}`)}
+            >
+
+              <div className="idea-card">
+
+                <div className="idea-image-wrapper">
+
+                  <img
+                    src={item.img}
+                    alt={item.title}
+                    loading="lazy"
+                    decoding="async"
+                    className="idea-image"
+                  />
+
                 </div>
+
+                <div className="idea-body">
+
+                  <h5 className="idea-title">
+                    {item.title}
+                  </h5>
+
+                  <p className="idea-desc">
+                    {item.desc}
+                  </p>
+
+                  <div className="idea-footer">
+
+                    <span className="idea-read">
+                      Read Article
+                    </span>
+
+                    <div className="idea-arrow">
+                      <i className="bi bi-arrow-right"></i>
+                    </div>
+
+                  </div>
+
+                </div>
+
               </div>
 
             </div>
-          </div>
-        ))}
+
+          ))}
+
+        </div>
+
       </div>
-    </div>
+
+    </section>
   );
 }

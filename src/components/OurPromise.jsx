@@ -1,4 +1,5 @@
-import "./OurPromise.css";
+import "../styles/components/OurPromise.css";
+
 
 export default function OurPromise() {
     return (
@@ -8,15 +9,23 @@ export default function OurPromise() {
 
                 <div className="promise-box">
 
-                    <span className="promise-label">
-                        OUR PROMISE
-                    </span>
+                    <div className="discount-ornament">
 
-                    <h2>
+                        <span className="ornament-line"></span>
+
+                        <span className="ornament-text">
+                            OUR PROMISE
+                        </span>
+
+                        <span className="ornament-line"></span>
+
+                    </div>
+
+                    <h2 className="mt-3 fw-semibold for-user-heading">
                         Crafted with Care. Delivered with Confidence.
                     </h2>
 
-                    <p>
+                    <p className="for-user-subheading mx-auto">
                         Every rug we offer reflects thoughtful craftsmanship,
                         careful inspection, honest pricing, and personal service.
                         From the moment it leaves the hands of skilled artisans

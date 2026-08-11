@@ -1,0 +1,536 @@
+/* ==========================================================
+   DISCOUNT SECTION
+========================================================== */
+
+.discount-section {
+    padding: clamp(4rem, 8vw, 7rem) 0;
+    position: relative;
+    overflow: hidden;
+}
+
+/* ==========================================================
+   HEADER
+========================================================== */
+
+.discount-header {
+    max-width: 760px;
+    margin: 0 auto 4rem;
+    text-align: center;
+    padding-inline: 1rem;
+}
+
+/* ==========================================================
+   ORNAMENT
+========================================================== */
+
+.discount-ornament {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+}
+
+.ornament-line {
+    width: 80px;
+    height: 1px;
+    background: linear-gradient(90deg,
+            transparent,
+            var(--color-primary),
+            transparent);
+
+    opacity: .75;
+}
+
+.ornament-text {
+    text-transform: uppercase;
+    letter-spacing: .28rem;
+    font-size: .78rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    white-space: nowrap;
+}
+
+/* ==========================================================
+   TITLE
+========================================================== */
+
+.discount-title {
+    font-family: var(--font-heading);
+    font-size: clamp(2.3rem, 4vw, 4rem);
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: 1.25rem;
+
+    color: var(--text-primary);
+
+    text-wrap: balance;
+}
+
+/* ==========================================================
+   SUBTITLE
+========================================================== */
+
+.discount-subtitle {
+    max-width: 650px;
+    margin: 0 auto;
+
+    font-size: 1.05rem;
+    line-height: 1.9;
+
+    color: var(--text-secondary);
+}
+
+/* ==========================================================
+   GRID
+========================================================== */
+
+.discount-grid {
+    display: flex;
+    gap: 1.5rem;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    padding: .5rem .25rem 1rem;
+
+    scroll-behavior: smooth;
+    scroll-snap-type: x proximity;
+
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    scroll-padding-left: 1rem;
+}
+
+.discount-grid::-webkit-scrollbar {
+    display: none;
+}
+
+
+/* ==========================================================
+   OFFER CARD
+========================================================== */
+
+.offer-card {
+    position: relative;
+
+    flex: 0 0 280px;
+
+    min-height: 320px;
+    overflow: hidden;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    padding: 2.25rem 2rem;
+
+    border-radius: var(--radius-2xl);
+
+    background: var(--surface-1);
+    border: 1px solid var(--border-color);
+
+    text-align: center;
+
+    cursor: pointer;
+
+    isolation: isolate;
+
+    transition:
+        transform .45s ease,
+        border-color .35s ease,
+        box-shadow .45s ease,
+        background-color .35s ease;
+}
+
+/* Decorative background */
+
+.offer-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+
+    opacity: .07;
+
+    background:
+        radial-gradient(circle at top right,
+            var(--color-primary),
+            transparent 45%),
+
+        radial-gradient(circle at bottom left,
+            var(--color-primary),
+            transparent 38%);
+}
+
+/* Premium shine */
+
+.offer-card::before {
+
+    content: "";
+
+    position: absolute;
+
+    top: -120%;
+    left: -35%;
+
+    width: 70%;
+    height: 280%;
+
+    transform: rotate(28deg);
+
+    background: linear-gradient(90deg,
+            transparent,
+            rgba(255, 255, 255, .10),
+            transparent);
+
+    transition: left .9s ease;
+
+    pointer-events: none;
+}
+
+.offer-card:first-child {
+    margin-left: .25rem;
+}
+
+.offer-card:last-child {
+    margin-right: .25rem;
+}
+
+/* Golden top line */
+
+.offer-card::after {
+
+    content: "";
+
+    position: absolute;
+
+    left: 24px;
+    right: 24px;
+    top: 0;
+
+    height: 2px;
+
+    background: linear-gradient(90deg,
+            transparent,
+            var(--color-primary),
+            transparent);
+
+    opacity: .85;
+}
+
+/* Hover */
+
+.offer-card:hover {
+
+    transform:
+        translateY(-10px);
+
+    border-color: var(--color-primary);
+
+    background: var(--surface-2);
+
+    box-shadow: var(--shadow-xl);
+}
+
+.offer-card:hover::before {
+
+    left: 130%;
+}
+
+/* ==========================================================
+   ICON
+========================================================== */
+
+.offer-icon {
+
+    width: 64px;
+    height: 64px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    margin-bottom: 1.6rem;
+
+    background: color-mix(in srgb,
+            var(--color-primary) 12%,
+            transparent);
+
+    color: var(--color-primary);
+
+    font-size: 1.5rem;
+
+    transition: .35s ease;
+}
+
+.offer-card:hover .offer-icon {
+
+    transform:
+        rotate(8deg) scale(1.08);
+}
+
+
+/* ==========================================================
+   OFFER CONTENT
+========================================================== */
+
+.offer-percent {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+
+    margin-bottom: .2rem;
+
+    line-height: 1;
+}
+
+.offer-percent .number {
+
+    font-size: clamp(3.3rem, 6vw, 4.5rem);
+
+    font-weight: 700;
+
+    letter-spacing: -.06em;
+
+    color: var(--text-primary);
+}
+
+.offer-percent .percent {
+
+    margin-top: .45rem;
+    margin-left: .2rem;
+
+    font-size: 1.3rem;
+
+    font-weight: 600;
+
+    color: var(--color-primary);
+}
+
+.offer-off {
+
+    margin-bottom: 1.6rem;
+
+    font-size: .82rem;
+
+    font-weight: 700;
+
+    letter-spacing: .35em;
+
+    text-transform: uppercase;
+
+    color: var(--text-secondary);
+}
+
+/* ==========================================================
+   DIVIDER
+========================================================== */
+
+.offer-divider {
+
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+
+    margin-bottom: 1.4rem;
+}
+
+.offer-divider span {
+
+    width: 70px;
+    height: 2px;
+
+    border-radius: 999px;
+
+    background: linear-gradient(90deg,
+            transparent,
+            var(--color-primary),
+            transparent);
+
+    opacity: .7;
+}
+
+/* ==========================================================
+   TITLE
+========================================================== */
+
+.offer-title {
+
+    margin: 0;
+
+    font-family: var(--font-heading);
+
+    font-size: 1.28rem;
+
+    font-weight: 600;
+
+    line-height: 1.4;
+
+    color: var(--text-primary);
+}
+
+/* ==========================================================
+   BUTTON
+========================================================== */
+
+.offer-button {
+
+    margin-top: auto;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: .6rem;
+
+    padding: .85rem 1.4rem;
+
+    border: 1px solid var(--border-color);
+
+    border-radius: 999px;
+
+    background: transparent;
+
+    color: var(--text-primary);
+
+    font-size: .92rem;
+
+    font-weight: 600;
+
+    transition:
+        all .35s ease;
+}
+
+.offer-button i {
+
+    transition: transform .35s ease;
+}
+
+.offer-card:hover .offer-button {
+
+    background: var(--color-primary);
+
+    color: #fff;
+
+    border-color: var(--color-primary);
+}
+
+.offer-card:hover .offer-button i {
+
+    transform: translateX(4px);
+}
+
+/* ==========================================================
+   ACCENT COLOURS
+========================================================== */
+
+.offer-card.crimson {
+
+    --card-accent: #C45A63;
+}
+
+.offer-card.emerald {
+
+    --card-accent: #4E8F74;
+}
+
+.offer-card.royal {
+
+    --card-accent: #5575A5;
+}
+
+.offer-card.gold {
+
+    --card-accent: var(--color-primary);
+}
+
+.offer-card .offer-icon {
+
+    color: var(--card-accent);
+
+    background: color-mix(in srgb,
+            var(--card-accent) 12%,
+            transparent);
+}
+
+.offer-card::after {
+
+    background: linear-gradient(90deg,
+            transparent,
+            var(--card-accent),
+            transparent);
+}
+
+.offer-divider span {
+
+    background: linear-gradient(90deg,
+            transparent,
+            var(--card-accent),
+            transparent);
+}
+
+/* ==========================================================
+   RESPONSIVE
+========================================================== */
+
+@media (max-width: 768px) {
+
+    .offer-card {
+
+        min-height: 280px;
+
+        padding: 1.75rem 1.4rem;
+    }
+
+    .offer-icon {
+
+        width: 56px;
+        height: 56px;
+
+        margin-bottom: 1.2rem;
+
+        font-size: 1.3rem;
+    }
+
+    .offer-percent .number {
+
+        font-size: 3rem;
+    }
+
+    .offer-title {
+
+        font-size: 1.1rem;
+    }
+
+    .offer-button {
+
+        padding: .75rem 1.15rem;
+
+        font-size: .85rem;
+
+    }
+
+    .discount-section {
+        padding: 3.5rem 0;
+    }
+
+    .discount-grid {
+        gap: 1rem;
+    }
+
+    .offer-card {
+        flex: 0 0 240px;
+    }
+
+    .ornament-line {
+        width: 40px;
+    }
+
+    .discount-subtitle {
+        font-size: .95rem;
+        line-height: 1.8;
+    }
+}

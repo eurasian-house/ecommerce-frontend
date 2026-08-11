@@ -1,0 +1,471 @@
+/* ==========================================================
+   ABOUT PAGE
+========================================================== */
+
+.about-page {
+    background: var(--bg);
+    min-height: 100vh;
+    padding: 4rem 0 5rem;
+}
+
+/* ==========================================================
+   HERO
+========================================================== */
+
+.about-hero {
+    align-items: center;
+    margin-bottom: 6rem;
+    row-gap: 3rem;
+}
+
+.about-hero-image {
+    overflow: hidden;
+    border-radius: 28px;
+    background: var(--surface);
+}
+
+.about-hero-image img {
+    width: 100%;
+    display: block;
+    border-radius: inherit;
+    transition: transform .6s ease;
+}
+
+.about-hero-image:hover img {
+    transform: scale(1.03);
+}
+
+.about-eyebrow {
+    display: inline-block;
+
+    margin-bottom: 1rem;
+
+    color: #b68d40;
+
+    text-transform: uppercase;
+
+    letter-spacing: .28em;
+
+    font-size: .82rem;
+
+    font-weight: 600;
+}
+
+.about-title {
+    margin-bottom: 1.5rem;
+
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+
+    line-height: 1.08;
+
+    font-weight: 500;
+
+    letter-spacing: -.04em;
+
+    color: var(--text);
+}
+
+.about-description {
+    color: var(--text-muted);
+
+    line-height: 1.95;
+
+    font-size: 1.05rem;
+
+    margin-bottom: 1.4rem;
+}
+
+.about-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+
+    margin-top: 2rem;
+}
+
+/* ==========================================================
+   VALUES
+========================================================== */
+
+.about-values {
+    margin: 6rem 0;
+}
+
+.section-heading {
+
+    margin: 2rem 0;
+    text-align: center;
+}
+
+.value-card {
+    height: 100%;
+
+    padding: 2.2rem;
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+
+    border-radius: 24px;
+
+    transition: .35s ease;
+}
+
+.value-card:hover {
+    transform: translateY(-8px);
+
+    box-shadow: 0 24px 60px rgba(0, 0, 0, .08);
+}
+
+[data-theme="dark"] .value-card:hover {
+    box-shadow: 0 24px 60px rgba(0, 0, 0, .35);
+}
+
+.value-icon {
+    font-size: 2.4rem;
+
+    margin-bottom: 1.5rem;
+}
+
+.value-title {
+    margin-bottom: 1rem;
+
+    font-size: 1.45rem;
+
+    font-weight: 500;
+
+    color: var(--text);
+}
+
+.value-description {
+    color: var(--text-muted);
+
+    line-height: 1.9;
+}
+
+/* ==========================================================
+   MISSION
+========================================================== */
+
+.about-mission {
+    text-align: center;
+
+    margin: 6rem 0;
+
+    padding: 5rem 2rem;
+
+    border-radius: 30px;
+
+    background: linear-gradient(135deg, #2b211c, #6b5748);
+
+    color: #fff;
+
+    position: relative;
+
+    overflow: hidden;
+}
+
+.about-mission::before {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    background:
+        radial-gradient(circle at top right,
+            rgba(255, 255, 255, .08),
+            transparent 45%);
+}
+
+.about-mission>* {
+    position: relative;
+    z-index: 2;
+}
+
+.about-mission-subtitle {
+    display: block;
+
+    margin-bottom: 1rem;
+
+    text-transform: uppercase;
+
+    letter-spacing: .28em;
+
+    font-size: .82rem;
+
+    opacity: .8;
+}
+
+.about-mission-title {
+    max-width: 900px;
+
+    margin: 0 auto 1.5rem;
+
+    font-size: clamp(2rem, 4vw, 3.3rem);
+
+    line-height: 1.5;
+
+    font-weight: 300;
+
+    color: #fff;
+}
+
+.about-mission-text {
+    opacity: .9;
+    color: #fff;
+    letter-spacing: .08em;
+}
+
+/* ==========================================================
+   CTA
+========================================================== */
+
+.about-cta {
+    text-align: center;
+
+    padding: 5rem 2rem;
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+
+    border-radius: 30px;
+}
+
+.about-cta-subtitle {
+    display: block;
+
+    margin-bottom: 1rem;
+
+    color: #b68d40;
+
+    text-transform: uppercase;
+
+    letter-spacing: .25em;
+
+    font-size: .82rem;
+
+    font-weight: 800;
+}
+
+.about-cta-title {
+    margin-bottom: 1.2rem;
+
+    font-size: clamp(2rem, 4vw, 3rem);
+
+    font-weight: 500;
+
+    color: var(--text);
+}
+
+.about-cta-description {
+    max-width: 700px;
+
+    margin: 0 auto 2rem;
+
+    color: var(--text-muted);
+
+    line-height: 1.9;
+}
+
+/* ==========================================================
+   PRIMARY BUTTON
+========================================================== */
+
+.app-btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 220px;
+    height: 58px;
+
+    padding: 0 2rem;
+
+    border: none;
+    border-radius: 999px;
+
+    background: linear-gradient(135deg, #2f241f, #4b3a31);
+
+    color: #fff !important;
+
+    font-size: .95rem;
+    font-weight: 500;
+    letter-spacing: .05em;
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition: all .35s ease;
+
+    box-shadow:
+        0 10px 25px rgba(47, 36, 31, .18);
+
+    position: relative;
+
+    overflow: hidden;
+}
+
+.app-btn-primary::before {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    background: linear-gradient(90deg,
+            transparent,
+            rgba(255, 255, 255, .18),
+            transparent);
+
+    transform: translateX(-100%);
+
+    transition: transform .7s ease;
+}
+
+.app-btn-primary:hover {
+    color: #fff !important;
+
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 18px 40px rgba(47, 36, 31, .28);
+}
+
+.app-btn-primary:hover::before {
+    transform: translateX(100%);
+}
+
+.app-btn-primary:active {
+    transform: translateY(-1px);
+}
+
+/* ==========================================================
+   SECONDARY BUTTON
+========================================================== */
+
+.app-btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 220px;
+    height: 58px;
+
+    padding: 0 2rem;
+
+    border-radius: 999px;
+
+    border: 1px solid var(--border);
+
+    background: transparent;
+
+    color: var(--text);
+
+    font-size: .95rem;
+    font-weight: 500;
+    letter-spacing: .05em;
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition: all .35s ease;
+}
+
+.app-btn-secondary:hover {
+
+    background: var(--text);
+
+    border-color: var(--text);
+
+    color: var(--bg);
+
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 16px 35px rgba(0, 0, 0, .12);
+}
+
+.app-btn-secondary:active {
+    transform: translateY(-1px);
+}
+
+@media(max-width:576px) {
+
+    .app-btn-primary,
+    .app-btn-secondary {
+
+        width: 100%;
+        min-width: unset;
+    }
+
+}
+
+/* ==========================================================
+   MOBILE
+========================================================== */
+
+@media(max-width:992px) {
+
+    .about-page {
+        padding: 2rem 0 4rem;
+    }
+
+    .about-hero {
+        margin-bottom: 4rem;
+    }
+
+    .about-hero-image {
+        margin-bottom: 1rem;
+    }
+
+}
+
+@media(max-width:768px) {
+
+    .about-title {
+        font-size: 2.4rem;
+    }
+
+    .about-description {
+        font-size: 1rem;
+    }
+
+    .value-card {
+        padding: 1.75rem;
+    }
+
+    .about-mission,
+    .about-cta {
+        padding: 3rem 1.5rem;
+    }
+
+}
+
+@media(max-width:576px) {
+
+    .about-page {
+        padding: 1.5rem 0 3rem;
+    }
+
+    .about-title {
+        font-size: 2rem;
+    }
+
+    .about-hero-image,
+    .about-mission,
+    .about-cta,
+    .value-card {
+        border-radius: 20px;
+    }
+
+    .about-actions {
+        flex-direction: column;
+    }
+
+    .about-actions>* {
+        width: 100%;
+    }
+
+}

@@ -1,12 +1,27 @@
 .wholesale-contact {
-    background: #FAF8F5;
+    background: var(--bg-primary);
     min-height: 100vh;
 }
 
-
 .wholesale-contact .card {
-    border-radius: 22px;
-    box-shadow: 0 10px 35px rgba(0, 0, 0, .06) !important;
+    background: var(--surface);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    box-shadow: var(--shadow-lg) !important;
+    transition: .25s;
+}
+
+.wholesale-contact .card:hover {
+    transform: translateY(-4px);
+}
+
+.wholesale-contact h1,
+.wholesale-contact h4,
+.wholesale-contact h5,
+.wholesale-contact p,
+.wholesale-contact span {
+    color: var(--text);
 }
 
 .wholesale-contact h1 {
@@ -18,6 +33,15 @@
     margin-bottom: 1rem;
 }
 
+.wholesale-contact .lead,
+.wholesale-contact .text-muted,
+.wholesale-contact label,
+.wholesale-contact .form-label,
+.wholesale-contact .form-check-label,
+.wholesale-contact .form-floating>label {
+    color: var(--text-secondary)!important;
+}
+
 .wholesale-contact .form-label {
     font-weight: 500;
     margin-bottom: .45rem;
@@ -25,18 +49,64 @@
 
 .wholesale-contact .form-control,
 .wholesale-contact .form-select {
-    min-height: 60px;
+    min-height: 58px;
+    border-radius: 12px;
+    color: var(--text);
+    border-color: var(--border);
+    box-shadow: none;
 }
 
 .wholesale-contact textarea.form-control {
-    min-height: 150px;
+    min-height: 180px;
     resize: vertical;
+    background: var(--surface-hover);
+    color: var(--text);
+}
+
+.wholesale-contact .form-floating .form-control,
+.wholesale-contact .form-floating .form-select,
+.wholesale-contact .form-floating textarea.form-control,
+.wholesale-contact .form-floating .form-control:not(:placeholder-shown),
+.wholesale-contact .form-floating .form-select:not(:placeholder-shown),
+.wholesale-contact .form-floating textarea.form-control:not(:placeholder-shown) {
+    background: var(--surface-hover) !important;
+    color: var(--text);
+}
+
+.wholesale-contact .form-control::placeholder,
+.wholesale-contact .form-select::placeholder {
+    color: var(--text-secondary);
+    opacity: 1;
+}
+
+.wholesale-contact .form-floating .form-control::placeholder,
+.wholesale-contact .form-floating .form-select::placeholder,
+.wholesale-contact .form-floating textarea.form-control::placeholder {
+    color: transparent;
+    opacity: 0;
+}
+
+.wholesale-contact .form-floating>label {
+    padding: .625rem .75rem;
+    background: transparent !important;
+}
+
+.wholesale-contact .form-floating>label::after {
+    background: transparent !important;
 }
 
 .wholesale-contact .form-control:focus,
 .wholesale-contact .form-select:focus {
-    border-color: #212529;
-    box-shadow: 0 0 0 .15rem rgba(33, 37, 41, .1);
+    background: var(--surface-hover) !important;
+    color: var(--text);
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 .12rem color-mix(in srgb, var(--color-primary) 12%, transparent);
+}
+
+.wholesale-contact .form-control:focus::placeholder,
+.wholesale-contact .form-select:focus::placeholder {
+    color: transparent;
+    opacity: 0;
 }
 
 .wholesale-contact .form-check {
@@ -55,110 +125,160 @@
     transform: translateY(-2px);
 }
 
+.wholesale-contact .btn-dark {
+    color: var(--text-inverse);
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+}
+
+.wholesale-contact .btn-dark:hover {
+    background: color-mix(in srgb, var(--color-primary) 85%, var(--text-inverse) 15%);
+    border-color: var(--color-primary);
+}
+
+.wholesale-contact .btn-outline-dark {
+    min-width: 180px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 1.25rem;
+    margin-right: .5rem;
+    margin-bottom: .5rem;
+    border-radius: 999px;
+    font-size: .95rem;
+    text-align: center;
+    color: var(--text);
+    background: transparent;
+    border-color: var(--border);
+}
+
+.wholesale-contact .btn-outline-dark:hover {
+    background: var(--surface-hover);
+    color: var(--text);
+    border-color: var(--border);
+}
+
 .wholesale-contact hr {
     opacity: .12;
 }
 
-@media (max-width: 768px) {
-    .wholesale-contact .card {
-        padding: 1.25rem !important;
+.product-pill {
+    display: inline-block;
+    margin: 0 .5rem .75rem 0;
+}
+.wholesale-contact .btn-check:checked + .btn-outline-dark,
+.wholesale-contact .btn-check:active + .btn-outline-dark {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+    color: var(--text-inverse);
+}
+
+.upload-dropzone {
+    padding: 40px 25px;
+    text-align: center;
+    cursor: pointer;
+    border: 2px dashed var(--border);
+    border-radius: 18px;
+    background: var(--surface-hover);
+    transition: .25s;
+}
+
+.upload-dropzone:hover {
+    border-color: var(--text-muted);
+}
+
+.upload-dropzone i {
+    color: var(--text-secondary);
+}
+
+.upload-dropzone:hover i {
+    color: var(--text);
+}
+
+
+@media (max-width: 991.98px) {
+    .product-pill {
+        width: calc(50% - .5rem);
+        margin-right: .5rem;
     }
 
-    .wholesale-contact h1 {
-        font-size: 2rem;
+    .product-pill .btn {
+        width: 100%;
+    }
+
+    .wholesale-contact .btn-outline-dark {
+        width: calc(50% - .5rem);
+        min-width: calc(50% - .5rem);
+    }
+}
+
+@media (max-width: 767.98px) {
+    .wholesale-contact {
+        padding: 0 !important;
+    }
+
+    .wholesale-contact form,
+    .wholesale-contact .card,
+    .wholesale-contact .card-body {
+        padding: 4px !important;
     }
 
     .wholesale-contact .form-check {
         display: block;
         margin-bottom: .6rem;
     }
-}
 
-.wholesale-contact .card {
-    border-radius: 20px;
-}
-
-.wholesale-contact .form-control,
-.wholesale-contact .form-select {
-    border-radius: 12px;
-    min-height: 58px;
-}
-
-.wholesale-contact textarea.form-control {
-    min-height: 180px;
-}
-
-.wholesale-contact .btn-dark {
-    transition: .25s;
-}
-
-.wholesale-contact .btn-dark:hover {
-    transform: translateY(-2px);
-}
-
-.wholesale-contact .btn-outline-dark {
-    border-radius: 999px;
-    margin-right: .5rem;
-    margin-bottom: .5rem;
-}
-
-.wholesale-contact .card {
-    transition: .25s;
-}
-
-.wholesale-contact .card:hover {
-    transform: translateY(-4px);
-}
-
-
-.upload-dropzone {
-    border: 2px dashed #cfcfcf;
-    border-radius: 18px;
-    padding: 40px 25px;
-    text-align: center;
-    cursor: pointer;
-    background: #fafafa;
-    transition: .25s;
-}
-
-.upload-dropzone:hover {
-    border-color: #212529;
-    background: #f5f5f5;
-}
-
-.upload-dropzone i {
-    color: #6c757d;
-}
-
-.upload-dropzone:hover i {
-    color: #212529;
-}
-
-.wholesale-contact .btn-outline-dark {
-    min-width: 180px;
-    height: 48px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    text-align: center;
-    padding: 0 1.25rem;
-    font-size: .95rem;
-
-}
-
-@media (max-width: 991.98px) {
-
-    .wholesale-contact .btn-outline-dark {
-        min-width: calc(50% - .5rem);
-        width: calc(50% - .5rem);
+    .wholesale-contact h1 {
+        font-size: 1.5rem;
     }
 
+    .wholesale-contact h4 {
+        font-size: 1rem;
+        margin-bottom: 1rem !important;
+    }
+
+    .wholesale-contact .lead {
+        font-size: .85rem;
+    }
+
+    .wholesale-contact .form-control,
+    .wholesale-contact .form-select {
+        min-height: 38px;
+        height: 38px;
+        font-size: .75rem;
+    }
+
+    .wholesale-contact textarea.form-control {
+        height: 140px !important;
+    }
+
+    .wholesale-contact .form-floating > label {
+        padding: .75rem 1rem;
+        font-size: .9rem;
+        word-break: break-word;
+    }
+
+    .wholesale-contact .btn-lg {
+        padding: .75rem 1rem !important;
+        font-size: 1rem;
+    }
+
+    .upload-dropzone {
+        padding: 24px 16px;
+    }
+
+    .upload-dropzone h5 {
+        font-size: 1rem;
+    }
+
+    .upload-dropzone p,
+    .upload-dropzone small {
+        font-size: .85rem;
+    }
 }
 
 @media (max-width: 575.98px) {
-
     .wholesale-contact .btn-outline-dark {
         width: 100%;
         min-width: 100%;
@@ -172,111 +292,12 @@
         margin-right: 0 !important;
     }
 
-}
-
-
-
-.product-pill{
-    display:inline-block;
-    margin:0 .5rem .75rem 0;
-}
-
-.wholesale-contact .btn-outline-dark{
-    min-width:180px;
-    height:48px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    text-align:center;
-    padding:0 1.25rem;
-}
-
-@media (max-width: 991.98px){
-
-    .product-pill{
-        width:calc(50% - .5rem);
-        margin-right:.5rem;
+    .product-pill {
+        width: 100%;
+        margin-right: 0;
     }
 
-    .product-pill .btn{
-        width:100%;
+    .product-pill .btn {
+        width: 100%;
     }
-
-}
-
-@media (max-width: 575.98px){
-
-    .product-pill{
-        width:100%;
-        margin-right:0;
-    }
-
-    .product-pill .btn{
-        width:100%;
-    }
-
-}
-
-/* ================= Mobile ================= */
-
-@media (max-width: 767.98px){
-
-    .wholesale-contact{
-        padding-top:1.5rem !important;
-        padding-bottom:1.5rem !important;
-    }
-
-    .wholesale-contact .card-body{
-        padding:1rem !important;
-    }
-
-    .wholesale-contact form{
-        padding:1rem !important;
-    }
-
-    .wholesale-contact h1{
-        font-size:2rem;
-    }
-
-    .wholesale-contact h4{
-        font-size:1.4rem;
-        margin-bottom:1rem !important;
-    }
-
-    .wholesale-contact .form-control,
-    .wholesale-contact .form-select{
-        min-height:48px;
-        height:48px;
-        font-size:.95rem;
-    }
-
-    .wholesale-contact textarea.form-control{
-        height:140px !important;
-    }
-
-    .wholesale-contact .form-floating > label{
-        padding:.75rem 1rem;
-        font-size:.9rem;
-    }
-
-    .wholesale-contact .btn-lg{
-        padding:.75rem 1rem !important;
-        font-size:1rem;
-    }
-
-    .upload-dropzone{
-        padding:24px 16px;
-    }
-
-    .upload-dropzone h5{
-        font-size:1rem;
-    }
-
-    .upload-dropzone p,
-    .upload-dropzone small{
-        font-size:.85rem;
-    }
-
 }

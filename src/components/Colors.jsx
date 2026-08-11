@@ -1,86 +1,104 @@
 import { COLORS } from "../data/productOptions";
+import "../styles/components/Colors.css";
+
+
+const COLOR_MAP = {
+  Maroon: "#7A1F3D",
+  Gold: "#D4AF37",
+  Navy: "#1E3A8A",
+  Blue: "#2563EB",
+  "Sky Blue": "#38BDF8",
+  Green: "#2E8B57",
+  Olive: "#6B8E23",
+  Beige: "#DCC9A3",
+  Cream: "#FFFDD0",
+  Ivory: "#FFFFF0",
+  Brown: "#7B4A2F",
+  Grey: "#8B8B8B",
+  Silver: "#C0C0C0",
+  White: "#FFFFFF",
+  Black: "#1F1F1F",
+  Teal: "#0F766E",
+  Pink: "#EC4899",
+  Purple: "#7C3AED",
+  Orange: "#EA580C",
+  Red: "#DC2626",
+  Rust: "#B7410E",
+  Mustard: "#D4A017",
+  Tan: "#D2B48C",
+  Yellow: "#FACC15",
+};
+
+const MULTICOLOR =
+  "conic-gradient(red, orange, yellow, green, cyan, blue, violet, red)";
 
 export default function Colors({ colorFilter, setColorFilter }) {
-
   return (
-    <div className="mb-4">
-      <div className="text-center mb-5">
-        <span
-          className="badge rounded-pill section-title"
-          style={{
-            backgroundColor: "#F3E8C8",
-            color: "#8B6B2E",
-          }}
-        >
-          Color Collection
-        </span>
+    <section className="colors-section section-spacing">
 
-        <h2 className="mt-3 fw-semibold display-6">
+      <div className="section-header text-center">
+
+
+        <div className="discount-ornament">
+
+          <span className="ornament-line"></span>
+
+          <span className="ornament-text">
+            Color Collection
+          </span>
+
+          <span className="ornament-line"></span>
+
+        </div>
+
+        <h2 className="discount-title my-2">
           Find Your Perfect Palette
         </h2>
 
-        <p
-          className="mx-auto mt-3"
-          style={{
-            maxWidth: 620,
-            color: "#777",
-            lineHeight: 1.8,
-          }}
-        >
-          Browse rugs by color and find the perfect match for your decor, furniture, and personal taste.
+        <p className="section-description mb-4">
+          Browse rugs by color and find the perfect match for your décor,
+          furniture, and personal taste.
         </p>
+
       </div>
-      <div className="d-flex justify-content-center gap-3 flex-wrap">
-        {COLORS.map((c) => (
-          <div
-            key={c}
-            className={`color-swatch ${colorFilter === c ? "active" : ""}`}
-            title={c}
-            onClick={() => setColorFilter(c)}
+
+      <div className="colors-grid mb-4">
+
+        {COLORS.map((color) => (
+          <button
+            key={color}
+            type="button"
+            title={color}
+            aria-label={color}
+            onClick={() => setColorFilter(color)}
+            className={`color-swatch ${colorFilter === color ? "active" : ""}`}
             style={{
               background:
-                c === "Maroon" ? "#7A1F3D" :
-                  c === "Gold" ? "#D4AF37" :
-                    c === "Navy" ? "#1E3A8A" :
-                      c === "Blue" ? "#2563EB" :
-                        c === "Sky Blue" ? "#38BDF8" :
-                          c === "Green" ? "#2E8B57" :
-                            c === "Olive" ? "#6B8E23" :
-                              c === "Beige" ? "#DCC9A3" :
-                                c === "Cream" ? "#FFFDD0" :
-                                  c === "Ivory" ? "#FFFFF0" :
-                                    c === "Brown" ? "#7B4A2F" :
-                                      c === "Grey" ? "#8B8B8B" :
-                                        c === "Silver" ? "#C0C0C0" :
-                                          c === "White" ? "#FFFFFF" :
-                                            c === "Black" ? "#1F1F1F" :
-                                              c === "Teal" ? "#0F766E" :
-                                                c === "Pink" ? "#EC4899" :
-                                                  c === "Purple" ? "#7C3AED" :
-                                                    c === "Orange" ? "#EA580C" :
-                                                      c === "Red" ? "#DC2626" :
-                                                        c === "Rust" ? "#B7410E" :
-                                                          c === "Mustard" ? "#D4A017" :
-                                                            c === "Tan" ? "#D2B48C" :
-                                                              c === "Yellow" ? "#FACC15" :
-                                                                "conic-gradient(red, orange, yellow, green, cyan, blue, violet, red)",
+                COLOR_MAP[color] ||
+                "radial-gradient(circle at 30% 30%, rgba(255,255,255,.35), transparent 40%), conic-gradient(red, orange, yellow, green, cyan, blue, violet, red)",
 
               border:
-                c === "White"
-                  ? "1px solid #dcdcdc"
-                  : undefined
+                color === "White"
+                  ? "1px solid var(--border-color)"
+                  : undefined,
             }}
-          />
+          >
+            <span className="color-name">{color}</span>
+          </button>
         ))}
 
         <button
+          type="button"
           className="color-clear"
-          onClick={() => setColorFilter("")}
           title="Clear filter"
+          aria-label="Clear color filter"
+          onClick={() => setColorFilter("")}
         >
-          ✕
+          <i className="bi bi-x-lg"></i>
         </button>
+
       </div>
-    </div>
+
+    </section>
   );
 }

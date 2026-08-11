@@ -134,13 +134,14 @@ export const getProductReviews = async (productId) => {
     }));
 };
 
-export const markReviewHelpful = async (reviewId, helpful) => {
-    const { error } = await supabase
-        .from("product_reviews")
-        .update({
-            helpful_count: helpful + 1,
-        })
-        .eq("id", reviewId);
+export const markReviewHelpful = async (reviewId) => {
+
+    const { data, error } = await supabase.rpc(
+        "mark_review_helpful",
+        {
+            review_id: reviewId,
+        }
+    );
 
     if (error) throw error;
 };

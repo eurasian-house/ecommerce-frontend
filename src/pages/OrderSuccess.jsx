@@ -2,6 +2,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { supabase } from "../lib/supabase";
 import confetti from "canvas-confetti";
+import "../styles/pages/OrderSuccess.css";
 
 export default function OrderSuccess() {
   const navigate = useNavigate();
@@ -70,22 +71,41 @@ export default function OrderSuccess() {
 
   if (loading) {
     return (
-      <div className="d-flex justify-content-center align-items-center vh-100">
-        <p>Loading...</p>
+      <div className="order-loading">
+
+        <div className="spinner-border" role="status"></div>
+
+        <p className="mt-3">
+          Loading your order...
+        </p>
+
       </div>
     );
   }
 
   if (!order) {
     return (
-      <div className="text-center mt-5">
-        <h4>No order found</h4>
+      <div className="order-empty">
+
+        <div className="order-empty-icon">
+          <i className="bi bi-bag-x"></i>
+        </div>
+
+        <h2>
+          No Order Found
+        </h2>
+
+        <p>
+          We couldn't find a recent order associated with your account.
+        </p>
+
         <button
-          className="btn btn-primary mt-3"
+          className="app-btn-primary"
           onClick={() => navigate("/")}
         >
           Go Home
         </button>
+
       </div>
     );
   }
@@ -100,162 +120,206 @@ export default function OrderSuccess() {
       : "-";
 
   return (
-    <div
-      className="d-flex align-items-center justify-content-center py-5"
-      style={{
-        minHeight: "100vh",
-        background: "linear-gradient(180deg, #faf8f5 0%, #ffffff 100%)",
-        padding: "20px",
-      }}
-    >
-      <div
-        className="text-center shadow-sm"
-        style={{
-          maxWidth: "650px",
-          width: "100%",
-          background: "#fff",
-          borderRadius: "28px",
-          padding: "48px 36px",
-          border: "1px solid #ece8e2",
-        }}
-      >
-        {/* Success Icon */}
-        <div
-          className="mx-auto mb-4 d-flex align-items-center justify-content-center"
-          style={{
-            width: "90px",
-            height: "90px",
-            borderRadius: "50%",
-            background: "#eef9f1",
-            color: "#2e7d32",
-            fontSize: "2.8rem",
-          }}
-        >
-          ✓
-        </div>
 
-        {/* Heading */}
-        <span
-          className="text-uppercase"
-          style={{
-            fontSize: ".75rem",
-            letterSpacing: "2px",
-            color: "#8b7355",
-            fontWeight: 600,
-          }}
-        >
-          Order Confirmed
-        </span>
+    <div className="order-success-page">
 
-        <h2 className="fw-bold mt-2 mb-3">
-          Thank You for Your Purchase
-        </h2>
+      <div className="container">
 
-        <p
-          className="text-muted mx-auto mb-4"
-          style={{ maxWidth: "480px" }}
-        >
-          Your payment has been successfully received. Our artisans will begin
-          preparing your handcrafted rug shortly. You'll receive email updates as
-          your order progresses.
-        </p>
+        <div className="order-success-card">
 
-        {/* Order Details */}
-        <div
-          className="text-start"
-          style={{
-            background: "#faf8f5",
-            borderRadius: "20px",
-            padding: "24px",
-          }}
-        >
-          <div className="d-flex justify-content-between mb-3">
-            <span className="text-muted">Order ID</span>
-            <strong>{order.id}</strong>
+          {/* Success Icon */}
+
+          <div className="order-success-icon">
+
+            <i className="bi bi-check-lg"></i>
+
           </div>
 
-          <div className="d-flex justify-content-between mb-2">
-            <span className="text-muted">Payment Method</span>
-            <strong>{paymentMethod}</strong>
+          {/* Header */}
+
+          <span className="order-success-subtitle">
+            ORDER CONFIRMED
+          </span>
+
+          <h1 className="order-success-title">
+            Thank You For Your Purchase
+          </h1>
+
+          <p className="order-success-description">
+            Your payment has been successfully received.
+            Our artisans will begin preparing your handcrafted rug shortly.
+            You'll receive email and WhatsApp updates as your order progresses.
+          </p>
+
+          {/* Details */}
+
+          <section className="order-details">
+
+            <div className="order-detail-row">
+
+              <span>
+                Order ID
+              </span>
+
+              <strong>
+                {order.id}
+              </strong>
+
+            </div>
+
+            <div className="order-detail-row">
+
+              <span>
+                Payment Method
+              </span>
+
+              <strong>
+                {paymentMethod}
+              </strong>
+
+            </div>
+
+            <div className="order-detail-row">
+
+              <span>
+                Payment Reference
+              </span>
+
+              <strong
+                className="payment-reference"
+                title={paymentReference}
+              >
+                {paymentReference || "-"}
+              </strong>
+
+            </div>
+
+            <div className="order-detail-row">
+
+              <span>
+                Total Paid
+              </span>
+
+              <strong>
+                ${order.total_amount}
+              </strong>
+
+            </div>
+
+            <div className="order-detail-row">
+
+              <span>
+                Order Date
+              </span>
+
+              <strong>
+                {new Date(order.created_at).toLocaleString()}
+              </strong>
+
+            </div>
+
+          </section>
+
+          {/* Timeline */}
+
+          <section className="order-next-steps">
+
+            <h5>
+              What Happens Next?
+            </h5>
+
+            <div className="order-step">
+
+              <i className="bi bi-check-circle-fill"></i>
+
+              <span>
+                Order Confirmed
+              </span>
+
+            </div>
+
+            <div className="order-step">
+
+              <i className="bi bi-hammer"></i>
+
+              <span>
+                Manufacturing
+              </span>
+
+            </div>
+
+            <div className="order-step">
+
+              <i className="bi bi-box-seam"></i>
+
+              <span>
+                Shipping
+              </span>
+
+            </div>
+
+            <div className="order-step">
+
+              <i className="bi bi-house-check"></i>
+
+              <span>
+                Delivered
+              </span>
+
+            </div>
+
+          </section>
+
+          {/* Note */}
+
+          <div className="order-note">
+
+            <i className="bi bi-info-circle"></i>
+
+            <p>
+              We'll keep you updated by email and WhatsApp throughout every stage of your order.
+              You can also monitor your order status anytime from your account.
+            </p>
+
           </div>
 
-          <div className="d-flex justify-content-between mb-3">
-            <span className="text-muted">Payment Reference</span>
-            <strong title={paymentReference}>
-              {paymentReference
-                ? `${paymentReference.slice(0, 12)}...`
-                : "-"}
-            </strong>
-          </div>
+          {/* Buttons */}
 
-          <div className="d-flex justify-content-between mb-3">
-            <span className="text-muted">Total Paid</span>
-            <strong>${order.total_amount}</strong>
-          </div>
+          <div className="order-actions">
 
-          <div className="d-flex justify-content-between">
-            <span className="text-muted">Order Date</span>
-            <strong>
-              {new Date(order.created_at).toLocaleString()}
-            </strong>
-          </div>
-        </div>
-
-        {/* Information */}
-        <div
-          className="mt-4 p-3"
-          style={{
-            background: "#fffaf2",
-            border: "1px solid #f0e4c3",
-            borderRadius: "16px",
-          }}
-        >
-          <small className="text-muted">
-            We will send you email notifications or whatsapp updates as your order moves through
-            processing, manufacturing, shipping, and delivery. You can also track
-            your order anytime from your account.
-          </small>
-        </div>
-
-        {/* Buttons */}
-        <div className="row g-3 mt-4">
-          <div className="col-md-6">
             <button
-              className="btn btn-outline-dark w-100 py-3"
-              style={{
-                borderRadius: "999px",
-                fontWeight: 600,
-              }}
+              className="app-btn-secondary"
               onClick={() => navigate("/")}
             >
               Continue Shopping
             </button>
-          </div>
 
-          <div className="col-md-6">
             <button
-              className="btn btn-dark w-100 py-3"
-              style={{
-                borderRadius: "999px",
-                fontWeight: 600,
-              }}
+              className="app-btn-primary"
               onClick={() => navigate("/account")}
             >
               Track My Order
             </button>
+
           </div>
+
+          {/* Footer */}
+
+          <p className="order-footer">
+
+            Thank you for choosing
+            <strong> Eurasian House</strong>.
+            Every rug is handcrafted with care,
+            preserving generations of artisanal excellence from
+            Bhadohi, India.
+
+          </p>
+
         </div>
 
-        {/* Footer */}
-        <p
-          className="text-muted small mt-4 mb-0"
-          style={{ lineHeight: 1.7 }}
-        >
-          Thank you for choosing <strong>Eurasian House</strong>. Every rug is
-          handcrafted with care, preserving generations of artisanal excellence
-          from Bhadohi, India.
-        </p>
       </div>
+
     </div>
+
   );
 }

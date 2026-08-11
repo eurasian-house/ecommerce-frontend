@@ -2,11 +2,12 @@ import { useEffect, useMemo, useState } from "react";
 import { getProductReviews, markReviewHelpful } from "../services/reviewService";
 import UserAvatar from "../components/common/UserAvatar";
 import { getAvatar } from "../utils/getAvatar";
+import "../styles/components/ProductReviews.css";
 
 export default function ProductReviews({ productId }) {
     const [reviews, setReviews] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [showAll, setShowAll] = useState(false);
+    const [visibleCount, setVisibleCount] = useState(3);
     const [selectedImage, setSelectedImage] = useState(null);
     const [helpfulVotes, setHelpfulVotes] = useState([]);
     const [expandedReviews, setExpandedReviews] = useState({});
@@ -34,10 +35,7 @@ export default function ProductReviews({ productId }) {
 
         try {
 
-            await markReviewHelpful(
-                review.id,
-                review.helpful_count || 0
-            );
+            await markReviewHelpful(review.id);
 
             const updatedVotes = [...helpfulVotes, review.id];
 
@@ -48,12 +46,14 @@ export default function ProductReviews({ productId }) {
                 JSON.stringify(updatedVotes)
             );
 
-            fetchReviews();
+            await fetchReviews();
 
         } catch (err) {
             console.error(err);
         }
     }
+
+
 
     const averageRating = useMemo(() => {
         if (!reviews.length) return 0;
@@ -85,7 +85,7 @@ export default function ProductReviews({ productId }) {
     if (loading) {
         return (
             <div
-                className="mx-auto mt-5 px-3"
+                className="product-reviews mx-auto mt-5 px-3"
                 style={{ maxWidth: "920px" }}
             >
                 <div className="card border-0 shadow-sm rounded-4 p-5">
@@ -120,10 +120,10 @@ export default function ProductReviews({ productId }) {
 
     return (
         <div
-            className="mx-auto mt-5 px-3"
+            className="product-reviews mx-auto mt-5 px-3"
             style={{ maxWidth: "920px" }}
         >
-            <div className="card border-0 shadow-sm rounded-4 p-4 p-md-5">
+            <div className="product-feedback-shell card border-0 shadow-sm rounded-4 p-4 p-md-5">
 
                 <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-5">
 
@@ -273,11 +273,11 @@ export default function ProductReviews({ productId }) {
                 ) : (
                     <>
 
-                        {(showAll ? reviews : reviews.slice(0, 3)).map((review) => (
+                        {reviews.slice(0, visibleCount).map((review) => (
 
                             <div
                                 key={review.id}
-                                className="border rounded-4 p-4 p-md-5 mb-5 bg-white shadow-sm review-card"
+                                className="product-review-item border rounded-4 p-4 p-md-5 mb-5 bg-white shadow-sm review-card"
                             >
 
                                 <div className="d-flex flex-column flex-md-row justify-content-between align-items-start">
@@ -292,7 +292,7 @@ export default function ProductReviews({ productId }) {
                                                     review.avatar_url,
                                             })}
                                             alt={review.reviewer_name}
-                                            size={48}
+                                            size={35}
                                             className="me-3"
                                         />
 
@@ -416,8 +416,8 @@ export default function ProductReviews({ productId }) {
                                             <div
                                                 className="rounded-circle bg-dark text-white d-flex align-items-center justify-content-center me-3"
                                                 style={{
-                                                    width: 38,
-                                                    height: 38,
+                                                    width: 35,
+                                                    height: 35,
                                                     fontSize: ".9rem",
                                                     fontWeight: 600,
                                                     flexShrink: 0,
@@ -477,11 +477,17 @@ export default function ProductReviews({ productId }) {
 
                                 <button
                                     className="btn btn-dark rounded-pill px-5 py-2"
-                                    onClick={() => setShowAll(!showAll)}
+                                    onClick={() => {
+                                        if (visibleCount < reviews.length) {
+                                            setVisibleCount((count) => Math.min(count + 3, reviews.length));
+                                        } else {
+                                            setVisibleCount(3);
+                                        }
+                                    }}
                                 >
-                                    {showAll
+                                    {visibleCount >= reviews.length
                                         ? "Show Less"
-                                        : `View All Reviews (${reviews.length})`}
+                                        : `Show 3 More (${reviews.length - visibleCount})`}
                                 </button>
 
                             </div>
