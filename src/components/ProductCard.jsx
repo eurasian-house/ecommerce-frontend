@@ -163,10 +163,10 @@ export default function ProductCard({
                   });
 
                   toast.success(
-                    <>
-                      <div className="fw-semibold">Added to Cart</div>
-                      <small>{product.title}</small>
-                    </>,
+                    <div className="app-toast-content">
+                      <div className="app-toast-title">Added to Cart</div>
+                      <div className="app-toast-message">{product.title}</div>
+                    </div>,
                     {
                       autoClose: 2500,
                     }

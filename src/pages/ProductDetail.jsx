@@ -97,6 +97,46 @@ export default function ProductDetail() {
   }, [product]);
 
   useEffect(() => {
+    if (!product) return;
+
+    const storageKey = "recentlyViewedProducts";
+
+    try {
+      const stored = JSON.parse(
+        localStorage.getItem(storageKey) || "[]"
+      );
+
+      // Remove current product if it already exists
+      const filtered = stored.filter(
+        (item) => item.id !== product.id
+      );
+
+      // Put current product at the beginning
+      const updated = [
+        {
+          id: product.id,
+          slug: product.slug,
+          title: product.title,
+          thumbnail: product.thumbnail,
+          selling_price: product.selling_price,
+          mrp: product.mrp,
+          discount_percent: product.discount_percent,
+          primary_color: product.primary_color,
+          shape: product.shape,
+        },
+        ...filtered,
+      ].slice(0, 10);
+
+      localStorage.setItem(
+        storageKey,
+        JSON.stringify(updated)
+      );
+    } catch (error) {
+      console.log("Recently viewed error:", error);
+    }
+  }, [product]);
+
+  useEffect(() => {
     window.scrollTo({
       top: 0,
       behavior: "smooth"
@@ -579,7 +619,7 @@ export default function ProductDetail() {
               <div className="product-action-buttons">
 
                 <button
-                  className="app-btn-primary flex-fill"m
+                  className="app-btn-primary flex-fill" m
                   aria-disabled={!isSelectionValid}
                   onClick={() => {
 
@@ -623,11 +663,14 @@ export default function ProductDetail() {
                     });
 
                     toast.success(
-                      <div>
-                        <div className="fw-semibold">
+                      <div className="app-toast-content">
+                        <div className="app-toast-title">
                           Added to Cart
                         </div>
-                        <small>{product.title}</small>
+
+                        <div className="app-toast-message">
+                          {product.title}
+                        </div>
                       </div>,
                       {
                         position: "top-right",

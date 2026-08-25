@@ -5,25 +5,31 @@ import "../styles/components/Discount.css";
 const OFFERS = [
   {
     discount: 20,
-    tag: "Valentine Special",
+    tag: "Modern Persian Collection",
     icon: "bi-heart",
     accent: "crimson",
   },
   {
-    discount: 30,
-    tag: "Eid Offers",
+    discount: 50,
+    tag: "Ultra Premium Selection",
+    icon: "bi-gem",
+    accent: "pink",
+  },
+  {
+    discount: 70,
+    tag: "Premium Selection",
     icon: "bi-stars",
     accent: "emerald",
   },
   {
-    discount: 40,
-    tag: "Festive Sale",
+    discount: 75,
+    tag: "Luxury Line",
     icon: "bi-flower1",
     accent: "royal",
   },
   {
-    discount: 50,
-    tag: "Summer Sale",
+    discount: 80,
+    tag: "Standard Range",
     icon: "bi-brightness-high",
     accent: "gold",
   },

@@ -76,7 +76,7 @@ export const QUALITIES = [
     "Standard",
     "Luxury",
     "Premium",
-    "Antique",
+    "Persian",
 ];
 
 export const COLORS = [

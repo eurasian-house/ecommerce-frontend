@@ -161,3 +161,69 @@ table {
     width: 100%;
     border-collapse: collapse;
 }
+
+
+
+
+/* ================================
+   APP TOAST
+================================ */
+
+.app-toast {
+    border-radius: 10px !important;
+    padding: 12px 14px !important;
+}
+
+.app-toast .Toastify__toast-body {
+    align-items: center !important;
+    padding: 0 !important;
+}
+
+.app-toast-content {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 0;
+    width: 100%;
+}
+
+.app-toast-title {
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.25;
+}
+
+.app-toast-message {
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.4;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Mobile */
+@media (max-width: 576px) {
+
+    .Toastify__toast {
+        width: calc(100vw - 24px) !important;
+        margin: 12px !important;
+    }
+
+    .app-toast-content {
+        gap: 3px;
+    }
+
+    .app-toast-title {
+        font-size: 14px;
+    }
+
+    .app-toast-message {
+        font-size: 12px;
+
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        overflow: hidden;
+    }
+}

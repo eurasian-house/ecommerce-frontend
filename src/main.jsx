@@ -29,6 +29,7 @@ createRoot(document.getElementById("root")).render(
           pauseOnHover
           draggable
           theme="colored"
+          toastClassName="app-toast"
         />
       </ThemeProvider>
     </HelmetProvider>

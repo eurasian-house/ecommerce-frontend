@@ -168,7 +168,7 @@ const PriceUnder = () => {
               <div
                 className="premium-grid-card"
                 onClick={() =>
-                  navigate("/products?quality=antique")
+                  navigate("/products?quality=persian")
 
                 }
               >
@@ -187,7 +187,7 @@ const PriceUnder = () => {
                   </span>
 
                   <h6>
-                    Antique Rugs
+                    Modern Persian Rugs
                   </h6>
 
                 </div>

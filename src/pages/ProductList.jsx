@@ -178,7 +178,7 @@ export default function ProductList({ colorFilter }) { // ✅ receive prop
 
     if (discount) {
       data = data.filter(
-        (p) => p.discount_percent >= Number(discount)
+        (p) => p.discount_percent == Number(discount)
       );
     }
 

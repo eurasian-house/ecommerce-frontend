@@ -7,6 +7,8 @@ import HeroCarousel from "./HeroCarousel";
 import ForUser from "../components/ForUser";
 import PriceUnder from "../components/PriceUnder";
 import TopDeals from "../components/TopDeals";
+import RecentAdded from "../components/RecentAdded";
+import RecentlyViewed from "../components/RecentlyViewed";
 import IdeasSection from "../components/IdeasSection";
 
 import Category from "../components/Category";
@@ -107,6 +109,9 @@ export default function Products() {
         <Category />
         <HeroCarousel onSlideClick={handleCarouselClick} />
         <WholesaleHeroCTA />
+        <LazySection minHeight={350}>
+          <RecentAdded />
+        </LazySection>
         <Discount />
         <Colors
           colorFilter={colorFilter}
@@ -187,6 +192,9 @@ export default function Products() {
         </LazySection>
         <LazySection minHeight={450}>
           <WhyChooseUs />
+        </LazySection>
+        <LazySection minHeight={450}>
+          <RecentlyViewed />
         </LazySection>
         <LazySection minHeight={450}>
           <ShopWithConfidence />
