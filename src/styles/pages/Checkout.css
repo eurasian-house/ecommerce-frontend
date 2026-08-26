@@ -360,6 +360,13 @@
         0 10px 25px rgba(58, 44, 36, .25);
 }
 
+.checkout-button:disabled,
+.checkout-button:disabled:hover,
+.checkout-button:disabled:focus {
+    cursor: not-allowed;
+    opacity: .7;
+}
+
 /* ==========================================================
    MOBILE
 ========================================================== */
