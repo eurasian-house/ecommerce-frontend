@@ -41,7 +41,7 @@ export default function Discount() {
   return (
     <section className="discount-section">
 
-      {/* ---------- Section Heading ---------- */}
+      {/* ---------- Section Heading ----------  */}
 
       <div className="discount-header">
 

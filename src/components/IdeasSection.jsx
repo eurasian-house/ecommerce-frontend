@@ -45,12 +45,11 @@ export default function IdeasSection() {
             </div>
 
           <h2 className="mt-3 fw-semibold for-user-heading">
-            Bring Character to Every Room
+            Ideas & Inspiration for Your Space
           </h2>
 
           <p className="pt-4 mx-auto">
-            Discover thoughtfully designed interiors where handcrafted rugs add
-            warmth, texture, and timeless elegance to everyday living.
+            Discover home decor on Eurasian House Blogs and create the space of your dreams. Find inspiration by room and trend, or shop for that perfect item to complete the vibe.
           </p>
 
         </div>

@@ -202,7 +202,7 @@
 
     font-size: 1rem;
 
-    line-height: 1.9;
+    line-height: 1.6;
 
 }
 
@@ -364,6 +364,9 @@
 /* ==========================================================
    WHOLESALE CARD
 ========================================================== */
+.card1 {
+    margin-right: 0px !important;
+}
 
 .wholesale-card {
 
@@ -373,9 +376,8 @@
 
     max-width: 820px;
 
-    /* width: 100%; */
-
     margin-left: auto;
+    /* margin-right: 4px !important; */
 
     padding: 2rem;
 
@@ -397,6 +399,12 @@
 
     box-shadow: var(--shadow-xl);
 
+}
+.card-container {
+    
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 /* ==========================================================
@@ -437,7 +445,7 @@
 }
 
 .card-title {
-
+    text-align: center;
     margin-bottom: 1rem;
 
     color: var(--text-primary);
@@ -451,7 +459,7 @@
 }
 
 .card-description {
-
+    text-align: center;
     margin-bottom: 2rem;
 
     color: var(--text-secondary);
@@ -683,6 +691,10 @@
 
         max-width: 100%;
 
+    }
+
+    .card1 {
+        margin-right: -24px !important;
     }
 
 }

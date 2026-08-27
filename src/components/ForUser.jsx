@@ -31,9 +31,7 @@ const ForUser = () => {
               </h2>
 
               <p className="mx-auto mt-3 for-user-subheading">
-                Every rug reflects our dedication to exceptional craftsmanship,
-                premium materials, ethical sourcing, and lasting quality that
-                transforms houses into timeless homes.
+                For us, a rug isn't just decor—it’s the foundation of a home. That’s why we stick to ethical sourcing, premium materials, and honest craftsmanship. We make pieces designed to grow old with your family.
               </p>
 
             </div>

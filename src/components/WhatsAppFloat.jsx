@@ -1,12 +1,15 @@
+import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { trackWhatsApp } from "../lib/analytics";
+import "../styles/components/WhatsAppFloat.css";
 
 export default function WhatsAppFloat() {
   const location = useLocation();
+  const [showPrompt, setShowPrompt] = useState(true);
 
   const path = location.pathname;
 
-  let message = "Hi, I have a General question.";
+  let message = "Hi, I have a doubt.";
 
   if (path.includes("/login")) {
     message = "Hi, I am facing an issue while logging in.";
@@ -28,32 +31,32 @@ export default function WhatsAppFloat() {
     `https://wa.me/917080012972?text=${encodeURIComponent(message)}`;
 
   return (
-    <a
-      href={whatsappLink}
-      aria-label="Chat with us on WhatsApp"
-      title="Chat with us on WhatsApp"
-      target="_blank"
-      rel="noopener noreferrer"
-      onClick={trackWhatsApp}
-      style={{
-        position: "fixed",
-        bottom: "24px",
-        right: "24px",
-        width: "50px",
-        height: "50px",
-        borderRadius: "50%",
-        background: "#25D366",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        fontSize: "30px",
-        color: "white",
-        textDecoration: "none",
-        boxShadow: "0 4px 12px rgba(0,0,0,0.25)",
-        zIndex: 9999,
-      }}
-    >
-      <i className="bi bi-whatsapp"></i>
-    </a>
+    <>
+      {showPrompt && (
+        <div className="whatsapp-prompt" role="status">
+          <span>Message on WhatsApp for instant reply</span>
+          <button
+            type="button"
+            className="whatsapp-prompt-close"
+            aria-label="Close WhatsApp message"
+            onClick={() => setShowPrompt(false)}
+          >
+            <i className="bi bi-x-lg" aria-hidden="true"></i>
+          </button>
+        </div>
+      )}
+
+      <a
+        className="whatsapp-float"
+        href={whatsappLink}
+        aria-label="Chat with us on WhatsApp"
+        title="Chat with us on WhatsApp"
+        target="_blank"
+        rel="noopener noreferrer"
+        onClick={trackWhatsApp}
+      >
+        <i className="bi bi-whatsapp" aria-hidden="true"></i>
+      </a>
+    </>
   );
 }

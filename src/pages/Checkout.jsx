@@ -766,6 +766,12 @@ export default function Checkout() {
                 : "Proceed to Secure Payment"}
             </button>
 
+            {loading && (
+              <p className="checkout-processing-note" role="status">
+                To ensure a secure transaction, your first payment may take approximately 30 seconds to process.
+              </p>
+            )}
+
           </div>
 
         )}

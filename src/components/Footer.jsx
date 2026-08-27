@@ -22,34 +22,38 @@ const Footer = () => {
 
           {/* Brand */}
           <div className="col-lg-4">
-
-            <div
-              className="d-inline-flex align-items-center justify-content-center rounded-circle shadow-lg mb-4"
-              style={{
-                width: 90,
-                height: 90,
-                background: "#fff"
-              }}
-            >
-              <img
-                src={logo}
-                alt="Eurasian House"
-                loading="lazy"
-                decoding="async"
+            <div className="footLogo">
+              <div
+                className="d-inline-flex align-items-center justify-content-center rounded-circle shadow-lg mb-4"
                 style={{
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "cover",
-                  borderRadius: "50%",
-                  transform: "scale(1.35)"
+                  width: 90,
+                  height: 90,
+                  background: "#fff"
                 }}
-              />
+              >
+                <img
+                  src={logo}
+                  alt="Eurasian House"
+                  loading="lazy"
+                  decoding="async"
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                    borderRadius: "50%",
+                    transform: "scale(1.35)"
+                  }}
+                />
+              </div>
             </div>
 
             <h4
               className="heading mb-3"
               style={{
-                letterSpacing: ".08em"
+                letterSpacing: ".08em",
+                justifyContent: "center",
+                display: "flex",
+                // fontSize: "1.2rem"
               }}
             >
               Eurasian House
@@ -60,7 +64,9 @@ const Footer = () => {
               style={{
                 color: "#b8b8b8",
                 lineHeight: 1.8,
-                maxWidth: 350
+                textAlign: "center",
+                justifyContent: "center",
+                display: "flex",
               }}
             >
               Handcrafted luxury rugs made by skilled artisans.
@@ -68,7 +74,12 @@ const Footer = () => {
               interiors for homes across the world.
             </p>
 
-            <div className="d-flex gap-3">
+            <div className="d-flex gap-3"
+              style={{
+                textAlign: "center",
+                justifyContent: "center",
+                display: "flex",
+              }}>
 
               <a
                 href="https://www.facebook.com/eurasianhouse"
@@ -477,6 +488,11 @@ const Footer = () => {
               <span className="payment-badge">
                 <i className="bi bi-credit-card-fill"></i>
                 AmEx
+              </span>
+
+              <span className="payment-badge">
+                <i className="bi bi-lightning-charge-fill"></i>
+                UPI
               </span>
 
             </div>

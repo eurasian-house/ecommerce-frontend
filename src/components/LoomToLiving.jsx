@@ -5,7 +5,7 @@ const steps = [
   {
     icon: "bi-person-workspace",
     title: "Skilled Artisans",
-    text: "Every rug begins in the hands of experienced artisans, preserving generations of craftsmanship in every knot.",
+    text: "At Eurasian House, each rug begins in the hands of experienced artisans, preserving generations of craftsmanship in every knot.",
   },
   {
     icon: "bi-scissors",
@@ -15,7 +15,7 @@ const steps = [
   {
     icon: "bi-patch-check",
     title: "Quality Inspection",
-    text: "Each rug is individually inspected to ensure it meets our standards before dispatch.",
+    text: "Throughout the process, each rug is individually inspected to ensure it meets our standards before dispatch.",
   },
   {
     icon: "bi-box-seam",
@@ -58,7 +58,7 @@ export default function LoomToLiving() {
           </h2>
 
           <p className="mx-auto pt-4">
-            Every handcrafted rug follows a thoughtful journey before becoming
+            The Eurasian House handcrafted rug follows a thoughtful journey before becoming
             part of your home.
           </p>
 

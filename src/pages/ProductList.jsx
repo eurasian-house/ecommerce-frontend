@@ -196,8 +196,8 @@ export default function ProductList({ colorFilter }) { // ✅ receive prop
       data = data.filter((p) => {
         const price = p.selling_price;
 
-        if (budget === "1") return price < 299;
-        if (budget === "2") return price >= 299 && price < 499;
+        if (budget === "1") return price < 100;
+        if (budget === "2") return price >= 100 && price < 499;
         if (budget === "3") return price >= 499 && price < 999;
         if (budget === "4") return price >= 999 && price < 1499;
         if (budget === "5") return price >= 1499;
@@ -358,8 +358,8 @@ export default function ProductList({ colorFilter }) { // ✅ receive prop
                   }}
                 >
                   <option value="">Budget</option>
-                  <option value="1">Below $299</option>
-                  <option value="2">$299 - $499</option>
+                  <option value="1">Below $100</option>
+                  <option value="2">$100 - $499</option>
                   <option value="3">$499 - $999</option>
                   <option value="4">$999 - $1,499</option>
                   <option value="5">Above $1,499</option>

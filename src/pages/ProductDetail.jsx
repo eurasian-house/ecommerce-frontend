@@ -79,7 +79,7 @@ export default function ProductDetail() {
     mrp: 0,
     discount: 0
   });
-  // From Cart
+  // From Cart 
   const { addToCart } = useCart();
 
 
@@ -469,101 +469,105 @@ export default function ProductDetail() {
 
               </div>
 
-              {/* COLORS */}
 
-              <div className="product-option-section">
 
-                <h6 className="product-option-title">
-                  Colors
-                </h6>
+              <div className="productVariation">
+                {/* COLORS */}
 
-                <p className="product-option-note">
-                  Didn't find the color you want? We customize it at no additional cost.
-                </p>
+                <div className="product-option-section">
 
-                <div className="product-color-list">
+                  <h6 className="product-option-title">
+                    Colors
+                  </h6>
 
-                  {product.product_colors?.map((c, i) => (
+                  <p className="product-option-note">
+                    Didn't find the color you want? We customize it at no additional cost.
+                  </p>
 
-                    <img
-                      key={i}
-                      src={optimizeUrl(c.color_image)}
-                      alt={`${product.title} - ${c.color_name}`}
-                      loading="lazy"
-                      title={c.color_name}
-                      className={`product-color-swatch ${selectedColor === c ? "active" : ""
-                        }`}
-                      onClick={() => {
-                        setSelectedImage(c.color_image);
-                        setSelectedColor(c);
-                      }}
-                    />
+                  <div className="product-color-list">
 
-                  ))}
+                    {product.product_colors?.map((c, i) => (
+
+                      <img
+                        key={i}
+                        src={optimizeUrl(c.color_image)}
+                        alt={`${product.title} - ${c.color_name}`}
+                        loading="lazy"
+                        title={c.color_name}
+                        className={`product-color-swatch ${selectedColor === c ? "active" : ""
+                          }`}
+                        onClick={() => {
+                          setSelectedImage(c.color_image);
+                          setSelectedColor(c);
+                        }}
+                      />
+
+                    ))}
+
+                  </div>
 
                 </div>
 
-              </div>
+                {/* SIZE */}
 
-              {/* SIZE */}
+                <div className="product-option-section">
 
-              <div className="product-option-section">
+                  <label
+                    htmlFor="size-select"
+                    className="product-option-title"
+                  >
+                    Sizes
+                  </label>
 
-                <label
-                  htmlFor="size-select"
-                  className="product-option-title"
-                >
-                  Size
-                </label>
+                  <p className="product-option-note">
+                    Didn't find your size? We customize it at no additional cost.
+                  </p>
 
-                <p className="product-option-note">
-                  Didn't find your size? We customize it at no additional cost.
-                </p>
+                  <select
+                    id="size-select"
+                    className="product-size-select"
+                    value={selectedSize?.id ?? ""}
+                    onChange={(e) => {
 
-                <select
-                  id="size-select"
-                  className="product-size-select"
-                  value={selectedSize?.id ?? ""}
-                  onChange={(e) => {
+                      const size = product.product_sizes?.find(
+                        (s) => String(s.id) === e.target.value
+                      );
 
-                    const size = product.product_sizes?.find(
-                      (s) => String(s.id) === e.target.value
-                    );
+                      if (!size) return;
 
-                    if (!size) return;
+                      setSelectedSize(size);
 
-                    setSelectedSize(size);
+                      setDisplayPrice({
+                        selling: Math.round(
+                          Number(size.selling_price ?? product.selling_price)
+                        ),
+                        mrp: size.mrp_variation || product.mrp,
+                        discount:
+                          size.discount_variation ||
+                          Number(product.discount_percent),
+                      });
 
-                    setDisplayPrice({
-                      selling: Math.round(
-                        Number(size.selling_price ?? product.selling_price)
-                      ),
-                      mrp: size.mrp_variation || product.mrp,
-                      discount:
-                        size.discount_variation ||
-                        Number(product.discount_percent),
-                    });
+                    }}
+                  >
 
-                  }}
-                >
-
-                  <option value="" disabled>
-                    Select a Size
-                  </option>
-
-                  {product.product_sizes?.map((s, i) => (
-
-                    <option
-                      key={s.id || i}
-                      value={s.id}
-                    >
-                      {s.size}
+                    <option value="" disabled>
+                      Select a Size
                     </option>
 
-                  ))}
+                    {product.product_sizes?.map((s, i) => (
 
-                </select>
+                      <option
+                        key={s.id || i}
+                        value={s.id}
+                      >
+                        {s.size}
+                      </option>
 
+                    ))}
+
+                  </select>
+
+                </div>
               </div>
 
               <div className="product-spec-list">
@@ -783,6 +787,8 @@ export default function ProductDetail() {
               </div>
 
             </div>
+
+
 
             <div className="col-lg-6">
 

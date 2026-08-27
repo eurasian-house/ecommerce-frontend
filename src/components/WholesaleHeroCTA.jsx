@@ -32,14 +32,14 @@ export default function WholesaleHeroCTA() {
     return (
         <section className="wholesale-section">
 
-            <div className="container-fluid px-2">
+            <div className="container-fluid px-0">
 
-                <div className="wholesale-wrapper">
+                <div className="wholesale-wrapper px-2">
 
                     <span className="shape shape-1"></span>
                     <span className="shape shape-2"></span>
 
-                    <div className="row align-items-start g-5">
+                    <div className="row align-items-start g-5 card1">
 
                         {/* LEFT */}
 
@@ -103,54 +103,42 @@ export default function WholesaleHeroCTA() {
 
                                 </div>
 
-                                {/* It was here */}
+                                {/* It was here  */}
 
                             </div>
 
                         </div>
 
-                        {/* CENTER DIVIDER */}
 
-                        {/* <div className="col-lg-1 d-none d-lg-flex justify-content-center">
-                            <div className="section-divider">
-
-                                <span></span>
-
-                                <div className="divider-icon">
-                                    <i className="bi bi-diamond"></i>
-                                </div>
-
-                                <span></span>
-
-                            </div>
-                        </div> */}
 
                         {/* RIGHT */}
 
                         <div className="col-lg-6 px-4 px-lg-2">
 
                             <div className="wholesale-card">
+                                <div className="card-container">
 
-                                <div className="card-badge">
-                                    <i className="bi bi-buildings"></i>
+                                    <div className="card-badge">
+                                        <i className="bi bi-buildings"></i>
 
-                                    <span>
-                                        Manufacturer • Wholesale • Export
-                                    </span>
+                                        <span>
+                                            Manufacturer • Wholesale • Export
+                                        </span>
 
+                                    </div>
+
+                                    <h3 className="card-title">
+                                        Source Directly from the Manufacturer
+                                    </h3>
+
+                                    <p className="card-description">
+                                        Eurasian House manufactures handcrafted rugs for
+                                        importers, retailers, hospitality groups, interior
+                                        designers and private-label brands seeking dependable
+                                        production, exceptional quality and worldwide export
+                                        support.
+                                    </p>
                                 </div>
-
-                                <h3 className="card-title">
-                                    Source Directly from the Manufacturer
-                                </h3>
-
-                                <p className="card-description">
-                                    Eurasian House manufactures handcrafted rugs for
-                                    importers, retailers, hospitality groups, interior
-                                    designers and private-label brands seeking dependable
-                                    production, exceptional quality and worldwide export
-                                    support.
-                                </p>
 
                                 <div className="stats-row">
 

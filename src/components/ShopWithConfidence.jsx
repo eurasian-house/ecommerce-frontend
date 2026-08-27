@@ -31,7 +31,7 @@ const items = [
   {
     icon: "bi-headset",
     title: "Personal Customer Support",
-    text: "Whether before or after your purchase, our team is always happy to assist you.",
+    text: "Whether before or after your purchase, our team is always happy to assist you. Use WhatsApp for instant support.",
     url: "/contact",
   },
 ];

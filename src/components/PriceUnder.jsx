@@ -72,7 +72,7 @@ const PriceUnder = () => {
 
                 <img
                   src={images.orangeWhatsNew}
-                  alt="Under $299"
+                  alt="Under $100"
                   className="premium-grid-image"
                   loading="lazy"
                 />
@@ -84,7 +84,7 @@ const PriceUnder = () => {
                   </span>
 
                   <h6>
-                    Under $299
+                    Under $100, Free Shipping
                   </h6>
 
                 </div>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "../styles/pages/HeroCarousel.css";
 
 const slides = [
@@ -41,6 +41,8 @@ const slides = [
 
 export default function HeroCarousel({ onSlideClick }) {
   const [current, setCurrent] = useState(0);
+  const touchStartX = useRef(null);
+  const didSwipe = useRef(false);
 
   const duration = 3500;
 
@@ -62,12 +64,40 @@ export default function HeroCarousel({ onSlideClick }) {
     );
   };
 
+  const handleTouchStart = (event) => {
+    touchStartX.current = event.touches[0].clientX;
+    didSwipe.current = false;
+  };
+
+  const handleTouchEnd = (event) => {
+    if (touchStartX.current === null) return;
+
+    const distance = event.changedTouches[0].clientX - touchStartX.current;
+    touchStartX.current = null;
+
+    if (Math.abs(distance) < 50) return;
+
+    didSwipe.current = true;
+    distance > 0 ? prevSlide() : nextSlide();
+  };
+
+  const handleSlideClick = () => {
+    if (didSwipe.current) {
+      didSwipe.current = false;
+      return;
+    }
+
+    onSlideClick?.();
+  };
+
   return (
     <section className="hero-carousel">
 
       <div
         className="hero-slide"
-        onClick={onSlideClick}
+        onClick={handleSlideClick}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
       >
         <img
           src={slides[current].image}
@@ -83,12 +113,7 @@ export default function HeroCarousel({ onSlideClick }) {
           <div className="hero-glow"></div>
 
           {/* <div className="hero-content"> */}
-          <div
-            className="hero-content"
-            style={{
-              "--hero-image": `url(${slides[current].image})`,
-            }}
-          >
+          <div className="hero-content">
 
             <span className="hero-badge">
               Crafted in India

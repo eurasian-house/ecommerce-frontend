@@ -26,7 +26,7 @@ export default function OurPromise() {
                     </h2>
 
                     <p className="for-user-subheading mx-auto">
-                        Every rug we offer reflects thoughtful craftsmanship,
+                        The Eurasian House rug we offer reflects thoughtful craftsmanship,
                         careful inspection, honest pricing, and personal service.
                         From the moment it leaves the hands of skilled artisans
                         until it becomes part of your home, our commitment remains

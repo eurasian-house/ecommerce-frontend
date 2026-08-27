@@ -1,0 +1,95 @@
+.whatsapp-float {
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: #25D366;
+    color: #fff;
+    font-size: 30px;
+    text-decoration: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, .25);
+}
+
+.whatsapp-prompt {
+    position: fixed;
+    right: 24px;
+    bottom: 86px;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    gap: .65rem;
+    max-width: min( calc(100vw - 48px), 290px);
+    padding: .7rem .75rem .7rem 1rem;
+    border: 1px solid rgba(37, 211, 102, .25);
+    border-radius: 12px;
+    background: #fff;
+    color: #25352b;
+    font-size: .85rem;
+    font-weight: 600;
+    line-height: 1.35;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, .18);
+    animation: whatsapp-prompt-in .25s ease-out;
+}
+
+.whatsapp-prompt::after {
+    content: "";
+    position: absolute;
+    right: 19px;
+    bottom: -7px;
+    width: 13px;
+    height: 13px;
+    border-right: 1px solid rgba(37, 211, 102, .25);
+    border-bottom: 1px solid rgba(37, 211, 102, .25);
+    background: #fff;
+    transform: rotate(45deg);
+}
+
+.whatsapp-prompt-close {
+    position: relative;
+    z-index: 1;
+    flex: 0 0 auto;
+    display: grid;
+    place-items: center;
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: rgba(37, 211, 102, .12);
+    color: #356044;
+    cursor: pointer;
+}
+
+.whatsapp-prompt-close:hover,
+.whatsapp-prompt-close:focus-visible {
+    background: rgba(37, 211, 102, .24);
+}
+
+.whatsapp-prompt-close i {
+    font-size: .65rem;
+}
+
+@keyframes whatsapp-prompt-in {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 576px) {
+    .whatsapp-float {
+        right: 16px;
+        bottom: 16px;
+    }
+
+    .whatsapp-prompt {
+        right: 16px;
+        bottom: 78px;
+        max-width: min( calc(100vw - 32px), 270px);
+        font-size: .8rem;
+    }
+}

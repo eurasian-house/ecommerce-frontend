@@ -431,6 +431,10 @@
 
     --card-accent: #C45A63;
 }
+.offer-card.pink {
+
+    --card-accent: #b716aa;
+}
 
 .offer-card.emerald {
 
