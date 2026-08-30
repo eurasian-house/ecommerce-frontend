@@ -84,6 +84,11 @@ export default function ProductList({ colorFilter }) {
 
   const autoQuality = location.state?.autoQuality || "";
   const autoShapes = location.state?.autoShapes || [];
+  const urlShapes = shape
+    .split(",")
+    .map((value) => value.trim())
+    .filter(Boolean);
+  const activeShapes = autoShapes.length > 0 ? autoShapes : urlShapes;
 
   const activeQuality = autoQuality || quality;
   const activeColor = colorFilter || color;
@@ -178,15 +183,10 @@ export default function ProductList({ colorFilter }) {
      * URL autoShapes can contain multiple shapes.
      */
 
-    if (autoShapes.length > 0) {
+    if (activeShapes.length > 0) {
       query = query.in(
         "shape",
-        autoShapes
-      );
-    } else if (shape) {
-      query = query.eq(
-        "shape",
-        shape
+        activeShapes
       );
     }
 
@@ -296,6 +296,11 @@ export default function ProductList({ colorFilter }) {
       query = query.order(
         "created_at",
         { ascending: true }
+      );
+    } else if (sort === "top-deals") {
+      query = query.order(
+        "clicks",
+        { ascending: false }
       );
     } else if (sort === "low") {
       query = query.order(
@@ -473,7 +478,7 @@ export default function ProductList({ colorFilter }) {
     budget,
     discount,
     activeColor,
-    autoShapes.join(","),
+    activeShapes.join(","),
   ]);
 
   /*
@@ -489,7 +494,7 @@ export default function ProductList({ colorFilter }) {
       search ||
       budget ||
       discount ||
-      colorFilter ||
+      activeColor ||
       shape ||
       activeQuality ||
       pattern ||
@@ -505,8 +510,8 @@ export default function ProductList({ colorFilter }) {
       discount: discount || "",
       color: activeColor || "",
       shape:
-        autoShapes.length > 0
-          ? autoShapes.join(", ")
+        activeShapes.length > 0
+          ? activeShapes.join(", ")
           : shape || "",
       quality: activeQuality || "",
       pattern: pattern || "",
@@ -524,7 +529,7 @@ export default function ProductList({ colorFilter }) {
     activeQuality,
     pattern,
     sort,
-    autoShapes.join(","),
+    activeShapes.join(","),
   ]);
 
   /*

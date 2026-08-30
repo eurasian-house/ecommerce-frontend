@@ -3,19 +3,19 @@ import { useRef } from "react";
 import "../styles/components/Category.css";
 
 const CATEGORIES = [
-  "All",
-  "Hand Knotted",
-  "Jute",
-  "Tufted",
-  "Persian",
-  "Tibetan",
-  "Kilim",
-  "Dhurry",
-  "Leather",
-  "Shag",
-  "Irregular",
-  "Round",
-  "Runner",
+  { label: "All" },
+  { label: "Hand Knotted", mainCategory: "Hand Knotted Rugs" },
+  { label: "Jute", mainCategory: "Jute Rugs" },
+  { label: "Tufted", mainCategory: "Hand Tufted Rugs" },
+  { label: "Persian", mainCategory: "Persian Rugs" },
+  { label: "Tibetan", mainCategory: "Tibetan Weave Rugs" },
+  { label: "Kilim", subCategory: "Kilim" },
+  { label: "Dhurry", subCategory: "Dhurrie" },
+  { label: "Leather", mainCategory: "Leather Rugs/Pouffe" },
+  { label: "Shag", search: "Shag" },
+  { label: "Irregular", shape: "Irregular" },
+  { label: "Round", shape: "Round" },
+  { label: "Runner", shape: "Runner" },
 ];
 
 export default function Category() {
@@ -36,11 +36,11 @@ export default function Category() {
     });
   };
 
-  const handleCategoryClick = (category) => {
-    if (category === "All") {
+  const handleCategoryClick = ({ label, ...filters }) => {
+    if (label === "All") {
       navigate("/products");
     } else {
-      navigate(`/products?category=${encodeURIComponent(category)}`);
+      navigate(`/products?${new URLSearchParams(filters).toString()}`);
     }
   };
 
@@ -62,17 +62,17 @@ export default function Category() {
       >
         {CATEGORIES.map((category) => (
           <div
-            key={category}
+            key={category.label}
             className="category-wrapper"
             onClick={() => handleCategoryClick(category)}
           >
             <article className="category-card">
 
               <img
-                src={`/category/${category
+                src={`/category/${category.label
                   .toLowerCase()
                   .replace(/\s/g, "")}.jpg`}
-                alt={`${category} Rugs`}
+                alt={`${category.label} Rugs`}
                 className="category-image"
                 loading="lazy"
                 decoding="async"
@@ -83,7 +83,7 @@ export default function Category() {
 
               <div className="category-card-body">
                 <h6 className="category-title">
-                  {category}
+                  {category.label}
                 </h6>
               </div>
 

@@ -320,7 +320,7 @@ const Footer = () => {
 
                   <li>
                     <Link
-                      to="/products?category=Hand Knotted"
+                      to="/products?mainCategory=Hand%20Knotted%20Rugs"
                       className="footer-link"
                     >
                       Hand Knotted
@@ -329,7 +329,7 @@ const Footer = () => {
 
                   <li>
                     <Link
-                      to="/products?category=Persian"
+                      to="/products?mainCategory=Persian%20Rugs"
                       className="footer-link"
                     >
                       Persian Rugs
@@ -338,7 +338,7 @@ const Footer = () => {
 
                   <li>
                     <Link
-                      to="/products?category=Tufted"
+                      to="/products?mainCategory=Hand%20Tufted%20Rugs"
                       className="footer-link"
                     >
                       Tufted Rugs
@@ -347,7 +347,7 @@ const Footer = () => {
 
                   <li>
                     <Link
-                      to="/products?category=Kilim"
+                      to="/products?subCategory=Kilim"
                       className="footer-link"
                     >
                       Kilim Rugs
@@ -356,7 +356,7 @@ const Footer = () => {
 
                   <li>
                     <Link
-                      to="/products?category=Tibetan"
+                      to="/products?mainCategory=Tibetan%20Weave%20Rugs"
                       className="footer-link"
                     >
                       Tibetan Rugs
@@ -365,7 +365,7 @@ const Footer = () => {
 
                   <li>
                     <Link
-                      to="/products?category=Jute"
+                      to="/products?mainCategory=Jute%20Rugs"
                       className="footer-link"
                     >
                       Jute Rugs
@@ -374,7 +374,7 @@ const Footer = () => {
 
                   <li>
                     <Link
-                      to="/products?category=Dhurrie"
+                      to="/products?subCategory=Dhurrie"
                       className="footer-link"
                     >
                       Dhurrie Rugs

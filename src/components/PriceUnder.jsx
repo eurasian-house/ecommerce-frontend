@@ -100,7 +100,7 @@ const PriceUnder = () => {
               <div
                 className="premium-grid-card"
                 onClick={() =>
-                  navigate("/products?shape=round,oval")
+                  navigate("/products?shape=Round,Oval")
                 }
               >
 
@@ -134,7 +134,7 @@ const PriceUnder = () => {
               <div
                 className="premium-grid-card"
                 onClick={() =>
-                  navigate("/products?shape=irregular")
+                  navigate("/products?shape=Irregular")
                 }
               >
 
@@ -168,7 +168,7 @@ const PriceUnder = () => {
               <div
                 className="premium-grid-card"
                 onClick={() =>
-                  navigate("/products?quality=persian")
+                  navigate("/products?quality=Persian")
 
                 }
               >
