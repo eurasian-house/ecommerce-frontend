@@ -14,6 +14,8 @@ const CATEGORIES = [
   "Leather",
   "Shag",
   "Irregular",
+  "Round",
+  "Runner",
 ];
 
 export default function Category() {

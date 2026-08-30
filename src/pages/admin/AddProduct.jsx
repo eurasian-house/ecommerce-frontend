@@ -6,6 +6,7 @@ import { compressImage, IMAGE_RULES } from "../../utils/imageCompression";
 import ImageUploadBox from "../../components/common/ImageUploadBox";
 import "./AddProduct.css";
 import ProductSelect from "../../components/common/ProductSelect";
+import { sortSizes } from "../../utils/sortSizes";
 
 import {
     MAIN_CATEGORIES,
@@ -572,7 +573,9 @@ export default function AddProduct() {
                 color_image: c.color_image || "",
             })),
 
-            sizes: (product.sizes || []).map(s => ({
+            // Keep the edit form consistent with Product Detail, regardless of
+            // the order in which size variations were returned from the DB.
+            sizes: sortSizes(product.sizes || []).map(s => ({
                 id: s.id,
                 size: s.size || "",
                 mrp_variation: s.mrp_variation || "",

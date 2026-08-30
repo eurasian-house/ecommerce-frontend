@@ -28,9 +28,10 @@ export const MAIN_CATEGORIES = [
 export const SUB_CATEGORIES = [
     "Braided Jute Rugs",
     "Wool Rugs",
-    "Runner Rugs",
+    "Silk Rugs",
     "Cotton Rugs",
-
+    
+    "Runner Rugs",
     "Isfahan Rugs",
     "Tabriz Rugs",
     "Heriz Rugs",
@@ -43,13 +44,13 @@ export const SUB_CATEGORIES = [
 
 export const MATERIALS = [
     "Jute",
-    "Premium Natural Wool",
+    "Premium Wool",
     "Cotton",
     "Silk",
     "Viscose",
     "Leather",
-    "Natural Dyes(Where applicable)",
-    "Natural Latex (Edge Finishing)",
+    "Natural Dyes",
+    "Natural Latex",
 ];
 
 export const SHAPES = [
@@ -63,19 +64,23 @@ export const SHAPES = [
 
 export const PATTERNS = [
     "Abstract",
-    "Persian",
+    "Animal Print",
+    "Checkered",
     "Floral",
     "Geometric",
+    "Oriental",
     "Solid",
     "Striped",
     "Vintage",
     "Modern",
+    "Moroccan",
 ];
 
 export const QUALITIES = [
     "Standard",
     "Luxury",
     "Premium",
+    "Ultra Premium",
     "Persian",
 ];
 
@@ -103,6 +108,7 @@ export const COLORS = [
     "Sky Blue",
     "Tan",
     "Teal",
+    "Terracotta",
     "White",
     "Yellow",
 ];

@@ -1,6 +1,6 @@
 import React from 'react';
 import logo from "/logo.png";
-import { FaFacebookF, FaInstagram, FaWhatsapp, FaPinterest } from "react-icons/fa";
+import { FaFacebookF, FaInstagram, FaWhatsapp, FaPinterest, FaYoutube } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { Link } from "react-router-dom";
 import "../styles/components/Footer.css";
@@ -74,12 +74,7 @@ const Footer = () => {
               interiors for homes across the world.
             </p>
 
-            <div className="d-flex gap-3"
-              style={{
-                textAlign: "center",
-                justifyContent: "center",
-                display: "flex",
-              }}>
+            <div className="d-flex flex-wrap justify-content-center align-items-center gap-3">
 
               <a
                 href="https://www.facebook.com/eurasianhouse"
@@ -99,6 +94,16 @@ const Footer = () => {
                 aria-label="Instagram"
               >
                 <FaInstagram />
+              </a>
+
+              <a
+                href="https://www.youtube.com/@eurasianhouse"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="footer-social"
+                aria-label="YouTube"
+              >
+                <FaYoutube />
               </a>
 
               <a
