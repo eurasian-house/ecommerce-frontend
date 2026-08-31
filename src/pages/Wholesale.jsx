@@ -97,9 +97,9 @@ export default function Wholesale() {
                                 EXPERIENCE BEFORE YOU ORDER
                             </span>
 
-                            <h2 className="heading">
+                            <h1>
                                 Complimentary Rug Samples for Serious Wholesale Buyers
-                            </h2>
+                            </h1>
 
                             <p>
                                 Choosing the right manufacturing partner should never involve

@@ -438,7 +438,7 @@
 
     border: 1px solid var(--border);
 
-    font-size: .72rem;
+    font-size: 1rem;
 }
 
 .customer-product-bottom {
@@ -487,6 +487,16 @@
 
     margin-top: 1rem;
 }
+
+/* .writeR {
+    width: 100%;
+    min-height: 42px;
+    font-size: 1rem;
+    border: none;
+    background: none !important;
+    color: #fff !important;
+
+} */
 
 /* ==========================================================
    ADDRESS
@@ -583,195 +593,187 @@
    MOBILE
 ========================================================== */
 
-    @media (max-width:576px) {
+@media (max-width:576px) {
 
-        .customer-order-page {
-            padding: .75rem 0 1.5rem;
-        }
-
-        .customer-card,
-        .customer-order-header {
-            padding: .85rem;
-            border-radius: 16px;
-        }
-
-        .customer-card-title {
-            font-size: 1rem;
-            margin-bottom: .8rem;
-        }
-
-        .customer-order-title {
-            font-size: 1.15rem;
-        }
-
-        .customer-order-total {
-            font-size: 1.3rem;
-        }
-
-        .customer-order-meta {
-            gap: .45rem;
-        }
-
-        .customer-order-meta>div {
-            font-size: .75rem;
-        }
-
-        .customer-timeline-item {
-            gap: .7rem;
-            margin-bottom: .85rem;
-        }
-
-        .customer-status-dot {
-            width: 26px;
-            height: 26px;
-            font-size: .7rem;
-        }
-
-        .customer-timeline-track {
-            left: 11px;
-            top: 13px;
-            bottom: 13px;
-            width: 4px;
-        }
-
-        .customer-timeline-track::before,
-        .customer-timeline-track::after {
-            width: 4px;
-        }
-
-        .customer-timeline-title {
-            font-size: .88rem;
-            line-height: 1.4;
-        }
-
-        .customer-timeline-content small {
-            font-size: .72rem;
-        }
-
-        /* ---------- Product Card ---------- */
-
-        .customer-product-card {
-
-            flex-direction: row;
-
-            align-items: flex-start;
-
-            gap: .75rem;
-
-            padding: .75rem;
-        }
-
-        .customer-product-image {
-
-            width: 72px;
-
-            height: 72px;
-
-            border-radius: 10px;
-
-            flex-shrink: 0;
-        }
-
-        .customer-product-content {
-
-            min-width: 0;
-
-            flex: 1;
-        }
-
-        .customer-product-title {
-
-            font-size: .9rem;
-
-            line-height: 1.35;
-
-            margin-bottom: .45rem;
-
-            display: -webkit-box;
-
-            -webkit-box-orient: vertical;
-
-            -webkit-line-clamp: 4;
-
-            overflow: hidden;
-        }
-
-        .customer-product-badges {
-
-            gap: .3rem;
-
-            margin-bottom: .45rem;
-        }
-
-        .customer-badge {
-
-            font-size: .66rem;
-
-            padding: .18rem .45rem;
-        }
-
-        .customer-product-bottom {
-
-            display: flex;
-
-            flex-direction: column;
-
-            align-items: flex-start;
-
-            gap: .3rem;
-        }
-
-        .customer-product-price {
-
-            font-size: .95rem;
-        }
-
-        .customer-product-delivery {
-
-            font-size: .68rem;
-
-            line-height: 1.4;
-        }
-
-        .customer-review-action {
-
-            margin-top: .6rem;
-        }
-
-        .customer-review-action .app-btn-primary,
-        .customer-review-action .app-btn-secondary {
-
-            width: 100%;
-
-            min-height: 42px;
-
-            font-size: .78rem;
-        }
-
-        /* ---------- Address ---------- */
-
-        .customer-address-item {
-
-            gap: .55rem;
-
-            font-size: .82rem;
-        }
-
-        /* ---------- Summary ---------- */
-
-        .customer-summary-row,
-        .customer-summary-total {
-
-            padding: .55rem 0;
-
-            font-size: .85rem;
-        }
-
-        .customer-summary-actions {
-
-            margin-top: 1rem;
-
-            gap: .6rem;
-        }
-
+    .customer-order-page {
+        padding: .75rem 0 1.5rem;
     }
+
+    .customer-card,
+    .customer-order-header {
+        padding: .85rem;
+        border-radius: 16px;
+    }
+
+    .customer-card-title {
+        font-size: 1rem;
+        margin-bottom: .8rem;
+    }
+
+    .customer-order-title {
+        font-size: 1.15rem;
+    }
+
+    .customer-order-total {
+        font-size: 1.3rem;
+    }
+
+    .customer-order-meta {
+        gap: .45rem;
+    }
+
+    .customer-order-meta>div {
+        font-size: .75rem;
+    }
+
+    .customer-timeline-item {
+        gap: .7rem;
+        margin-bottom: .85rem;
+    }
+
+    .customer-status-dot {
+        width: 26px;
+        height: 26px;
+        font-size: .7rem;
+    }
+
+    .customer-timeline-track {
+        left: 11px;
+        top: 13px;
+        bottom: 13px;
+        width: 4px;
+    }
+
+    .customer-timeline-track::before,
+    .customer-timeline-track::after {
+        width: 4px;
+    }
+
+    .customer-timeline-title {
+        font-size: .88rem;
+        line-height: 1.4;
+    }
+
+    .customer-timeline-content small {
+        font-size: .72rem;
+    }
+
+    /* ---------- Product Card ---------- */
+
+    .customer-product-card {
+
+        flex-direction: row;
+
+        align-items: flex-start;
+
+        gap: .75rem;
+
+        padding: .75rem;
+    }
+
+    .customer-product-image {
+
+        width: 72px;
+
+        height: 72px;
+
+        border-radius: 10px;
+
+        flex-shrink: 0;
+    }
+
+    .customer-product-content {
+
+        min-width: 0;
+
+        flex: 1;
+    }
+
+    .customer-product-title {
+
+        font-size: .9rem;
+
+        line-height: 1.35;
+
+        margin-bottom: .45rem;
+
+        display: -webkit-box;
+
+        -webkit-box-orient: vertical;
+
+        -webkit-line-clamp: 4;
+
+        overflow: hidden;
+    }
+
+    .customer-product-badges {
+
+        gap: .3rem;
+
+        margin-bottom: .45rem;
+    }
+
+    .customer-badge {
+
+        font-size: .66rem;
+
+        padding: .18rem .45rem;
+    }
+
+    .customer-product-bottom {
+
+        display: flex;
+
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: .3rem;
+    }
+
+    .customer-product-price {
+
+        font-size: .95rem;
+    }
+
+    .customer-product-delivery {
+
+        font-size: .68rem;
+
+        line-height: 1.4;
+    }
+
+    .customer-review-action {
+
+        margin-top: .6rem;
+    }
+
+
+
+    /* ---------- Address ---------- */
+
+    .customer-address-item {
+
+        gap: .55rem;
+
+        font-size: .82rem;
+    }
+
+    /* ---------- Summary ---------- */
+
+    .customer-summary-row,
+    .customer-summary-total {
+
+        padding: .55rem 0;
+
+        font-size: .85rem;
+    }
+
+    .customer-summary-actions {
+
+        margin-top: 1rem;
+
+        gap: .6rem;
+    }
+
+}

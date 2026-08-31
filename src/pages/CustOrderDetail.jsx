@@ -827,7 +827,7 @@ export default function CustOrderDetail() {
 
                                                     <Link
                                                         to={`/write-review/${item.id}`}
-                                                        className="app-btn-secondary"
+                                                        className="customer-badge"
                                                     >
 
                                                         <i className="bi bi-pencil-square me-2"></i>
@@ -840,7 +840,7 @@ export default function CustOrderDetail() {
 
                                                     <Link
                                                         to={`/write-review/${item.id}`}
-                                                        className="app-btn-primary"
+                                                        className="customer-badge"
                                                     >
 
                                                         <i className="bi bi-star-fill me-2"></i>
