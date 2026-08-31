@@ -130,7 +130,7 @@ export default function AdminReviews() {
 
                                         <div className="text-muted small">
 
-                                            {review.reviewer_name}
+                                            {review.current_reviewer_name || review.reviewer_name || "Customer"}
 
                                         </div>
 

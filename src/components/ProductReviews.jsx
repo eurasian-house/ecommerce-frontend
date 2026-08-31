@@ -291,7 +291,11 @@ export default function ProductReviews({ productId }) {
                                                     review.reviewer_avatar ||
                                                     review.avatar_url,
                                             })}
-                                            alt={review.reviewer_name}
+                                            alt={
+                                                review.current_reviewer_name ||
+                                                review.reviewer_name ||
+                                                "Customer"
+                                            }
                                             size={35}
                                             className="me-3"
                                         />
@@ -300,7 +304,12 @@ export default function ProductReviews({ productId }) {
 
                                             <div className="fw-semibold fs-5">
 
-                                                {review.reviewer_name || "Customer"}
+                                                {review.current_reviewer_name || review.reviewer_name || "Customer"}
+                                                {/* {JSON.stringify({
+                                                    current: review.current_reviewer_name,
+                                                    reviewer: review.reviewer_name,
+                                                    userId: review.user_id
+                                                })} */}
 
                                             </div>
 

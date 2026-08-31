@@ -3,6 +3,7 @@ import { supabase } from "../lib/supabase";
 import { useNavigate } from "react-router-dom";
 import UserAvatar from "../components/common/UserAvatar";
 import { getAvatar } from "../utils/getAvatar";
+import { attachCurrentReviewerProfiles } from "../services/reviewService";
 import "../styles/components/CustomerInspiration.css";
 
 
@@ -27,6 +28,7 @@ export default function CustomerInspiration() {
         image_url,
         reviewer_name,
         reviewer_avatar,
+        user_id,
         products (
             slug,
             title
@@ -36,7 +38,7 @@ export default function CustomerInspiration() {
             .not("image_url", "is", null)
             .order("created_at", { ascending: false });
 
-        setReviews(data || []);
+        setReviews(await attachCurrentReviewerProfiles(data || []));
     }
 
     return (
@@ -91,9 +93,11 @@ export default function CustomerInspiration() {
 
                                         <UserAvatar
                                             src={getAvatar({
-                                                avatar_url: r.reviewer_avatar,
+                                                avatar_url:
+                                                    r.current_avatar ||
+                                                    r.reviewer_avatar,
                                             })}
-                                            alt={r.reviewer_name}
+                                            alt={r.current_reviewer_name || r.reviewer_name || "Customer"}
                                             size={30}
                                             className="me-2"
                                         />
@@ -101,7 +105,7 @@ export default function CustomerInspiration() {
                                         <div>
 
                                             <div className="customer-name">
-                                                {r.reviewer_name}
+                                                {r.current_reviewer_name || r.reviewer_name || "Customer"}
                                             </div>
 
                                             <div className="customer-rating">
