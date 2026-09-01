@@ -138,10 +138,11 @@
 
 .customer-gallery-image{
 
+    height: 250px !important;
     width:100%;
-
+    
     display:block;
-
+    
     transition:.6s ease;
 }
 

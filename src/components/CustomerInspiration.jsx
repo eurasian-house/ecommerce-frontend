@@ -80,7 +80,6 @@ export default function CustomerInspiration() {
                         >
 
                             <div className="customer-gallery-card">
-
                                 <img
                                     src={r.image_url}
                                     alt={r.products.title}

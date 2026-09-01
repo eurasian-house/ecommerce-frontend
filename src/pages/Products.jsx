@@ -108,6 +108,9 @@ export default function Products() {
       <div className="container-fluid px-0">
         <Category />
         <HeroCarousel onSlideClick={handleCarouselClick} />
+        <LazySection minHeight={350}>
+          <CustomerInspiration />
+        </LazySection>
         <WholesaleHeroCTA />
         <LazySection minHeight={350}>
           <RecentAdded />
@@ -198,9 +201,6 @@ export default function Products() {
         </LazySection>
         <LazySection minHeight={450}>
           <ShopWithConfidence />
-        </LazySection>
-        <LazySection minHeight={350}>
-          <CustomerInspiration />
         </LazySection>
         <LazySection minHeight={350}>
           <LoomToLiving />

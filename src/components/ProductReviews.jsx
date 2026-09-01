@@ -305,11 +305,6 @@ export default function ProductReviews({ productId }) {
                                             <div className="fw-semibold fs-5">
 
                                                 {review.current_reviewer_name || review.reviewer_name || "Customer"}
-                                                {/* {JSON.stringify({
-                                                    current: review.current_reviewer_name,
-                                                    reviewer: review.reviewer_name,
-                                                    userId: review.user_id
-                                                })} */}
 
                                             </div>
 
