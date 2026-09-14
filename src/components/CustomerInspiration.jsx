@@ -44,7 +44,7 @@ export default function CustomerInspiration() {
     return (
         <section className="customer-inspiration">
 
-            <div className="container">
+            <div className="container p-0">
 
                 <div className="text-center mb-5">
                     <div className="discount-ornament">

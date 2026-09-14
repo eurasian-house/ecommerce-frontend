@@ -1,9 +1,11 @@
 import { useCart } from "../context/CartContext";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useRef } from "react";
 import StarRating from "../components/common/StarRating";
 import { toast } from "react-toastify";
 import "../styles/components/ProductCard.css";
 import { sortSizes } from "../utils/sortSizes";
+import { incrementProductView } from "../lib/productMetrics";
 
 
 export default function ProductCard({
@@ -17,10 +19,42 @@ export default function ProductCard({
 
   const { addToCart } = useCart();
   const navigate = useNavigate();
+  const cardRef = useRef(null);
+  const hasTrackedViewRef = useRef(false);
+
+  useEffect(() => {
+    const card = cardRef.current;
+    if (!card || hasTrackedViewRef.current) return;
+
+    const trackView = () => {
+      if (hasTrackedViewRef.current) return;
+
+      hasTrackedViewRef.current = true;
+      void incrementProductView(product.id);
+    };
+
+    if (!("IntersectionObserver" in window)) {
+      trackView();
+      return undefined;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        trackView();
+        observer.disconnect();
+      },
+      { threshold: 0.1 }
+    );
+
+    observer.observe(card);
+    return () => observer.disconnect();
+  }, [product.id]);
 
 
   return (
     <div
+      ref={cardRef}
       style={{
         width: cardWidth,
         flex: "0 0 auto",

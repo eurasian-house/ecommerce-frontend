@@ -310,7 +310,7 @@ export default function ProductReviews({ productId }) {
 
                                             <div className="small text-secondary mt-1">
 
-                                                {new Date(review.created_at).toLocaleDateString()}
+                                                {/* {new Date(review.created_at).toLocaleDateString()} */}
 
                                             </div>
 

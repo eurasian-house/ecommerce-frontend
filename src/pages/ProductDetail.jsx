@@ -74,6 +74,7 @@ export default function ProductDetail() {
   const [activeTab, setActiveTab] = useState("description");
   const [related, setRelated] = useState([]);
   const detailsRef = useRef(null);
+  const clickedProductIdRef = useRef(null);
   const [displayPrice, setDisplayPrice] = useState({
     selling: 0,
     mrp: 0,
@@ -94,6 +95,15 @@ export default function ProductDetail() {
     if (!product) return;
 
     trackProductView(product);
+  }, [product]);
+
+  useEffect(() => {
+    if (!product || clickedProductIdRef.current === product.id) return;
+
+    // The product loader can run twice in React development mode. Count only
+    // one click for this product-detail visit.
+    clickedProductIdRef.current = product.id;
+    void incrementClick(product.id);
   }, [product]);
 
   useEffect(() => {
@@ -184,7 +194,6 @@ export default function ProductDetail() {
       .single();
 
     if (data) {
-      await incrementClick(data.id);
       const allImages = [
         data.thumbnail,
         ...(data.images || []),
@@ -206,7 +215,7 @@ export default function ProductDetail() {
         .eq("main_category", data.main_category)
         .eq("shape", data.shape)
         .neq("id", data.id)
-        .limit(10);
+        .limit(15);
 
       setRelated(
         (relatedData || []).map(product => ({
@@ -815,6 +824,13 @@ export default function ProductDetail() {
 
                 <li>
                   <strong>Category:</strong> {product.main_category}
+                </li>
+
+                <li>
+                  <strong>Sub-Category:</strong>{" "}
+                  {Array.isArray(product.sub_category)
+                    ? product.sub_category.join(", ")
+                    : product.sub_category || ""}
                 </li>
 
                 <li>

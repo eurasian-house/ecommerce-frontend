@@ -21,8 +21,7 @@ export const MAIN_CATEGORIES = [
     "Hand Knotted Persian",
     "Hand Knotted Kashmiri",
     "Indo-Gabbeh Rugs",
-    "Turkish Rugs",
-
+    
 ];
 
 export const SUB_CATEGORIES = [
@@ -34,12 +33,11 @@ export const SUB_CATEGORIES = [
     "Runner Rugs",
     "Isfahan Rugs",
     "Tabriz Rugs",
-    "Heriz Rugs",
     "Oushak Rugs",
+    "Turkish Rugs",
 
     "Dhurrie",
     "Kilim",
-    "Soumak",
 ];
 
 export const MATERIALS = [
@@ -125,7 +123,7 @@ export const CATEGORY_CODES = {
     "Hand Knotted Persian": "HKP",
     "Hand Knotted Kashmiri": "HKK",
     "Indo-Gabbeh Rugs": "IGR",
-    "Turkish Rugs": "TRG",
+    // "Turkish Rugs": "TRG",
 };
 
 export const SHAPE_CODES = {
