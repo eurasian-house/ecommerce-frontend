@@ -32,6 +32,7 @@ export const SUB_CATEGORIES = [
     "Tibetan Weave Rugs",
     
     "Runner Rugs",
+    "Shag Rugs",
     "Isfahan Rugs",
     "Nain Rugs",
     "Sultanabad Rugs",
