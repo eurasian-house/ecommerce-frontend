@@ -32,7 +32,11 @@ export const SUB_CATEGORIES = [
     
     "Runner Rugs",
     "Isfahan Rugs",
+    "Nain Rugs",
+    "Sultanabad Rugs",
+    "Mughal Rugs",
     "Tabriz Rugs",
+    
     "Oushak Rugs",
     "Turkish Rugs",
     "Leather Rugs",
