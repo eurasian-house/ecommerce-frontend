@@ -1084,7 +1084,8 @@ export default function AddProduct() {
                     <div className="mt-3">
 
                         <textarea
-                            rows={50}
+                            rows={20}
+                            style={{ height: '600px' }}
                             className={`form-control ${errors.description ? "is-invalid" : ""}`}
                             name="description"
                             value={form.description}
