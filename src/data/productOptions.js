@@ -35,6 +35,8 @@ export const SUB_CATEGORIES = [
     "Tabriz Rugs",
     "Oushak Rugs",
     "Turkish Rugs",
+    "Leather Rugs",
+    "Leather Pouffes",
 
     "Dhurrie",
     "Kilim",
