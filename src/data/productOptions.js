@@ -14,11 +14,11 @@ export const MAIN_CATEGORIES = [
     "Hand Loom Rugs",
     "Hand Knotted Rugs",
     "Persian Rugs",
-    "Tibetan Weave Rugs",
     "Jute Rugs",
     "Flatweave Rugs/Dhurries",
     "Leather Rugs/Pouffe",
     "Hand Knotted Persian",
+    "Hand Knotted Tibetan",
     "Hand Knotted Kashmiri",
     "Indo-Gabbeh Rugs",
     
@@ -29,6 +29,7 @@ export const SUB_CATEGORIES = [
     "Wool Rugs",
     "Silk Rugs",
     "Cotton Rugs",
+    "Tibetan Weave Rugs",
     
     "Runner Rugs",
     "Isfahan Rugs",
@@ -36,7 +37,7 @@ export const SUB_CATEGORIES = [
     "Sultanabad Rugs",
     "Mughal Rugs",
     "Tabriz Rugs",
-    
+
     "Oushak Rugs",
     "Turkish Rugs",
     "Leather Rugs",
