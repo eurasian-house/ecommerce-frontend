@@ -230,9 +230,12 @@ export default function PayPalCheckout() {
                                             headers: {
                                                 "Content-Type": "application/json",
                                             },
+                                            // body: JSON.stringify({
+                                            //     amount,
+                                            //     currency: "USD",
+                                            // }),
                                             body: JSON.stringify({
-                                                amount,
-                                                currency: "USD",
+                                                orderId,
                                             }),
                                         }
                                     );
