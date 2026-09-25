@@ -9,7 +9,7 @@ import "../styles/components/CustomerInspiration.css";
 
 export default function CustomerInspiration() {
     const [reviews, setReviews] = useState([]);
-    const [visibleCount, setVisibleCount] = useState(10);
+    const [visibleCount, setVisibleCount] = useState(5);
 
     const navigate = useNavigate();
     const isMobile = window.innerWidth < 576;
@@ -138,8 +138,8 @@ export default function CustomerInspiration() {
                     <div className="text-center mt-5">
 
                         <button
-                            className="app-btn-primary"
-                            onClick={() => setVisibleCount(v => v + 10)}
+                            className="show-more"
+                            onClick={() => setVisibleCount(v => v + 5)}
                         >
                             Show More
                         </button>
