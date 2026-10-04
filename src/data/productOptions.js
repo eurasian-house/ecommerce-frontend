@@ -13,8 +13,6 @@ export const MAIN_CATEGORIES = [
     "Hand Tufted Rugs",
     "Hand Loom Rugs",
     "Hand Knotted Rugs",
-    "Persian Rugs",
-    "Jute Rugs",
     "Flatweave Rugs/Dhurries",
     "Leather Rugs/Pouffe",
     "Hand Knotted Persian",

@@ -569,7 +569,7 @@ export default function ProductDetail() {
                         key={s.id || i}
                         value={s.id}
                       >
-                        {s.size}
+                        {s.size} - ${s.selling_price}
                       </option>
 
                     ))}
