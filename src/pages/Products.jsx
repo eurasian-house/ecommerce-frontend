@@ -21,6 +21,7 @@ import WhyChooseUs from "../components/WhyChooseUs";
 import ShopWithConfidence from "../components/ShopWithConfidence";
 import CustomerInspiration from "../components/CustomerInspiration";
 import LoomToLiving from "../components/LoomToLiving";
+import RugInspirationSlider from "../components/RugInspirationSlider";
 import OurPromise from "../components/OurPromise";
 import BrandStory from "../components/BrandStory";
 import WholesaleHeroCTA from "../components/WholesaleHeroCTA";
@@ -37,6 +38,7 @@ export default function Products() {
   const displayProducts = colorFilter ? allProducts : products;
   const [selectedImages, setSelectedImages] = useState({});
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
 
   // pagination
   const [page, setPage] = useState(1);
@@ -49,41 +51,52 @@ export default function Products() {
   }, [page, colorFilter]);
 
   const fetchProducts = async () => {
-    const from = (page - 1) * limit;
-    const to = from + limit - 1;
+    setLoading(true);
 
-    let query = supabase
-      .from("products")
-      .select(`
-      *,
-      product_colors (*),
-      product_sizes (*)
-    `, { count: "exact" })
-      .order("created_at", { ascending: false });
+    try {
+      const from = (page - 1) * limit;
+      const to = from + limit - 1;
 
-    query = applyActiveFilter(query); // ✅ active only
+      let query = supabase
+        .from("products")
+        .select(
+          `
+          *,
+          product_colors (*),
+          product_sizes (*)
+        `,
+          { count: "exact" }
+        )
+        .order("created_at", { ascending: false });
 
-    if (colorFilter) {
-      const { data, error } = await query;
+      query = applyActiveFilter(query);
 
-      if (error) return alert(error.message);
+      if (colorFilter) {
+        const { data, error } = await query;
 
-      setAllProducts(data || []);
-    } else {
-      const { data, count, error } = await query.range(from, to);
+        if (error) throw error;
 
-      if (error) return alert(error.message);
+        setAllProducts(data || []);
+      } else {
+        const { data, count, error } = await query.range(from, to);
 
-      setProducts(data || []);
-      setTotal(count || 0);
+        if (error) throw error;
 
-      const imgs = {};
+        setProducts(data || []);
+        setTotal(count || 0);
 
-      (data || []).forEach((p) => {
-        imgs[p.id] = p.thumbnail;
-      });
+        const imgs = {};
 
-      setSelectedImages(imgs);
+        (data || []).forEach((p) => {
+          imgs[p.id] = p.thumbnail;
+        });
+
+        setSelectedImages(imgs);
+      }
+    } catch (error) {
+      alert(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -116,72 +129,120 @@ export default function Products() {
           <RecentAdded />
         </LazySection>
         <Discount />
+        {/* ========== HOME PAGE COLOUR SECTION: START ========== */}
+
         <Colors
           colorFilter={colorFilter}
           setColorFilter={setColorFilter}
         />
 
+        {/* Filter products using the existing fetched data */}
+        {(() => {
+          const filteredProducts = displayProducts.filter((product) => {
+            if (!colorFilter) return true;
 
-        {/* PRODUCT LIST */}
-        <div className="d-flex overflow-auto gap-3 pb-2">
-          {displayProducts
-            .filter((product) => {
-              if (!colorFilter) return true;
+            return product.product_colors?.some(
+              (color) =>
+                color.color_name?.trim().toLowerCase() ===
+                colorFilter.trim().toLowerCase()
+            );
+          });
 
-              return product.product_colors?.some(
-                (color) =>
-                  color.color_name?.trim().toLowerCase() ===
-                  colorFilter.trim().toLowerCase()
-              );
-            })
-            .map((p) => (
-              <ProductCard
-                key={p.id}
-                product={p}
-                selectedImage={selectedImages[p.id]}
-                onClick={() => navigate(`/products/${p.slug}`)}
-                onColorClick={(id, img) =>
-                  setSelectedImages((prev) => ({
-                    ...prev,
-                    [id]: img,
-                  }))
-                }
-              />
-            ))}
-        </div>
-        {!colorFilter && (
-          <div className="d-flex justify-content-center align-items-center gap-3 mb-4">
-            <div className="d-flex justify-content-center align-items-center gap-3 mb-4">
-              <button
-                className="btn rounded-4 px-4 d-flex align-items-center gap-2"
-                style={{
-                  background: "var(--surface-1)",
-                  color: "var(--text-primary)",
-                  border: "1px solid var(--border-color)",
-                }}
-                disabled={page === 1}
-                onClick={() => setPage((p) => Math.max(p - 1, 1))}
-              >
-                <i className="bi bi-arrow-left"></i>
-                Previous
-              </button>
+          return (
+            <>
+              {/* Product loading skeleton */}
+              {loading ? (
+                <div
+                  className="home-products-row d-flex overflow-hidden gap-3 pb-2"
+                  aria-label="Loading products"
+                  aria-busy="true"
+                >
+                  {Array.from({ length: 5 }).map((_, index) => (
+                    <div className="home-product-skeleton" key={index}>
+                      <div className="home-product-skeleton__image" />
+                      <div className="home-product-skeleton__line" />
+                      <div className="home-product-skeleton__line home-product-skeleton__line--short" />
+                    </div>
+                  ))}
+                </div>
+              ) : filteredProducts.length === 0 ? (
+                /* No products message */
+                <div className="home-products-empty text-center py-5">
+                  <i className="bi bi-search" />
+                  <h4>No products found</h4>
+                  <p>
+                    {colorFilter
+                      ? `We couldn't find any rugs in ${colorFilter}. Try another colour.`
+                      : "There are no products available right now. Please check again later."}
+                  </p>
 
-              <button
-                className="btn px-2 d-flex align-items-center gap-2"
-                style={{
-                  color: "var(--color-primary)",
-                  border: "none",
-                  background: "transparent",
-                }}
-                disabled={page >= totalPages}
-                onClick={() => setPage((p) => p + 1)}
-              >
-                Next
-                <i className="bi bi-arrow-right"></i>
-              </button>
-            </div>
-          </div>
-        )}
+                  {colorFilter && (
+                    <button
+                      type="button"
+                      className="btn-clear btn btn-primary"
+                      onClick={() => setColorFilter("")}
+                    >
+                      View All Colours
+                    </button>
+                  )}
+                </div>
+              ) : (
+                /* Products */
+                <div className="d-flex overflow-auto gap-3 pb-2">
+                  {filteredProducts.map((p) => (
+                    <ProductCard
+                      key={p.id}
+                      product={p}
+                      selectedImage={selectedImages[p.id]}
+                      onClick={() => navigate(`/products/${p.slug}`)}
+                      onColorClick={(id, img) =>
+                        setSelectedImages((prev) => ({
+                          ...prev,
+                          [id]: img,
+                        }))
+                      }
+                    />
+                  ))}
+                </div>
+              )}
+
+              {/* Pagination: unchanged */}
+              {!colorFilter && !loading && total > 0 && (
+                <div className="d-flex justify-content-center align-items-center gap-3 mb-4">
+                  <button
+                    className="btn rounded-4 px-4 d-flex align-items-center gap-2"
+                    style={{
+                      background: "var(--surface-1)",
+                      color: "var(--text-primary)",
+                      border: "1px solid var(--border-color)",
+                    }}
+                    disabled={page === 1}
+                    onClick={() => setPage((p) => Math.max(p - 1, 1))}
+                  >
+                    <i className="bi bi-arrow-left" />
+                    Previous
+                  </button>
+
+                  <button
+                    className="btn px-2 d-flex align-items-center gap-2"
+                    style={{
+                      color: "var(--color-primary)",
+                      border: "none",
+                      background: "transparent",
+                    }}
+                    disabled={page >= totalPages}
+                    onClick={() => setPage((p) => p + 1)}
+                  >
+                    Next
+                    <i className="bi bi-arrow-right" />
+                  </button>
+                </div>
+              )}
+            </>
+          );
+        })()}
+
+        {/* ========== HOME PAGE COLOUR SECTION: END ========== */}
 
         {/* EXTRA SECTIONS */}
         <LazySection minHeight={350}>
@@ -199,8 +260,12 @@ export default function Products() {
         <LazySection minHeight={450}>
           <RecentlyViewed />
         </LazySection>
+        
         <LazySection minHeight={450}>
           <ShopWithConfidence />
+        </LazySection>
+        <LazySection minHeight={650}>
+          <RugInspirationSlider />
         </LazySection>
         <LazySection minHeight={350}>
           <LoomToLiving />

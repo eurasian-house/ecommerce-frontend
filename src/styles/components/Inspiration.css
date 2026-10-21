@@ -2,357 +2,418 @@
    INSPIRATION SECTION
 ========================================================== */
 
-.inspiration-section{
+.inspiration-section {
 
     /* padding:6rem 0; */
 
     background:
-        radial-gradient(
-            circle at top,
+        radial-gradient(circle at top,
             var(--bg-secondary) 0%,
             var(--bg-primary) 45%,
-            var(--bg-primary) 100%
-        );
+            var(--bg-primary) 100%);
 }
 
 /* ==========================================================
    FILTER CHIPS
 ========================================================== */
 
-.inspiration-chips{
+.inspiration-chips {
 
-    display:flex;
+    display: flex;
 
-    justify-content:center;
+    justify-content: center;
 
-    flex-wrap:wrap;
+    flex-wrap: wrap;
 
-    gap:.9rem;
+    gap: .9rem;
 
-    margin-bottom:3rem;
+    margin-bottom: 3rem;
 }
 
-.inspiration-chip{
+.inspiration-chip {
 
-    padding:.7rem 1.3rem;
+    padding: .7rem 1.3rem;
 
-    border-radius:50px;
+    border-radius: 50px;
 
-    border:1px solid var(--border);
+    border: 1px solid var(--border);
 
-    background:var(--surface);
+    background: var(--surface);
 
-    color:var(--text-secondary);
+    color: var(--text-secondary);
 
-    font-size:.92rem;
+    font-size: .92rem;
 
-    font-weight:500;
+    font-weight: 500;
 
-    transition:.3s ease;
+    transition: .3s ease;
 }
 
-.inspiration-chip:hover{
+.inspiration-chip:hover {
 
-    transform:translateY(-2px);
+    transform: translateY(-2px);
 
-    border-color:var(--color-primary);
+    border-color: var(--color-primary);
 
-    color:var(--color-primary);
+    color: var(--color-primary);
 
-    box-shadow:var(--shadow-md);
+    box-shadow: var(--shadow-md);
 }
 
-.inspiration-chip.active{
+.inspiration-chip.active {
 
-    background:var(--color-primary);
+    background: var(--color-primary);
 
-    color:#fff;
+    color: #fff;
 
-    border-color:var(--color-primary);
+    border-color: var(--color-primary);
 
-    box-shadow:var(--shadow-md);
+    box-shadow: var(--shadow-md);
 }
 
 /* ==========================================================
    MASONRY
 ========================================================== */
 
-.inspiration-gallery{
+.inspiration-gallery {
 
-    columns:280px;
+    columns: 280px;
 
-    column-gap:1rem;
+    column-gap: 1rem;
 }
 
-.inspiration-card{
+.inspiration-card {
 
-    position:relative;
+    position: relative;
 
-    overflow:hidden;
+    overflow: hidden;
 
-    break-inside:avoid;
+    break-inside: avoid;
 
-    margin-bottom:1rem;
+    margin-bottom: 1rem;
 
-    border-radius:22px;
+    border-radius: 22px;
 
-    cursor:pointer;
+    cursor: pointer;
 
     background:
-        linear-gradient(
-            160deg,
+        linear-gradient(160deg,
             var(--surface),
-            var(--bg-secondary)
-        );
+            var(--bg-secondary));
 
-    border:1px solid var(--border);
+    border: 1px solid var(--border);
 
-    box-shadow:var(--shadow-md);
+    box-shadow: var(--shadow-md);
 
-    transition:.4s ease;
+    transition: .4s ease;
 }
 
-.inspiration-card::before{
+.inspiration-card::before {
 
-    content:"";
+    content: "";
 
-    position:absolute;
+    position: absolute;
 
-    top:-120px;
-    right:-120px;
+    top: -120px;
+    right: -120px;
 
-    width:220px;
-    height:220px;
+    width: 220px;
+    height: 220px;
 
-    border-radius:50%;
+    border-radius: 50%;
 
     background:
-        radial-gradient(
-            rgba(139,106,70,.15),
-            transparent 72%
-        );
+        radial-gradient(rgba(139, 106, 70, .15),
+            transparent 72%);
 
-    transition:.4s;
+    transition: .4s;
 
-    z-index:0;
+    z-index: 0;
 }
 
-.inspiration-card::after{
+.inspiration-card::after {
 
-    content:"";
+    content: "";
 
-    position:absolute;
+    position: absolute;
 
-    left:0;
-    bottom:0;
+    left: 0;
+    bottom: 0;
 
-    width:100%;
-    height:4px;
+    width: 100%;
+    height: 4px;
 
     background:
-        linear-gradient(
-            90deg,
+        linear-gradient(90deg,
             transparent,
             var(--color-primary),
             var(--color-accent),
             var(--color-primary),
-            transparent
-        );
+            transparent);
 
-    transform:scaleX(0);
+    transform: scaleX(0);
 
-    transition:.35s;
+    transition: .35s;
 
-    z-index:3;
+    z-index: 3;
 }
 
-.inspiration-card:hover{
+.inspiration-card:hover {
 
-    transform:translateY(-8px);
+    transform: translateY(-8px);
 
-    border-color:var(--color-primary);
+    border-color: var(--color-primary);
 
-    box-shadow:var(--shadow-xl);
+    box-shadow: var(--shadow-xl);
 }
 
-.inspiration-card:hover::before{
+.inspiration-card:hover::before {
 
-    transform:scale(1.2);
+    transform: scale(1.2);
 }
 
-.inspiration-card:hover::after{
+.inspiration-card:hover::after {
 
-    transform:scaleX(1);
+    transform: scaleX(1);
 }
 
 /* ==========================================================
    IMAGE
 ========================================================== */
 
-.inspiration-image{
+.inspiration-image {
 
-    width:100%;
+    width: 100%;
 
-    display:block;
+    display: block;
 
-    transition:.6s ease;
+    transition: .6s ease;
 }
 
-.inspiration-card:hover .inspiration-image{
+.inspiration-card:hover .inspiration-image {
 
-    transform:scale(1.06);
+    transform: scale(1.06);
 }
 
 /* ==========================================================
    OVERLAY
 ========================================================== */
 
-.inspiration-overlay{
+.inspiration-overlay {
 
-    position:absolute;
+    position: absolute;
 
-    inset:0;
+    inset: 0;
 
-    display:flex;
+    display: flex;
 
-    flex-direction:column;
+    flex-direction: column;
 
-    justify-content:flex-end;
+    justify-content: flex-end;
 
-    padding:1.5rem;
+    padding: 1.5rem;
 
     background:
-        linear-gradient(
-            transparent 35%,
-            rgba(0,0,0,.82)
-        );
+        linear-gradient(transparent 35%,
+            rgba(0, 0, 0, .82));
 
-    color:#fff;
+    color: #fff;
 
-    opacity:0;
+    opacity: 0;
 
-    transition:.35s;
+    transition: .35s;
 
-    z-index:2;
+    z-index: 2;
 }
 
-.inspiration-card:hover .inspiration-overlay{
+.inspiration-card:hover .inspiration-overlay {
 
-    opacity:1;
+    opacity: 1;
 }
 
-.inspiration-overlay h6{
+.inspiration-overlay h6 {
     color: #fff !important;
 
-    font-size:1rem;
+    font-size: 1rem;
 
-    font-weight:600;
+    font-weight: 600;
 
-    margin-bottom:.4rem;
+    margin-bottom: .4rem;
 
-    line-height:1.4;
+    line-height: 1.4;
 }
 
-.inspiration-overlay span{
+.inspiration-overlay span {
 
-    display:flex;
+    display: flex;
 
-    align-items:center;
+    align-items: center;
 
-    font-size:.9rem;
+    font-size: .9rem;
 
-    opacity:.95;
+    opacity: .95;
 }
 
 /* ==========================================================
    LOAD MORE BUTTON
 ========================================================== */
 
-.inspiration-load-btn{
+.inspiration-load-btn {
 
-    display:inline-flex;
+    display: inline-flex;
 
-    align-items:center;
+    align-items: center;
 
-    gap:.8rem;
+    gap: .8rem;
 
-    padding:.95rem 1.8rem;
+    padding: .95rem 1.8rem;
 
-    border:none;
+    border: none;
 
-    border-radius:999px;
+    border-radius: 999px;
 
     background:
-        linear-gradient(
-            135deg,
+        linear-gradient(135deg,
             var(--color-primary),
-            var(--color-accent)
-        );
+            var(--color-accent));
 
-    color:#fff;
+    color: #fff;
 
-    font-weight:600;
+    font-weight: 600;
 
-    letter-spacing:.3px;
+    letter-spacing: .3px;
 
     box-shadow:
-        0 12px 28px rgba(139,106,70,.25);
+        0 12px 28px rgba(139, 106, 70, .25);
 
-    transition:.35s ease;
+    transition: .35s ease;
 }
 
-.inspiration-load-btn span{
+.inspiration-load-btn span {
 
-    white-space:nowrap;
+    white-space: nowrap;
 }
 
-.inspiration-load-btn i{
+.inspiration-load-btn i {
 
-    width:36px;
+    width: 36px;
 
-    height:36px;
+    height: 36px;
 
-    display:flex;
+    display: flex;
 
-    align-items:center;
+    align-items: center;
 
-    justify-content:center;
+    justify-content: center;
 
-    border-radius:50%;
+    border-radius: 50%;
 
-    background:rgba(255,255,255,.18);
+    background: rgba(255, 255, 255, .18);
 
-    transition:.35s ease;
+    transition: .35s ease;
 }
 
-.inspiration-load-btn:hover{
+.inspiration-load-btn:hover {
 
-    transform:translateY(-4px);
+    transform: translateY(-4px);
 
-    box-shadow:var(--shadow-xl);
+    box-shadow: var(--shadow-xl);
 }
 
-.inspiration-load-btn:hover i{
+.inspiration-load-btn:hover i {
 
-    transform:translateX(5px);
+    transform: translateX(5px);
 
-    background:rgba(255,255,255,.28);
+    background: rgba(255, 255, 255, .28);
 }
 
-.inspiration-load-btn:active{
+.inspiration-load-btn:active {
 
-    transform:translateY(-1px);
+    transform: translateY(-1px);
+}
+
+
+/* ==========================================================
+   INSPIRATION SKELETON LOADING
+========================================================== */
+
+.inspiration-skeleton {
+    break-inside: avoid;
+    margin-bottom: 1rem;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    border-radius: 22px;
+    background: var(--surface);
+    box-shadow: var(--shadow-md);
+}
+
+.inspiration-skeleton-image {
+    width: 100%;
+    height: 320px;
+    background: linear-gradient(100deg,
+            var(--surface) 20%,
+            var(--bg-secondary) 40%,
+            var(--surface) 60%);
+    background-size: 200% 100%;
+    animation: inspiration-shimmer 1.4s ease-in-out infinite;
+}
+
+@keyframes inspiration-shimmer {
+    from {
+        background-position: 100% 0;
+    }
+
+    to {
+        background-position: -100% 0;
+    }
+}
+
+/* Tablet */
+@media (max-width: 992px) {
+    .inspiration-skeleton-image {
+        height: 280px;
+    }
+}
+
+/* Mobile */
+@media (max-width: 576px) {
+    .inspiration-skeleton {
+        border-radius: 16px;
+        margin-bottom: 0.7rem;
+    }
+
+    .inspiration-skeleton-image {
+        height: 220px;
+    }
+}
+
+/* Extra small screens */
+@media (max-width: 380px) {
+    .inspiration-skeleton {
+        border-radius: 14px;
+    }
+
+    .inspiration-skeleton-image {
+        height: 180px;
+    }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+    .inspiration-skeleton-image {
+        animation: none;
+    }
 }
 
 /* ==========================================================
    TABLET
 ========================================================== */
 
-@media(max-width:992px){
-.inspiration-gallery{
+@media(max-width:992px) {
+    .inspiration-gallery {
 
-    columns:220px;
-}
+        columns: 220px;
+    }
 
 }
 
@@ -360,70 +421,70 @@
    MOBILE
 ========================================================== */
 
-@media(max-width:576px){
+@media(max-width:576px) {
 
-.inspiration-chips{
+    .inspiration-chips {
 
-    gap:.6rem;
+        gap: .6rem;
 
-    margin-bottom:2rem;
-}
+        margin-bottom: 2rem;
+    }
 
-.inspiration-chip{
+    .inspiration-chip {
 
-    padding:.55rem .9rem;
+        padding: .55rem .9rem;
 
-    font-size:.75rem;
-}
+        font-size: .75rem;
+    }
 
-.inspiration-gallery{
+    .inspiration-gallery {
 
-    columns:2;
+        columns: 2;
 
-    column-gap:.7rem;
-}
+        column-gap: .7rem;
+    }
 
-.inspiration-card{
+    .inspiration-card {
 
-    border-radius:16px;
+        border-radius: 16px;
 
-    margin-bottom:.7rem;
-}
+        margin-bottom: .7rem;
+    }
 
-.inspiration-overlay{
+    .inspiration-overlay {
 
-    padding:.75rem;
-}
+        padding: .75rem;
+    }
 
-.inspiration-overlay h6{
+    .inspiration-overlay h6 {
 
-    font-size:.72rem;
+        font-size: .72rem;
 
-    margin-bottom:.2rem;
-}
+        margin-bottom: .2rem;
+    }
 
-.inspiration-overlay span{
+    .inspiration-overlay span {
 
-    font-size:.68rem;
-}
+        font-size: .68rem;
+    }
 
-.inspiration-load-btn{
+    .inspiration-load-btn {
 
-    padding:.8rem 1.3rem;
+        padding: .8rem 1.3rem;
 
-    font-size:.9rem;
+        font-size: .9rem;
 
-    gap:.6rem;
-}
+        gap: .6rem;
+    }
 
-.inspiration-load-btn i{
+    .inspiration-load-btn i {
 
-    width:30px;
+        width: 30px;
 
-    height:30px;
+        height: 30px;
 
-    font-size:.85rem;
-}
+        font-size: .85rem;
+    }
 
 }
 
@@ -431,31 +492,31 @@
    EXTRA SMALL
 ========================================================== */
 
-@media(max-width:380px){
+@media(max-width:380px) {
 
-.inspiration-gallery{
+    .inspiration-gallery {
 
-    column-gap:.5rem;
-}
+        column-gap: .5rem;
+    }
 
-.inspiration-card{
+    .inspiration-card {
 
-    border-radius:14px;
-}
+        border-radius: 14px;
+    }
 
-.inspiration-overlay{
+    .inspiration-overlay {
 
-    padding:.6rem;
-}
+        padding: .6rem;
+    }
 
-.inspiration-overlay h6{
+    .inspiration-overlay h6 {
 
-    font-size:.68rem;
-}
+        font-size: .68rem;
+    }
 
-.inspiration-overlay span{
+    .inspiration-overlay span {
 
-    font-size:.62rem;
-}
+        font-size: .62rem;
+    }
 
 }

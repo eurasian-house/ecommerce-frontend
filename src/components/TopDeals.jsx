@@ -3,9 +3,9 @@ import { supabase } from "../lib/supabase";
 import ProductCard from "./ProductCard";
 import "../styles/components/SmallComponent.css";
 
-
 export default function TopDeals() {
     const [products, setProducts] = useState([]);
+    const [loading, setLoading] = useState(true);
     const scrollRef = useRef(null);
 
     useEffect(() => {
@@ -13,23 +13,27 @@ export default function TopDeals() {
     }, []);
 
     const fetchTopDeals = async () => {
+        setLoading(true);
+
         const { data, error } = await supabase
             .from("products")
             .select("*")
-            .eq("status", "active") // recommended
+            .eq("status", "active")
             .order("clicks", { ascending: false })
-            .limit(10);
+            .limit(15);
 
         if (error) {
             console.log(error);
+            setLoading(false);
             return;
         }
 
         setProducts(data || []);
+        setLoading(false);
     };
 
     const optimizeUrl = (url) => {
-        if (!url.includes("/upload/")) return url;
+        if (!url || !url.includes("/upload/")) return url;
 
         return url.replace(
             "/upload/",
@@ -53,21 +57,12 @@ export default function TopDeals() {
 
     return (
         <section className="top-deals-section">
-
             <div className="container-fluid">
-
                 <div className="text-center top-deals-header">
-
                     <div className="discount-ornament mt-4">
-
                         <span className="ornament-line"></span>
-
-                        <span className="ornament-text">
-                            Featured Deal
-                        </span>
-
+                        <span className="ornament-text">Featured Deal</span>
                         <span className="ornament-line"></span>
-
                     </div>
 
                     <h2 className="mt-3 fw-semibold for-user-heading">
@@ -75,14 +70,12 @@ export default function TopDeals() {
                     </h2>
 
                     <p className="for-user-subheading mx-auto my-4">
-                        Discover our <span className="top-10">Top 10</span> handcrafted rugs loved by
+                        Discover our <span className="top-10">Top</span> handcrafted rugs loved by
                         customers worldwide.
                     </p>
-
                 </div>
 
                 <div className="position-relative">
-
                     <button
                         className="category-arrow category-arrow-left d-none d-md-flex"
                         onClick={scrollLeft}
@@ -95,16 +88,30 @@ export default function TopDeals() {
                         ref={scrollRef}
                         className="d-flex overflow-auto gap-3 pb-2 category-scroll"
                     >
-                        {products.map((product) => (
-                            <ProductCard
-                                key={product.id}
-                                product={{
-                                    ...product,
-                                    thumbnail: optimizeUrl(product.thumbnail),
-                                }}
-                                cardWidth="185px"
-                            />
-                        ))}
+                        {loading ? (
+                            Array.from({ length: 6 }).map((_, index) => (
+                                <div
+                                    key={index}
+                                    className="top-deals-skeleton"
+                                >
+                                    <div className="top-deals-skeleton-image"></div>
+                                    <div className="top-deals-skeleton-line"></div>
+                                    <div className="top-deals-skeleton-line short"></div>
+                                    <div className="top-deals-skeleton-price"></div>
+                                </div>
+                            ))
+                        ) : (
+                            products.map((product) => (
+                                <ProductCard
+                                    key={product.id}
+                                    product={{
+                                        ...product,
+                                        thumbnail: optimizeUrl(product.thumbnail),
+                                    }}
+                                    cardWidth="185px"
+                                />
+                            ))
+                        )}
                     </div>
 
                     <button
@@ -114,11 +121,8 @@ export default function TopDeals() {
                     >
                         ›
                     </button>
-
                 </div>
-
             </div>
-
         </section>
     );
 }

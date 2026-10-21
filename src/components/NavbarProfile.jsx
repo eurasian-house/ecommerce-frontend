@@ -4,6 +4,9 @@ import { supabase } from "../lib/supabase";
 import UserAvatar from "../components/common/UserAvatar";
 import { getAvatar } from "../utils/getAvatar";
 
+import { FaCircleUser, FaRightFromBracket, FaRightToBracket } from "react-icons/fa6";
+
+
 export default function NavbarProfile({ user }) {
   const [open, setOpen] = useState(false);
   const [profile, setProfile] = useState(null);
@@ -73,7 +76,7 @@ export default function NavbarProfile({ user }) {
             />
           </div>
         ) : (
-          <i className="bi bi-person-circle fs-4"></i>
+          <FaCircleUser />
         )}
       </button>
 
@@ -108,7 +111,7 @@ export default function NavbarProfile({ user }) {
                 navigate("/account");
               }}
             >
-              <i className="bi bi-person me-2"></i>
+              <FaCircleUser />
               My Account
             </button>
 
@@ -120,7 +123,7 @@ export default function NavbarProfile({ user }) {
                   navigate("/login");
                 }}
               >
-                <i className="bi bi-box-arrow-in-right me-2"></i>
+                <FaRightToBracket />
                 Login
               </button>
             ) : (
@@ -128,7 +131,7 @@ export default function NavbarProfile({ user }) {
                 className="profile-btn profile-btn-danger w-100"
                 onClick={handleLogout}
               >
-                <i className="bi bi-box-arrow-right me-2"></i>
+                <FaRightFromBracket />
                 Logout
               </button>
             )}

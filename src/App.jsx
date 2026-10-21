@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Suspense, lazy } from "react";
+import ScrollManager from "./components/ScrollManager";
 
 import Layout from "./components/layout/Layout";
 import Products from "./pages/Products";
@@ -67,6 +68,7 @@ export default function App() {
     <AuthProvider>
       <CartProvider>
         <BrowserRouter>
+          <ScrollManager />
           <Analytics />
           <Suspense
             fallback={

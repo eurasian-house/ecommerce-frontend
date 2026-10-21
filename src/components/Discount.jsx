@@ -5,7 +5,7 @@ import "../styles/components/Discount.css";
 const OFFERS = [
   {
     discount: 20,
-    tag: "Modern Persian Collection",
+    tag: "Modern Persian & Kashmiri Collection",
     icon: "bi-heart",
     accent: "crimson",
   },
@@ -18,7 +18,7 @@ const OFFERS = [
   {
     discount: 70,
     tag: "Premium Selection",
-    icon: "bi-stars",
+    icon: "bi-moon",
     accent: "emerald",
   },
   {

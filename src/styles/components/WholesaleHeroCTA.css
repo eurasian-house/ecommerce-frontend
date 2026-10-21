@@ -1,5 +1,5 @@
 /* ==========================================================
-   WHOLESALE HERO CTA
+   WHOLESALE HERO CTA 
 ========================================================== */
 
 .wholesale-section {
@@ -360,7 +360,6 @@
 
 }
 
-
 /* ==========================================================
    WHOLESALE CARD
 ========================================================== */
@@ -400,8 +399,9 @@
     box-shadow: var(--shadow-xl);
 
 }
+
 .card-container {
-    
+
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -669,6 +669,149 @@
 
     line-height: 1.7;
 
+}
+
+/* ==========================================================
+   TAJ MAHAL â€” MARBLE DRAWING & GLOW
+========================================================== */
+
+.taj-artwork {
+    position: relative;
+    width: min(100%, 470px);
+    margin: 2.5rem auto 0;
+    isolation: isolate;
+    opacity: 0;
+    transform: translateY(28px) scale(.96);
+    transition: opacity 1s ease, transform 1s cubic-bezier(.2, .7, .2, 1);
+    cursor: pointer;
+}
+
+.taj-artwork--visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+.taj-artwork__svg {
+    position: relative;
+    z-index: 1;
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+    animation: taj-float 6s ease-in-out infinite;
+    transition: filter .45s ease;
+}
+
+.taj-artwork__path {
+    fill: none;
+    stroke: var(--color-primary-hover);
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: var(--taj-path-length, 5000);
+    stroke-dashoffset: var(--taj-path-length, 5000);
+    filter: drop-shadow(var(--color-primary-hover));
+    transition: stroke .4s ease, stroke-width .4s ease, filter .4s ease;
+}
+
+.taj-artwork--visible .taj-artwork__path {
+    animation: taj-draw 20.5s cubic-bezier(.45, 0, .25, 1) forwards;
+}
+
+.taj-artwork__glow {
+    position: absolute;
+    z-index: 0;
+    inset: 20% 15% 5%;
+    border-radius: 50%;
+    background: radial-gradient(ellipse, rgba(0, 0, 0, .09), transparent 70%);
+    filter: blur(35px);
+    opacity: .35;
+    transform: scale(.8);
+    transition: opacity .5s ease, transform .5s ease;
+    pointer-events: none;
+}
+
+.taj-artwork:hover .taj-artwork__glow {
+    opacity: .7;
+    transform: scale(1.08);
+}
+
+.taj-artwork:hover .taj-artwork__svg {
+    filter: drop-shadow(0 0 4px rgba(0, 0, 0, .12));
+    animation-duration: 3.5s;
+}
+
+.taj-artwork:hover .taj-artwork__path {
+    stroke: var(--color-primary-hover);
+    stroke-width: 2.5;
+    filter: drop-shadow(0 0 3px rgba(0, 0, 0, .35))
+            drop-shadow(0 0 8px rgba(0, 0, 0, .18));
+}
+
+/* Dark mode: white marble */
+[data-theme="dark"] .taj-artwork__path {
+    stroke: #f5f2ea;
+    filter: drop-shadow(0 0 3px rgba(255, 255, 255, .25));
+}
+
+[data-theme="dark"] .taj-artwork__glow {
+    background: radial-gradient(ellipse, rgba(255, 255, 255, .12), transparent 70%);
+    opacity: .45;
+}
+
+[data-theme="dark"] .taj-artwork:hover .taj-artwork__glow {
+    opacity: .9;
+}
+
+[data-theme="dark"] .taj-artwork:hover .taj-artwork__svg {
+    filter: drop-shadow(0 0 6px rgba(255, 255, 255, .2));
+}
+
+[data-theme="dark"] .taj-artwork:hover .taj-artwork__path {
+    stroke: #fff;
+    filter: drop-shadow(0 0 4px rgba(255, 255, 255, .65))
+            drop-shadow(0 0 12px rgba(255, 255, 255, .35))
+            drop-shadow(0 0 22px rgba(255, 255, 255, .15));
+}
+
+@keyframes taj-draw {
+    to { stroke-dashoffset: 0; }
+}
+
+@keyframes taj-float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-7px); }
+}
+
+@media (max-width: 767.98px) {
+    .taj-artwork {
+        width: min(94%, 390px);
+        margin-top: 2rem;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .taj-artwork {
+        width: 100%;
+        padding-inline: .35rem;
+        margin-top: 1.5rem;
+    }
+
+    .taj-artwork__path { stroke-width: 1.5; }
+    .taj-artwork:hover .taj-artwork__path { stroke-width: 2; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .taj-artwork,
+    .taj-artwork__svg,
+    .taj-artwork__path,
+    .taj-artwork__glow {
+        animation: none !important;
+        transition: none !important;
+    }
+
+    .taj-artwork { opacity: 1; transform: none; }
+    .taj-artwork__path { stroke-dashoffset: 0; }
 }
 
 /* ==========================================================

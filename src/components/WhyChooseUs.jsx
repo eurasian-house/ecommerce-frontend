@@ -2,93 +2,152 @@ import "../styles/components/WhyChooseUs.css";
 
 const features = [
   {
+    number: "01",
     icon: "bi-person-workspace",
     title: "Made by Skilled Artisans",
-    text: "Having extensive experience of 25+ years in this field, our artisans bring a level of skill and artistry that is unmatched.",
+    text: "With over 25 years of experience of exceptional rugs, our artisans bring exceptional skill and artistry to every rug.",
   },
   {
-    icon: "bi-gem",
+    number: "02",
+    icon: "bi-currency-dollar",
     title: "Fair & Honest Pricing",
-    text: "We believe exceptional craftsmanship should come with transparent pricing without middlemen and provide genuine value.",
+    text: "Buy directly from us and enjoy authentic craftsmanship without unnecessary middlemen or inflated prices.",
   },
   {
+    number: "03",
     icon: "bi-patch-check",
     title: "Carefully Quality Checked",
-    text: "Each rug is individually inspected before dispatch to ensure it meets our quality standards.",
+    text: "Every rug is individually inspected before dispatch to meet our quality standards.",
   },
   {
+    number: "04",
     icon: "bi-globe2",
     title: "Delivered Worldwide",
-    text: "Wherever you call home, we package every order with care for safe delivery to your doorstep. Shipping is totally free, you just pay for the rugs, we handle the shipping.",
+    text: "Carefully package your order and offer free worldwide shipping. You pay for the rug; we handle the shipping.",
   },
   {
+    number: "05",
     icon: "bi-headset",
     title: "Personal Customer Support",
-    text: "From choosing the right rug to after-sales assistance, we're here whenever you need us. Use WhatsApp for instant support.",
+    text: "From choosing your rug to after-sales assistance, our team is here to help whenever you need us.",
   },
 ];
 
 export default function WhyChooseUs() {
   return (
     <section className="why-choose-us">
-
       <div className="container">
-
-        <div className="text-center mb-5">
-
-          <div className="discount-ornament mt-4">
+        {/* ========== WHY CHOOSE US HEADER: START ========== */}
+        <div className="why-choose-header">
+          <div className="discount-ornament">
 
             <span className="ornament-line"></span>
 
             <span className="ornament-text">
-              WHY CHOOSE US
+              Just Arrived
             </span>
 
             <span className="ornament-line"></span>
 
           </div>
 
-          <h2 className="mt-3 fw-semibold for-user-heading">
-            Why Choose Eurasian House
+          <h2>
+            More Than a Rug.
+            <br />
+            <span>A Part of Your Story.</span>
           </h2>
 
-          <p className="for-user-subheading mx-auto pt-3">
-            We offer exceptional quality at lower prices than standard online stores. Buying directly from us eliminates middlemen commisions.
+          <p>
+            Thoughtfully crafted rugs, honest pricing, and personal service.
+            Discover what makes Eurasian House different.
           </p>
-
         </div>
+        {/* ========== WHY CHOOSE US HEADER: END ========== */}
 
-        <div className="row justify-content-center g-5">
+        {/* ========== BRAND STORY: START ========== */}
+        <div className="why-story">
+          <div className="why-story-image">
+            <img
+              src="/whyus.jpg"
+              alt="Handcrafted rug styled in a warm, elegant living room"
+              loading="lazy"
+            />
+          </div>
 
-          {features.map((item, index) => (
+          <div className="why-story-content">
+            <span className="why-overline">THE EURASIAN DIFFERENCE</span>
 
-            <div
-              key={index}
-              className={`col-lg-${index < 3 ? "4" : "5"} col-md-6`}
-            >
+            <h3>
+              Exceptional craftsmanship.
+              <br />
+              <em>Without the extra cost.</em>
+            </h3>
 
-              <div className="why-card h-100">
+            <p className="why-story-description">
+              We believe beautiful rugs should be accessible without middlemen and
+              compromising on craftsmanship. By working directly with skilled
+              artisans, we bring you thoughtfully made rugs at honest prices.
+            </p>
 
-                <div className="icon-circle">
-
-                  <i className={`bi ${item.icon}`}></i>
-
+            <div className="why-promise-list">
+              <div className="why-promise">
+                <span className="why-promise-icon">
+                  <i className="bi bi-hand-thumbs-up" />
+                </span>
+                <div>
+                  <h4>Direct from Artisans</h4>
+                  <p>No middlemen, better value.</p>
                 </div>
-
-                <h5>{item.title}</h5>
-
-                <p>{item.text}</p>
-
               </div>
 
+              <div className="why-promise">
+                <span className="why-promise-icon">
+                  <i className="bi bi-shield-check" />
+                </span>
+                <div>
+                  <h4>Quality You Can Trust</h4>
+                  <p>Every rug checked before dispatch.</p>
+                </div>
+              </div>
+
+              <div className="why-promise">
+                <span className="why-promise-icon">
+                  <i className="bi bi-truck" />
+                </span>
+                <div>
+                  <h4>Worldwide Free Delivery</h4>
+                  <p>Carefully packed for its journey to you.</p>
+                </div>
+              </div>
             </div>
-
-          ))}
-
+          </div>
         </div>
+        {/* ========== BRAND STORY: END ========== */}
 
+        {/* ========== FEATURE CARDS: START ========== */}
+        <div className="why-features-grid">
+          {features.map((item) => (
+            <article className="why-feature-card" key={item.number}>
+              <div className="why-feature-top">
+                <span className="why-feature-icon">
+                  <i className={`bi ${item.icon}`} />
+                </span>
+
+                <span className="why-feature-number">{item.number}</span>
+              </div>
+
+              <h3>{item.title}</h3>
+              <p>{item.text}</p>
+
+              <div className="why-feature-footer">
+                <span />
+                <i className="bi bi-triangle" />
+              </div>
+            </article>
+          ))}
+        </div>
+        {/* ========== FEATURE CARDS: END ========== */}
       </div>
-
     </section>
   );
 }

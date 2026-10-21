@@ -1,11 +1,15 @@
 import { useTheme } from "../../context/ThemeContext";
 import { NavLink, useNavigate } from "react-router-dom";
-import { useState } from "react";
 import { useCart } from "../../context/CartContext";
 import NavbarProfile from "../NavbarProfile";
+import { useEffect, useRef, useState } from "react";
+
+import EurasianLogo from "../EurasianLogo";
 
 import { useAuth } from "../../context/AuthContext";
 import { trackSearch } from "../../lib/analytics";
+
+import { FaXmark, FaMagnifyingGlass, FaSun, FaMoon, FaCartShopping, FaBars } from "react-icons/fa6";
 
 
 export default function Navbar() {
@@ -17,6 +21,24 @@ export default function Navbar() {
   const { theme, toggleTheme } = useTheme();
 
   const { user } = useAuth();
+  const navbarRef = useRef(null);
+
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (
+        navbarRef.current &&
+        !navbarRef.current.contains(event.target)
+      ) {
+        setNavOpen(false);
+      }
+    };
+
+    document.addEventListener("click", handleOutsideClick);
+
+    return () => {
+      document.removeEventListener("click", handleOutsideClick);
+    };
+  }, []);
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -37,10 +59,13 @@ export default function Navbar() {
   const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
-    <nav className="navbar navbar-expand-lg sticky-top py-0">
+    <nav
+      ref={navbarRef}
+      className="navbar navbar-expand-lg sticky-top py-0"
+    >
       <div className="container-fluid px-2 px-md-4 d-flex align-items-center">
 
-        <NavLink className="navbar-brand" to="/">
+        {/* <NavLink className="navbar-brand" to="/">
           <img
             src={theme === "dark" ? "/logobw.png" : "/logo.png"}
             alt="Eurasian House Logo"
@@ -48,6 +73,13 @@ export default function Navbar() {
             decoding="async"
             className="navbar-logo"
           />
+        </NavLink> */}
+        <NavLink
+          className="navbar-brand"
+          to="/"
+          aria-label="Eurasian House home"
+        >
+          <EurasianLogo className="navbar-logo" animated={false} />
         </NavLink>
 
 
@@ -145,14 +177,14 @@ export default function Navbar() {
                 onClick={() => setMobileSearchOpen(false)}
                 aria-label="Close search"
               >
-                <i className="bi bi-x-lg"></i>
+                <FaXmark />
               </button>
 
               <button
                 type="submit"
                 className="navbar-mobile-search-btn border-0 d-flex align-items-center justify-content-center flex-shrink-0"
               >
-                <i className="bi bi-search"></i>
+                <FaMagnifyingGlass />
               </button>
             </div>
           </form>
@@ -161,21 +193,16 @@ export default function Navbar() {
         {/* Search+User+Cart */}
 
         <div className="d-flex align-items-center flex-grow-1 order-1 order-lg-0 navbar-actions">
-
-
+          {/* Dark/light theme btn */}
           <button
             type="button"
             className="theme-toggle"
             onClick={toggleTheme}
             aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
           >
-            <i
-              className={`bi ${theme === "dark"
-                ? "bi-sun-fill"
-                : "bi-moon-stars-fill"
-                }`}
-            />
+            {theme === "dark" ? <FaSun /> : <FaMoon />}
           </button>
+
 
           {/* Desktop Search */}
           <form
@@ -196,7 +223,7 @@ export default function Navbar() {
               type="submit"
               className="navbar-search-btn border-0 d-flex align-items-center justify-content-center fw-bold"
             >
-              <i className="bi bi-search fs-6 fw-bold"></i>
+              <FaMagnifyingGlass />
             </button>
           </form>
 
@@ -208,7 +235,7 @@ export default function Navbar() {
               onClick={() => setMobileSearchOpen(true)}
               aria-label="Open search"
             >
-              <i className="bi bi-search fs-4"></i>
+              <FaMagnifyingGlass />
             </button>
           )}
 
@@ -222,7 +249,7 @@ export default function Navbar() {
               onClick={() => navigate("/cart")}
               aria-label="Shopping cart"
             >
-              <i className="bi bi-cart fs-5"></i>
+              <FaCartShopping />
 
               {totalItems > 0 && (
                 <span className="navbar-cart-badge">
@@ -239,19 +266,22 @@ export default function Navbar() {
 
 
 
+
           <button
             className="navbar-toggler flex-shrink-0 order-2"
             type="button"
-            onClick={() => setNavOpen(!navOpen)}
+            onClick={() => setNavOpen((prev) => !prev)}
             aria-label={navOpen ? "Close navigation menu" : "Open navigation menu"}
             aria-expanded={navOpen}
             aria-controls="navbarContent"
           >
-            <span className="navbar-toggler-icon"></span>
+            {navOpen ? <FaXmark /> : <FaBars />}
           </button>
+
         </div>
 
       </div>
+
     </nav >
   );
 }

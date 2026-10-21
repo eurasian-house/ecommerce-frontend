@@ -19,6 +19,7 @@ html {
 }
 
 @media (max-width: 767.98px) {
+
     html,
     body {
         max-width: 100%;
@@ -87,12 +88,29 @@ h6 {
     line-height: var(--lh-tight);
 }
 
-h1 { font-size: var(--fs-h1); }
-h2 { font-size: var(--fs-h2); }
-h3 { font-size: var(--fs-h3); }
-h4 { font-size: var(--fs-h4); }
-h5 { font-size: var(--fs-h5); }
-h6 { font-size: var(--fs-h6); }
+h1 {
+    font-size: var(--fs-h1);
+}
+
+h2 {
+    font-size: var(--fs-h2);
+}
+
+h3 {
+    font-size: var(--fs-h3);
+}
+
+h4 {
+    font-size: var(--fs-h4);
+}
+
+h5 {
+    font-size: var(--fs-h5);
+}
+
+h6 {
+    font-size: var(--fs-h6);
+}
 
 p {
     margin: 0;
@@ -155,12 +173,90 @@ textarea {
     resize: vertical;
 }
 
+/* ========= SVGs ========= */
+.navbar-toggler svg {
+    pointer-events: none;
+}
+
 /* ========= Tables ========= */
 
 table {
     width: 100%;
     border-collapse: collapse;
 }
+
+
+
+
+
+/* =========================================
+   PREMIUM HOVER EFFECT
+   Reusable for text, links and icons
+========================================= */
+
+.hover-lift {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    transition:
+        color var(--transition),
+        transform var(--transition);
+}
+
+/* Smooth lift and slight magnification */
+.hover-lift:hover {
+    color: var(--color-primary);
+    transform: translateY(-2px) scale(1.04);
+}
+
+/* Icons inherit the same hover colour */
+.hover-lift svg {
+    transition:
+        color var(--transition),
+        transform var(--transition);
+}
+
+/* Optional animated underline */
+.hover-lift--underline::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+    width: 100%;
+    height: 1px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--transition);
+}
+
+.hover-lift--underline:hover::after {
+    transform: scaleX(1);
+}
+
+/* Keyboard accessibility */
+.hover-lift:focus-visible {
+    color: var(--color-primary);
+    outline: 2px solid var(--color-primary);
+    outline-offset: 4px;
+    border-radius: var(--radius-sm);
+}
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+    .hover-lift,
+    .hover-lift svg,
+    .hover-lift--underline::after {
+        transition: none;
+    }
+
+    .hover-lift:hover {
+        transform: none;
+    }
+}
+
+
+
 
 
 

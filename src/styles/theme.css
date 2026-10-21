@@ -1,18 +1,8 @@
-/* @import "./global01.css"; */
-
-/* ==========================================================================
-   EURASIAN HOUSE DESIGN TOKENS
-   Version 1.0
-   ========================================================================== */
-
-
 /* ==========================================================================
    LIGHT THEME
    ========================================================================== */
 
 :root {
-
-
     /* =========================
    THEME TOGGLE
     ========================= */
@@ -223,13 +213,13 @@
      NAVBAR
   ========================= */
 
-    --navbar-height: 58px;
-    --navbar-height-mobile: 58px;
-    --navbar-logo-size: 40px;
+    --navbar-height: 38px;
+    --navbar-height-mobile: 25px;
+    --navbar-logo-size: 38px;
 
-    --navbar-search-height: 45px;
-    --navbar-search-btn-size: 40px;
-    --navbar-mobile-search-btn-size: 42px;
+    --navbar-search-height: 35px;
+    --navbar-search-btn-size: 30px;
+    --navbar-mobile-search-btn-size: 32px;
 
     --navbar-search-width: clamp(120px, 30vw, 700px);
 
@@ -248,11 +238,11 @@
     --navbar-action-bg: var(--surface);
     --navbar-action-bg-hover: var(--surface-hover);
     --navbar-action-border: var(--border);
-    --navbar-action-size: 40px;
+    --navbar-action-size: 30px;
 
     --navbar-focus-ring: var(--color-primary);
 
-    --navbar-icon-size: 1rem;
+    --navbar-icon-size: 0.8rem;
     --navbar-search-icon-size: 0.95rem;
     --navbar-toggler-icon-size: 1rem;
 

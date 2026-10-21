@@ -1,181 +1,286 @@
-/* ==========================================================
-   OUR PROMISE
-========================================================== */
+.our-promise {
+    --promise-bg: #f5eee4;
+    --promise-card: #fbf8f2;
+    --promise-text: #30271f;
+    --promise-muted: #766b60;
+    --promise-accent: #a36f45;
+    --promise-border: rgba(120, 87, 57, 0.2);
 
-.our-promise{
+    padding: 75px 0;
+    background: var(--promise-bg);
+    color: var(--promise-text);
+    transition: background 0.3s ease, color 0.3s ease;
+}
 
-    /* padding:6rem 0; */
-
+.promise-box {
+    position: relative;
+    overflow: hidden;
+    padding: clamp(30px, 5vw, 68px);
+    border: 1px solid var(--promise-border);
+    border-radius: 8px;
     background:
-        radial-gradient(
-            circle at center,
-            var(--bg-secondary) 0%,
-            var(--bg-primary) 70%
-        );
+        radial-gradient(ellipse at 0% 100%,
+            rgba(163, 111, 69, 0.09),
+            transparent 40%),
+        var(--promise-card);
+    text-align: center;
 }
 
-/* ==========================================================
-   PROMISE BOX
-========================================================== */
+/* Decorative corner detail */
 
-.promise-box{
+.promise-decoration {
+    position: absolute;
+    top: -36px;
+    right: -24px;
+    color: var(--promise-accent);
+    font-size: 190px;
+    line-height: 1;
+    opacity: 0.07;
+    transform-origin: center;
+    pointer-events: none;
+    animation: promiseFlowerAnimation 18s linear infinite;
+}
 
-    position:relative;
+@keyframes promiseFlowerAnimation {
+    0% {
+        transform: rotate(-15deg) scale(1);
+    }
 
-    max-width:900px;
+    50% {
+        transform: rotate(165deg) scale(1.06);
+    }
 
-    margin:auto;
+    100% {
+        transform: rotate(345deg) scale(1);
+    }
+}
 
-    padding:3rem;
+@media (prefers-reduced-motion: reduce) {
+    .promise-decoration {
+        animation: none;
+    }
+}
 
-    text-align:center;
+.promise-content {
+    position: relative;
+    z-index: 1;
+    max-width: 900px;
+    margin: 0 auto;
+}
 
-    overflow:hidden;
+.promise-eyebrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    color: var(--promise-accent);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+}
 
-    border-radius:28px;
+.promise-eyebrow span {
+    width: 35px;
+    height: 1px;
+    background: var(--promise-accent);
+    opacity: 0.65;
+}
 
+.promise-content h2 {
+    margin: 23px 0 20px;
+    font-family: "Cardo", Georgia, serif;
+    font-size: clamp(2.1rem, 4.5vw, 3.8rem);
+    font-weight: 600;
+    line-height: 1.17;
+    letter-spacing: -0.035em;
+}
+
+.promise-content h2 em {
+    color: var(--promise-accent);
+    font-weight: 400;
+}
+
+.promise-description {
+    max-width: 740px;
+    margin: 0 auto;
+    color: var(--promise-muted);
+    font-size: 1rem;
+    line-height: 1.9;
+}
+
+.promise-description strong {
+    color: var(--promise-text);
+    font-weight: 600;
+}
+
+.promise-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 13px;
+    margin: 30px auto;
+    color: var(--promise-accent);
+}
+
+.promise-divider span {
+    width: 65px;
+    height: 1px;
+    background: var(--promise-border);
+}
+
+.promise-divider i {
+    font-size: 1.1rem;
+}
+
+/* Three trust points */
+
+.promise-features {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 22px;
+    text-align: left;
+}
+
+.promise-feature {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 20px 16px;
+    border: 1px solid var(--promise-border);
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.28);
+    transition:
+        transform 0.25s ease,
+        border-color 0.25s ease,
+        background 0.25s ease;
+}
+
+.promise-feature:hover {
+    transform: translateY(-4px);
+    border-color: var(--promise-accent);
+    background: rgba(163, 111, 69, 0.06);
+}
+
+.promise-feature-icon {
+    display: grid;
+    flex: 0 0 42px;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: rgba(163, 111, 69, 0.1);
+    color: var(--promise-accent);
+    font-size: 1.2rem;
+}
+
+.promise-feature h3 {
+    margin: 2px 0 6px;
+    color: var(--promise-text);
+    font-family: "Cardo", Georgia, serif;
+    font-size: 1.12rem;
+    font-weight: 700;
+}
+
+.promise-feature p {
+    margin: 0;
+    color: var(--promise-muted);
+    font-size: 0.84rem;
+    line-height: 1.65;
+}
+
+/* Brand signature */
+
+.promise-signature {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    margin-top: 30px;
+}
+
+.promise-signature span {
+    color: var(--promise-muted);
+    font-family: "Delius", cursive;
+    font-size: 0.95rem;
+}
+
+.promise-signature strong {
+    color: var(--promise-accent);
+    font-family: "Cardo", Georgia, serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+}
+
+/* Dark mode */
+
+[data-theme="dark"] .our-promise {
+    --promise-bg: var(--color-background, #191816);
+    --promise-card: var(--color-card, #23211e);
+    --promise-text: var(--color-foreground, #f2ece3);
+    --promise-muted: var(--color-muted, #b9b0a4);
+    --promise-accent: #d5a579;
+    --promise-border: rgba(225, 203, 178, 0.16);
+}
+
+[data-theme="dark"] .promise-box {
     background:
-        linear-gradient(
-            160deg,
-            var(--surface),
-            var(--bg-secondary)
-        );
-
-    border:1px solid var(--border);
-
-    box-shadow:var(--shadow-md);
-
-    transition:.4s ease;
+        radial-gradient(ellipse at 0% 100%,
+            rgba(213, 165, 121, 0.08),
+            transparent 40%),
+        var(--promise-card);
 }
 
-.promise-box::before{
-
-    content:"";
-
-    position:absolute;
-
-    top:-140px;
-
-    right:-140px;
-
-    width:260px;
-
-    height:260px;
-
-    border-radius:50%;
-
-    background:
-        radial-gradient(
-            rgba(139,106,70,.15),
-            transparent 72%
-        );
-
-    transition:.4s;
+[data-theme="dark"] .promise-feature {
+    background: rgba(255, 255, 255, 0.025);
 }
 
-.promise-box::after{
-
-    content:"";
-
-    position:absolute;
-
-    left:0;
-
-    bottom:0;
-
-    width:100%;
-
-    height:4px;
-
-    background:
-        linear-gradient(
-            90deg,
-            transparent,
-            var(--color-primary),
-            var(--color-accent),
-            var(--color-primary),
-            transparent
-        );
-
-    transform:scaleX(0);
-
-    transition:.35s;
+[data-theme="dark"] .promise-feature:hover {
+    background: rgba(213, 165, 121, 0.07);
 }
 
-.promise-box:hover{
-
-    transform:translateY(-8px);
-
-    border-color:var(--color-primary);
-
-    box-shadow:var(--shadow-xl);
+[data-theme="dark"] .promise-feature-icon {
+    background: rgba(213, 165, 121, 0.12);
 }
 
-.promise-box:hover::before{
+/* Responsive */
 
-    transform:scale(1.2);
+@media (max-width: 767px) {
+    .our-promise {
+        padding: 50px 0;
+    }
+
+    .promise-box {
+        padding: 38px 22px;
+    }
+
+    .promise-content h2 {
+        font-size: clamp(2rem, 7vw, 2.8rem);
+    }
+
+    .promise-description {
+        font-size: 0.94rem;
+        line-height: 1.8;
+    }
+
+    .promise-features {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .promise-feature {
+        padding: 16px;
+    }
+
+    .promise-decoration {
+        top: -15px;
+        right: -20px;
+        font-size: 125px;
+    }
 }
 
-.promise-box:hover::after{
-
-    transform:scaleX(1);
-}
-
-/* ==========================================================
-   CONTENT
-========================================================== */
-
-.promise-box>*{
-
-    position:relative;
-
-    z-index:2;
-}
-
-.promise-box .for-user-subheading{
-
-    max-width:760px;
-
-    margin:1.5rem auto 0;
-
-    line-height:1.9;
-}
-
-/* ==========================================================
-   MOBILE
-========================================================== */
-
-@media(max-width:768px){
-
-.our-promise{
-
-    padding:5rem 0;
-}
-
-.promise-box{
-
-    padding:2.25rem;
-}
-
-}
-
-@media(max-width:576px){
-
-.our-promise{
-
-    padding:4rem 0;
-}
-
-.promise-box{
-
-    padding:1.75rem;
-
-    border-radius:22px;
-}
-
-.promise-box .for-user-subheading{
-
-    line-height:1.8;
-}
-
+@media (prefers-reduced-motion: reduce) {
+    .promise-feature {
+        transition: none;
+    }
 }

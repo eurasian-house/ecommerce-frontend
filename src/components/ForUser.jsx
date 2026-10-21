@@ -2,88 +2,123 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/components/SmallComponent.css";
 
+const commitments = [
+  {
+    number: "01",
+    icon: "bi-headset",
+    title: "Here for You",
+    description:
+      "Personal support and genuine assistance whenever you need us.",
+  },
+  {
+    number: "02",
+    icon: "bi-award",
+    title: "Made with Care",
+    description:
+      "Thoughtfully crafted rugs with quality and detail at heart.",
+  },
+  {
+    number: "03",
+    icon: "bi-globe2",
+    title: "A Global Promise",
+    description:
+      "A commitment to quality, integrity, and lasting relationships.",
+  },
+];
+
 const ForUser = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="for-user-section d-flex align-items-center justify-content-center">
+    <section className="for-user-section">
       <div className="container">
-        <div className="row justify-content-center text-center">
-          <div className="col-lg-10">
+        <div className="for-user-layout">
+          {/* Image */}
+          <div className="for-user-visual">
+            <div className="for-user-image-frame">
+              <img
+                src="/commitment.jpg"
+                alt="Beautiful handmade rug in a thoughtfully designed living room"
+                className="for-user-image"
+                loading="lazy"
+                decoding="async"
+              />
 
-            {/* Badge */}
-            <div className="mb-4">
-
-              <div className="discount-ornament">
-
-                <span className="ornament-line"></span>
-
-                <span className="ornament-text">
-                  Our Commitment
-                </span>
-
-                <span className="ornament-line"></span>
-
+              <div className="for-user-image-caption">
+                <span className="for-user-caption-mark">EH</span>
+                <div>
+                  <span className="for-user-caption-label">
+                    THE EURASIAN PROMISE
+                  </span>
+                  <p>Made to belong. Made to last.</p>
+                </div>
               </div>
-
-              <h2 className="mt-3 fw-semibold for-user-heading">
-                Crafted with Integrity
-              </h2>
-
-              <p className="mx-auto mt-3 for-user-subheading">
-                For us, a rug isn't just decor—it’s the foundation of a home. That’s why we stick to ethical sourcing, premium materials, and honest craftsmanship. We make pieces designed to grow old with your family.
-              </p>
-
             </div>
 
-            {/* Main Heading */}
-            <h1 className="for-user-title fw-bold mb-4">
-              We really <span className="stronger">care</span> for our customer.
-            </h1>
+            <span className="for-user-visual-decoration" aria-hidden="true">
+              Crafted for living
+            </span>
+          </div>
 
-            {/* Supporting Text */}
-            <p className="for-user-description mb-5 mx-auto">
-              From the initial spark of an idea to the final delivery,
-              your satisfaction is the heartbeat of our process.
-              We don't just build products; we build relationships.
+          {/* Content */}
+          <div className="for-user-content">
+            <div className="for-user-eyebrow">
+              <span />
+              OUR COMMITMENT
+              <span />
+            </div>
+
+            <h2 className="for-user-heading">
+              More than a rug.
+              <br />
+              <em>A part of your story.</em>
+            </h2>
+
+            <p className="for-user-subheading">
+              A rug is where life happens. Where families gather, memories
+              unfold, and a house begins to feel like home. We believe every
+              piece should be made with that responsibility in mind.
             </p>
 
-            {/* Features */}
-            <div className="row g-4 mt-5 pt-4 for-user-features">
+            <div className="for-user-divider" />
 
-              <div className="col-md-4">
-                <h4 className="fw-bold">24/7 Support</h4>
-                <p>Always here when you need us most.</p>
-              </div>
+            <div className="for-user-commitments">
+              {commitments.map((item) => (
+                <article className="for-user-commitment" key={item.number}>
+                  <span className="for-user-commitment-number">
+                    {item.number}
+                  </span>
 
-              <div className="col-md-4">
-                <h4 className="fw-bold">Global Quality</h4>
-                <p>Crafted to meet international standards.</p>
-              </div>
+                  <div className="for-user-commitment-icon">
+                    <i className={`bi ${item.icon}`} aria-hidden="true" />
+                  </div>
 
-              <div className="col-md-4">
-                <h4 className="fw-bold">Human First</h4>
-                <p>Real people, real conversations.</p>
-              </div>
-
+                  <div className="for-user-commitment-copy">
+                    <h3>{item.title}</h3>
+                    <p>{item.description}</p>
+                  </div>
+                </article>
+              ))}
             </div>
 
-            {/* CTA  */}
-            <div className="mt-5 pt-3">
+            <button
+              type="button"
+              className="for-user-cta"
+              onClick={() => navigate("/products")}
+            >
+              Discover our collection
+              <span className="for-user-cta-icon">
+                <i className="bi bi-arrow-up-right" />
+              </span>
+            </button>
 
-              <button
-                className="btn app-btn-primary btn-lg px-5 py-3 rounded-pill FU-btn"
-                onClick={() => navigate("/products")}
-              >
-                Experience the Difference
-              </button>
-
-            </div>
-
+            <p className="for-user-footnote">
+              Thoughtful craftsmanship. A more personal experience.
+            </p>
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

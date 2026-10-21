@@ -1,43 +1,85 @@
 import "../styles/components/OurPromise.css";
 
+const promises = [
+    {
+        icon: "bi-hand-index",
+        title: "Made by Hand",
+        text: "Traditional craftsmanship in every detail.",
+    },
+    {
+        icon: "bi-patch-check",
+        title: "Quality First",
+        text: "Carefully finished and inspected rugs.",
+    },
+    {
+        icon: "bi-shield-check",
+        title: "Packed with Care",
+        text: "Protected for the journey to your home.",
+    },
+];
 
 export default function OurPromise() {
     return (
         <section className="our-promise">
-
             <div className="container">
-
                 <div className="promise-box">
-
-                    <div className="discount-ornament">
-
-                        <span className="ornament-line"></span>
-
-                        <span className="ornament-text">
-                            OUR PROMISE
-                        </span>
-
-                        <span className="ornament-line"></span>
-
+                    <div className="promise-decoration" aria-hidden="true">
+                        <i className="bi bi-flower1" />
                     </div>
 
-                    <h2 className="mt-3 fw-semibold for-user-heading">
-                        Crafted with Care. Delivered with Confidence.
-                    </h2>
+                    <div className="promise-content">
+                        <div className="discount-ornament mt-4">
+                            <span className="ornament-line"></span>
+                            <span className="ornament-text">
+                                OUR PROMISE
+                            </span>
+                            <span className="ornament-line"></span>
+                        </div>
 
-                    <p className="for-user-subheading mx-auto">
-                        The Eurasian House rug we offer reflects thoughtful craftsmanship,
-                        careful inspection, honest pricing, and personal service.
-                        From the moment it leaves the hands of skilled artisans
-                        until it becomes part of your home, our commitment remains
-                        the same — to create an experience you'll be proud to
-                        remember.
-                    </p>
+                        <h2>
+                            Crafted with Care.
+                            <br />
+                            <em>Delivered with Confidence.</em>
+                        </h2>
 
+                        <p className="promise-description">
+                            Every rug we create reflects patience, passion, and generations
+                            of artistry. We take the time to refine every detail and carefully
+                            prepare each piece for its journey to you.
+                            <strong>
+                                {" "}From our hands to your home, your rug deserves care at
+                                every step.
+                            </strong>
+                        </p>
+
+                        <div className="promise-divider">
+                            <span />
+                            <i className="bi bi-flower3" />
+                            <span />
+                        </div>
+
+                        <div className="promise-features">
+                            {promises.map((promise) => (
+                                <div className="promise-feature" key={promise.title}>
+                                    <div className="promise-feature-icon">
+                                        <i className={`bi ${promise.icon}`} />
+                                    </div>
+
+                                    <div>
+                                        <h3>{promise.title}</h3>
+                                        <p>{promise.text}</p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+
+                        <div className="promise-signature">
+                            <span>With care,</span>
+                            <strong>Eurasian House</strong>
+                        </div>
+                    </div>
                 </div>
-
             </div>
-
         </section>
     );
 }

@@ -110,7 +110,6 @@ export const COLORS = [
     "Rust",
     "Silver",
     "Sky Blue",
-    "Tan",
     "Teal",
     "Terracotta",
     "White",

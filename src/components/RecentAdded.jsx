@@ -1,31 +1,39 @@
-import { useEffect, useState, useRef } from "react";
+
+import { useEffect, useRef, useState } from "react";
 import { supabase } from "../lib/supabase";
 import ProductCard from "./ProductCard";
 import "../styles/components/SmallComponent.css";
 
 export default function RecentAdded() {
     const [products, setProducts] = useState([]);
+    const [loading, setLoading] = useState(true);
     const scrollRef = useRef(null);
 
     useEffect(() => {
+        const fetchRecentAdded = async () => {
+            try {
+                const { data, error } = await supabase
+                    .from("products")
+                    .select("*")
+                    .eq("status", "active")
+                    .order("created_at", { ascending: false })
+                    .limit(15);
+
+                if (error) {
+                    console.error("Error fetching recent products:", error);
+                    return;
+                }
+
+                setProducts(data || []);
+            } catch (error) {
+                console.error("Unexpected error fetching products:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
         fetchRecentAdded();
     }, []);
-
-    const fetchRecentAdded = async () => {
-        const { data, error } = await supabase
-            .from("products")
-            .select("*")
-            .eq("status", "active")
-            .order("created_at", { ascending: false })
-            .limit(15);
-
-        if (error) {
-            console.log(error);
-            return;
-        }
-
-        setProducts(data || []);
-    };
 
     const optimizeUrl = (url) => {
         if (!url?.includes("/upload/")) return url;
@@ -36,88 +44,118 @@ export default function RecentAdded() {
         );
     };
 
-    const scrollLeft = () => {
+    const scroll = (direction) => {
         scrollRef.current?.scrollBy({
-            left: -350,
+            left: direction * 400,
             behavior: "smooth",
         });
     };
 
-    const scrollRight = () => {
-        scrollRef.current?.scrollBy({
-            left: 350,
-            behavior: "smooth",
-        });
-    };
+    if (!loading && products.length === 0) return null;
 
     return (
-        <section className="top-deals-section">
+        <section className="recent-added-section">
+            {/* Decorative background texture */}
+            <img
+                className="recent-added-texture"
+                src="/category/tibetan.jpg"
+                alt="Close Hand Knotted Rug"
+                aria-hidden="true"
+                loading="lazy"
+                decoding="async"
+            />
 
-            <div className="container-fluid">
-
-                <div className="text-center top-deals-header">
-
-                    <div className="discount-ornament mt-4">
+            <div className="container-fluid recent-added-container">
+                <header className="recent-added-header">
+                    <div className="discount-ornament">
 
                         <span className="ornament-line"></span>
 
                         <span className="ornament-text">
-                            Recently Added
+                            Just Arrived
                         </span>
 
                         <span className="ornament-line"></span>
 
                     </div>
 
-                    <h2 className="mt-3 fw-semibold for-user-heading">
-                        Discover Our Latest Arrivals
+                    <h2 className="recent-added-title">
+                        Discover Our <em>Latest Arrivals</em>
                     </h2>
 
-                    <p className="for-user-subheading mx-auto my-4">
-                        Explore our newest
-                        handcrafted rugs, freshly added to our collection.
+                    <p className="recent-added-description">
+                        Freshly curated, beautifully handcrafted.
+                        Discover the newest additions to our rug collection.
                     </p>
 
-                </div>
+                    <div className="recent-added-divider">
+                        <span />
+                        <i className="bi bi-diamond" aria-hidden="true" />
+                        <span />
+                    </div>
+                </header>
 
-                <div className="position-relative">
-
+                <div className="recent-added-gallery">
                     <button
-                        className="category-arrow category-arrow-left d-none d-md-flex"
-                        onClick={scrollLeft}
+                        className="recent-added-arrow recent-added-arrow-left"
                         type="button"
+                        onClick={() => scroll(-1)}
+                        aria-label="Scroll to previous rugs"
+                        disabled={loading}
                     >
-                        ‹
+                        <i className="bi bi-arrow-left" aria-hidden="true" />
                     </button>
 
                     <div
                         ref={scrollRef}
-                        className="d-flex overflow-auto gap-3 pb-2 category-scroll"
+                        className="recent-added-track"
+                        aria-label="Recently added rugs"
                     >
-                        {products.map((product) => (
-                            <ProductCard
-                                key={product.id}
-                                product={{
-                                    ...product,
-                                    thumbnail: optimizeUrl(product.thumbnail),
-                                }}
-                                cardWidth="185px"
-                            />
-                        ))}
+                        {loading
+                            ? Array.from({ length: 5 }).map((_, index) => (
+                                <div
+                                    className="recent-added-skeleton"
+                                    key={index}
+                                    aria-hidden="true"
+                                >
+                                    <div className="recent-added-skeleton-image" />
+                                    <div className="recent-added-skeleton-line" />
+                                    <div className="recent-added-skeleton-line short" />
+                                </div>
+                            ))
+                            : products.map((product) => (
+                                <div
+                                    className="recent-added-item"
+                                    key={product.id}
+                                >
+                                    <ProductCard
+                                        product={{
+                                            ...product,
+                                            thumbnail: optimizeUrl(product.thumbnail),
+                                        }}
+                                        cardWidth="185px"
+                                    />
+                                </div>
+                            ))}
                     </div>
 
                     <button
-                        className="category-arrow category-arrow-right d-none d-md-flex"
-                        onClick={scrollRight}
+                        className="recent-added-arrow recent-added-arrow-right"
                         type="button"
+                        onClick={() => scroll(1)}
+                        aria-label="Scroll to more rugs"
+                        disabled={loading}
                     >
-                        ›
+                        <i className="bi bi-arrow-right" aria-hidden="true" />
                     </button>
-
                 </div>
 
+                <div className="recent-added-footer">
+                    <span>
+                        Crafted with care. Made to be lived with.
+                    </span>
+                </div>
             </div>
-
         </section>
     );
 }
