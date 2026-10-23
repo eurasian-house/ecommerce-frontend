@@ -255,85 +255,6 @@
 }
 
 /* ==========================================================
-   LOAD MORE BUTTON
-========================================================== */
-
-.inspiration-load-btn {
-
-    display: inline-flex;
-
-    align-items: center;
-
-    gap: .8rem;
-
-    padding: .95rem 1.8rem;
-
-    border: none;
-
-    border-radius: 999px;
-
-    background:
-        linear-gradient(135deg,
-            var(--color-primary),
-            var(--color-accent));
-
-    color: #fff;
-
-    font-weight: 600;
-
-    letter-spacing: .3px;
-
-    box-shadow:
-        0 12px 28px rgba(139, 106, 70, .25);
-
-    transition: .35s ease;
-}
-
-.inspiration-load-btn span {
-
-    white-space: nowrap;
-}
-
-.inspiration-load-btn i {
-
-    width: 36px;
-
-    height: 36px;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    border-radius: 50%;
-
-    background: rgba(255, 255, 255, .18);
-
-    transition: .35s ease;
-}
-
-.inspiration-load-btn:hover {
-
-    transform: translateY(-4px);
-
-    box-shadow: var(--shadow-xl);
-}
-
-.inspiration-load-btn:hover i {
-
-    transform: translateX(5px);
-
-    background: rgba(255, 255, 255, .28);
-}
-
-.inspiration-load-btn:active {
-
-    transform: translateY(-1px);
-}
-
-
-/* ==========================================================
    INSPIRATION SKELETON LOADING
 ========================================================== */
 
@@ -466,24 +387,6 @@
     .inspiration-overlay span {
 
         font-size: .68rem;
-    }
-
-    .inspiration-load-btn {
-
-        padding: .8rem 1.3rem;
-
-        font-size: .9rem;
-
-        gap: .6rem;
-    }
-
-    .inspiration-load-btn i {
-
-        width: 30px;
-
-        height: 30px;
-
-        font-size: .85rem;
     }
 
 }

@@ -10,7 +10,7 @@ const PriceUnder = () => {
     leftLarge: "/priceunder/left.jpg",
     topRightAdventure: "/priceunder/tr.jpg",
     orangeWhatsNew: "/priceunder/tc.jpg",
-    middleRightPlant: "/priceunder/bc.jpg",
+    middleRightPlant: "/priceunder/bc1.jpg",
     bottomRightRoom: "/priceunder/br.jpg",
   };
 
@@ -84,7 +84,7 @@ const PriceUnder = () => {
                   </span>
 
                   <h6>
-                    Under $100, Free Shipping
+                    Under $100, Free Global Shipping
                   </h6>
 
                 </div>
@@ -168,7 +168,7 @@ const PriceUnder = () => {
               <div
                 className="premium-grid-card"
                 onClick={() =>
-                  navigate("/products?quality=Persian")
+                  navigate("/products?mainCategory=Hand Knotted Persian")
 
                 }
               >

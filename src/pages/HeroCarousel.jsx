@@ -112,11 +112,11 @@ export default function HeroCarousel({ onSlideClick }) {
 
           <div className="hero-glow"></div>
 
-          {/* <div className="hero-content"> */}
+          {/* <div className="hero-content">  */}
           <div className="hero-content">
 
             <span className="hero-badge">
-              Crafted in India
+              Crafted in Bhadohi, India
             </span>
 
             <h2 className="hero-title">
@@ -129,7 +129,7 @@ export default function HeroCarousel({ onSlideClick }) {
 
             <button
               type="button"
-              className="hero-btn"
+              className="btn-primary btn-lg my-3"
               onClick={(e) => {
                 e.stopPropagation();
                 onSlideClick?.();
@@ -144,23 +144,22 @@ export default function HeroCarousel({ onSlideClick }) {
         </div>
 
       </div>
-
       <button
         type="button"
-        className="hero-arrow hero-arrow-left"
+        className="sliding-arrow sliding-arrow--left hero-arrow-left"
         onClick={prevSlide}
-        aria-label="Previous Slide"
+        aria-label="Previous slide"
       >
-        <i className="bi bi-chevron-left"></i>
+        <i className="bi bi-chevron-left" />
       </button>
 
       <button
         type="button"
-        className="hero-arrow hero-arrow-right"
+        className="sliding-arrow sliding-arrow--right hero-arrow-right"
         onClick={nextSlide}
-        aria-label="Next Slide"
+        aria-label="Next slide"
       >
-        <i className="bi bi-chevron-right"></i>
+        <i className="bi bi-chevron-right" />
       </button>
 
       <div className="hero-dots">

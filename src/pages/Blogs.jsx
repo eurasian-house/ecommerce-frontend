@@ -1,4 +1,3 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
 import SEO from "../components/SEO";
 import "../styles/pages/Blogs.css";
@@ -44,11 +43,11 @@ const Blogs = () => {
             <p className="blogs-description">
               Discover buying guides, timeless interiors, weaving traditions,
               craftsmanship from Bhadohi, and practical advice that helps you
-              choose a rug your family will treasure for generations.
+              choose a rug your family will treasure for generations. 
             </p>
 
             <button
-              className="app-btn-luxury mt-4"
+              className="btn-secondary btn-lg mt-4"
               onClick={() => navigate("/contact")}
             >
               Speak With Our Experts
@@ -140,7 +139,7 @@ const Blogs = () => {
             </p>
 
             <button
-              className="app-btn-luxury"
+              className="btn-secondary btn-lg"
               onClick={() => navigate("/contact")}
             >
               Contact Our Team

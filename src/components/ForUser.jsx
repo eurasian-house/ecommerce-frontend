@@ -60,21 +60,25 @@ const ForUser = () => {
             </span>
           </div>
 
-          {/* Content */}
+          {/* Content  */}
           <div className="for-user-content">
-            <div className="for-user-eyebrow">
-              <span />
-              OUR COMMITMENT
-              <span />
-            </div>
 
-            <h2 className="for-user-heading">
-              More than a rug.
-              <br />
-              <em>A part of your story.</em>
+            <div className="discount-ornament">
+
+              <span className="ornament-line"></span>
+
+              <span className="ornament-text">
+                Our Commitment
+              </span>
+
+              <span className="ornament-line"></span>
+
+            </div>
+            <h2 className="recent-added-title">
+              More than a rug. <br /><em>A part of your story.</em>
             </h2>
 
-            <p className="for-user-subheading">
+            <p className="recent-added-description mx-0">
               A rug is where life happens. Where families gather, memories
               unfold, and a house begins to feel like home. We believe every
               piece should be made with that responsibility in mind.

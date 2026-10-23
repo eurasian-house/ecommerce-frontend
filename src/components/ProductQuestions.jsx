@@ -98,7 +98,7 @@ export default function ProductQuestions({ productId }) {
                 {!showAskBox ? (
 
                     <button
-                        className="btn btn-dark rounded-pill px-4 py-2"
+                        className="btn-primary"
                         onClick={() => setShowAskBox(true)}
                     >
                         <i className="bi bi-chat-left-dots me-2"></i>
@@ -128,7 +128,7 @@ export default function ProductQuestions({ productId }) {
                             <div>
 
                                 <button
-                                    className="btn btn-light rounded-pill me-2"
+                                    className="btn-secondary btn-sm m-2"
                                     onClick={() => {
                                         setShowAskBox(false);
                                         setQuestion("");
@@ -138,7 +138,7 @@ export default function ProductQuestions({ productId }) {
                                 </button>
 
                                 <button
-                                    className="btn btn-dark rounded-pill px-4"
+                                    className="btn-primary btn-sm m-2"
                                     disabled={saving}
                                     onClick={handleSubmit}
                                 >

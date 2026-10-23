@@ -45,7 +45,7 @@ export default function ShopWithConfidence() {
   return (
     <section className="shop-confidence">
       <div className="container">
-        {/* ========== SHOP CONFIDENCE HEADER: START ========== */}
+        {/* ========== SHOP CONFIDENCE HEADER: START  ========== */}
         <div className="confidence-header">
           <div className="discount-ornament mt-4">
             <span className="ornament-line"></span>
@@ -55,13 +55,11 @@ export default function ShopWithConfidence() {
             <span className="ornament-line"></span>
           </div>
 
-          <h2>
-            A Better Way
-            <br />
-            <em>to Shop for Rugs.</em>
+          <h2 className="recent-added-title">
+            A Better Way <br /><em>to Shop for Rugs.</em>
           </h2>
 
-          <p>
+          <p className="recent-added-description">
             From the moment you order to the day your rug arrives,
             every detail matters. Shop with confidence, knowing we're
             here to help.

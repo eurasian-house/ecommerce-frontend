@@ -55,6 +55,86 @@ function renderDescription(description) {
   return content.length ? content : <p>No description available.</p>;
 }
 
+function ProductDetailSkeleton() {
+  return (
+    <div className="product-detail-page container-fluid px-0 mt-3">
+      <div className="product-detail-card">
+        <div className="product-detail-layout product-detail-skeleton-layout">
+          {/* Gallery skeleton */}
+          <div className="product-gallery">
+            <div className="product-gallery-wrapper">
+              <div className="product-thumbnail-strip">
+                {Array.from({ length: 4 }).map((_, index) => (
+                  <div
+                    key={index}
+                    className="product-skeleton-thumb skeleton-shimmer"
+                  />
+                ))}
+              </div>
+
+              <div className="product-image-panel">
+                <div className="product-skeleton-main-image skeleton-shimmer" />
+              </div>
+            </div>
+          </div>
+
+          {/* Product information skeleton */}
+          <div className="product-detail-info product-skeleton-info">
+            <div className="product-skeleton-category skeleton-shimmer" />
+            <div className="product-skeleton-title skeleton-shimmer" />
+
+            <div className="product-skeleton-price-row">
+              <div className="product-skeleton-price skeleton-shimmer" />
+              <div className="product-skeleton-mrp skeleton-shimmer" />
+              <div className="product-skeleton-discount skeleton-shimmer" />
+            </div>
+
+            <div className="product-skeleton-description">
+              <div className="skeleton-shimmer" />
+              <div className="skeleton-shimmer" />
+            </div>
+
+            <div className="product-skeleton-option">
+              <div className="product-skeleton-label skeleton-shimmer" />
+              <div className="product-skeleton-note skeleton-shimmer" />
+              <div className="product-skeleton-swatches">
+                {Array.from({ length: 5 }).map((_, index) => (
+                  <div
+                    key={index}
+                    className="product-skeleton-swatch skeleton-shimmer"
+                  />
+                ))}
+              </div>
+            </div>
+
+            <div className="product-skeleton-option">
+              <div className="product-skeleton-label skeleton-shimmer" />
+              <div className="product-skeleton-select skeleton-shimmer" />
+            </div>
+
+            <div className="product-skeleton-specs">
+              {Array.from({ length: 3 }).map((_, index) => (
+                <div
+                  key={index}
+                  className="skeleton-shimmer"
+                />
+              ))}
+            </div>
+
+            <div className="product-skeleton-info-line skeleton-shimmer" />
+            <div className="product-skeleton-info-line skeleton-shimmer" />
+
+            <div className="product-skeleton-actions">
+              <div className="skeleton-shimmer" />
+              <div className="skeleton-shimmer" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function ProductDetail() {
   const { slug } = useParams();
   const navigate = useNavigate(); // ✅ added
@@ -63,6 +143,9 @@ export default function ProductDetail() {
   const location = useLocation();
   const selectedSizeId = location.state?.selectedSizeId;
   const selectedColorId = location.state?.selectedColorId;
+  const [isLoading, setIsLoading] = useState(true);
+  const [isSizeDropdownOpen, setIsSizeDropdownOpen] = useState(false);
+  const sizeDropdownRef = useRef(null);
 
   const [product, setProduct] = useState(null);
   const [selectedImage, setSelectedImage] = useState("");
@@ -179,63 +262,75 @@ export default function ProductDetail() {
     });
   };
 
+
   const fetchProduct = async () => {
-    const { data } = await supabase
-      .from("products")
-      .select(`
-    *,
-    product_colors (*),
-    product_sizes (
-      *
-    )
-  `)
+    setIsLoading(true);
+    setProduct(null);
 
-      .eq("slug", slug)
-      .single();
-
-    if (data) {
-      const allImages = [
-        data.thumbnail,
-        ...(data.images || []),
-        ...(data.product_colors?.map(c => c.color_image) || [])
-      ];
-
-      setImages(allImages);
-      setSelectedImage(data.thumbnail);
-
-      const { data: relatedData } = await supabase
+    try {
+      const { data, error } = await supabase
         .from("products")
         .select(`
-      *,
-      product_colors (*),
-      product_sizes (
-        *
-      )
-  `)
-        .eq("main_category", data.main_category)
-        .eq("shape", data.shape)
-        .neq("id", data.id)
-        .limit(15);
+        *,
+        product_colors (*),
+        product_sizes (*)
+      `)
+        .eq("slug", slug)
+        .single();
 
-      setRelated(
-        (relatedData || []).map(product => ({
-          ...product,
-          product_sizes: sortSizes(product.product_sizes || []),
-        }))
-      );
-    }
+      if (error) throw error;
 
-    if (data?.product_sizes) {
-      data.product_sizes = sortSizes(data.product_sizes);
+      if (data) {
+        const allImages = [
+          data.thumbnail,
+          ...(data.images || []),
+          ...(data.product_colors?.map((c) => c.color_image) || []),
+        ].filter(Boolean);
+
+        setImages(allImages);
+        setSelectedImage(data.thumbnail);
+
+        const { data: relatedData, error: relatedError } = await supabase
+          .from("products")
+          .select(`
+          *,
+          product_colors (*),
+          product_sizes (*)
+        `)
+          .eq("main_category", data.main_category)
+          .eq("shape", data.shape)
+          .neq("id", data.id)
+          .limit(15);
+
+        if (relatedError) {
+          console.error("Error fetching related products:", relatedError);
+        }
+
+        setRelated(
+          (relatedData || []).map((product) => ({
+            ...product,
+            product_sizes: sortSizes(product.product_sizes || []),
+          }))
+        );
+
+        data.product_sizes = sortSizes(data.product_sizes || []);
+      } else {
+        setImages([]);
+        setSelectedImage("");
+        setRelated([]);
+      }
+
+      setProduct(data);
+    } catch (error) {
+      console.error("Error fetching product:", error);
+      setProduct(null);
+      setImages([]);
+      setSelectedImage("");
+      setRelated([]);
+    } finally {
+      setIsLoading(false);
     }
-    setProduct(data);
   };
-
-
-
-
-
-
 
 
   const nextImage = () => {
@@ -254,6 +349,27 @@ export default function ProductDetail() {
     const next = (index + 1) % gallery.length;
     setSelectedImage(gallery[next]);
   };
+
+
+  const changePreviewImage = (direction) => {
+    const gallery = [product.thumbnail, ...(product.images || [])].filter(Boolean);
+
+    if (!gallery.length) return;
+
+    let index = gallery.findIndex(
+      (img) => optimizeUrl(img) === previewImage
+    );
+
+    // If a color image is open, start from the first gallery image.
+    if (index === -1) index = 0;
+
+    const nextIndex = (index + direction + gallery.length) % gallery.length;
+    const nextImageUrl = gallery[nextIndex];
+
+    setSelectedImage(nextImageUrl);
+    setPreviewImage(optimizeUrl(nextImageUrl));
+  };
+
 
   const prevImage = () => {
     // navigate only through the main gallery images (thumbnail + product images)
@@ -323,7 +439,39 @@ export default function ProductDetail() {
       url: `https://www.eurasianrugs.com/products/${product.slug}`,
     },
   };
-  if (!product) return <div className="container mt-4">Loading...</div>;
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        sizeDropdownRef.current &&
+        !sizeDropdownRef.current.contains(event.target)
+      ) {
+        setIsSizeDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  if (isLoading) return <ProductDetailSkeleton />;
+
+  if (!product) {
+    return (
+      <div className="container text-center py-5">
+        <h3>Product not found</h3>
+        <p>Please check the product link or explore our collection.</p>
+        <Link to="/products" className="app-btn-primary">
+          Browse Products
+        </Link>
+      </div>
+    );
+  }
+
+
 
   const expectedDelivery = new Date();
   expectedDelivery.setDate(
@@ -391,12 +539,13 @@ export default function ProductDetail() {
                   {...handlers}
                   className="product-image-panel"
                 >
-
                   <button
+                    type="button"
+                    className="sliding-arrow sliding-arrow--left hero-arrow-left"
                     onClick={prevImage}
-                    className="image-nav-btn image-nav-left"
+                    aria-label="Previous slide"
                   >
-                    <i className="bi bi-chevron-left"></i>
+                    <i className="bi bi-chevron-left" />
                   </button>
 
                   <div className="product-main-image">
@@ -411,12 +560,13 @@ export default function ProductDetail() {
                     />
 
                   </div>
-
                   <button
+                    type="button"
+                    className="sliding-arrow sliding-arrow--right hero-arrow-right"
                     onClick={nextImage}
-                    className="image-nav-btn image-nav-right"
+                    aria-label="Next slide"
                   >
-                    <i className="bi bi-chevron-right"></i>
+                    <i className="bi bi-chevron-right" />
                   </button>
 
                 </div>
@@ -532,49 +682,103 @@ export default function ProductDetail() {
                     Didn't find your size? We customize it at no additional cost.
                   </p>
 
-                  <select
-                    id="size-select"
-                    className="product-size-select"
-                    value={selectedSize?.id ?? ""}
-                    onChange={(e) => {
 
-                      const size = product.product_sizes?.find(
-                        (s) => String(s.id) === e.target.value
-                      );
+                  <div className="premium-size-dropdown" ref={sizeDropdownRef}>
+                    <button
+                      type="button"
+                      className={`premium-size-trigger ${isSizeDropdownOpen ? "is-open" : ""
+                        }`}
+                      onClick={() => setIsSizeDropdownOpen((open) => !open)}
+                      aria-expanded={isSizeDropdownOpen}
+                      aria-haspopup="listbox"
+                    >
+                      <span className="premium-size-trigger-content">
+                        <span className="premium-size-trigger-label">
+                          {selectedSize ? "SELECTED SIZE" : "CHOOSE YOUR SIZE"}
+                        </span>
 
-                      if (!size) return;
+                        <span className="premium-size-trigger-value">
+                          {selectedSize
+                            ? selectedSize.size
+                            : "Select a size"}
+                        </span>
+                      </span>
 
-                      setSelectedSize(size);
+                      <span className="premium-size-trigger-price">
+                        {selectedSize
+                          ? `$${Math.round(Number(displayPrice.selling))}`
+                          : "View sizes"}
+                        <i
+                          className={`bi ${isSizeDropdownOpen
+                            ? "bi-chevron-up"
+                            : "bi-chevron-down"
+                            }`}
+                        />
+                      </span>
+                    </button>
 
-                      setDisplayPrice({
-                        selling: Math.round(
-                          Number(size.selling_price ?? product.selling_price)
-                        ),
-                        mrp: size.mrp_variation || product.mrp,
-                        discount:
-                          size.discount_variation ||
-                          Number(product.discount_percent),
-                      });
-
-                    }}
-                  >
-
-                    <option value="" disabled>
-                      Select a Size
-                    </option>
-
-                    {product.product_sizes?.map((s, i) => (
-
-                      <option
-                        key={s.id || i}
-                        value={s.id}
+                    {isSizeDropdownOpen && (
+                      <div
+                        className="premium-size-menu"
+                        role="listbox"
+                        aria-label="Available rug sizes"
                       >
-                        {s.size} - ${s.selling_price}
-                      </option>
+                        <div className="premium-size-menu-heading">
+                          <span>AVAILABLE SIZES</span>
+                          <span>PRICE</span>
+                        </div>
 
-                    ))}
+                        {product.product_sizes?.map((size, index) => {
+                          const isSelected = selectedSize?.id === size.id;
+                          const price = Math.round(
+                            Number(size.selling_price ?? product.selling_price)
+                          );
 
-                  </select>
+                          return (
+                            <button
+                              key={size.id || index}
+                              type="button"
+                              role="option"
+                              aria-selected={isSelected}
+                              className={`premium-size-option ${isSelected ? "is-selected" : ""
+                                }`}
+                              onClick={() => {
+                                setSelectedSize(size);
+
+                                setDisplayPrice({
+                                  selling: price,
+                                  mrp: size.mrp_variation || product.mrp,
+                                  discount:
+                                    size.discount_variation ||
+                                    Number(product.discount_percent),
+                                });
+
+                                setIsSizeDropdownOpen(false);
+                              }}
+                            >
+                              <span className="premium-size-option-details">
+                                <span className="premium-size-option-name">
+                                  {size.size}
+                                </span>
+
+                                <span className="premium-size-option-unit">
+                                  Rug size
+                                </span>
+                              </span>
+
+                              <span className="premium-size-option-price">
+                                ${price}
+                                {isSelected && (
+                                  <i className="bi bi-check-circle-fill" />
+                                )}
+                              </span>
+                            </button>
+                          );
+                        })}
+                      </div>
+                    )}
+                  </div>
+
 
                 </div>
               </div>
@@ -623,16 +827,12 @@ export default function ProductDetail() {
                 </span>
               </div>
 
-
-
-
-
               {/* ACTION BUTTONS */}
 
-              <div className="product-action-buttons">
+              <div className="product-action-buttons d-flex justify-content-center">
 
                 <button
-                  className="app-btn-primary flex-fill" m
+                  className="btn-primary"
                   aria-disabled={!isSelectionValid}
                   onClick={() => {
 
@@ -658,7 +858,7 @@ export default function ProductDetail() {
                 </button>
 
                 <button
-                  className="app-btn-secondary flex-fill"
+                  className="btn-secondary"
                   aria-disabled={!isSelectionValid}
                   onClick={() => {
 
@@ -751,6 +951,21 @@ export default function ProductDetail() {
           </div>
 
         </section>
+
+
+
+        {/* Rug Size Guide */}
+        <div className="container-fluid px-0 my-0">
+          <img
+            src="/size.jpg"
+            alt="Rug size guide"
+            className="img-fluid w-100 d-block"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+
+
 
         <section
           ref={detailsRef}
@@ -928,40 +1143,53 @@ export default function ProductDetail() {
           <ProductQuestions productId={product.id} />
         </section>
 
-      </div>
+      </div >
+
       {previewImage && (
-
-        <div
-          className="product-preview-modal"
-          onClick={() => setPreviewImage(null)}
-        >
-
+        <div className="product-preview-modal">
           <div className="product-preview-dialog">
-
             <div className="product-preview-content">
-
               <img
                 src={previewImage}
                 alt={product?.title}
                 className="product-preview-image"
-                onClick={(e) => e.stopPropagation()}
               />
 
+              {/* Previous image */}
               <button
-                className="product-preview-close"
-                onClick={() => setPreviewImage(null)}
-                aria-label="Close Preview"
+                type="button"
+                className="sliding-arrow sliding-arrow--left hero-arrow-left"
+                onClick={() => changePreviewImage(-1)}
+                aria-label="Previous slide"
               >
-                <i className="bi bi-x-lg"></i>
+                <i className="bi bi-chevron-left" />
               </button>
 
+              {/* Next image */}
+              <button
+                type="button"
+                className="sliding-arrow sliding-arrow--right hero-arrow-right"
+                onClick={() => changePreviewImage(1)}
+                aria-label="Next slide"
+              >
+                <i className="bi bi-chevron-right" />
+              </button>
+
+              {/* Close only through this button */}
+              <button
+                type="button"
+                className="product-preview-close"
+                onClick={() => setPreviewImage(null)}
+                aria-label="Close preview"
+              >
+                <i className="bi bi-x-lg" />
+              </button>
             </div>
-
           </div>
-
         </div>
+      )
+      }
 
-      )}
     </>
   );
 }

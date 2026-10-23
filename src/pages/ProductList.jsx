@@ -19,6 +19,40 @@ import {
 
 const PRODUCTS_PER_PAGE = 18;
 
+
+function ProductCardSkeleton() {
+  return (
+    <div className="product-skeleton-card">
+      <div className="product-skeleton-image skeleton-shimmer" />
+
+      <div className="product-skeleton-body">
+        <div className="product-skeleton-category skeleton-shimmer" />
+        <div className="product-skeleton-title skeleton-shimmer" />
+        <div className="product-skeleton-title product-skeleton-title-short skeleton-shimmer" />
+
+        <div className="product-skeleton-rating skeleton-shimmer" />
+
+        <div className="product-skeleton-price-row">
+          <div className="product-skeleton-price skeleton-shimmer" />
+          <div className="product-skeleton-old-price skeleton-shimmer" />
+        </div>
+
+        <div className="product-skeleton-colors">
+          {Array.from({ length: 4 }).map((_, index) => (
+            <div
+              key={index}
+              className="product-skeleton-color skeleton-shimmer"
+            />
+          ))}
+        </div>
+
+        <div className="product-skeleton-button skeleton-shimmer" />
+        <div className="product-skeleton-button skeleton-shimmer" />
+      </div>
+    </div>
+  );
+}
+
 export default function ProductList({ colorFilter }) {
   const navigate = useNavigate();
   const location = useLocation();
@@ -1088,7 +1122,7 @@ export default function ProductList({ colorFilter }) {
 
   /*
    * ---------------------------------------------
-   * RESET ALL FILTERS
+   * RESET ALL FILTERS 
    * ---------------------------------------------
    */
 
@@ -1497,73 +1531,69 @@ export default function ProductList({ colorFilter }) {
 
         </div>
 
+
+
         {/* PRODUCTS */}
 
         <div className="row products-grid">
 
           {loading ? (
 
-            <div className="col-12 text-center py-5">
-
+            Array.from({ length: 12 }).map((_, index) => (
               <div
-                className="spinner-border"
-                role="status"
-              />
-
-            </div>
+                key={`product-skeleton-${index}`}
+                className="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-2 mb-4 cards-body"
+              >
+                <ProductCardSkeleton />
+              </div>
+            ))
 
           ) : products.length === 0 ? (
 
-            <div className="col-12">
-
-              <div className="empty-products">
-
+            <div className="col-12 d-flex justify-content-center align-items-center text-center">
+              <div className="empty-products w-100 d-flex flex-column align-items-center justify-content-center py-5">
                 <i className="bi bi-search display-4 mb-3"></i>
 
-                <h3>
-                  No Products Found
-                </h3>
+                <h3>No Products Found</h3>
 
-                <p>
-                  Try adjusting your search or
-                  filters to discover more beautiful
-                  rugs.
+                <p className="mb-0">
+                  Try adjusting your search or filters to discover
+                  more beautiful rugs.
                 </p>
-
               </div>
-
             </div>
 
           ) : (
 
             products.map((p) => (
-
               <div
                 key={p.id}
                 className="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-2 mb-4 cards-body"
               >
-
                 <ProductCard
                   product={p}
-                  selectedImage={
-                    selectedImages[p.id]
-                  }
-                  onColorClick={
-                    handleColorClick
-                  }
-                  onClick={() =>
-                    handleProductClick(
-                      p.slug
-                    )
-                  }
+                  selectedImage={selectedImages[p.id]}
+                  onColorClick={handleColorClick}
+                  onClick={() => handleProductClick(p.slug)}
                   cardWidth="100%"
                 />
-
               </div>
-
             ))
 
           )}
+
+          {/* Skeletons while loading more products */}
+
+          {!loading && loadingMore &&
+            Array.from({ length: 6 }).map((_, index) => (
+              <div
+                key={`loading-more-${index}`}
+                className="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-2 mb-4 cards-body"
+              >
+                <ProductCardSkeleton />
+              </div>
+            ))
+          }
 
         </div>
 
@@ -1574,7 +1604,7 @@ export default function ProductList({ colorFilter }) {
           <div className="load-more-wrapper">
 
             <button
-              className="app-btn-luxury"
+              className="btn-secondary"
               onClick={loadMore}
               disabled={loadingMore}
             >

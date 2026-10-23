@@ -1,13 +1,19 @@
-.rug-inspiration-section {
-  --rug-inspiration-bg: #faf3e9;
-  --rug-inspiration-text: #29251f;
-  --rug-inspiration-muted: #82786c;
-  --rug-inspiration-accent: #a67c52;
+/* =========================================
+   RUG INSPIRATION SECTION
+   Uses global theme.css variables
+========================================= */
 
+@property --ris-glow-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.rug-inspiration-section {
   padding: 72px clamp(16px, 4vw, 64px);
-  background: var(--rug-inspiration-bg);
-  color: var(--rug-inspiration-text);
   overflow: hidden;
+  background: var(--bg-primary);
+  color: var(--text-primary);
 }
 
 .rug-inspiration-heading {
@@ -21,7 +27,7 @@
 .rug-inspiration-eyebrow {
   display: block;
   margin-bottom: 12px;
-  color: var(--rug-inspiration-accent);
+  color: var(--color-primary);
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.2em;
@@ -30,6 +36,7 @@
 .rug-inspiration-heading h2 {
   margin: 0;
   font-family: inherit;
+  color: var(--text-primary);
   font-size: clamp(27px, 3vw, 43px);
   font-weight: 500;
   line-height: 1.2;
@@ -38,7 +45,7 @@
 
 .rug-inspiration-heading p {
   margin: 10px 0 0;
-  color: var(--rug-inspiration-muted);
+  color: var(--text-muted);
   font-size: 14px;
 }
 
@@ -53,32 +60,46 @@
   display: grid;
   width: 42px;
   height: 42px;
+  padding: 0;
   place-items: center;
-  border: 1px solid rgba(41, 37, 31, 0.2);
-  border-radius: 50%;
-  background: transparent;
-  color: var(--rug-inspiration-text);
-  transition: background 0.25s ease, color 0.25s ease,
-    border-color 0.25s ease;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: var(--surface);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition:
+    background-color var(--transition),
+    color var(--transition),
+    border-color var(--transition),
+    transform var(--transition);
 }
 
 .rug-inspiration-arrow:hover {
-  background: var(--rug-inspiration-text);
-  border-color: var(--rug-inspiration-text);
-  color: white;
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--text-inverse);
+}
+
+.rug-inspiration-arrow:active {
+  transform: scale(0.96);
 }
 
 .rug-inspiration-counter {
   display: flex;
-  gap: 5px;
   align-items: center;
+  gap: 5px;
+  color: var(--text-primary);
   font-size: 12px;
   font-variant-numeric: tabular-nums;
 }
 
 .rug-inspiration-counter span {
-  color: #b6aa9b;
+  color: var(--text-muted);
 }
+
+/* =========================================
+   MAIN LAYOUT
+========================================= */
 
 .rug-inspiration-layout {
   display: grid;
@@ -95,19 +116,20 @@
   aspect-ratio: 1.02 / 1;
   overflow: hidden;
   border-radius: 34px;
-  background: #e5d8c7;
+  background: var(--surface-muted);
   isolation: isolate;
 }
 
 .rug-inspiration-scene-image {
   position: absolute;
+  z-index: -2;
   inset: 0;
+  display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center;
   transition: transform 0.8s ease;
-  z-index: -2;
 }
 
 .rug-inspiration-scene:hover .rug-inspiration-scene-image {
@@ -116,22 +138,22 @@
 
 .rug-inspiration-scene-shade {
   position: absolute;
-  inset: 0;
   z-index: -1;
+  inset: 0;
   background: linear-gradient(180deg,
-      rgba(20, 17, 13, 0.06) 20%,
-      rgba(20, 17, 13, 0.04) 45%,
-      rgba(20, 17, 13, 0.56) 100%);
+      color-mix(in srgb, var(--premium-overlay-strong) 12%, transparent) 20%,
+      color-mix(in srgb, var(--premium-overlay-strong) 18%, transparent) 45%,
+      var(--premium-overlay-medium) 100%);
   pointer-events: none;
 }
 
 .rug-inspiration-scene-copy {
   position: absolute;
+  right: 32px;
   bottom: 34px;
   left: 32px;
-  right: 32px;
   max-width: 370px;
-  color: white;
+  color: var(--image-overlay-text);
   pointer-events: none;
 }
 
@@ -144,6 +166,7 @@
 
 .rug-inspiration-scene-copy h3 {
   margin: 10px 0 8px;
+  color: var(--image-overlay-text);
   font-size: clamp(23px, 2.4vw, 34px);
   font-weight: 500;
   line-height: 1.15;
@@ -152,34 +175,47 @@
 
 .rug-inspiration-scene-copy p {
   margin: 0;
+  color: var(--image-overlay-muted);
   font-size: 13px;
   line-height: 1.6;
-  color: rgba(255, 255, 255, 0.86);
 }
+
+/* =========================================
+   MAP-STYLE PRODUCT HOTSPOTS
+========================================= */
 
 .rug-inspiration-hotspot {
   position: absolute;
+  z-index: 2;
   display: grid;
   width: 35px;
   height: 35px;
   padding: 0;
   place-items: center;
-  border: 1px solid rgba(255, 255, 255, 0.95);
+  border: 1px solid var(--image-overlay-text);
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.2);
+  background: color-mix(in srgb,
+      var(--image-overlay-text) 20%,
+      transparent);
+  color: var(--image-overlay-text);
   backdrop-filter: blur(5px);
   cursor: pointer;
   transform: translate(-50%, -50%);
-  transition: width 0.25s ease, height 0.25s ease,
-    background 0.25s ease, box-shadow 0.25s ease;
-  z-index: 2;
+  animation: rugHotspotPulse 2.4s ease-out infinite;
+  transition:
+    width 0.25s ease,
+    height 0.25s ease,
+    background-color 0.25s ease;
 }
 
 .rug-inspiration-hotspot>span {
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  background: white;
+  background: var(--image-overlay-text);
+  box-shadow:
+    0 0 8px color-mix(in srgb, var(--image-overlay-text) 90%, transparent),
+    0 0 18px color-mix(in srgb, var(--image-overlay-text) 45%, transparent);
   transition: transform 0.25s ease;
 }
 
@@ -187,20 +223,51 @@
 .rug-inspiration-hotspot.is-active {
   width: 43px;
   height: 43px;
-  background: rgba(255, 255, 255, 0.34);
-  box-shadow: 0 0 0 7px rgba(255, 255, 255, 0.15);
+  background: color-mix(in srgb,
+      var(--image-overlay-text) 34%,
+      transparent);
 }
 
 .rug-inspiration-hotspot.is-active>span {
   transform: scale(1.25);
 }
 
-.rug-inspiration-hotspot:focus-visible,
-.rug-inspiration-arrow:focus-visible,
-.rug-inspiration-progress-item:focus-visible {
-  outline: 2px solid var(--rug-inspiration-accent);
-  outline-offset: 4px;
+/* Stagger each marker's pulse */
+.rug-inspiration-hotspot:nth-of-type(1) {
+  animation-delay: 0s;
 }
+
+.rug-inspiration-hotspot:nth-of-type(2) {
+  animation-delay: 0.6s;
+}
+
+.rug-inspiration-hotspot:nth-of-type(3) {
+  animation-delay: 1.2s;
+}
+
+.rug-inspiration-hotspot:nth-of-type(4) {
+  animation-delay: 1.8s;
+}
+
+@keyframes rugHotspotPulse {
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in srgb,
+        var(--image-overlay-text) 45%,
+        transparent);
+  }
+
+  70% {
+    box-shadow: 0 0 0 13px transparent;
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 transparent;
+  }
+}
+
+/* =========================================
+   EXPLORE RUGS BUTTON
+========================================= */
 
 .rug-inspiration-scene-hint {
   position: absolute;
@@ -210,13 +277,34 @@
   align-items: center;
   gap: 8px;
   padding: 10px 14px;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 50px;
-  background: rgba(255, 255, 255, 0.82);
-  color: #393127;
+  border: 1px solid color-mix(in srgb,
+      var(--image-overlay-text) 30%,
+      transparent);
+  border-radius: var(--radius-full);
+  background: color-mix(in srgb,
+      var(--surface) 88%,
+      transparent);
+  color: var(--text-primary);
   font-size: 11px;
   backdrop-filter: blur(10px);
+  cursor: pointer;
+  transition:
+    background-color var(--transition),
+    color var(--transition),
+    transform var(--transition),
+    box-shadow var(--transition);
 }
+
+.rug-inspiration-scene-hint:hover {
+  background: var(--surface);
+  color: var(--color-primary);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* =========================================
+   PRODUCT GRID
+========================================= */
 
 .rug-inspiration-products {
   display: grid;
@@ -227,16 +315,62 @@
 }
 
 .rug-inspiration-product {
+  position: relative;
+  z-index: 0;
   min-width: 0;
+  border-radius: var(--radius-md);
   cursor: pointer;
   outline: none;
+  isolation: isolate;
 }
 
+/* Animated accent border */
+.rug-inspiration-product::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: -7px;
+  padding: 1px;
+  border-radius: calc(var(--radius-md) + 7px);
+  background: conic-gradient(from var(--ris-glow-angle),
+      transparent 0deg,
+      color-mix(in srgb, var(--color-primary) 25%, transparent) 70deg,
+      var(--color-primary) 130deg,
+      var(--color-primary-hover) 175deg,
+      var(--color-accent) 220deg,
+      transparent 300deg,
+      transparent 360deg);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  -webkit-mask:
+    linear-gradient(var(--text-inverse) 0 0) content-box,
+    linear-gradient(var(--text-inverse) 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+
+.rug-inspiration-product.is-active {
+  z-index: 1;
+}
+
+.rug-inspiration-product.is-active::before {
+  opacity: 1;
+  animation: risGlowRotate 3s linear infinite;
+}
+
+@keyframes risGlowRotate {
+  to {
+    --ris-glow-angle: 360deg;
+  }
+}
+
+/* Product image */
 .rug-inspiration-product-image-wrap {
   position: relative;
   overflow: hidden;
   aspect-ratio: 1 / 1;
-  background: #e9e1d6;
+  background: var(--surface-muted);
 }
 
 .rug-inspiration-product-image {
@@ -244,18 +378,19 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.5s ease, filter 0.35s ease;
+  filter: saturate(0.9);
+  transition:
+    transform 0.4s ease,
+    filter 0.4s ease;
 }
 
 .rug-inspiration-product:hover .rug-inspiration-product-image,
 .rug-inspiration-product.is-active .rug-inspiration-product-image {
-  transform: scale(1.045);
+  transform: scale(1.035);
+  filter: saturate(1.04);
 }
 
-.rug-inspiration-product:not(.is-active) .rug-inspiration-product-image {
-  filter: saturate(0.9);
-}
-
+/* Product number badge */
 .rug-inspiration-product-number {
   position: absolute;
   top: 10px;
@@ -265,11 +400,12 @@
   height: 28px;
   place-items: center;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.9);
-  color: #342c23;
+  background: var(--surface);
+  color: var(--text-primary);
   font-size: 10px;
 }
 
+/* Product open icon */
 .rug-inspiration-product-open {
   position: absolute;
   right: 10px;
@@ -279,11 +415,13 @@
   height: 35px;
   place-items: center;
   border-radius: 50%;
-  background: white;
-  color: #342c23;
+  background: var(--surface);
+  color: var(--text-primary);
   opacity: 0;
   transform: translateY(5px);
-  transition: opacity 0.25s ease, transform 0.25s ease;
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease;
 }
 
 .rug-inspiration-product:hover .rug-inspiration-product-open,
@@ -292,6 +430,7 @@
   transform: translateY(0);
 }
 
+/* Product details */
 .rug-inspiration-product-info {
   padding-top: 13px;
   border-top: 2px solid transparent;
@@ -299,13 +438,13 @@
 }
 
 .rug-inspiration-product.is-active .rug-inspiration-product-info {
-  border-top-color: var(--rug-inspiration-accent);
+  border-top-color: var(--color-primary);
 }
 
 .rug-inspiration-product-category {
   display: block;
   margin-bottom: 6px;
-  color: var(--rug-inspiration-muted);
+  color: var(--text-muted);
   font-size: 10px;
   text-transform: uppercase;
   letter-spacing: 0.12em;
@@ -315,6 +454,7 @@
   display: -webkit-box;
   overflow: hidden;
   margin: 0;
+  color: var(--text-primary);
   font-size: clamp(14px, 1.25vw, 19px);
   font-weight: 500;
   line-height: 1.45;
@@ -329,15 +469,20 @@
   align-items: baseline;
   gap: 9px;
   margin-top: 8px;
+  color: var(--text-primary);
   font-size: 13px;
   font-weight: 600;
 }
 
 .rug-inspiration-price del {
-  color: #94897e;
+  color: var(--text-muted);
   font-size: 11px;
   font-weight: 400;
 }
+
+/* =========================================
+   SLIDE PROGRESS
+========================================= */
 
 .rug-inspiration-progress {
   display: flex;
@@ -351,37 +496,226 @@
   height: 3px;
   padding: 0;
   border: 0;
-  border-radius: 4px;
-  background: #d6c9b9;
+  border-radius: var(--radius-full);
+  background: var(--border);
   cursor: pointer;
-  transition: width 0.25s ease, background 0.25s ease;
+  transition:
+    width 0.25s ease,
+    background-color 0.25s ease;
 }
 
 .rug-inspiration-progress-item.is-active {
   width: 42px;
-  background: var(--rug-inspiration-accent);
+  background: var(--color-primary);
 }
 
-.rug-inspiration-loading {
-  display: flex;
-  gap: 16px;
+/* =========================================
+   LAYOUT-MATCHING SKELETON
+========================================= */
+
+.rug-inspiration-skeleton .rug-inspiration-heading {
+  min-height: 85px;
+}
+
+.ris-skeleton {
+  position: relative;
+  display: block;
   overflow: hidden;
+  border-radius: 5px;
+  background: var(--skeleton-base);
 }
 
-.rug-inspiration-loading span {
-  flex: 1;
-  aspect-ratio: 1 / 0.8;
-  background: #eee4d8;
-  animation: rugInspirationPulse 1.2s ease-in-out infinite alternate;
+.ris-skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg,
+      transparent,
+      var(--skeleton-highlight),
+      transparent);
+  animation: risSkeletonShimmer 1.5s ease-in-out infinite;
 }
 
-.rug-inspiration-loading span:nth-child(2) {
-  animation-delay: 0.2s;
+.ris-skeleton-heading {
+  width: min(380px, 65vw);
+  height: 38px;
+  margin-top: 5px;
 }
 
-.rug-inspiration-loading span:nth-child(3) {
-  animation-delay: 0.4s;
+.ris-skeleton-subheading {
+  width: 230px;
+  max-width: 80%;
+  height: 12px;
+  margin-top: 14px;
 }
+
+.ris-skeleton-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ris-skeleton-controls span {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--skeleton-base);
+}
+
+.ris-skeleton-controls span:nth-child(2) {
+  width: 34px;
+  height: 10px;
+  border-radius: 4px;
+}
+
+.rug-inspiration-skeleton-layout {
+  align-items: stretch;
+}
+
+.ris-skeleton-scene {
+  position: relative;
+  min-height: 530px;
+  aspect-ratio: 1.02 / 1;
+  background: var(--skeleton-base);
+}
+
+.ris-skeleton-scene-badge {
+  position: absolute;
+  top: 22px;
+  left: 22px;
+  width: 130px;
+  height: 32px;
+  border-radius: var(--radius-full);
+  background: var(--skeleton-highlight);
+}
+
+.ris-skeleton-scene-copy {
+  position: absolute;
+  right: 32px;
+  bottom: 34px;
+  left: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.ris-skeleton-label {
+  width: 65px;
+  height: 10px;
+}
+
+.ris-skeleton-scene-title {
+  width: 80%;
+  height: 30px;
+}
+
+.ris-skeleton-scene-subtitle {
+  width: 55%;
+  height: 12px;
+}
+
+.ris-skeleton-hotspots {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.ris-skeleton-hotspots span {
+  position: absolute;
+  width: 35px;
+  height: 35px;
+  border: 1px solid var(--border-light);
+  border-radius: 50%;
+  background: var(--skeleton-highlight);
+}
+
+.ris-skeleton-hotspots span:nth-child(1) {
+  top: 75%;
+  left: 22%;
+}
+
+.ris-skeleton-hotspots span:nth-child(2) {
+  top: 57%;
+  left: 32%;
+}
+
+.ris-skeleton-hotspots span:nth-child(3) {
+  top: 68%;
+  left: 50%;
+}
+
+.ris-skeleton-hotspots span:nth-child(4) {
+  top: 90%;
+  left: 70%;
+}
+
+/* Skeleton product cards */
+.ris-skeleton-product {
+  min-width: 0;
+}
+
+.ris-skeleton-product-image {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+}
+
+.ris-skeleton-product-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 9px;
+  padding-top: 13px;
+}
+
+.ris-skeleton-category {
+  width: 45%;
+  height: 9px;
+}
+
+.ris-skeleton-product-title {
+  width: 95%;
+  height: 13px;
+}
+
+.ris-skeleton-product-title-short {
+  width: 65%;
+}
+
+.ris-skeleton-price {
+  width: 25%;
+  height: 12px;
+  margin-top: 3px;
+}
+
+.ris-skeleton-progress {
+  display: flex;
+  justify-content: center;
+  gap: 7px;
+  margin-top: 30px;
+}
+
+.ris-skeleton-progress span {
+  width: 24px;
+  height: 3px;
+  border-radius: var(--radius-full);
+  background: var(--skeleton-base);
+}
+
+.ris-skeleton-progress span:first-child {
+  width: 42px;
+}
+
+@keyframes risSkeletonShimmer {
+  to {
+    transform: translateX(100%);
+  }
+}
+
+/* =========================================
+   ENTRANCE ANIMATION
+========================================= */
 
 @keyframes rugInspirationEnter {
   from {
@@ -395,108 +729,19 @@
   }
 }
 
-@keyframes rugInspirationPulse {
-  from {
-    opacity: 0.5;
-  }
-
-  to {
-    opacity: 1;
-  }
-}
-
-
-
-/* ========== RUG INSPIRATION DARK MODE: START ========== */
-
-[data-theme="dark"] .rug-inspiration-section {
-  --rug-inspiration-bg: var(--color-background, #171715);
-  --rug-inspiration-text: var(--color-foreground, #f3eee6);
-  --rug-inspiration-muted: var(--color-muted, #c0b8ad);
-  --rug-inspiration-accent: #d5a579;
-
-  background: var(--rug-inspiration-bg);
-  color: var(--rug-inspiration-text);
-}
-
-[data-theme="dark"] .rug-inspiration-arrow {
-  border-color: rgba(224, 193, 158, 0.3);
-  color: var(--rug-inspiration-text);
-}
-
-[data-theme="dark"] .rug-inspiration-arrow:hover {
-  background: var(--rug-inspiration-accent);
-  border-color: var(--rug-inspiration-accent);
-  color: #211b15;
-}
-
-[data-theme="dark"] .rug-inspiration-counter span {
-  color: #8c8174;
-}
-
-[data-theme="dark"] .rug-inspiration-scene {
-  background: #302a23;
-}
-
-[data-theme="dark"] .rug-inspiration-scene-hint {
-  border-color: rgba(255, 255, 255, 0.15);
-  background: rgba(34, 32, 28, 0.88);
-  color: #f3eee6;
-}
-
-[data-theme="dark"] .rug-inspiration-product-image-wrap {
-  background: #302a23;
-}
-
-[data-theme="dark"] .rug-inspiration-product-number {
-  background: rgba(34, 32, 28, 0.92);
-  color: #f3eee6;
-}
-
-[data-theme="dark"] .rug-inspiration-product-open {
-  background: #302a23;
-  color: #f3eee6;
-}
-
-[data-theme="dark"] .rug-inspiration-product-info {
-  border-top-color: transparent;
-}
-
-[data-theme="dark"] .rug-inspiration-product.is-active .rug-inspiration-product-info {
-  border-top-color: var(--rug-inspiration-accent);
-}
-
-[data-theme="dark"] .rug-inspiration-price del {
-  color: #a69a8c;
-}
-
-[data-theme="dark"] .rug-inspiration-progress-item {
-  background: #51463a;
-}
-
-[data-theme="dark"] .rug-inspiration-progress-item.is-active {
-  background: var(--rug-inspiration-accent);
-}
-
-[data-theme="dark"] .rug-inspiration-loading span {
-  background: #302a23;
-}
-
-/* Keyboard focus */
-
-[data-theme="dark"] .rug-inspiration-hotspot:focus-visible,
-[data-theme="dark"] .rug-inspiration-arrow:focus-visible,
-[data-theme="dark"] .rug-inspiration-progress-item:focus-visible {
-  outline-color: var(--rug-inspiration-accent);
-}
-
-/* ========== RUG INSPIRATION DARK MODE: END ========== */
+/* =========================================
+   LARGE SCREENS
+========================================= */
 
 @media (min-width: 1600px) {
   .rug-inspiration-scene {
     min-height: 620px;
   }
 }
+
+/* =========================================
+   TABLET
+========================================= */
 
 @media (max-width: 991px) {
   .rug-inspiration-section {
@@ -508,7 +753,8 @@
     gap: 28px;
   }
 
-  .rug-inspiration-scene {
+  .rug-inspiration-scene,
+  .ris-skeleton-scene {
     min-height: 0;
     aspect-ratio: 1.2 / 1;
   }
@@ -521,6 +767,10 @@
     font-size: 17px;
   }
 }
+
+/* =========================================
+   MOBILE
+========================================= */
 
 @media (max-width: 575px) {
   .rug-inspiration-section {
@@ -554,15 +804,17 @@
     font-size: 10px;
   }
 
-  .rug-inspiration-scene {
+  .rug-inspiration-scene,
+  .ris-skeleton-scene {
     aspect-ratio: 0.88 / 1;
     border-radius: 22px;
   }
 
-  .rug-inspiration-scene-copy {
+  .rug-inspiration-scene-copy,
+  .ris-skeleton-scene-copy {
+    right: 20px;
     bottom: 24px;
     left: 20px;
-    right: 20px;
   }
 
   .rug-inspiration-scene-copy h3 {
@@ -581,6 +833,7 @@
     height: 30px;
   }
 
+  .rug-inspiration-hotspot:hover,
   .rug-inspiration-hotspot.is-active {
     width: 38px;
     height: 38px;
@@ -614,6 +867,44 @@
     opacity: 1;
     transform: none;
   }
+
+  .rug-inspiration-skeleton .rug-inspiration-heading {
+    align-items: flex-end;
+  }
+
+  .ris-skeleton-heading {
+    height: 27px;
+  }
+
+  .ris-skeleton-controls {
+    gap: 5px;
+  }
+
+  .ris-skeleton-controls span {
+    width: 30px;
+    height: 30px;
+  }
+
+  .ris-skeleton-controls span:nth-child(2) {
+    width: 25px;
+  }
+
+  .ris-skeleton-scene-title {
+    height: 24px;
+  }
+}
+
+/* =========================================
+   ACCESSIBILITY
+========================================= */
+
+.rug-inspiration-hotspot:focus-visible,
+.rug-inspiration-arrow:focus-visible,
+.rug-inspiration-progress-item:focus-visible,
+.rug-inspiration-scene-hint:focus-visible,
+.rug-inspiration-product:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 4px;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -621,7 +912,15 @@
   .rug-inspiration-section *,
   .rug-inspiration-section *::before,
   .rug-inspiration-section *::after {
-    animation-duration: 0.01ms !important;
-    transition-duration: 0.01ms !important;
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .rug-inspiration-hotspot {
+    box-shadow: none;
+  }
+
+  .rug-inspiration-hotspot>span {
+    box-shadow: none;
   }
 }

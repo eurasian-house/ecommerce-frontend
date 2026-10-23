@@ -137,7 +137,7 @@ export default function WholesaleHeroCTA() {
                                 </p>
 
                                 <div className="retail-actions">
-                                    <Link to="/products" className="explore-btn">
+                                    <Link to="/products" className="btn-primary btn-lg">
                                         Explore Collection
                                         <i className="bi bi-arrow-right"></i>
                                     </Link>
@@ -206,7 +206,7 @@ export default function WholesaleHeroCTA() {
                                     ))}
                                 </div>
 
-                                <Link to="/wholesale" className="wholesale-btn">
+                                <Link to="/wholesale" className="btn-secondary w-100">
                                     Request Wholesale Catalogue
                                     <i className="bi bi-arrow-right"></i>
                                 </Link>

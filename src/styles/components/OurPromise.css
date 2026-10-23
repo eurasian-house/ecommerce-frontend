@@ -1,28 +1,21 @@
-.our-promise {
-    --promise-bg: #f5eee4;
-    --promise-card: #fbf8f2;
-    --promise-text: #30271f;
-    --promise-muted: #766b60;
-    --promise-accent: #a36f45;
-    --promise-border: rgba(120, 87, 57, 0.2);
+/* =========================================================
+   OUR PROMISE
+========================================================= */
 
+.our-promise {
     padding: 75px 0;
-    background: var(--promise-bg);
-    color: var(--promise-text);
-    transition: background 0.3s ease, color 0.3s ease;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    transition: background var(--transition), color var(--transition);
 }
 
 .promise-box {
     position: relative;
     overflow: hidden;
     padding: clamp(30px, 5vw, 68px);
-    border: 1px solid var(--promise-border);
-    border-radius: 8px;
-    background:
-        radial-gradient(ellipse at 0% 100%,
-            rgba(163, 111, 69, 0.09),
-            transparent 40%),
-        var(--promise-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    background: var(--surface);
     text-align: center;
 }
 
@@ -32,7 +25,7 @@
     position: absolute;
     top: -36px;
     right: -24px;
-    color: var(--promise-accent);
+    color: var(--color-accent);
     font-size: 190px;
     line-height: 1;
     opacity: 0.07;
@@ -55,12 +48,6 @@
     }
 }
 
-@media (prefers-reduced-motion: reduce) {
-    .promise-decoration {
-        animation: none;
-    }
-}
-
 .promise-content {
     position: relative;
     z-index: 1;
@@ -68,12 +55,14 @@
     margin: 0 auto;
 }
 
+/* Eyebrow */
+
 .promise-eyebrow {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 14px;
-    color: var(--promise-accent);
+    color: var(--color-accent);
     font-size: 0.72rem;
     font-weight: 700;
     letter-spacing: 0.22em;
@@ -82,36 +71,11 @@
 .promise-eyebrow span {
     width: 35px;
     height: 1px;
-    background: var(--promise-accent);
+    background: currentColor;
     opacity: 0.65;
 }
 
-.promise-content h2 {
-    margin: 23px 0 20px;
-    font-family: "Cardo", Georgia, serif;
-    font-size: clamp(2.1rem, 4.5vw, 3.8rem);
-    font-weight: 600;
-    line-height: 1.17;
-    letter-spacing: -0.035em;
-}
-
-.promise-content h2 em {
-    color: var(--promise-accent);
-    font-weight: 400;
-}
-
-.promise-description {
-    max-width: 740px;
-    margin: 0 auto;
-    color: var(--promise-muted);
-    font-size: 1rem;
-    line-height: 1.9;
-}
-
-.promise-description strong {
-    color: var(--promise-text);
-    font-weight: 600;
-}
+/* Divider */
 
 .promise-divider {
     display: flex;
@@ -119,20 +83,20 @@
     justify-content: center;
     gap: 13px;
     margin: 30px auto;
-    color: var(--promise-accent);
+    color: var(--color-accent);
 }
 
 .promise-divider span {
     width: 65px;
     height: 1px;
-    background: var(--promise-border);
+    background: var(--border);
 }
 
 .promise-divider i {
     font-size: 1.1rem;
 }
 
-/* Three trust points */
+/* Trust features */
 
 .promise-features {
     display: grid;
@@ -146,19 +110,19 @@
     align-items: flex-start;
     gap: 14px;
     padding: 20px 16px;
-    border: 1px solid var(--promise-border);
-    border-radius: 6px;
-    background: rgba(255, 255, 255, 0.28);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    background: var(--bg-secondary);
     transition:
-        transform 0.25s ease,
-        border-color 0.25s ease,
-        background 0.25s ease;
+        transform var(--transition),
+        border-color var(--transition),
+        background var(--transition);
 }
 
 .promise-feature:hover {
     transform: translateY(-4px);
-    border-color: var(--promise-accent);
-    background: rgba(163, 111, 69, 0.06);
+    border-color: var(--color-accent);
+    background: var(--surface);
 }
 
 .promise-feature-icon {
@@ -167,15 +131,15 @@
     place-items: center;
     width: 42px;
     height: 42px;
-    border-radius: 50%;
-    background: rgba(163, 111, 69, 0.1);
-    color: var(--promise-accent);
+    border-radius: var(--radius-full);
+    background: var(--bg-tertiary);
+    color: var(--color-accent);
     font-size: 1.2rem;
 }
 
 .promise-feature h3 {
     margin: 2px 0 6px;
-    color: var(--promise-text);
+    color: var(--text-primary);
     font-family: "Cardo", Georgia, serif;
     font-size: 1.12rem;
     font-weight: 700;
@@ -183,7 +147,7 @@
 
 .promise-feature p {
     margin: 0;
-    color: var(--promise-muted);
+    color: var(--text-secondary);
     font-size: 0.84rem;
     line-height: 1.65;
 }
@@ -199,48 +163,24 @@
 }
 
 .promise-signature span {
-    color: var(--promise-muted);
+    color: var(--text-secondary);
     font-family: "Delius", cursive;
     font-size: 0.95rem;
 }
 
 .promise-signature strong {
-    color: var(--promise-accent);
+    color: var(--color-accent);
     font-family: "Cardo", Georgia, serif;
     font-size: 1.2rem;
     font-weight: 700;
     letter-spacing: 0.04em;
 }
 
-/* Dark mode */
+/* Accessibility */
 
-[data-theme="dark"] .our-promise {
-    --promise-bg: var(--color-background, #191816);
-    --promise-card: var(--color-card, #23211e);
-    --promise-text: var(--color-foreground, #f2ece3);
-    --promise-muted: var(--color-muted, #b9b0a4);
-    --promise-accent: #d5a579;
-    --promise-border: rgba(225, 203, 178, 0.16);
-}
-
-[data-theme="dark"] .promise-box {
-    background:
-        radial-gradient(ellipse at 0% 100%,
-            rgba(213, 165, 121, 0.08),
-            transparent 40%),
-        var(--promise-card);
-}
-
-[data-theme="dark"] .promise-feature {
-    background: rgba(255, 255, 255, 0.025);
-}
-
-[data-theme="dark"] .promise-feature:hover {
-    background: rgba(213, 165, 121, 0.07);
-}
-
-[data-theme="dark"] .promise-feature-icon {
-    background: rgba(213, 165, 121, 0.12);
+.our-promise :focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 4px;
 }
 
 /* Responsive */
@@ -252,15 +192,6 @@
 
     .promise-box {
         padding: 38px 22px;
-    }
-
-    .promise-content h2 {
-        font-size: clamp(2rem, 7vw, 2.8rem);
-    }
-
-    .promise-description {
-        font-size: 0.94rem;
-        line-height: 1.8;
     }
 
     .promise-features {
@@ -279,8 +210,15 @@
     }
 }
 
+/* Reduced motion */
+
 @media (prefers-reduced-motion: reduce) {
-    .promise-feature {
+    .promise-decoration {
+        animation: none;
+    }
+
+    .promise-feature,
+    .our-promise {
         transition: none;
     }
 }

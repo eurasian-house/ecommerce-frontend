@@ -136,7 +136,7 @@ export default function ProductCard({
                                                           c.color_name === "Red" ? "#DC2626" :
                                                             c.color_name === "Rust" ? "#B7410E" :
                                                               c.color_name === "Mustard" ? "#D4A017" :
-                                                                c.color_name === "Tan" ? "#D2B48C" :
+                                                                c.color_name === "Terracotta" ? "#E2725B" :
                                                                   c.color_name === "Yellow" ? "#FACC15" :
                                                                     c.color_name === "Multicolor"
                                                                       ? "conic-gradient(red, orange, yellow, green, cyan, blue, violet)"
@@ -154,7 +154,7 @@ export default function ProductCard({
           <div className="product-card-buttons mt-auto">
 
             <button
-                className="btn app-btn-outline btn-sm"
+                className="btn-secondary btn-sm"
                 onClick={(e) => {
                   e.stopPropagation();
 
@@ -176,10 +176,11 @@ export default function ProductCard({
                 }}
               >
                 Buy Now
+
               </button>
 
               <button
-                className="btn app-btn-primary btn-sm addCart"
+                className="btn-primary btn-sm"
                 onClick={(e) => {
                   e.stopPropagation();
 

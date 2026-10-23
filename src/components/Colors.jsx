@@ -27,7 +27,7 @@ const COLOR_MAP = {
   Tan: "#D2B48C",
   Terracotta: "#E2725B",
   Yellow: "#FACC15",
-  
+
 };
 
 const MULTICOLOR =
@@ -42,12 +42,11 @@ export default function Colors({ colorFilter, setColorFilter }) {
           <span className="ornament-text">THE ART OF COLOUR</span>
           <span className="ornament-line" />
         </div>
-
-        <h2 className="discount-title my-2">
-          Find Your Perfect Palette
+        <h2 className="recent-added-title">
+          Find <em>Your Perfect Palette</em>
         </h2>
 
-        <p className="section-description colors-description">
+        <p className="recent-added-description">
           Explore rugs by colour and discover the perfect shade for your space.
         </p>
       </div>
@@ -71,9 +70,8 @@ export default function Colors({ colorFilter, setColorFilter }) {
                 onClick={() =>
                   setColorFilter(colorFilter === color ? "" : color)
                 }
-                className={`color-swatch ${
-                  colorFilter === color ? "active" : ""
-                }`}
+                className={`color-swatch ${colorFilter === color ? "active" : ""
+                  }`}
               >
                 <span
                   className="color-swatch__circle"
@@ -94,9 +92,8 @@ export default function Colors({ colorFilter, setColorFilter }) {
         {/* Fixed clear button — never scrolls */}
         <button
           type="button"
-          className={`color-swatch color-swatch--clear ${
-            !colorFilter ? "color-swatch--clear-active" : ""
-          }`}
+          className={`color-swatch color-swatch--clear ${!colorFilter ? "color-swatch--clear-active" : ""
+            }`}
           title="Clear colour filter"
           aria-label="Clear colour filter"
           aria-pressed={!colorFilter}

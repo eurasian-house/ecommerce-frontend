@@ -14,16 +14,8 @@
     padding: 0 16px;
 }
 
-.colors-description {
-    max-width: 520px;
-    margin: 0 auto;
-    line-height: 1.8;
-    opacity: 0.75;
-}
-
 /* =========================================
-   COLOUR PICKER LAYOUT
-   Scrollable colours + fixed clear button
+   COLOUR PICKER
 ========================================= */
 
 .colors-picker {
@@ -37,20 +29,23 @@
     padding: 8px 12px 20px;
 }
 
-/* Only the colour area scrolls */
+/* Scrollable swatches; scrollbar hidden */
 .colors-scroll {
     flex: 0 1 320px;
     min-width: 0;
     overflow-x: auto;
     overflow-y: hidden;
     overscroll-behavior-x: contain;
-    scrollbar-width: thin;
-    scrollbar-color: var(--border-color, #c9c4bb) transparent;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
     scroll-snap-type: x proximity;
     padding: 5px 2px 12px;
 }
 
-/* Four swatches visible */
+.colors-scroll::-webkit-scrollbar {
+    display: none;
+}
+
 .colors-scroll__inner {
     display: grid;
     grid-auto-flow: column;
@@ -61,7 +56,7 @@
 }
 
 /* =========================================
-   INDIVIDUAL SWATCHES
+   COLOUR SWATCHES
 ========================================= */
 
 .color-swatch {
@@ -77,7 +72,7 @@
     border: none;
     border-radius: 8px;
     background: transparent;
-    color: var(--color-foreground, #292722);
+    color: var(--text-primary);
     cursor: pointer;
     scroll-snap-align: center;
     transition: transform 0.25s ease;
@@ -119,19 +114,18 @@
         inset 0 0 0 1px rgba(0, 0, 0, 0.04);
 }
 
-/* Selected colour */
+/* Selected swatch */
 .color-swatch.active .color-swatch__circle {
     box-shadow:
-        0 0 0 2px var(--color-background, #fff),
-        0 0 0 3px var(--color-foreground, #292722);
+        0 0 0 2px var(--bg-primary),
+        0 0 0 3px var(--text-primary);
 }
 
 .color-swatch.active .color-swatch__circle::after {
-    inset: -5px;
-    border-color: var(--color-foreground, #292722);
+    border-color: var(--text-primary);
 }
 
-/* Colour labels */
+/* Swatch labels */
 .color-name {
     font-size: 11px;
     font-weight: 500;
@@ -153,7 +147,7 @@
 
 /* Keyboard accessibility */
 .color-swatch:focus-visible {
-    outline: 2px solid var(--color-foreground, #292722);
+    outline: 2px solid var(--color-primary);
     outline-offset: 5px;
 }
 
@@ -171,8 +165,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: var(--color-surface, #f3f0eb);
-    border: 1px dashed var(--border-color, #c9c4bb);
+    background: var(--surface-muted);
+    border: 1px dashed var(--border);
     box-shadow: none;
 }
 
@@ -182,16 +176,16 @@
 }
 
 .color-swatch--clear:hover .color-swatch__circle--clear {
-    background: var(--color-background, #fff);
+    background: var(--surface);
 }
 
 .color-swatch--clear-active .color-swatch__circle--clear {
     border-style: solid;
-    border-color: var(--color-foreground, #292722);
+    border-color: var(--text-primary);
 }
 
 /* =========================================
-   HOMEPAGE PRODUCT LOADING SKELETON
+   HOMEPAGE PRODUCT SKELETON
 ========================================= */
 
 .home-products-row {
@@ -208,7 +202,7 @@
     width: 100%;
     aspect-ratio: 1 / 1;
     border-radius: 8px;
-    background: #e9e5df;
+    background: var(--skeleton-base);
 }
 
 .home-product-skeleton__line {
@@ -216,7 +210,7 @@
     height: 12px;
     margin-top: 12px;
     border-radius: 4px;
-    background: #e9e5df;
+    background: var(--skeleton-base);
 }
 
 .home-product-skeleton__line--short {
@@ -224,10 +218,10 @@
     margin-top: 8px;
 }
 
-/* No products state */
+/* Empty products state */
 .home-products-empty {
     padding: 48px 16px;
-    color: var(--color-foreground, #292722);
+    color: var(--text-primary);
 }
 
 .home-products-empty>i {
@@ -242,13 +236,7 @@
 }
 
 .home-products-empty p {
-    opacity: 0.7;
-}
-
-.btn-clear{
-    background: var(--color-primary)!important;
-    margin: var(--space-5) !important;
-    border: 2px solid var(--color-primary) !important;
+    color: var(--text-muted);
 }
 
 /* Skeleton animation */
@@ -262,63 +250,6 @@
     50% {
         opacity: 0.5;
     }
-}
-
-/* Dark theme */
-[data-theme="dark"] .home-product-skeleton__image,
-[data-theme="dark"] .home-product-skeleton__line {
-    background: #303030;
-}
-
-/* Mobile */
-@media (max-width: 480px) {
-    .home-product-skeleton {
-        flex-basis: 170px;
-    }
-}
-
-/* Accessibility */
-@media (prefers-reduced-motion: reduce) {
-    .home-product-skeleton {
-        animation: none;
-    }
-}
-
-/* =========================================
-   DARK MODE
-========================================= */
-
-[data-theme="dark"] .color-swatch {
-    color: var(--color-foreground, #f5f1e9);
-}
-
-[data-theme="dark"] .color-swatch__circle {
-    box-shadow:
-        0 2px 8px rgba(0, 0, 0, 0.3),
-        inset 0 0 0 1px rgba(255, 255, 255, 0.08);
-}
-
-[data-theme="dark"] .color-swatch.active .color-swatch__circle {
-    box-shadow:
-        0 0 0 2px var(--color-background, #171717),
-        0 0 0 3px var(--color-foreground, #f5f1e9);
-}
-
-[data-theme="dark"] .color-swatch.active .color-swatch__circle::after {
-    border-color: var(--color-foreground, #f5f1e9);
-}
-
-[data-theme="dark"] .colors-scroll {
-    scrollbar-color: var(--border-color, #454545) transparent;
-}
-
-[data-theme="dark"] .color-swatch__circle--clear {
-    background: var(--color-surface, #242424);
-    border-color: var(--border-color, #454545);
-}
-
-[data-theme="dark"] .color-swatch--clear:hover .color-swatch__circle--clear {
-    background: var(--color-background, #171717);
 }
 
 /* =========================================
@@ -336,6 +267,12 @@
 
     .colors-picker {
         gap: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .home-product-skeleton {
+        flex-basis: 170px;
     }
 }
 
@@ -375,8 +312,14 @@
     }
 }
 
-/* Reduced motion preference */
+/* =========================================
+   ACCESSIBILITY
+========================================= */
+
 @media (prefers-reduced-motion: reduce) {
+    .home-product-skeleton {
+        animation: none;
+    }
 
     .color-swatch,
     .color-swatch__circle,

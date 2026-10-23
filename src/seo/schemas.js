@@ -6,7 +6,6 @@ export const organizationSchema = {
 
   url: "https://www.eurasianrugs.com",
 
-  // logo: "https://www.eurasianrugs.com/logo.png",
   logo: "https://www.eurasianrugs.com/LOGO.svg",
 
   description:

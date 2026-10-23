@@ -1,350 +1,704 @@
 /* ==========================================================================
-   LIGHT THEME
-   ========================================================================== */
+   EURASIAN HOUSE — GLOBAL THEME
+   PART 1: LIGHT THEME & SHARED TOKENS
+========================================================================== */
 
 :root {
-    /* =========================
-   THEME TOGGLE
+   /* =========================
+       THEME TOGGLE
     ========================= */
 
-    --theme-toggle-size: 40px;
-    --theme-toggle-font-size: 1rem;
+   --theme-toggle-size: 40px;
+   --theme-toggle-font-size: 1rem;
+   --theme-toggle-bg: transparent;
+   --theme-toggle-hover: var(--surface-hover);
+   --theme-toggle-color: var(--text-primary);
+   --theme-toggle-border: var(--border);
 
-    --theme-toggle-bg: transparent;
-    --theme-toggle-hover: var(--surface-hover);
-    --theme-toggle-color: var(--text-primary);
-
-    --theme-toggle-border: var(--border);
-
-    /* Light Theme */
-    --navbar-toggler-filter: none;
-
-    --navbar-toggler-color: var(--text-primary);
+   --navbar-toggler-filter: none;
+   --navbar-toggler-color: var(--text-primary);
 
 
-    /* Compatibility Variables */
+   /* =========================
+       BRAND
+    ========================= */
 
-    --section-bg: var(--bg-primary);
-    --card-bg: var(--surface);
+   --color-primary: #8B6A46;
+   --color-primary-dark: #765739;
+   --color-primary-hover: #765739;
+   --color-primary-light: #F5EEE6;
 
-    --primary-color: var(--color-primary);
-    --primary-light: var(--color-primary-light);
-
-    --text-color: var(--text-primary);
-
-
-    /* =========================
-     BRAND
-  ========================= */
-
-    --color-primary: #8B6A46;
-    --color-primary-hover: #765739;
-    --color-primary-light: #F5EEE6;
-
-    --color-secondary: #5E6D63;
-    --color-accent: #C49A6C;
-
-    /* =========================
-     BACKGROUNDS
-  ========================= */
-
-    --bg-primary: #FAF8F5;
-    --bg-secondary: #F4F1EC;
-    --bg-tertiary: #ECE7E0;
-
-    /* =========================
-     SURFACES
-  ========================= */
-
-    --surface: #FFFFFF;
-    --surface-hover: #F8F8F8;
-    --surface-muted: #F3F3F3;
-
-    /* =========================
-     TEXT
-  ========================= */
-
-    --text-primary: #222222;
-    --text-secondary: #555555;
-    --text-muted: #777777;
-    --text-disabled: #B3B3B3;
-    --text-inverse: #FFFFFF;
-
-    /* =========================
-     BORDER
-  ========================= */
-
-    --border: #E5E5E5;
-    --border-light: #EFEFEF;
-    --divider: #ECECEC;
-
-    /* =========================
-     STATUS
-  ========================= */
-
-    --success: #2E7D32;
-    --warning: #ED6C02;
-    --danger: #D32F2F;
-    --info: #0288D1;
-
-    /* =========================
-     SHADOW
-  ========================= */
-
-    --shadow-xs: 0 1px 2px rgba(0, 0, 0, .04);
-    --shadow-sm: 0 2px 6px rgba(0, 0, 0, .06);
-    --shadow-md: 0 6px 18px rgba(0, 0, 0, .08);
-    --shadow-lg: 0 12px 30px rgba(0, 0, 0, .12);
-    --shadow-xl: 0 24px 48px rgba(0, 0, 0, .15);
-
-    /* =========================
-     TYPOGRAPHY
-  ========================= */
-
-    --font-primary: "Inter", sans-serif;
-    --font-heading: "Cardo", serif;
-
-    --fs-display: 4rem;
-    --fs-h1: 3rem;
-    --fs-h2: 2.5rem;
-    --fs-h3: 2rem;
-    --fs-h4: 1.5rem;
-    --fs-h5: 1.25rem;
-    --fs-h6: 1rem;
-
-    --fs-xl: 1.25rem;
-    --fs-lg: 1.125rem;
-    --fs-md: 1rem;
-    --fs-sm: .875rem;
-    --fs-xs: .75rem;
-
-    --fw-light: 300;
-    --fw-normal: 400;
-    --fw-medium: 500;
-    --fw-semibold: 600;
-    --fw-bold: 700;
-
-    --lh-tight: 1.2;
-    --lh-normal: 1.5;
-    --lh-loose: 1.8;
-
-    /* =========================
-     SPACING
-  ========================= */
-
-    --space-0: 0;
-    --space-1: 4px;
-    --space-2: 8px;
-    --space-3: 12px;
-    --space-4: 16px;
-    --space-5: 20px;
-    --space-6: 24px;
-    --space-7: 32px;
-    --space-8: 40px;
-    --space-9: 48px;
-    --space-10: 64px;
-    --space-11: 80px;
-    --space-12: 96px;
-
-    /* =========================
-     BORDER RADIUS
-  ========================= */
-
-    --radius-none: 0;
-    --radius-xs: 4px;
-    --radius-sm: 8px;
-    --radius-md: 12px;
-    --radius-lg: 16px;
-    --radius-xl: 24px;
-    --radius-full: 9999px;
-
-    /* =========================
-     COMPONENT RADII
-  ========================= */
-
-    --button-radius: var(--radius-md);
-    --card-radius: var(--radius-lg);
-    --form-radius: var(--radius-md);
-    --image-radius: var(--radius-md);
-    --modal-radius: var(--radius-xl);
-
-    /* =========================
-     BORDERS
-  ========================= */
-
-    --border-width: 1px;
-
-    /* =========================
-     TRANSITIONS
-  ========================= */
-
-    --transition-fast: .15s ease;
-    --transition: .25s ease;
-    --transition-slow: .4s ease;
-
-    /* =========================
-     OPACITY
-  ========================= */
-
-    --opacity-disabled: .5;
-    --opacity-overlay: .55;
-
-    /* =========================
-     Z INDEX
-  ========================= */
-
-    --z-dropdown: 1000;
-    --z-sticky: 1020;
-    --z-fixed: 1030;
-    --z-offcanvas: 1045;
-    --z-modal: 1055;
-    --z-toast: 1080;
-    --z-tooltip: 1090;
-
-    /* =========================
-     LAYOUT
-  ========================= */
-
-    --container-width: 1320px;
-    --footer-padding: 64px;
+   --color-secondary: #5E6D63;
+   --color-accent: #C49A6C;
 
 
-    /* =========================
-     NAVBAR
-  ========================= */
+   /* =========================
+       BACKGROUNDS
+    ========================= */
 
-    --navbar-height: 38px;
-    --navbar-height-mobile: 25px;
-    --navbar-logo-size: 38px;
-
-    --navbar-search-height: 35px;
-    --navbar-search-btn-size: 30px;
-    --navbar-mobile-search-btn-size: 32px;
-
-    --navbar-search-width: clamp(120px, 30vw, 700px);
-
-    --navbar-search-bg: var(--bg-secondary);
-    --navbar-search-border: var(--border);
-
-    --navbar-link-color: var(--text-primary);
-    --navbar-link-active: var(--color-primary);
-
-    --navbar-cart-badge-size: 20px;
-    --navbar-cart-bg: var(--text-primary);
-    --navbar-cart-color: var(--text-inverse);
-
-    --navbar-icon-color: var(--text-primary);
-    --navbar-icon-hover: var(--color-primary);
-    --navbar-action-bg: var(--surface);
-    --navbar-action-bg-hover: var(--surface-hover);
-    --navbar-action-border: var(--border);
-    --navbar-action-size: 30px;
-
-    --navbar-focus-ring: var(--color-primary);
-
-    --navbar-icon-size: 0.8rem;
-    --navbar-search-icon-size: 0.95rem;
-    --navbar-toggler-icon-size: 1rem;
+   --bg-primary: #FAF8F5;
+   --bg-secondary: #F4F1EC;
+   --bg-tertiary: #ECE7E0;
 
 
-    /* Input Placeholder */
-    --input-placeholder: var(--text-secondary);
+   /* =========================
+       SURFACES
+    ========================= */
+
+   --surface: #FFFFFF;
+   --surface-hover: #F8F8F8;
+   --surface-muted: #F3F3F3;
 
 
+   /* =========================
+       TEXT
+    ========================= */
+
+   --text-primary: #222222;
+   --text-secondary: #555555;
+   --text-muted: #777777;
+   --text-disabled: #B3B3B3;
+   --text-inverse: #FFFFFF;
+
+
+   /* =========================
+       BORDERS
+    ========================= */
+
+   --border: #E5E5E5;
+   --border-light: #EFEFEF;
+   --divider: #ECECEC;
+   --border-width: 1px;
+
+
+   /* =========================
+       STATUS
+    ========================= */
+
+   --success: #2E7D32;
+   --warning: #ED6C02;
+   --danger: #D32F2F;
+   --info: #0288D1;
+
+
+   /* =========================
+       SHADOWS
+    ========================= */
+
+   --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.04);
+   --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.06);
+   --shadow-md: 0 6px 18px rgba(0, 0, 0, 0.08);
+   --shadow-lg: 0 12px 30px rgba(0, 0, 0, 0.12);
+   --shadow-xl: 0 24px 48px rgba(0, 0, 0, 0.15);
+
+
+   /* =========================
+       TYPOGRAPHY
+    ========================= */
+
+   --font-primary: "Inter", sans-serif;
+   --font-heading: "Cardo", serif;
+
+   --fs-display: 4rem;
+   --fs-h1: 3rem;
+   --fs-h2: 2.5rem;
+   --fs-h3: 2rem;
+   --fs-h4: 1.5rem;
+   --fs-h5: 1.25rem;
+   --fs-h6: 1rem;
+
+   --fs-xl: 1.25rem;
+   --fs-lg: 1.125rem;
+   --fs-md: 1rem;
+   --fs-sm: 0.875rem;
+   --fs-xs: 0.75rem;
+
+   --fw-light: 300;
+   --fw-normal: 400;
+   --fw-medium: 500;
+   --fw-semibold: 600;
+   --fw-bold: 700;
+
+   --lh-tight: 1.2;
+   --lh-normal: 1.5;
+   --lh-loose: 1.8;
+
+
+   /* =========================
+       SPACING
+    ========================= */
+
+   --space-0: 0;
+   --space-1: 4px;
+   --space-2: 8px;
+   --space-3: 12px;
+   --space-4: 16px;
+   --space-5: 20px;
+   --space-6: 24px;
+   --space-7: 32px;
+   --space-8: 40px;
+   --space-9: 48px;
+   --space-10: 64px;
+   --space-11: 80px;
+   --space-12: 96px;
+
+
+   /* =========================
+       BORDER RADII
+    ========================= */
+
+   --radius-none: 0;
+   --radius-xs: 4px;
+   --radius-sm: 8px;
+   --radius-md: 12px;
+   --radius-lg: 16px;
+   --radius-xl: 24px;
+   --radius-full: 9999px;
+
+   --button-radius: var(--radius-md);
+   --card-radius: var(--radius-lg);
+   --form-radius: var(--radius-md);
+   --image-radius: var(--radius-md);
+   --modal-radius: var(--radius-xl);
+
+
+   /* =========================
+       TRANSITIONS
+    ========================= */
+
+   --transition-fast: 0.15s ease;
+   --transition: 0.25s ease;
+   --transition-slow: 0.4s ease;
+
+
+   /* =========================
+       OPACITY
+    ========================= */
+
+   --opacity-disabled: 0.5;
+   --opacity-overlay: 0.55;
+
+
+   /* =========================
+       Z-INDEX
+    ========================= */
+
+   --z-dropdown: 1000;
+   --z-sticky: 1020;
+   --z-fixed: 1030;
+   --z-offcanvas: 1045;
+   --z-modal: 1055;
+   --z-toast: 1080;
+   --z-tooltip: 1090;
+
+
+   /* =========================
+       LAYOUT
+    ========================= */
+
+   --container-width: 1320px;
+   --footer-padding: 64px;
+
+
+   /* =========================
+       COMPATIBILITY TOKENS
+    ========================= */
+
+   --section-bg: var(--bg-primary);
+   --card-bg: var(--surface);
+
+   --primary-color: var(--color-primary);
+   --primary-light: var(--color-primary-light);
+
+   --text-color: var(--text-primary);
+   --recent-ink: #29251F;
+
+
+   /* =========================
+       NAVBAR
+    ========================= */
+
+   --navbar-height: 38px;
+   --navbar-height-mobile: 25px;
+   --navbar-logo-size: 38px;
+
+   --navbar-search-height: 35px;
+   --navbar-search-btn-size: 30px;
+   --navbar-mobile-search-btn-size: 32px;
+   --navbar-search-width: clamp(120px, 30vw, 700px);
+
+   --navbar-search-bg: var(--bg-secondary);
+   --navbar-search-border: var(--border);
+
+   --navbar-link-color: var(--text-primary);
+   --navbar-link-active: var(--color-primary);
+
+   --navbar-cart-badge-size: 20px;
+   --navbar-cart-bg: var(--text-primary);
+   --navbar-cart-color: var(--text-inverse);
+
+   --navbar-icon-color: var(--text-primary);
+   --navbar-icon-hover: var(--color-primary);
+
+   --navbar-action-bg: var(--surface);
+   --navbar-action-bg-hover: var(--surface-hover);
+   --navbar-action-border: var(--border);
+   --navbar-action-size: 30px;
+
+   --navbar-focus-ring: var(--color-primary);
+
+   --navbar-icon-size: 0.8rem;
+   --navbar-search-icon-size: 0.95rem;
+   --navbar-toggler-icon-size: 1rem;
+
+   --navbar-shadow: var(--shadow-sm);
+
+   --input-placeholder: var(--text-secondary);
+
+
+   /* =========================
+       RECENT ARRIVALS
+    ========================= */
+
+   --recent-muted: #6F685E;
+   --recent-accent: #8B6539;
+   --recent-line: rgba(105, 84, 58, 0.22);
+   --recent-paper: #FAF8F3;
+
+   --recent-overlay-start: rgba(250, 248, 243, 0.88);
+   --recent-overlay-middle: rgba(250, 248, 243, 0.94);
+   --recent-overlay-end: rgba(250, 248, 243, 0.97);
+
+   --recent-arrow-bg: #FAF8F3;
+   --recent-arrow-border: rgba(105, 84, 58, 0.22);
+   --recent-arrow-shadow: 0 5px 20px rgba(43, 35, 25, 0.08);
+   --recent-arrow-hover-text: #FFFFFF;
+   --recent-scrollbar: rgba(139, 101, 57, 0.55);
+
+
+   /* =========================
+       SKELETON LOADING
+    ========================= */
+
+   --skeleton-base: #EAE6DF;
+   --skeleton-highlight: #F8F6F2;
+
+   --recent-skeleton-base: #EAE5DC;
+   --recent-skeleton-highlight: #F5F1E9;
+
+
+   /* =========================
+       FOR USER — EDITORIAL
+    ========================= */
+
+   --fu-paper: #FAF8F3;
+   --fu-ink: #292820;
+   --fu-muted: #6B695F;
+   --fu-accent: #80643D;
+   --fu-line: rgba(91, 78, 54, 0.2);
+
+   --fu-image-bg: #E9E2D6;
+   --fu-image-overlay: rgba(18, 17, 13, 0.7);
+   --fu-caption-border: rgba(255, 255, 255, 0.65);
+
+   --fu-cta-bg: var(--fu-ink);
+   --fu-cta-text: var(--fu-paper);
+   --fu-cta-hover-bg: var(--fu-accent);
+   --fu-cta-hover-text: #FFFFFF;
+
+   --fu-cta-icon-bg: var(--fu-paper);
+   --fu-cta-icon-text: var(--fu-ink);
+
+
+   /* =========================
+       IMAGE OVERLAYS
+    ========================= */
+
+   --image-overlay-text: #FFFFFF;
+   --image-overlay-muted: rgba(255, 255, 255, 0.9);
+
+
+   /* =========================
+       PREMIUM COLLECTION CARDS
+    ========================= */
+
+   --premium-card-shadow: 0 18px 40px rgba(0, 0, 0, 0.12);
+
+   --premium-overlay-strong: rgba(0, 0, 0, 0.72);
+   --premium-overlay-medium: rgba(0, 0, 0, 0.35);
+   --premium-overlay-text: rgba(255, 255, 255, 0.95);
+
+   --premium-badge-bg: rgba(255, 255, 255, 0.18);
+   --premium-text-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+
+
+   /* =========================
+       ACCENTS
+    ========================= */
+
+   --review-star-color: #B58A00;
+   --premium-label-color: #704B18;
 }
+
+/* ==========================================================================
+   EURASIAN HOUSE — GLOBAL THEME
+   PART 2: DARK THEME & SYSTEM PREFERENCE
+========================================================================== */
 
 
 /* ==========================================================================
    DARK THEME
-   ========================================================================== */
+   Activated when data-theme="dark" is applied to <html> or an ancestor.
+========================================================================== */
 
 [data-theme="dark"] {
+   /* =========================
+       BRAND
+    ========================= */
 
-    /* Dark Theme */
-    --navbar-toggler-filter: invert(1);
-    --navbar-toggler-color: #ffffff;
+   --color-primary: #D0AE7C;
+   --color-primary-hover: #E2C69B;
+   --color-primary-light: #332B20;
 
-    --bg-primary: #121212;
-    --bg-secondary: #1A1A1A;
-    --bg-tertiary: #222222;
+   --color-secondary: #A6B6A9;
+   --color-accent: #D0AE7C;
 
-    --surface: #1F1F1F;
-    --surface-hover: #262626;
-    --surface-muted: #2E2E2E;
 
-    --text-primary: #F7F7F7;
-    --text-secondary: #D2D2D2;
-    --text-muted: #A5A5A5;
-    --text-disabled: #666666;
-    --text-inverse: #111111;
+   /* =========================
+       BACKGROUNDS
+    ========================= */
 
-    --border: #303030;
-    --border-light: #3B3B3B;
-    --divider: #2A2A2A;
+   --bg-primary: #171717;
+   --bg-secondary: #202020;
+   --bg-tertiary: #292929;
 
-    --shadow-xs: 0 1px 2px rgba(0, 0, 0, .35);
-    --shadow-sm: 0 2px 6px rgba(0, 0, 0, .45);
-    --shadow-md: 0 8px 20px rgba(0, 0, 0, .55);
-    --shadow-lg: 0 16px 32px rgba(0, 0, 0, .60);
-    --shadow-xl: 0 24px 48px rgba(0, 0, 0, .70);
 
-    --input-placeholder: var(--text-muted);
+   /* =========================
+       SURFACES
+    ========================= */
 
-    --theme-toggle-bg: transparent;
-    --theme-toggle-hover: var(--surface-hover);
-    --theme-toggle-border: var(--border);
+   --surface: #222222;
+   --surface-hover: #2B2B2B;
+   --surface-muted: #303030;
 
-    --navbar-toggler-filter: invert(1);
 
-    --input-placeholder: var(--text-muted);
+   /* =========================
+       TEXT
+    ========================= */
 
-    --navbar-icon-color: var(--text-primary);
-    --navbar-icon-hover: var(--color-primary);
+   --text-primary: #F5F1E9;
+   --text-secondary: #D0CBC2;
+   --text-muted: #B5B0A6;
+   --text-disabled: #77736C;
+   --text-inverse: #171717;
 
-    --navbar-shadow: var(--shadow-sm);
 
+   /* =========================
+       BORDERS
+    ========================= */
+
+   --border: #414141;
+   --border-light: #353535;
+   --divider: #383838;
+
+
+   /* =========================
+       STATUS
+    ========================= */
+
+   --success: #81C784;
+   --warning: #FFB74D;
+   --danger: #EF9A9A;
+   --info: #81D4FA;
+
+
+   /* =========================
+       SHADOWS
+    ========================= */
+
+   --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.18);
+   --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.22);
+   --shadow-md: 0 6px 18px rgba(0, 0, 0, 0.28);
+   --shadow-lg: 0 12px 30px rgba(0, 0, 0, 0.34);
+   --shadow-xl: 0 24px 48px rgba(0, 0, 0, 0.4);
+
+
+   /* =========================
+       THEME TOGGLE
+    ========================= */
+
+   --theme-toggle-bg: transparent;
+   --theme-toggle-hover: #303030;
+   --theme-toggle-color: var(--text-primary);
+   --theme-toggle-border: var(--border);
+
+   --navbar-toggler-filter: invert(1);
+   --navbar-toggler-color: var(--text-primary);
+
+
+   /* =========================
+       COMPATIBILITY TOKENS
+    ========================= */
+
+   --section-bg: var(--bg-primary);
+   --card-bg: var(--surface);
+
+   --primary-color: var(--color-primary);
+   --primary-light: var(--color-primary-light);
+
+   --text-color: var(--text-primary);
+
+
+   /* =========================
+       NAVBAR
+    ========================= */
+
+   --navbar-search-bg: var(--bg-secondary);
+   --navbar-search-border: var(--border);
+
+   --navbar-link-color: var(--text-primary);
+   --navbar-link-active: var(--color-primary);
+
+   --navbar-cart-bg: var(--text-primary);
+   --navbar-cart-color: var(--text-inverse);
+
+   --navbar-icon-color: var(--text-primary);
+   --navbar-icon-hover: var(--color-primary);
+
+   --navbar-action-bg: var(--surface);
+   --navbar-action-bg-hover: var(--surface-hover);
+   --navbar-action-border: var(--border);
+
+   --navbar-focus-ring: var(--color-primary);
+   --navbar-shadow: var(--shadow-sm);
+
+   --input-placeholder: var(--text-muted);
+
+
+   /* =========================
+       RECENT ARRIVALS
+    ========================= */
+
+   --recent-muted: #C2BAAD;
+   --recent-accent: #D0AE7C;
+   --recent-ink: #F6F1E8;
+   --recent-line: rgba(231, 218, 195, 0.22);
+   --recent-paper: #191815;
+
+   --recent-overlay-start: rgba(25, 24, 21, 0.93);
+   --recent-overlay-middle: rgba(25, 24, 21, 0.97);
+   --recent-overlay-end: rgba(25, 24, 21, 0.99);
+
+   --recent-arrow-bg: var(--surface-muted);
+   --recent-arrow-border: var(--recent-line);
+   --recent-arrow-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+   --recent-arrow-hover-text: #1D1B16;
+   --recent-scrollbar: #D0AE7C;
+
+
+   /* =========================
+       SKELETON LOADING
+    ========================= */
+
+   --skeleton-base: #302E29;
+   --skeleton-highlight: #403C34;
+
+   --recent-skeleton-base: #302E29;
+   --recent-skeleton-highlight: #403C34;
+
+
+   /* =========================
+       FOR USER — EDITORIAL
+    ========================= */
+
+   --fu-paper: var(--bg-primary);
+   --fu-ink: #F5F1E9;
+   --fu-muted: #C2BAAD;
+   --fu-accent: #D6B77F;
+   --fu-line: rgba(220, 207, 181, 0.22);
+
+   --fu-image-bg: #28251F;
+   --fu-image-overlay: rgba(18, 17, 13, 0.7);
+   --fu-caption-border: rgba(255, 255, 255, 0.65);
+
+   --fu-cta-bg: #E1C99F;
+   --fu-cta-text: #1D1B16;
+   --fu-cta-hover-bg: #C6AA79;
+   --fu-cta-hover-text: #1D1B16;
+
+   --fu-cta-icon-bg: #FAF4E8;
+   --fu-cta-icon-text: #1D1B16;
+
+
+   /* =========================
+       IMAGE OVERLAYS
+       White text is intentional over darkened images.
+    ========================= */
+
+   --image-overlay-text: #FFFFFF;
+   --image-overlay-muted: rgba(255, 255, 255, 0.9);
+
+
+   /* =========================
+       PREMIUM COLLECTION CARDS
+    ========================= */
+
+   --premium-card-shadow: 0 18px 40px rgba(0, 0, 0, 0.3);
+
+   --premium-overlay-strong: rgba(0, 0, 0, 0.72);
+   --premium-overlay-medium: rgba(0, 0, 0, 0.35);
+   --premium-overlay-text: rgba(255, 255, 255, 0.95);
+
+   --premium-badge-bg: rgba(255, 255, 255, 0.18);
+   --premium-text-shadow: 0 2px 10px rgba(0, 0, 0, 0.45);
+
+
+   /* =========================
+       ACCENTS
+    ========================= */
+
+   --review-star-color: #D4AF37;
+   --premium-label-color: #D0AE7C;
 }
 
 
 /* ==========================================================================
-   AUTO SYSTEM THEME
-   ========================================================================== */
+   SYSTEM PREFERENCE
+   Used only when the site has NOT explicitly selected a theme.
+   Explicit data-theme="light" or data-theme="dark" takes priority.
+========================================================================== */
 
 @media (prefers-color-scheme: dark) {
+   :root:not([data-theme]) {
+      color-scheme: dark;
 
-    :root:not([data-theme="light"]) {
+      --color-primary: #D0AE7C;
+      --color-primary-hover: #E2C69B;
+      --color-primary-light: #332B20;
 
-        /* Dark Theme */
-        --navbar-toggler-filter: invert(1);
+      --color-secondary: #A6B6A9;
+      --color-accent: #D0AE7C;
 
-        --navbar-toggler-color: #ffffff;
+      --bg-primary: #171717;
+      --bg-secondary: #202020;
+      --bg-tertiary: #292929;
 
-        --bg-primary: #121212;
-        --bg-secondary: #1A1A1A;
-        --bg-tertiary: #222222;
+      --surface: #222222;
+      --surface-hover: #2B2B2B;
+      --surface-muted: #303030;
 
-        --surface: #1F1F1F;
-        --surface-hover: #262626;
-        --surface-muted: #2E2E2E;
+      --text-primary: #F5F1E9;
+      --text-secondary: #D0CBC2;
+      --text-muted: #B5B0A6;
+      --text-disabled: #77736C;
+      --text-inverse: #171717;
 
-        --text-primary: #F7F7F7;
-        --text-secondary: #D2D2D2;
-        --text-muted: #A5A5A5;
-        --text-disabled: #666666;
-        --text-inverse: #111111;
+      --border: #414141;
+      --border-light: #353535;
+      --divider: #383838;
 
-        --border: #303030;
-        --border-light: #3B3B3B;
-        --divider: #2A2A2A;
+      --success: #81C784;
+      --warning: #FFB74D;
+      --danger: #EF9A9A;
+      --info: #81D4FA;
 
-        --shadow-xs: 0 1px 2px rgba(0, 0, 0, .35);
-        --shadow-sm: 0 2px 6px rgba(0, 0, 0, .45);
-        --shadow-md: 0 8px 20px rgba(0, 0, 0, .55);
-        --shadow-lg: 0 16px 32px rgba(0, 0, 0, .60);
-        --shadow-xl: 0 24px 48px rgba(0, 0, 0, .70);
+      --theme-toggle-hover: #303030;
+      --navbar-toggler-filter: invert(1);
 
-    }
+      --section-bg: var(--bg-primary);
+      --card-bg: var(--surface);
+
+      --primary-color: var(--color-primary);
+      --primary-light: var(--color-primary-light);
+      --text-color: var(--text-primary);
+
+      --navbar-search-bg: var(--bg-secondary);
+      --navbar-search-border: var(--border);
+      --navbar-link-color: var(--text-primary);
+      --navbar-link-active: var(--color-primary);
+
+      --navbar-cart-bg: var(--text-primary);
+      --navbar-cart-color: var(--text-inverse);
+
+      --navbar-icon-color: var(--text-primary);
+      --navbar-icon-hover: var(--color-primary);
+
+      --navbar-action-bg: var(--surface);
+      --navbar-action-bg-hover: var(--surface-hover);
+      --navbar-action-border: var(--border);
+
+      --navbar-focus-ring: var(--color-primary);
+      --input-placeholder: var(--text-muted);
+
+      --recent-muted: #C2BAAD;
+      --recent-accent: #D0AE7C;
+      --recent-ink: #F6F1E8;
+      --recent-line: rgba(231, 218, 195, 0.22);
+      --recent-paper: #191815;
+
+      --recent-overlay-start: rgba(25, 24, 21, 0.93);
+      --recent-overlay-middle: rgba(25, 24, 21, 0.97);
+      --recent-overlay-end: rgba(25, 24, 21, 0.99);
+
+      --recent-arrow-bg: var(--surface-muted);
+      --recent-arrow-border: var(--recent-line);
+      --recent-arrow-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+      --recent-arrow-hover-text: #1D1B16;
+      --recent-scrollbar: #D0AE7C;
+
+      --skeleton-base: #302E29;
+      --skeleton-highlight: #403C34;
+      --recent-skeleton-base: #302E29;
+      --recent-skeleton-highlight: #403C34;
+
+      --fu-paper: var(--bg-primary);
+      --fu-ink: #F5F1E9;
+      --fu-muted: #C2BAAD;
+      --fu-accent: #D6B77F;
+      --fu-line: rgba(220, 207, 181, 0.22);
+
+      --fu-image-bg: #28251F;
+      --fu-image-overlay: rgba(18, 17, 13, 0.7);
+      --fu-caption-border: rgba(255, 255, 255, 0.65);
+
+      --fu-cta-bg: #E1C99F;
+      --fu-cta-text: #1D1B16;
+      --fu-cta-hover-bg: #C6AA79;
+      --fu-cta-hover-text: #1D1B16;
+
+      --fu-cta-icon-bg: #FAF4E8;
+      --fu-cta-icon-text: #1D1B16;
+
+      --image-overlay-text: #FFFFFF;
+      --image-overlay-muted: rgba(255, 255, 255, 0.9);
+
+      --premium-card-shadow: 0 18px 40px rgba(0, 0, 0, 0.3);
+      --premium-overlay-strong: rgba(0, 0, 0, 0.72);
+      --premium-overlay-medium: rgba(0, 0, 0, 0.35);
+      --premium-overlay-text: rgba(255, 255, 255, 0.95);
+      --premium-badge-bg: rgba(255, 255, 255, 0.18);
+      --premium-text-shadow: 0 2px 10px rgba(0, 0, 0, 0.45);
+
+      --review-star-color: #D4AF37;
+      --premium-label-color: #D0AE7C;
+   }
+}
 
 
+/* ==========================================================================
+   BROWSER COLOR SCHEME
+========================================================================== */
 
+:root {
+   color-scheme: light;
+}
+
+[data-theme="dark"] {
+   color-scheme: dark;
+}
+
+@media (prefers-color-scheme: dark) {
+   :root:not([data-theme]) {
+      color-scheme: dark;
+   }
 }

@@ -1,0 +1,235 @@
+
+.eh-chat {
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    z-index: 1050;
+    font-family: inherit;
+}
+
+.eh-chat__launcher {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 58px;
+    height: 58px;
+    margin-left: auto;
+    border: none;
+    border-radius: 50%;
+    background: #25251f;
+    color: #fff;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.eh-chat__launcher:hover {
+    transform: translateY(-2px);
+    background: #454438;
+}
+
+.eh-chat__launcher--open {
+    background: #454438;
+}
+
+.eh-chat__launcher-symbol {
+    font-size: 32px;
+    line-height: 1;
+}
+
+.eh-chat__panel {
+    display: flex;
+    flex-direction: column;
+    width: 360px;
+    height: min(520px, calc(100dvh - 120px));
+    margin-bottom: 14px;
+    overflow: hidden;
+    border: 1px solid #e8e5df;
+    border-radius: 16px;
+    background: #fff;
+    color: #25251f;
+    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.17);
+}
+
+.eh-chat__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 18px;
+    background: #f5f1e9;
+    border-bottom: 1px solid #e8e5df;
+}
+
+.eh-chat__header h2 {
+    margin: 0 0 5px;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.eh-chat__header p {
+    margin: 0;
+    color: #68665e;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.eh-chat__close {
+    padding: 0 4px;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font-size: 28px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.eh-chat__messages {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    padding: 16px;
+    background: #fff;
+}
+
+.eh-chat__welcome,
+.eh-chat__notice {
+    margin: 12px 0;
+    color: #68665e;
+    font-size: 13px;
+    line-height: 1.6;
+    text-align: center;
+}
+
+.eh-chat__welcome strong {
+    color: #25251f;
+}
+
+.eh-chat__message {
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    max-width: 85%;
+    margin-bottom: 12px;
+    padding: 10px 12px;
+    border-radius: 12px;
+    overflow-wrap: anywhere;
+}
+
+.eh-chat__message--customer {
+    margin-left: auto;
+    background: #f0ece4;
+    border-bottom-right-radius: 4px;
+}
+
+.eh-chat__message--admin {
+    margin-right: auto;
+    background: #f8f8f6;
+    border: 1px solid #eeece7;
+    border-bottom-left-radius: 4px;
+}
+
+.eh-chat__sender {
+    margin-bottom: 4px;
+    color: #68665e;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.eh-chat__message p {
+    margin: 0;
+    color: #25251f;
+    font-size: 13px;
+    line-height: 1.5;
+    white-space: pre-wrap;
+}
+
+.eh-chat__message time {
+    align-self: flex-end;
+    margin-top: 5px;
+    color: #77756e;
+    font-size: 10px;
+}
+
+.eh-chat__form {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+    padding: 12px;
+    border-top: 1px solid #e8e5df;
+    background: #fff;
+}
+
+.eh-chat__form textarea {
+    flex: 1;
+    min-width: 0;
+    resize: none;
+    padding: 10px;
+    border: 1px solid #dedbd3;
+    border-radius: 9px;
+    background: #fff;
+    color: #25251f;
+    font: inherit;
+    font-size: 13px;
+    outline: none;
+}
+
+.eh-chat__form textarea:focus {
+    border-color: #77735f;
+    box-shadow: 0 0 0 2px rgba(119, 115, 95, 0.12);
+}
+
+.eh-chat__form button {
+    min-height: 38px;
+    padding: 0 14px;
+    border: 0;
+    border-radius: 9px;
+    background: #25251f;
+    color: #fff;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.eh-chat__form button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.eh-chat__error {
+    margin: 0;
+    padding: 8px 12px;
+    background: #fff0ee;
+    color: #a32d22;
+    font-size: 12px;
+    overflow-wrap: anywhere;
+}
+
+.eh-chat__footer {
+    padding: 8px;
+    background: #fff;
+    color: #77756e;
+    font-size: 10px;
+    text-align: center;
+}
+
+@media (max-width: 480px) {
+    .eh-chat {
+        right: 14px;
+        bottom: 14px;
+    }
+
+    .eh-chat__launcher {
+        width: 54px;
+        height: 54px;
+    }
+
+    .eh-chat__panel {
+        position: fixed;
+        right: 10px;
+        bottom: 80px;
+        left: 10px;
+        width: auto;
+        height: min(520px, calc(100dvh - 110px));
+        margin-bottom: 0;
+    }
+}

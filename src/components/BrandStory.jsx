@@ -11,20 +11,17 @@ export default function BrandStory() {
 
                     <div className="col-lg-6">
                         <div className="discount-ornament">
-
                             <span className="ornament-line"></span>
-
                             <span className="ornament-text">
                                 STORY BEHIND EVERY RUG
                             </span>
-
                             <span className="ornament-line"></span>
-
                         </div>
 
-                        <h2 className="mt-3 fw-semibold for-user-heading">
-                            Crafted by Tradition. Chosen for Modern Homes.
+                        <h2 className="recent-added-title">
+                            Crafted by Tradition. <em>Chosen for Modern Homes.</em>
                         </h2>
+
 
                         <p className="story-text my-4">
                             Every handcrafted rug tells a story long before it

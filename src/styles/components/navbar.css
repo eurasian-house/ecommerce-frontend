@@ -34,15 +34,6 @@
    NAV LINKS
 ========================= */
 
-.nav-link {
-    color: var(--navbar-link-color) !important;
-    transition: color var(--transition);
-}
-
-.nav-link:hover,
-.nav-link.active {
-    color: var(--navbar-link-active) !important;
-}
 
 /* =========================
    NAVBAR ACTIONS
@@ -64,7 +55,7 @@
     z-index: var(--z-modal);
 }
 
-.navbar-profile-button{
+.navbar-profile-button {
     color: var(--navbar-icon-color) !important;
     font-size: var(--navbar-height-mobile);
     /* margin: var(--space-1); */
@@ -83,16 +74,14 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-shrink: 0;
+    padding: 0;
     border: 1px solid var(--navbar-action-border);
     border-radius: var(--radius-full);
     background: var(--navbar-action-bg);
     color: var(--navbar-icon-color);
     box-shadow: var(--shadow-xs);
-    transition:
-        background var(--transition),
-        color var(--transition),
-        border-color var(--transition),
-        transform var(--transition);
+    cursor: pointer;
 }
 
 .theme-toggle:hover,
@@ -111,9 +100,6 @@
 
 .navbar-cart-btn {
     position: relative;
-    cursor: pointer;
-    flex-shrink: 0;
-    padding: 0;
 }
 
 .navbar-cart-btn:hover {
@@ -124,10 +110,20 @@
     transform: scale(.95);
 }
 
-.navbar-cart-btn:focus-visible {
+.theme-toggle:focus-visible,
+.navbar-mobile-search-toggle:focus-visible,
+.navbar-cart-btn:focus-visible,
+.navbar-toggler:focus-visible {
     outline: 2px solid var(--color-primary);
     outline-offset: 2px;
-    border-radius: var(--radius-full);
+}
+
+/* Icon sizing */
+.theme-toggle svg,
+.navbar-mobile-search-toggle svg,
+.navbar-cart-btn svg,
+.navbar-toggler svg {
+    pointer-events: none;
 }
 
 .navbar-cart-badge {

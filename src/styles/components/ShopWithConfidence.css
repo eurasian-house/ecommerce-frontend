@@ -41,27 +41,6 @@
     background: var(--confidence-accent);
 }
 
-.confidence-header h2 {
-    margin: 0;
-    font-family: Georgia, "Times New Roman", serif;
-    font-size: clamp(38px, 4.5vw, 57px);
-    font-weight: 500;
-    line-height: 1.14;
-    letter-spacing: -1.4px;
-}
-
-.confidence-header h2 em {
-    color: var(--confidence-accent);
-    font-weight: 400;
-}
-
-.confidence-header>p {
-    max-width: 550px;
-    margin: 20px auto 0;
-    color: var(--confidence-muted);
-    font-size: 15px;
-    line-height: 1.85;
-}
 
 /* Main panel */
 
@@ -290,14 +269,6 @@
 
     .confidence-eyebrow span {
         width: 25px;
-    }
-
-    .confidence-header h2 {
-        letter-spacing: -0.8px;
-    }
-
-    .confidence-header>p {
-        font-size: 14px;
     }
 
     .confidence-panel {

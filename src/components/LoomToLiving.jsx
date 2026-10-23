@@ -44,17 +44,18 @@ export default function LoomToLiving() {
     <section className="loom-section">
       <div className="container">
         <header className="loom-heading text-center">
-          <div className="loom-eyebrow">
-            <span />
-            FROM LOOM TO LIVING ROOM
-            <span />
+
+          <div className="discount-ornament">
+            <span className="ornament-line" />
+            <span className="ornament-text">FROM LOOM TO LIVING ROOM</span>
+            <span className="ornament-line" />
           </div>
 
-          <h2>
+          <h2 className="recent-added-title">
             Every Rug Has <em>a Journey</em>
           </h2>
 
-          <p>
+          <p className="recent-added-description">
             Thoughtfully crafted, carefully finished, and made to feel at
             home. Discover the journey behind every Eurasian House rug.
           </p>
@@ -87,10 +88,6 @@ export default function LoomToLiving() {
                   <h3>{step.title}</h3>
                   <p>{step.text}</p>
                 </div>
-
-                {/* <span className="loom-card-arrow" aria-hidden="true">
-                  <i className="bi bi-arrow-up-right" />
-                </span> */}
               </div>
             </article>
           ))}

@@ -20,7 +20,7 @@ export default function TopDeals() {
             .select("*")
             .eq("status", "active")
             .order("clicks", { ascending: false })
-            .limit(15);
+            .limit(20);
 
         if (error) {
             console.log(error);
@@ -65,23 +65,25 @@ export default function TopDeals() {
                         <span className="ornament-line"></span>
                     </div>
 
-                    <h2 className="mt-3 fw-semibold for-user-heading">
-                        Exceptional Finds, Exceptional Value
+                    <h2 className="recent-added-title">
+                        Exceptional Finds. <em>Exceptional Value.</em>
                     </h2>
 
-                    <p className="for-user-subheading mx-auto my-4">
+                    <p className="recent-added-description">
                         Discover our <span className="top-10">Top</span> handcrafted rugs loved by
                         customers worldwide.
                     </p>
                 </div>
 
                 <div className="position-relative">
+
                     <button
-                        className="category-arrow category-arrow-left d-none d-md-flex"
-                        onClick={scrollLeft}
                         type="button"
+                        className="sliding-arrow sliding-arrow--left hero-arrow-left"
+                        onClick={scrollLeft}
+                        aria-label="Previous slide"
                     >
-                        ‹
+                        <i className="bi bi-chevron-left" />
                     </button>
 
                     <div
@@ -115,11 +117,12 @@ export default function TopDeals() {
                     </div>
 
                     <button
-                        className="category-arrow category-arrow-right d-none d-md-flex"
-                        onClick={scrollRight}
                         type="button"
+                        className="sliding-arrow sliding-arrow--right hero-arrow-right"
+                        onClick={scrollRight}
+                        aria-label="Next slide"
                     >
-                        ›
+                        <i className="bi bi-chevron-right" />
                     </button>
                 </div>
             </div>

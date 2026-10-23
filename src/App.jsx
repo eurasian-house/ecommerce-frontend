@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation, } from "react-router-dom";
 import { Suspense, lazy } from "react";
 import ScrollManager from "./components/ScrollManager";
 
@@ -11,6 +11,8 @@ import ProtectedRoute from "./components/ProtectedRoute";
 
 import CartProvider from "./context/CartContext";
 import { AuthProvider } from "./context/AuthContext";
+
+import ChatWidget from "./components/ChatWidget";
 
 import Analytics from "./components/Analytics";
 import WriteReview from "./pages/WriteReview";
@@ -63,6 +65,22 @@ const CustOrderDetail = lazy(() => import("./pages/CustOrderDetail"));
 
 
 
+function CustomerChat() {
+  const location = useLocation();
+
+  if (
+    location.pathname === "/admin" ||
+    location.pathname.startsWith("/admin/")
+  ) {
+    return null;
+  }
+
+  return <ChatWidget />;
+}
+
+
+
+
 export default function App() {
   return (
     <AuthProvider>
@@ -70,6 +88,7 @@ export default function App() {
         <BrowserRouter>
           <ScrollManager />
           <Analytics />
+          <CustomerChat />
           <Suspense
             fallback={
               <div className="d-flex justify-content-center align-items-center vh-100">

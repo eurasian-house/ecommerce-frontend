@@ -12,7 +12,6 @@ export default function CustomerInspiration() {
     const [visibleCount, setVisibleCount] = useState(5);
 
     const navigate = useNavigate();
-    const isMobile = window.innerWidth < 576;
 
     useEffect(() => {
         fetchReviews();
@@ -58,12 +57,11 @@ export default function CustomerInspiration() {
                         <span className="ornament-line"></span>
 
                     </div>
-
-                    <h2 className="mt-3 fw-semibold for-user-heading">
-                        Real Homes. Real Stories.
+                    <h2 className="recent-added-title">
+                        Real Homes. <em>Real Stories.</em>
                     </h2>
 
-                    <p className="for-user-subheading mx-auto">
+                    <p className="recent-added-description">
                         See how our handcrafted rugs look in homes around the world.
                     </p>
 
@@ -138,7 +136,7 @@ export default function CustomerInspiration() {
                     <div className="text-center mt-5">
 
                         <button
-                            className="show-more"
+                            className="btn-primary"
                             onClick={() => setVisibleCount(v => v + 5)}
                         >
                             Show More

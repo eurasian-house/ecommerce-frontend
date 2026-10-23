@@ -64,22 +64,12 @@ export default function Navbar() {
       className="navbar navbar-expand-lg sticky-top py-0"
     >
       <div className="container-fluid px-2 px-md-4 d-flex align-items-center">
-
-        {/* <NavLink className="navbar-brand" to="/">
-          <img
-            src={theme === "dark" ? "/logobw.png" : "/logo.png"}
-            alt="Eurasian House Logo"
-            fetchPriority="high"
-            decoding="async"
-            className="navbar-logo"
-          />
-        </NavLink> */}
         <NavLink
           className="navbar-brand"
           to="/"
           aria-label="Eurasian House home"
         >
-          <EurasianLogo className="navbar-logo" animated={false} />
+          <EurasianLogo className="navbar-logo" animated={true} />
         </NavLink>
 
 
@@ -90,9 +80,16 @@ export default function Navbar() {
         >
 
           <ul className="navbar-nav mx-auto mb-3 mb-lg-0 text-center text-lg-start">
-
             <li className="nav-item">
-              <NavLink to="/" onClick={closeNavbar} className={({ isActive }) => `nav-link ${isActive ? "active fw-semibold" : ""}`} >Home</NavLink>
+              <NavLink
+                to="/"
+                onClick={closeNavbar}
+                className={({ isActive }) =>
+                  `nav-link hover-lift hover-lift--underline ${isActive ? "active fw-semibold" : ""}`
+                }
+              >
+                Home
+              </NavLink>
             </li>
 
             <li className="nav-item">
@@ -100,7 +97,7 @@ export default function Navbar() {
                 to="/products"
                 onClick={closeNavbar}
                 className={({ isActive }) =>
-                  `nav-link ${isActive ? "active fw-semibold" : ""}`
+                  `nav-link hover-lift hover-lift--underline ${isActive ? "active fw-semibold" : ""}`
                 }
               >
                 Products
@@ -112,7 +109,7 @@ export default function Navbar() {
                 to="/blogs"
                 onClick={closeNavbar}
                 className={({ isActive }) =>
-                  `nav-link ${isActive ? "active fw-semibold" : ""}`
+                  `nav-link hover-lift hover-lift--underline ${isActive ? "active fw-semibold" : ""}`
                 }
               >
                 Blogs
@@ -124,7 +121,7 @@ export default function Navbar() {
                 to="/wholesale"
                 onClick={closeNavbar}
                 className={({ isActive }) =>
-                  `nav-link ${isActive ? "active fw-semibold" : ""}`
+                  `nav-link hover-lift hover-lift--underline ${isActive ? "active fw-semibold" : ""}`
                 }
               >
                 Trade
@@ -136,7 +133,7 @@ export default function Navbar() {
                 to="/us"
                 onClick={closeNavbar}
                 className={({ isActive }) =>
-                  `nav-link ${isActive ? "active fw-semibold" : ""}`
+                  `nav-link hover-lift hover-lift--underline ${isActive ? "active fw-semibold" : ""}`
                 }
               >
                 About Us
@@ -148,13 +145,14 @@ export default function Navbar() {
                 to="/contact"
                 onClick={closeNavbar}
                 className={({ isActive }) =>
-                  `nav-link ${isActive ? "active fw-semibold" : ""}`
+                  `nav-link hover-lift hover-lift--underline ${isActive ? "active fw-semibold" : ""}`
                 }
               >
                 Contact Us
               </NavLink>
             </li>
           </ul>
+
         </div>
 
         {mobileSearchOpen && (
@@ -196,7 +194,7 @@ export default function Navbar() {
           {/* Dark/light theme btn */}
           <button
             type="button"
-            className="theme-toggle"
+            className="theme-toggle hover-lift"
             onClick={toggleTheme}
             aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
           >

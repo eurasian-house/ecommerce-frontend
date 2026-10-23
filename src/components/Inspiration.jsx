@@ -103,11 +103,11 @@ export default function Inspiration() {
                         <span className="ornament-line"></span>
                     </div>
 
-                    <h2 className="mt-3 fw-semibold for-user-heading">
-                        Shop by Quality &amp; Design
+                    <h2 className="recent-added-title">
+                        Shop by <em>Quality &amp; Design</em>
                     </h2>
 
-                    <p className="pt-4 mx-auto">
+                    <p className="recent-added-description">
                         Discover a curated selection of handcrafted carpets,
                         defined by exceptional quality and intricate, signature
                         designs that elevate any interior.
@@ -186,7 +186,7 @@ export default function Inspiration() {
                 {!loading && visibleCount < filtered.length && (
                     <div className="text-center mt-5">
                         <button
-                            className="inspiration-load-btn"
+                            className="btn-secondary btn-lg"
                             onClick={() =>
                                 setVisibleCount((prev) => prev + 6)
                             }

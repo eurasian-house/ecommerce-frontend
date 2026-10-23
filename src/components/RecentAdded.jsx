@@ -97,13 +97,12 @@ export default function RecentAdded() {
 
                 <div className="recent-added-gallery">
                     <button
-                        className="recent-added-arrow recent-added-arrow-left"
                         type="button"
+                        className="sliding-arrow sliding-arrow--left hero-arrow-left"
                         onClick={() => scroll(-1)}
-                        aria-label="Scroll to previous rugs"
-                        disabled={loading}
+                        aria-label="Previous slide"
                     >
-                        <i className="bi bi-arrow-left" aria-hidden="true" />
+                        <i className="bi bi-chevron-left" />
                     </button>
 
                     <div
@@ -138,15 +137,13 @@ export default function RecentAdded() {
                                 </div>
                             ))}
                     </div>
-
                     <button
-                        className="recent-added-arrow recent-added-arrow-right"
                         type="button"
+                        className="sliding-arrow sliding-arrow--right hero-arrow-right"
                         onClick={() => scroll(1)}
-                        aria-label="Scroll to more rugs"
-                        disabled={loading}
+                        aria-label="Next slide"
                     >
-                        <i className="bi bi-arrow-right" aria-hidden="true" />
+                        <i className="bi bi-chevron-right" />
                     </button>
                 </div>
 

@@ -46,14 +46,13 @@ export default function Category() {
 
   return (
     <section className="position-relative">
-
       <button
         type="button"
-        className="category-arrow category-arrow-left d-none d-md-flex"
+        className="sliding-arrow sliding-arrow--left hero-arrow-left"
         onClick={scrollLeft}
-        aria-label="Scroll categories left"
+        aria-label="Previous slide"
       >
-        <i className="bi bi-chevron-left"></i>
+        <i className="bi bi-chevron-left" />
       </button>
 
       <div
@@ -91,14 +90,13 @@ export default function Category() {
           </div>
         ))}
       </div>
-
       <button
         type="button"
-        className="category-arrow category-arrow-right d-none d-md-flex"
+        className="sliding-arrow sliding-arrow--right hero-arrow-right"
         onClick={scrollRight}
-        aria-label="Scroll categories right"
+        aria-label="Next slide"
       >
-        <i className="bi bi-chevron-right"></i>
+        <i className="bi bi-chevron-right" />
       </button>
 
     </section>

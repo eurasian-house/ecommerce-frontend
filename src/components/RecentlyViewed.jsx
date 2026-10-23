@@ -57,11 +57,11 @@ export default function RecentlyViewed() {
                         <span className="ornament-line"></span>
                     </div>
 
-                    <h2 className="mt-3 fw-semibold for-user-heading">
-                        Pick Up Where You Left Off
+                    <h2 className="recent-added-title">
+                        Pick Up <em>Where You Left Off</em>
                     </h2>
 
-                    <p className="for-user-subheading mx-auto my-4">
+                    <p className="recent-added-description">
                         Revisit the handcrafted rugs you've recently explored.
                     </p>
                 </div>
@@ -88,11 +88,12 @@ export default function RecentlyViewed() {
                     ) : (
                         <>
                             <button
-                                className="category-arrow category-arrow-left d-none d-md-flex"
-                                onClick={scrollLeft}
                                 type="button"
+                                className="sliding-arrow sliding-arrow--left hero-arrow-left"
+                                onClick={scrollLeft}
+                                aria-label="Previous slide"
                             >
-                                ‹
+                                <i className="bi bi-chevron-left" />
                             </button>
 
                             <div
@@ -110,13 +111,13 @@ export default function RecentlyViewed() {
                                     />
                                 ))}
                             </div>
-
                             <button
-                                className="category-arrow category-arrow-right d-none d-md-flex"
-                                onClick={scrollRight}
                                 type="button"
+                                className="sliding-arrow sliding-arrow--right hero-arrow-right"
+                                onClick={scrollRight}
+                                aria-label="Next slide"
                             >
-                                ›
+                                <i className="bi bi-chevron-right" />
                             </button>
                         </>
                     )}

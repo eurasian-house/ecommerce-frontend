@@ -1,155 +1,33 @@
-/* ==========================================
-FOR USER
-\========================================== */
-.for-user-section {
-    background: var(--section-bg);
-    /* border-top: 1px solid var(--border-color);
-border-bottom: 1px solid var(--border-color); */
-    min-height: 85vh;
-    padding: 0 !important;
-}
-
-.for-user-badge {
-    background: var(--primary-light);
-    color: var(--primary-color);
-    font-size: .78rem;
-    font-weight: 600;
-    letter-spacing: .05em;
-    padding: .45rem .95rem;
-}
-
-.for-user-heading {
-    font-size: 2.3rem;
-    color: var(--text-color);
-}
-
-.for-user-subheading {
-    max-width: 620px;
-    color: var(--text-muted);
-    line-height: 1.75;
-    font-size: 1rem;
-}
-
-.for-user-title {
-    font-size: clamp(2.8rem, 6vw, 5rem);
-    line-height: 1.1;
-    color: var(--text-color);
-}
-
-.stronger {
-    color: var(--color-primary-hover)
-}
-
-.for-user-description {
-    max-width: 800px;
-    font-size: 1.35rem;
-    color: var(--text-muted);
-    line-height: 1.7;
-}
-
-.for-user-features {
-    border-top: 1px solid var(--border-color);
-}
-
-.for-user-features h4 {
-    font-size: 1.2rem;
-    color: var(--text-color);
-    margin-bottom: .5rem;
-}
-
-.for-user-features p {
-    color: var(--text-muted);
-    font-size: .92rem;
-    margin: 0;
-}
-
-/* ==========================
-TABLET
-\========================== */
-@media (max-width:992px) {
-    .for-user-section {
-        min-height: 70vh;
-    }
-
-    .for-user-heading {
-        font-size: 2rem;
-    }
-
-    .for-user-description {
-        font-size: 1.15rem;
-    }
-}
-
-/* ==========================
-MOBILE
-\========================== */
-@media (max-width:576px) {
-    .for-user-section {
-        min-height: auto;
-        padding: 4rem 0;
-    }
-
-    .for-user-badge {
-        font-size: .68rem;
-    }
-
-    .for-user-heading {
-        font-size: 1.6rem;
-    }
-
-    .for-user-subheading {
-        font-size: .9rem;
-        line-height: 1.6;
-    }
-
-    .for-user-title {
-        font-size: 2.3rem;
-    }
-
-    .for-user-description {
-        font-size: 1rem;
-        line-height: 1.6;
-    }
-
-    .for-user-features h4 {
-        font-size: 1rem;
-    }
-
-    .for-user-features p {
-        font-size: .82rem;
-    }
-
-    .rounded-pill {
-        font-size: .9rem !important;
-    }
-}
-
 /* =====================================================
-PRICE UNDER / COLLECTION GRID
-\===================================================== */
+   PRICE UNDER / COLLECTION GRID
+===================================================== */
+
 .premium-grid-card {
     position: relative;
-    overflow: hidden;
-    border-radius: 18px;
-    cursor: pointer;
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    transition: all .35s ease;
     height: 100%;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+    border-radius: 18px;
+    background: var(--card-bg);
+    cursor: pointer;
+    transition:
+        transform 0.35s ease,
+        border-color 0.35s ease,
+        box-shadow 0.35s ease;
 }
 
 .premium-grid-card:hover {
     transform: translateY(-6px);
     border-color: var(--primary-color);
-    box-shadow: 0 18px 40px rgba(0, 0, 0, .12);
+    box-shadow: var(--premium-card-shadow);
 }
 
 .premium-grid-image {
+    display: block;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    display: block;
-    transition: transform .6s ease;
+    transition: transform 0.6s ease;
 }
 
 .premium-grid-card:hover .premium-grid-image {
@@ -157,6 +35,7 @@ PRICE UNDER / COLLECTION GRID
 }
 
 /* ---------- Overlay ---------- */
+
 .premium-grid-overlay {
     position: absolute;
     inset: 0;
@@ -164,12 +43,11 @@ PRICE UNDER / COLLECTION GRID
     flex-direction: column;
     justify-content: flex-end;
     padding: 1.6rem;
-    background:
-        linear-gradient(to top,
-            rgba(0, 0, 0, .72) 0%,
-            rgba(0, 0, 0, .35) 40%,
-            rgba(0, 0, 0, 0) 75%);
-    color: #fff;
+    background: linear-gradient(to top,
+            var(--premium-overlay-strong) 0%,
+            var(--premium-overlay-medium) 40%,
+            transparent 75%);
+    color: var(--image-overlay-text);
 }
 
 .premium-grid-overlay.small {
@@ -177,60 +55,60 @@ PRICE UNDER / COLLECTION GRID
 }
 
 /* ---------- Labels ---------- */
+
 .premium-grid-badge {
     display: inline-block;
     align-self: flex-start;
-    margin-bottom: .75rem;
-    padding: .35rem .8rem;
+    margin-bottom: 0.75rem;
+    padding: 0.35rem 0.8rem;
     border-radius: 999px;
-    background: rgba(255, 255, 255, .18);
+    background: var(--premium-badge-bg);
     backdrop-filter: blur(10px);
-    font-size: .72rem;
+    font-size: 0.72rem;
     font-weight: 600;
-    letter-spacing: .06em;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
 }
 
 .premium-grid-label {
     display: inline-block;
-    margin-bottom: .4rem;
-    font-size: .65rem;
+    margin-bottom: 0.4rem;
+    color: var(--premium-overlay-text);
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
-    letter-spacing: .08em;
-    color: rgba(255, 255, 255, .82);
 }
 
 /* ---------- Typography ---------- */
+
 .premium-grid-title {
     margin: 0;
-    color: rgba(255, 255, 255, .82);
+    color: var(--premium-overlay-text);
     font-size: 2rem;
     font-weight: 700;
     line-height: 1.1;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, .35);
+    text-shadow: var(--premium-text-shadow);
 }
 
 .premium-grid-subtitle {
-    margin-top: .45rem;
-    margin-bottom: 0;
-    font-size: .95rem;
-    color: rgba(255, 255, 255, .9);
+    margin: 0.45rem 0 0;
+    color: var(--image-overlay-muted);
+    font-size: 0.95rem;
     line-height: 1.6;
 }
 
 .premium-grid-overlay h6 {
     margin: 0;
-    color: rgba(255, 255, 255, .9);
+    color: var(--image-overlay-muted);
     font-size: 1rem;
     font-weight: 600;
     line-height: 1.35;
-    text-shadow: 0 2px 8px rgba(0, 0, 0, .35);
+    text-shadow: var(--premium-text-shadow);
 }
 
-/* =====================================================
-TABLET
-\===================================================== */
-@media (max-width:992px) {
+/* ---------- Responsive ---------- */
+
+@media (max-width: 992px) {
     .premium-grid-card {
         border-radius: 16px;
     }
@@ -240,20 +118,16 @@ TABLET
     }
 
     .premium-grid-subtitle {
-        font-size: .9rem;
+        font-size: 0.9rem;
     }
 }
 
-/* =========================================
-RECENT ARRIVALS â€” LUXURY EDITORIAL
-\========================================= */
-.recent-added-section {
-    --recent-ink: #29251f;
-    --recent-muted: #777065;
-    --recent-accent: #a17b4c;
-    --recent-line: rgba(105, 84, 58, 0.2);
-    --recent-paper: #faf8f3;
 
+/* =====================================================
+   RECENT ARRIVALS — LUXURY EDITORIAL
+===================================================== */
+
+.recent-added-section {
     position: relative;
     isolation: isolate;
     overflow: hidden;
@@ -265,7 +139,7 @@ RECENT ARRIVALS â€” LUXURY EDITORIAL
 .recent-added-texture {
     position: absolute;
     inset: 0;
-    z-index: 1;
+    z-index: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -279,10 +153,7 @@ RECENT ARRIVALS â€” LUXURY EDITORIAL
     position: absolute;
     inset: 0;
     z-index: 1;
-    background: linear-gradient(180deg,
-            rgba(150, 148, 145, 0.88),
-            rgba(150, 148, 145, 0.88) 65%,
-            rgba(150, 148, 145, 0.88));
+    background: var(--recent-overlay);
     pointer-events: none;
 }
 
@@ -291,48 +162,13 @@ RECENT ARRIVALS â€” LUXURY EDITORIAL
     z-index: 2;
 }
 
-/* Dark theme */
-[data-theme="dark"] .recent-added-section::before {
-    background: linear-gradient(180deg,
-            rgba(25, 24, 21, 0.88),
-            rgba(25, 24, 21, 0.94) 65%,
-            rgba(25, 24, 21, 0.97));
-}
+/* ---------- Header ----------  */
 
-.recent-added-container {
-    position: relative;
-    z-index: 1;
-}
-
-/* Header */
 .recent-added-header {
     max-width: 760px;
     margin: 0 auto clamp(2.5rem, 4vw, 3.5rem);
     padding-inline: 1rem;
     text-align: center;
-}
-
-.recent-added-title {
-    margin: 0;
-    color: var(--recent-ink);
-    font-family: "Cardo", Georgia, serif;
-    font-size: clamp(2rem, 4vw, 3.5rem);
-    font-weight: 400;
-    line-height: 1.15;
-    letter-spacing: -0.035em;
-}
-
-.recent-added-title em {
-    color: var(--recent-accent);
-    font-weight: 400;
-}
-
-.recent-added-description {
-    max-width: 510px;
-    margin: 1.2rem auto 0;
-    color: var(--recent-muted);
-    font-size: 0.94rem;
-    line-height: 1.9;
 }
 
 .recent-added-divider {
@@ -351,10 +187,10 @@ RECENT ARRIVALS â€” LUXURY EDITORIAL
     background: var(--recent-line);
 }
 
-/* Product gallery */
+/* ---------- Product Gallery ---------- */
+
 .recent-added-gallery {
     position: relative;
-    padding: 0 clamp(0.5rem, 2.5vw, 2.5rem);
 }
 
 .recent-added-track {
@@ -367,7 +203,7 @@ RECENT ARRIVALS â€” LUXURY EDITORIAL
     scroll-behavior: smooth;
     scroll-snap-type: x mandatory;
     scrollbar-width: thin;
-    scrollbar-color: rgba(161, 123, 76, 0.45) transparent;
+    scrollbar-color: var(--recent-scrollbar) transparent;
     -webkit-overflow-scrolling: touch;
 }
 
@@ -381,7 +217,7 @@ RECENT ARRIVALS â€” LUXURY EDITORIAL
 
 .recent-added-track::-webkit-scrollbar-thumb {
     border-radius: 10px;
-    background: rgba(161, 123, 76, 0.45);
+    background: var(--recent-scrollbar);
 }
 
 .recent-added-item {
@@ -395,56 +231,35 @@ RECENT ARRIVALS â€” LUXURY EDITORIAL
     transform: translateY(-4px);
 }
 
-/* Navigation arrows  */
-.recent-added-arrow {
+/* ---------- Navigation Arrows ---------- */
+
+/* Desktop-only hero arrow positioning */
+.hero-arrow-left,
+.hero-arrow-right {
     position: absolute;
-    top: 40%;
-    z-index: 3;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 44px;
-    height: 44px;
-    padding: 0;
-    border: 1px solid rgba(105, 84, 58, 0.22);
-    border-radius: 50%;
-    color: var(--recent-ink);
-    background: rgba(250, 248, 243, 0.96);
-    box-shadow: 0 5px 20px rgba(43, 35, 25, 0.08);
-    cursor: pointer;
-    transition:
-        background 0.25s ease,
-        color 0.25s ease,
-        border-color 0.25s ease,
-        transform 0.25s ease;
+    top: 30%;
+    z-index: 5;
+    transform: translateY(-50%);
 }
 
-.recent-added-arrow i {
-    font-size: 1.15rem;
-    line-height: 1;
+.hero-arrow-left {
+    left: 1rem;
 }
 
-.recent-added-arrow-left {
-    left: 0;
+.hero-arrow-right {
+    right: 1rem;
 }
 
-.recent-added-arrow-right {
-    right: 0;
+@media (max-width: 991.98px) {
+
+    .hero-arrow-left,
+    .hero-arrow-right {
+        display: none;
+    }
 }
 
-.recent-added-arrow:hover:not(:disabled) {
-    color: #fff;
-    background: var(--recent-accent);
-    border-color: var(--recent-accent);
-    transform: scale(1.06);
-}
+/* ---------- Loading Skeleton ---------- */
 
-.recent-added-arrow:disabled {
-    opacity: 0.45;
-    cursor: default;
-}
-
-/* Loading skeleton */
 .recent-added-skeleton {
     flex: 0 0 185px;
     padding: 0.45rem;
@@ -455,11 +270,11 @@ RECENT ARRIVALS â€” LUXURY EDITORIAL
     aspect-ratio: 1 / 1;
     border-radius: 3px;
     background: linear-gradient(100deg,
-            #eae5dc 25%,
-            #f5f1e9 45%,
-            #eae5dc 65%);
+            var(--recent-skeleton-base) 25%,
+            var(--recent-skeleton-highlight) 45%,
+            var(--recent-skeleton-base) 65%);
     background-size: 200% 100%;
-    animation: recent-added-shimmer 1.5s infinite linear;
+    animation: recent-added-shimmer 1.5s linear infinite;
 }
 
 .recent-added-skeleton-line {
@@ -467,7 +282,7 @@ RECENT ARRIVALS â€” LUXURY EDITORIAL
     height: 10px;
     margin-top: 1rem;
     border-radius: 3px;
-    background: #eae5dc;
+    background: var(--recent-skeleton-base);
 }
 
 .recent-added-skeleton-line.short {
@@ -481,7 +296,8 @@ RECENT ARRIVALS â€” LUXURY EDITORIAL
     }
 }
 
-/* Footer */
+/* ---------- Footer ---------- */
+
 .recent-added-footer {
     display: flex;
     align-items: center;
@@ -504,61 +320,14 @@ RECENT ARRIVALS â€” LUXURY EDITORIAL
     letter-spacing: 0.03em;
 }
 
-/* Dark theme */
-[data-theme="dark"] .recent-added-section {
-    --recent-ink: #f0ece4;
-    --recent-muted: #b6aea0;
-    --recent-accent: #d0ae7c;
-    --recent-line: rgba(231, 218, 195, 0.2);
-    --recent-paper: #191815;
-}
-
-[data-theme="dark"] .recent-added-section::before {
-    background: linear-gradient(180deg,
-            rgba(25, 24, 21, 0.93),
-            rgba(25, 24, 21, 0.97) 65%,
-            rgba(25, 24, 21, 0.99));
-}
-
-[data-theme="dark"] .recent-added-arrow {
-    color: var(--recent-ink);
-    background: rgba(35, 33, 29, 0.96);
-    border-color: var(--recent-line);
-}
-
-[data-theme="dark"] .recent-added-arrow:hover:not(:disabled) {
-    color: #191815;
-    background: var(--recent-accent);
-    border-color: var(--recent-accent);
-}
-
-[data-theme="dark"] .recent-added-skeleton-image {
-    background: linear-gradient(100deg,
-            #302e29 25%,
-            #403c34 45%,
-            #302e29 65%);
-    background-size: 200% 100%;
-}
-
-[data-theme="dark"] .recent-added-skeleton-line {
-    background: #302e29;
-}
-
-
-
-/* =========================================
+/* =====================================================
    FOR USER — LUXURY EDITORIAL SECTION
-========================================= */
+===================================================== */
 
 .for-user-section {
-    --fu-paper: #faf8f3;
-    --fu-ink: #292820;
-    --fu-muted: #77756b;
-    --fu-accent: #94784c;
-    --fu-line: rgba(91, 78, 54, 0.18);
-
     position: relative;
     overflow: hidden;
+    min-height: 85vh;
     padding: clamp(4rem, 8vw, 7.5rem) 0;
     color: var(--fu-ink);
     background: var(--fu-paper);
@@ -571,8 +340,6 @@ RECENT ARRIVALS â€” LUXURY EDITORIAL
     gap: clamp(3rem, 7vw, 7rem);
 }
 
-/* ---------- Image ---------- */
-
 .for-user-visual {
     position: relative;
     min-width: 0;
@@ -584,7 +351,7 @@ RECENT ARRIVALS â€” LUXURY EDITORIAL
     isolation: isolate;
     overflow: hidden;
     aspect-ratio: 4 / 5;
-    background: #e9e2d6;
+    background: var(--fu-image-bg);
 }
 
 .for-user-image-frame::after {
@@ -594,7 +361,7 @@ RECENT ARRIVALS â€” LUXURY EDITORIAL
     z-index: 0;
     background: linear-gradient(to bottom,
             transparent,
-            rgba(18, 17, 13, 0.7));
+            var(--fu-image-overlay));
     pointer-events: none;
 }
 
@@ -619,7 +386,7 @@ RECENT ARRIVALS â€” LUXURY EDITORIAL
     display: flex;
     align-items: center;
     gap: 14px;
-    color: #fff;
+    color: var(--image-overlay-text);
 }
 
 .for-user-caption-mark {
@@ -628,7 +395,7 @@ RECENT ARRIVALS â€” LUXURY EDITORIAL
     height: 46px;
     flex-shrink: 0;
     place-items: center;
-    border: 1px solid rgba(255, 255, 255, 0.65);
+    border: 1px solid var(--fu-caption-border);
     border-radius: 50%;
     font-family: Georgia, serif;
     font-size: 15px;
@@ -649,70 +416,29 @@ RECENT ARRIVALS â€” LUXURY EDITORIAL
 .for-user-visual::before {
     content: "";
     position: absolute;
-    inset: 18px 0 0 0;
+    inset: 18px 0 0;
     z-index: -1;
     border: 1px solid var(--fu-line);
 }
 
 .for-user-visual-decoration {
     position: absolute;
-    right: -16px;
     top: 50%;
-    writing-mode: vertical-rl;
-    transform: translateY(-50%);
+    right: -16px;
     color: var(--fu-accent);
     font-family: Georgia, serif;
     font-size: 0.75rem;
     font-style: italic;
     letter-spacing: 0.08em;
+    writing-mode: vertical-rl;
+    transform: translateY(-50%);
 }
 
-/* ---------- Editorial content ---------- */
+/* ---------- Editorial Content  ---------- */
 
 .for-user-content {
     min-width: 0;
     max-width: 620px;
-}
-
-.for-user-eyebrow {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    margin: 1.5rem;
-    color: var(--fu-accent);
-    font-size: 0.7rem;
-    font-weight: 600;
-    letter-spacing: 0.2em;
-}
-
-.for-user-eyebrow span {
-    width: 27px;
-    height: 1px;
-    background: currentColor;
-}
-
-.for-user-heading {
-    margin: 0;
-    color: var(--fu-ink);
-    font-family: "Cardo", Georgia, serif;
-    font-size: clamp(2.5rem, 4.2vw, 4.25rem);
-    font-weight: 400;
-    line-height: 1.12;
-    letter-spacing: -0.045em;
-}
-
-.for-user-heading em {
-    color: var(--fu-accent);
-    font-weight: 400;
-}
-
-.for-user-subheading {
-    max-width: 540px;
-    margin: 1.5rem 0 0;
-    color: var(--fu-muted);
-    font-size: 1rem;
-    line-height: 1.9;
 }
 
 .for-user-divider {
@@ -722,7 +448,7 @@ RECENT ARRIVALS â€” LUXURY EDITORIAL
     background: var(--fu-line);
 }
 
-/* ---------- Commitment rows ---------- */
+/* ---------- Commitments ---------- */
 
 .for-user-commitments {
     display: flex;
@@ -793,10 +519,10 @@ RECENT ARRIVALS â€” LUXURY EDITORIAL
     min-height: 56px;
     margin-top: 2rem;
     padding: 7px 8px 7px 23px;
-    border: 1px solid var(--fu-ink);
+    border: 1px solid var(--fu-cta-bg);
     border-radius: 50px;
-    color: var(--fu-paper);
-    background: var(--fu-ink);
+    color: var(--fu-cta-text);
+    background: var(--fu-cta-bg);
     font-size: 0.88rem;
     font-weight: 500;
     transition:
@@ -806,9 +532,9 @@ RECENT ARRIVALS â€” LUXURY EDITORIAL
 }
 
 .for-user-cta:hover {
-    border-color: var(--fu-accent);
-    color: #fff;
-    background: var(--fu-accent);
+    border-color: var(--fu-cta-hover-bg);
+    color: var(--fu-cta-hover-text);
+    background: var(--fu-cta-hover-bg);
 }
 
 .for-user-cta-icon {
@@ -818,8 +544,8 @@ RECENT ARRIVALS â€” LUXURY EDITORIAL
     flex-shrink: 0;
     place-items: center;
     border-radius: 50%;
-    color: var(--fu-ink);
-    background: var(--fu-paper);
+    color: var(--fu-cta-icon-text);
+    background: var(--fu-cta-icon-bg);
     font-size: 1rem;
     transition: transform 0.25s ease;
 }
@@ -835,9 +561,13 @@ RECENT ARRIVALS â€” LUXURY EDITORIAL
     line-height: 1.6;
 }
 
-/* ========== TOP DEALS SKELETON: START ========== */
 
-.top-deals-skeleton {
+/* =====================================================
+   TOP DEALS & RECENTLY VIEWED — SHARED SKELETON
+===================================================== */
+
+.top-deals-skeleton,
+.recently-viewed-skeleton {
     flex: 0 0 185px;
     width: 185px;
     padding: 8px;
@@ -846,102 +576,46 @@ RECENT ARRIVALS â€” LUXURY EDITORIAL
 
 .top-deals-skeleton-image,
 .top-deals-skeleton-line,
-.top-deals-skeleton-price {
-    background: linear-gradient(90deg,
-            #eeeae4 25%,
-            #f8f6f2 50%,
-            #eeeae4 75%);
-    background-size: 200% 100%;
-    animation: topDealsShimmer 1.4s ease-in-out infinite;
-    border-radius: 6px;
-}
-
-.top-deals-skeleton-image {
-    width: 100%;
-    aspect-ratio: 1 / 1;
-    margin-bottom: 12px;
-}
-
-.top-deals-skeleton-line {
-    height: 12px;
-    width: 90%;
-    margin-bottom: 8px;
-}
-
-.top-deals-skeleton-line.short {
-    width: 60%;
-}
-
-.top-deals-skeleton-price {
-    width: 40%;
-    height: 16px;
-    margin-top: 12px;
-}
-
-@keyframes topDealsShimmer {
-    from {
-        background-position: 200% 0;
-    }
-
-    to {
-        background-position: -200% 0;
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-
-    .top-deals-skeleton-image,
-    .top-deals-skeleton-line,
-    .top-deals-skeleton-price {
-        animation: none;
-    }
-}
-
-
-/* ========== RECENTLY VIEWED SKELETON: START ========== */
-
-.recently-viewed-skeleton {
-    flex: 0 0 185px;
-    width: 185px;
-    padding: 8px;
-    overflow: hidden;
-}
-
+.top-deals-skeleton-price,
 .recently-viewed-skeleton-image,
 .recently-viewed-skeleton-line,
 .recently-viewed-skeleton-price {
-    background: linear-gradient(90deg,
-            #eeeae4 25%,
-            #f8f6f2 50%,
-            #eeeae4 75%);
-    background-size: 200% 100%;
-    animation: recentlyViewedShimmer 1.4s ease-in-out infinite;
     border-radius: 6px;
+    background: linear-gradient(90deg,
+            var(--skeleton-base) 25%,
+            var(--skeleton-highlight) 50%,
+            var(--skeleton-base) 75%);
+    background-size: 200% 100%;
+    animation: product-skeleton-shimmer 1.4s ease-in-out infinite;
 }
 
+.top-deals-skeleton-image,
 .recently-viewed-skeleton-image {
     width: 100%;
     aspect-ratio: 1 / 1;
     margin-bottom: 12px;
 }
 
+.top-deals-skeleton-line,
 .recently-viewed-skeleton-line {
     width: 90%;
     height: 12px;
     margin-bottom: 8px;
 }
 
+.top-deals-skeleton-line.short,
 .recently-viewed-skeleton-line.short {
     width: 60%;
 }
 
+.top-deals-skeleton-price,
 .recently-viewed-skeleton-price {
     width: 40%;
     height: 16px;
     margin-top: 12px;
 }
 
-@keyframes recentlyViewedShimmer {
+@keyframes product-skeleton-shimmer {
     from {
         background-position: 200% 0;
     }
@@ -951,64 +625,15 @@ RECENT ARRIVALS â€” LUXURY EDITORIAL
     }
 }
 
-@media (prefers-reduced-motion: reduce) {
 
-    .recently-viewed-skeleton-image,
-    .recently-viewed-skeleton-line,
-    .recently-viewed-skeleton-price {
-        animation: none;
-    }
-}
-
-/* ========== RECENTLY VIEWED SKELETON: END ========== */
-
-/* ========== TOP DEALS SKELETON: END ========== */
-
-/* =========================================
-   DARK THEME
-========================================= */
-
-[data-theme="dark"] .for-user-section {
-    --fu-paper: var(--color-background, #171717);
-    --fu-ink: var(--color-foreground, #f5f1e9);
-    --fu-muted: var(--text-muted, #b5b0a6);
-    --fu-accent: #c6aa79;
-    --fu-line: rgba(220, 207, 181, 0.2);
-}
-
-[data-theme="dark"] .for-user-image-frame {
-    background: #28251f;
-}
-
-[data-theme="dark"] .for-user-cta {
-    color: #1d1b16;
-    background: #e1c99f;
-    border-color: #e1c99f;
-}
-
-[data-theme="dark"] .for-user-cta:hover {
-    color: #fff;
-    background: #a68a5d;
-    border-color: #a68a5d;
-}
-
-[data-theme="dark"] .for-user-cta-icon {
-    color: #1d1b16;
-    background: #faf4e8;
-}
-
-/* =========================================
-   RESPONSIVE
-========================================= */
+/* =====================================================
+   RESPONSIVE — FOR USER
+===================================================== */
 
 @media (max-width: 991.98px) {
     .for-user-layout {
         grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
         gap: 2.5rem;
-    }
-
-    .for-user-heading {
-        font-size: clamp(2.25rem, 5vw, 3.3rem);
     }
 
     .for-user-visual-decoration {
@@ -1018,6 +643,7 @@ RECENT ARRIVALS â€” LUXURY EDITORIAL
 
 @media (max-width: 767.98px) {
     .for-user-section {
+        min-height: auto;
         padding: 4rem 0;
     }
 
@@ -1045,22 +671,70 @@ RECENT ARRIVALS â€” LUXURY EDITORIAL
         margin: 0 auto;
     }
 
-    .for-user-heading {
-        font-size: clamp(2.5rem, 8vw, 3.5rem);
+    .recent-added-section {
+        padding: 3.5rem 0 1.8rem;
     }
 
-    .for-user-subheading {
-        font-size: 0.95rem;
+    .recent-added-header {
+        margin-bottom: 2rem;
+    }
+
+    .recent-added-track {
+        gap: 1.45rem;
+    }
+
+    .recent-added-item,
+    .recent-added-skeleton {
+        flex-basis: 165px;
+        width: 165px;
+    }
+
+    .recent-added-footer {
+        flex-wrap: wrap;
+        margin-inline: 0.5rem;
+        font-size: 0.82rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .premium-grid-card {
+        border-radius: 14px;
+    }
+
+    .premium-grid-overlay {
+        padding: 1rem;
+    }
+
+    .premium-grid-overlay.small {
+        padding: 0.8rem;
+    }
+
+    .premium-grid-badge {
+        margin-bottom: 0.55rem;
+        padding: 0.28rem 0.65rem;
+        font-size: 0.62rem;
+    }
+
+    .premium-grid-label {
+        font-size: 0.58rem;
+    }
+
+    .premium-grid-title {
+        font-size: 1.35rem;
+    }
+
+    .premium-grid-subtitle {
+        display: none;
+    }
+
+    .premium-grid-overlay h6 {
+        font-size: 0.82rem;
     }
 }
 
 @media (max-width: 420px) {
     .for-user-section {
         padding: 3.25rem 0;
-    }
-
-    .for-user-heading {
-        font-size: 2.3rem;
     }
 
     .for-user-commitment {
@@ -1088,60 +762,9 @@ RECENT ARRIVALS â€” LUXURY EDITORIAL
         padding-left: 17px;
         font-size: 0.82rem;
     }
-}
 
-@media (prefers-reduced-motion: reduce) {
-
-    .for-user-image,
-    .for-user-commitment-icon,
-    .for-user-cta,
-    .for-user-cta-icon {
-        transition: none;
-    }
-}
-
-/* Responsive */
-@media (max-width: 767.98px) {
-    .recent-added-section {
-        padding: 3.5rem 0 1.8rem;
-    }
-
-    .recent-added-header {
-        margin-bottom: 2rem;
-    }
-
-    .recent-added-gallery {
-        padding-inline: 0.5rem;
-    }
-
-    .recent-added-track {
-        gap: 1.45rem;
-    }
-
-    .recent-added-item,
-    .recent-added-skeleton {
-        flex-basis: 165px;
-        width: 165px;
-    }
-
-    .recent-added-arrow {
-        display: none;
-    }
-
-    .recent-added-footer {
-        flex-wrap: wrap;
-        margin-inline: 0.5rem;
-        font-size: 0.82rem;
-    }
-}
-
-@media (max-width: 420px) {
     .recent-added-title {
         font-size: 1.9rem;
-    }
-
-    .recent-added-description {
-        font-size: 0.88rem;
     }
 
     .recent-added-item,
@@ -1161,59 +784,11 @@ RECENT ARRIVALS â€” LUXURY EDITORIAL
     }
 }
 
-@media (prefers-reduced-motion: reduce) {
-
-    .recent-added-section *,
-    .recent-added-section *::before,
-    .recent-added-section *::after {
-        scroll-behavior: auto !important;
-        animation-duration: 0.01ms !important;
-        transition-duration: 0.01ms !important;
-    }
-}
 
 /* =====================================================
-MOBILE
-\===================================================== */
-@media (max-width:576px) {
-    .premium-grid-card {
-        border-radius: 14px;
-    }
+   TOP DEALS
+===================================================== */
 
-    .premium-grid-overlay {
-        padding: 1rem;
-    }
-
-    .premium-grid-overlay.small {
-        padding: .8rem;
-    }
-
-    .premium-grid-badge {
-        font-size: .62rem;
-        padding: .28rem .65rem;
-        margin-bottom: .55rem;
-    }
-
-    .premium-grid-label {
-        font-size: .58rem;
-    }
-
-    .premium-grid-title {
-        font-size: 1.35rem;
-    }
-
-    .premium-grid-subtitle {
-        display: none;
-    }
-
-    .premium-grid-overlay h6 {
-        font-size: .82rem;
-    }
-}
-
-/* =====================================================
-Top DealsÃŸ
-\===================================================== */
 .top-deals-section {
     padding: 0;
 }
@@ -1223,6 +798,32 @@ Top DealsÃŸ
 }
 
 .top-10 {
+    color: var(--premium-label-color);
     font-weight: 900;
-    color: #704b18;
+}
+
+
+/* =====================================================
+   ACCESSIBILITY
+===================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .for-user-image,
+    .for-user-commitment-icon,
+    .for-user-cta,
+    .for-user-cta-icon,
+    .recent-added-section *,
+    .recent-added-section *::before,
+    .recent-added-section *::after,
+    .top-deals-skeleton-image,
+    .top-deals-skeleton-line,
+    .top-deals-skeleton-price,
+    .recently-viewed-skeleton-image,
+    .recently-viewed-skeleton-line,
+    .recently-viewed-skeleton-price {
+        animation: none !important;
+        scroll-behavior: auto !important;
+        transition: none !important;
+    }
 }

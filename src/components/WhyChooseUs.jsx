@@ -42,22 +42,17 @@ export default function WhyChooseUs() {
           <div className="discount-ornament">
 
             <span className="ornament-line"></span>
-
             <span className="ornament-text">
-              Just Arrived
+              Why Choose Us
             </span>
-
             <span className="ornament-line"></span>
-
           </div>
 
-          <h2>
-            More Than a Rug.
-            <br />
-            <span>A Part of Your Story.</span>
+          <h2 className="recent-added-title">
+            More Than a Rug.<br /> <em>A Part of Your Story.</em>
           </h2>
 
-          <p>
+          <p className="recent-added-description">
             Thoughtfully crafted rugs, honest pricing, and personal service.
             Discover what makes Eurasian House different.
           </p>
@@ -77,7 +72,7 @@ export default function WhyChooseUs() {
           <div className="why-story-content">
             <span className="why-overline">THE EURASIAN DIFFERENCE</span>
 
-            <h3>
+            <h3 className="recent-added-title">
               Exceptional craftsmanship.
               <br />
               <em>Without the extra cost.</em>

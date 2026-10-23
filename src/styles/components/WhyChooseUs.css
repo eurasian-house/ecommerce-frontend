@@ -28,27 +28,7 @@
     text-align: center;
 }
 
-.why-choose-header h2 {
-    margin: 0;
-    font-family: Georgia, "Times New Roman", serif;
-    font-size: clamp(36px, 4.5vw, 58px);
-    font-weight: 500;
-    line-height: 1.15;
-    letter-spacing: -1.5px;
-}
 
-.why-choose-header h2 span {
-    color: var(--why-accent);
-    font-style: italic;
-}
-
-.why-choose-header>p {
-    max-width: 570px;
-    margin: 20px auto 0;
-    color: var(--why-muted);
-    font-size: 15px;
-    line-height: 1.9;
-}
 
 /* Brand story */
 
@@ -86,19 +66,19 @@
     letter-spacing: 2.5px;
 }
 
-.why-story-content>h3 {
+/* .why-story-content>h3 {
     margin: 0 0 20px;
     font-family: Georgia, "Times New Roman", serif;
     font-size: clamp(29px, 3vw, 41px);
     font-weight: 500;
     line-height: 1.25;
     letter-spacing: -0.7px;
-}
+} */
 
-.why-story-content>h3 em {
+/* .why-story-content>h3 em {
     color: var(--why-accent);
     font-weight: 400;
-}
+} */
 
 .why-story-description {
     margin: 0 0 28px;
@@ -359,11 +339,6 @@
         margin-bottom: 35px;
     }
 
-
-    .why-choose-header h2 {
-        letter-spacing: -0.8px;
-    }
-
     .why-choose-header>p {
         font-size: 14px;
         line-height: 1.8;
@@ -378,10 +353,6 @@
     .why-story-image img {
         aspect-ratio: 1.1 / 1;
         border-top-right-radius: 55px;
-    }
-
-    .why-story-content>h3 {
-        font-size: 32px;
     }
 
     .why-feature-card,

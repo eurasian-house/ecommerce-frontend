@@ -33,22 +33,18 @@ export default function IdeasSection() {
 
         <div className="text-center mb-5">
             <div className="discount-ornament">
-
               <span className="ornament-line"></span>
-
               <span className="ornament-text">
                 Inspired Living
               </span>
-
               <span className="ornament-line"></span>
-
             </div>
 
-          <h2 className="mt-3 fw-semibold for-user-heading">
-            Ideas & Inspiration for Your Space
+          <h2 className="recent-added-title">
+            Ideas & Inspiration <em>for Your Space</em>
           </h2>
 
-          <p className="pt-4 mx-auto">
+          <p className="recent-added-description">
             Discover home decor on Eurasian House Blogs and create the space of your dreams. Find inspiration by room and trend, or shop for that perfect item to complete the vibe.
           </p>
 

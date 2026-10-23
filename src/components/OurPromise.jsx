@@ -36,13 +36,11 @@ export default function OurPromise() {
                             <span className="ornament-line"></span>
                         </div>
 
-                        <h2>
-                            Crafted with Care.
-                            <br />
-                            <em>Delivered with Confidence.</em>
+                        <h2 className="recent-added-title">
+                            Crafted with Care. <br /><em>Delivered with Confidence.</em>
                         </h2>
 
-                        <p className="promise-description">
+                        <p>
                             Every rug we create reflects patience, passion, and generations
                             of artistry. We take the time to refine every detail and carefully
                             prepare each piece for its journey to you.

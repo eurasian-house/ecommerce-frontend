@@ -179,7 +179,7 @@ export default function Products() {
                   {colorFilter && (
                     <button
                       type="button"
-                      className="btn-clear btn btn-primary"
+                      className="btn-primary mt-3"
                       onClick={() => setColorFilter("")}
                     >
                       View All Colours
@@ -208,14 +208,10 @@ export default function Products() {
 
               {/* Pagination: unchanged */}
               {!colorFilter && !loading && total > 0 && (
-                <div className="d-flex justify-content-center align-items-center gap-3 mb-4">
+                <div className="d-flex justify-content-center align-items-center gap-3 mt-4">
                   <button
-                    className="btn rounded-4 px-4 d-flex align-items-center gap-2"
-                    style={{
-                      background: "var(--surface-1)",
-                      color: "var(--text-primary)",
-                      border: "1px solid var(--border-color)",
-                    }}
+                    type="button"
+                    className="btn-secondary"
                     disabled={page === 1}
                     onClick={() => setPage((p) => Math.max(p - 1, 1))}
                   >
@@ -224,12 +220,8 @@ export default function Products() {
                   </button>
 
                   <button
-                    className="btn px-2 d-flex align-items-center gap-2"
-                    style={{
-                      color: "var(--color-primary)",
-                      border: "none",
-                      background: "transparent",
-                    }}
+                    type="button"
+                    className="btn-primary"
                     disabled={page >= totalPages}
                     onClick={() => setPage((p) => p + 1)}
                   >
@@ -260,7 +252,7 @@ export default function Products() {
         <LazySection minHeight={450}>
           <RecentlyViewed />
         </LazySection>
-        
+
         <LazySection minHeight={450}>
           <ShopWithConfidence />
         </LazySection>

@@ -10,21 +10,54 @@ const SCENES = [
         subtitle: "Find the rug that brings everything together.",
         image: "/images/inspiration/room-1.jpg",
         products: [
-            { slug: "eurasian-rugs-hand-tufted-wool-rug-pastel-pink-yellow-peach-organic-abstract-area-rug-for-bedroom-living-room", position: { left: "22%", top: "65%" } },
-            { slug: "eurasian-rugs-hand-tufted-daisy-flower-rug-cream-baby-blue-orange-floral-wool-area-rug-for-bedroom-nursery", position: { left: "48%", top: "42%" } },
-            { slug: "eurasian-rugs-handloom-silk-carpet-sage-green-handmade-mint-green-solid-textured-area-rug-for-living-room-bedroom", position: { left: "66%", top: "68%" } },
-            { slug: "eurasian-rugs-handloom-rug-beige-taupe-wave-pattern-textured-carpet-handmade-modern-abstract-area-rug-for-living-room-bedroom", position: { left: "79%", top: "30%" } },
+            { slug: "handmade-rainbow-runner-rug-hand-tufted-geometric-colourful-hallway-carpet", position: { left: "22%", top: "75%" } },
+            { slug: "modern-hand-tufted-irregular-area-rug-handmade-abstract-organic-multicolour-carpet", position: { left: "32%", top: "57%" } },
+            { slug: "hand-knotted-pink-oushak-floral-rug-handmade-turkish-wool-area-carpet-vintage-floral-oriental-carpet-luxury-living-room-teppich", position: { left: "50%", top: "68%" } },
+            { slug: "eurasian-rugs-handmade-floral-wool-carpet-multicolor-flower-hand-tufted-organic-area-rug-for-living-room-bedroom", position: { left: "70%", top: "90%" } },
         ],
     },
     {
-        title: "Make Space for Texture",
-        subtitle: "Natural textures. Thoughtful details.",
+        title: "A Space Wrapped in Warmth",
+        subtitle: "Discover the rug that anchors the space.",
         image: "/images/inspiration/room-2.jpg",
         products: [
-            { slug: "eurasian-rugs-hand-knotted-oushak-runner-rug-cream-floral-runner-carpet-for-kitchen-hallway", position: { left: "24%", top: "60%" } },
-            { slug: "eurasian-rugs-hand-knotted-oushak-runner-rug-blue-olive-green-fish-pattern-wool-runner-for-hallway-kitchen-entryway", position: { left: "47%", top: "40%" } },
-            { slug: "eurasian-rugs-premium-hand-knotted-kashmiri-silk-carpet-floral-tree-of-life-birds-peacock-area-rug-for-living-room-bedroom", position: { left: "67%", top: "66%" } },
-            { slug: "eurasian-rugs-handmade-cowhide-leather-patchwork-rug-brown-tan-white-checkered-area-rug-for-living-room-bedroom", position: { left: "80%", top: "32%" } },
+            { slug: "eurasian-rugs-handloom-rug-beige-taupe-wave-pattern-textured-carpet-handmade-modern-abstract-area-rug-for-living-room-bedroom", position: { left: "22%", top: "75%" } },
+            { slug: "eurasian-rugs-hand-tufted-wool-rug-pastel-pink-yellow-peach-organic-abstract-area-rug-for-bedroom-living-room", position: { left: "32%", top: "57%" } },
+            { slug: "eurasian-rugs-handloom-silk-carpet-sage-green-handmade-mint-green-solid-textured-area-rug-for-living-room-bedroom", position: { left: "50%", top: "68%" } },
+            { slug: "eurasian-rugs-hand-tufted-daisy-flower-rug-cream-baby-blue-orange-floral-wool-area-rug-for-bedroom-nursery", position: { left: "70%", top: "90%" } },
+        ],
+    },
+    {
+        title: "A Corner Full of Comfort and Belonging",
+        subtitle: "Choose the perfect rug to tie your room together.",
+        image: "/images/inspiration/room-3.jpg",
+        products: [
+            { slug: "handmade-organic-wave-runner-rug-green-beige-orange-wool-carpet-abstract-oval-pattern-hand-tufted-modern-hallway-entryway-rug", position: { left: "22%", top: "75%" } },
+            { slug: "eurasian-rugs-handmade-hand-tufted-wool-round-rug-cream-beige-abstract-sunburst-arch-area-carpet-for-living-room-bedroom", position: { left: "32%", top: "57%" } },
+            { slug: "hand-knotted-persian-isfahan-rug-handmade-wool-oriental-area-carpet-traditional-floral-medallion-teppich-luxury-living-room-rug", position: { left: "50%", top: "68%" } },
+            { slug: "handmade-botanical-abstract-wool-carpet-hand-tufted-green-cream-area-rug-boho-irregular-teppiche", position: { left: "70%", top: "90%" } },
+        ],
+    },
+    {
+        title: "A Sanctuary of Rest and Ease",
+        subtitle: "Select the rug that completes the look.",
+        image: "/images/inspiration/room-4.jpg",
+        products: [
+            { slug: "eurasian-rugs-hand-knotted-oushak-runner-rug-cream-floral-runner-carpet-for-kitchen-hallway", position: { left: "22%", top: "75%" } },
+            { slug: "eurasian-rugs-handmade-organic-wool-carpet-multicolor-floral-abstract-hand-tufted-area-rug-for-living-room-bedroom", position: { left: "32%", top: "57%" } },
+            { slug: "eurasian-rugs-premium-hand-knotted-kashmiri-silk-carpet-floral-tree-of-life-birds-peacock-area-rug-for-living-room-bedroom", position: { left: "50%", top: "68%" } },
+            { slug: "eurasian-rugs-hand-tufted-wool-koi-fish-rug-blue-orange-japanese-pond-area-carpet-round-water-garden-decorative-rug", position: { left: "70%", top: "90%" } },
+        ],
+    },
+    {
+        title: "A Cozy Haven That Welcomes You In",
+        subtitle: "Find a rug that unites the entire design.",
+        image: "/images/inspiration/room-5.jpg",
+        products: [
+            { slug: "eurasian-rugs-handmade-tibetan-wool-runner-rug-golden-yellow-blue-floral-medallion-hand-knotted-carpet-for-hallway-living-room", position: { left: "22%", top: "75%" } },
+            { slug: "hand-tufted-round-citrus-rug-orange-yellow-wool-circle-carpet", position: { left: "32%", top: "57%" } },
+            { slug: "eurasian-rugs-hand-tufted-wavy-stripe-area-rug-retro-abstract-geometric-carpet-green-mustard-terracotta-modern-rug-for-living-room-bedroom", position: { left: "50%", top: "68%" } },
+            { slug: "eurasian-rugs-handmade-koi-fish-wool-carpet-cream-blue-orange-abstract-hand-tufted-area-rug-for-bedroom-living-room", position: { left: "70%", top: "90%" } },
         ],
     },
 ];
@@ -35,7 +68,7 @@ const formatPrice = (price) =>
 export default function RugInspirationSlider() {
     const [products, setProducts] = useState([]);
     const [slide, setSlide] = useState(0);
-    const [activeProduct, setActiveProduct] = useState(0);
+    const [activeProduct, setActiveProduct] = useState(-1);
     const [loading, setLoading] = useState(true);
 
     const navigate = useNavigate();
@@ -87,7 +120,7 @@ export default function RugInspirationSlider() {
         .filter(Boolean);
 
     useEffect(() => {
-        setActiveProduct(0);
+        setActiveProduct(-1);
     }, [currentSlide]);
 
     const goToSlide = (nextSlide) => {
@@ -99,13 +132,63 @@ export default function RugInspirationSlider() {
 
     if (loading) {
         return (
-            <section className="rug-inspiration-section">
+            <section className="rug-inspiration-section rug-inspiration-skeleton">
                 <div className="rug-inspiration-heading">
-                    <span className="rug-inspiration-eyebrow">THE ART OF LIVING</span>
-                    <h2>Find your room’s missing piece.</h2>
+                    <div>
+                        <span className="rug-inspiration-eyebrow">
+                            THE ART OF LIVING
+                        </span>
+                        <div className="ris-skeleton ris-skeleton-heading" />
+                        <div className="ris-skeleton ris-skeleton-subheading" />
+                    </div>
+
+                    <div className="ris-skeleton-controls">
+                        <span />
+                        <span />
+                        <span />
+                    </div>
                 </div>
-                <div className="rug-inspiration-loading" aria-label="Loading inspiration">
-                    <span />
+
+                <div className="rug-inspiration-layout rug-inspiration-skeleton-layout">
+                    {/* Large room scene skeleton  */}
+                    <div className="rug-inspiration-scene ris-skeleton-scene">
+                        <div className="ris-skeleton-scene-badge" />
+
+                        <div className="ris-skeleton-scene-copy">
+                            <span className="ris-skeleton ris-skeleton-label" />
+                            <span className="ris-skeleton ris-skeleton-scene-title" />
+                            <span className="ris-skeleton ris-skeleton-scene-subtitle" />
+                        </div>
+
+                        <div className="ris-skeleton-hotspots">
+                            <span />
+                            <span />
+                            <span />
+                            <span />
+                        </div>
+                    </div>
+
+                    {/* Four product cards */}
+                    <div className="rug-inspiration-products">
+                        {Array.from({ length: 4 }, (_, index) => (
+                            <article
+                                key={index}
+                                className="ris-skeleton-product"
+                            >
+                                <div className="ris-skeleton ris-skeleton-product-image" />
+
+                                <div className="ris-skeleton-product-info">
+                                    <span className="ris-skeleton ris-skeleton-category" />
+                                    <span className="ris-skeleton ris-skeleton-product-title" />
+                                    <span className="ris-skeleton ris-skeleton-product-title ris-skeleton-product-title-short" />
+                                    <span className="ris-skeleton ris-skeleton-price" />
+                                </div>
+                            </article>
+                        ))}
+                    </div>
+                </div>
+
+                <div className="ris-skeleton-progress">
                     <span />
                     <span />
                 </div>
@@ -125,6 +208,7 @@ export default function RugInspirationSlider() {
                     <h2>Find your room’s missing piece.</h2>
                     <p>Explore the rugs. Discover the feeling.</p>
                 </div>
+
 
                 <div className="rug-inspiration-controls">
                     <button
@@ -178,6 +262,7 @@ export default function RugInspirationSlider() {
                                 }`}
                             style={scene.products[index].position}
                             onMouseEnter={() => setActiveProduct(index)}
+                            onMouseLeave={() => setActiveProduct(-1)}
                             onFocus={() => setActiveProduct(index)}
                             onClick={() => setActiveProduct(index)}
                             aria-label={`Highlight ${product.title}`}
@@ -186,11 +271,14 @@ export default function RugInspirationSlider() {
                             <span />
                         </button>
                     ))}
-
-                    <div className="rug-inspiration-scene-hint">
-                        <i className="bi bi-cursor" />
+                    <button
+                        type="button"
+                        className="rug-inspiration-scene-hint"
+                        onClick={() => navigate("/products")}
+                    >
                         Explore the rugs
-                    </div>
+                        <i className="bi bi-cursor" />
+                    </button>
                 </div>
 
                 <div className="rug-inspiration-products">
@@ -200,6 +288,7 @@ export default function RugInspirationSlider() {
                             className={`rug-inspiration-product ${activeProduct === index ? "is-active" : ""
                                 }`}
                             onMouseEnter={() => setActiveProduct(index)}
+                            onMouseLeave={() => setActiveProduct(-1)}
                             onFocus={() => setActiveProduct(index)}
                             onClick={() => navigate(`/products/${product.slug}`)}
                             tabIndex={0}
