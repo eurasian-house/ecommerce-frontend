@@ -1,5 +1,4 @@
-
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { supabase } from "../../lib/supabase";
 
 const API_URL = (import.meta.env.VITE_API_URL || "").replace(/\/+$/, "");
@@ -142,6 +141,38 @@ const Messages = () => {
   const [enablingNotifications, setEnablingNotifications] = useState(false);
   const [notificationStatus, setNotificationStatus] = useState("");
 
+  const lastReadMessageRef = useRef({});
+
+  const totalUnread = conversations.reduce(
+    (total, conversation) =>
+      total + (Number(conversation.admin_unread_count) || 0),
+    0
+  );
+
+  const markConversationRead = useCallback(async (conversationId) => {
+    if (!conversationId) return;
+
+    try {
+      await chatRequest(
+        `/api/chat/admin/conversations/${conversationId}/read`,
+        {
+          method: "POST",
+          body: JSON.stringify({}),
+        }
+      );
+
+      setConversations((current) =>
+        current.map((conversation) =>
+          conversation.id === conversationId
+            ? { ...conversation, admin_unread_count: 0 }
+            : conversation
+        )
+      );
+    } catch (err) {
+      console.error("Could not mark conversation as read:", err);
+    }
+  }, []);
+
   const activeConversation = conversations.find(
     (conversation) => conversation.id === activeConversationId
   );
@@ -213,6 +244,7 @@ const Messages = () => {
   useEffect(() => {
     if (!activeConversationId) {
       setMessages([]);
+      markConversationRead(activeConversationId);
       return;
     }
 
@@ -238,7 +270,7 @@ const Messages = () => {
       cancelled = true;
       window.clearInterval(interval);
     };
-  }, [activeConversationId, loadMessages]);
+  }, [activeConversationId, loadMessages, markConversationRead]);
 
   const filteredConversations = useMemo(() => {
     const query = search.trim().toLowerCase();
@@ -536,6 +568,16 @@ const Messages = () => {
               >
                 Open conversations
               </div>
+              <div
+                style={{
+                  marginTop: "6px",
+                  fontSize: "11px",
+                  color: totalUnread > 0 ? palette.danger : palette.muted,
+                  fontWeight: totalUnread > 0 ? 700 : 400,
+                }}
+              >
+                {totalUnread} unread message{totalUnread === 1 ? "" : "s"}
+              </div>
             </div>
           </div>
         </div>
@@ -805,6 +847,27 @@ const Messages = () => {
                                 conversation.last_message_at
                               )}
                             </span>
+                            {Number(conversation.admin_unread_count) > 0 && (
+                              <span
+                                title={`${conversation.admin_unread_count} unread messages`}
+                                style={{
+                                  flexShrink: 0,
+                                  minWidth: "21px",
+                                  height: "21px",
+                                  padding: "0 6px",
+                                  borderRadius: "20px",
+                                  background: palette.accentDark,
+                                  color: "#FFFFFF",
+                                  display: "inline-flex",
+                                  alignItems: "center",
+                                  justifyContent: "center",
+                                  fontSize: "10px",
+                                  fontWeight: 700,
+                                }}
+                              >
+                                {conversation.admin_unread_count}
+                              </span>
+                            )}
                           </div>
 
                           <div
