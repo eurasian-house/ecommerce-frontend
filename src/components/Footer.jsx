@@ -41,6 +41,63 @@ const Footer = () => {
 
             <div className="footer-brand-socials">
               {/* Keep all your existing social links here unchanged */}
+
+              <a
+                href="https://www.facebook.com/eurasianhouse"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="footer-social"
+                aria-label="Facebook"
+              >
+                <FaFacebookF />
+              </a>
+
+              <a
+                href="https://www.instagram.com/eurasianhouse/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="footer-social"
+                aria-label="Instagram"
+              >
+                <FaInstagram />
+              </a>
+
+              <a
+                href="https://www.youtube.com/@eurasianhouse"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="footer-social"
+                aria-label="YouTube"
+              >
+                <FaYoutube />
+              </a>
+
+              <a
+                href="https://wa.me/917080012972"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="footer-social"
+                aria-label="WhatsApp"
+              >
+                <FaWhatsapp />
+              </a>
+
+              <a
+                href="mailto:contact@eurasianrugs.com"
+                className="footer-social"
+                aria-label="Email"
+              >
+                <MdEmail />
+              </a>
+
+              <a
+                href="https://in.pinterest.com/eurasianhouse/"
+                target="_blank"
+                className="footer-social"
+                aria-label="Pinterest"
+              >
+                <FaPinterest />
+              </a>
             </div>
           </div>
 

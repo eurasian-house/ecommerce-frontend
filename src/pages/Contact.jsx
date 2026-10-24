@@ -344,7 +344,7 @@ const Contact = () => {
                 <p className="contact-note contact-p">
                   Every inquiry is personally reviewed by our team. We typically
                   respond within one business day and are always happy to discuss
-                  custom designs, wholesale orders and interior projects. Message on WhatsApp for instant response.
+                  custom designs, wholesale orders and interior projects. Message on Eurasian House chat or WhatsApp for instant response.
                 </p>
 
               </div>
