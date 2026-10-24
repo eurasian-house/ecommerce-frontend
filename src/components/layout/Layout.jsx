@@ -12,7 +12,7 @@ export default function Layout() {
           <Outlet />
         </div>
       </main>
-      <WhatsAppFloat />
+      {/* <WhatsAppFloat /> */}
 
       <Footer /> {/* ✅ ADD THIS */}
     </>

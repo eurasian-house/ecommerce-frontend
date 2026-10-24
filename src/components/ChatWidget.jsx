@@ -1,10 +1,11 @@
-
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import {
+    findExistingConversation,
     getOrCreateConversation,
     getChatMessages,
     sendChatMessage,
+    sendFirstChatMessage,
 } from "../lib/chatApi";
 import "../styles/components/ChatWidget.css";
 
@@ -23,7 +24,10 @@ export default function ChatWidget() {
     const conversationRef = useRef(null);
     const sendingRef = useRef(false);
 
+    // Load messages and merge them without adding duplicates.
     const loadMessages = useCallback(async (id, showError = false) => {
+        if (!id) return;
+
         try {
             const result = await getChatMessages(id);
 
@@ -47,50 +51,68 @@ export default function ChatWidget() {
         }
     }, []);
 
+    // Find an existing conversation without creating a new one.
     useEffect(() => {
         if (authLoading || isAdmin) return;
 
         let cancelled = false;
-        let pollId;
 
         async function initialize() {
             setInitializing(true);
             setError("");
 
             try {
-                const id = await getOrCreateConversation();
+                const id = await findExistingConversation();
 
                 if (cancelled) return;
 
                 conversationRef.current = id;
                 setConversationId(id);
 
-                await loadMessages(id, true);
-
-                if (cancelled) return;
-
-                pollId = window.setInterval(() => {
-                    if (document.visibilityState === "visible") {
-                        loadMessages(id);
-                    }
-                }, 3000);
+                if (id) {
+                    await loadMessages(id, true);
+                } else {
+                    setMessages([]);
+                }
             } catch (err) {
                 if (!cancelled) {
-                    setError(err.message || "Unable to start chat.");
+                    setError(
+                        err.message || "Unable to load your previous chat."
+                    );
                 }
             } finally {
-                if (!cancelled) setInitializing(false);
+                if (!cancelled) {
+                    setInitializing(false);
+                }
             }
         }
+
+        // Reset the current conversation when the authenticated user changes.
+        conversationRef.current = null;
+        setConversationId(null);
+        setMessages([]);
 
         initialize();
 
         return () => {
             cancelled = true;
-            window.clearInterval(pollId);
         };
     }, [authLoading, user?.id, isAdmin, loadMessages]);
 
+    // Poll existing conversations for new admin replies.
+    useEffect(() => {
+        if (authLoading || isAdmin || !conversationId) return;
+
+        const pollId = window.setInterval(() => {
+            if (document.visibilityState === "visible") {
+                loadMessages(conversationId);
+            }
+        }, 3000);
+
+        return () => window.clearInterval(pollId);
+    }, [authLoading, isAdmin, conversationId, loadMessages]);
+
+    // Scroll to the newest message while the widget is open.
     useEffect(() => {
         if (isOpen) {
             messagesEndRef.current?.scrollIntoView({
@@ -100,13 +122,14 @@ export default function ChatWidget() {
         }
     }, [messages, isOpen]);
 
+    // Create a conversation only when the visitor sends their first message.
+
     async function handleSubmit(event) {
         event.preventDefault();
 
         const text = message.trim();
-        const id = conversationRef.current;
 
-        if (!text || !id || sendingRef.current) return;
+        if (!text || sendingRef.current || initializing) return;
 
         if (text.length > 4000) {
             setError("Messages must be 4,000 characters or fewer.");
@@ -118,7 +141,22 @@ export default function ChatWidget() {
         setError("");
 
         try {
-            const sentMessage = await sendChatMessage(id, text);
+            let id = conversationRef.current;
+            let sentMessage;
+
+            if (!id) {
+                // First message: create the conversation and message atomically.
+                const result = await sendFirstChatMessage(text);
+
+                id = result.conversation.id;
+                sentMessage = result.message;
+
+                conversationRef.current = id;
+                setConversationId(id);
+            } else {
+                // Existing conversation: send the message normally.
+                sentMessage = await sendChatMessage(id, text);
+            }
 
             setMessages((current) => {
                 if (current.some((item) => item.id === sentMessage.id)) {
@@ -140,6 +178,7 @@ export default function ChatWidget() {
             setSending(false);
         }
     }
+
 
     if (authLoading || isAdmin) return null;
 
@@ -169,28 +208,29 @@ export default function ChatWidget() {
                     <div className="eh-chat__messages" aria-live="polite">
                         {initializing && messages.length === 0 && (
                             <p className="eh-chat__notice">
-                                Connecting to support…
+                                Loading chat…
                             </p>
                         )}
 
-                        {!initializing && messages.length === 0 && !error && (
-                            <div className="eh-chat__welcome">
-                                <strong>Welcome to Eurasian House!</strong>
-                                <p>
-                                    Send us a message and our team will get
-                                    back to you.
-                                </p>
-                            </div>
-                        )}
+                        {!initializing &&
+                            messages.length === 0 &&
+                            !error && (
+                                <div className="eh-chat__welcome">
+                                    <strong>Welcome to Eurasian House!</strong>
+                                    <p>
+                                        Send us a message and our team will get
+                                        back to you.
+                                    </p>
+                                </div>
+                            )}
 
                         {messages.map((item) => (
                             <div
                                 key={item.id}
-                                className={`eh-chat__message ${
-                                    item.sender_type === "admin"
-                                        ? "eh-chat__message--admin"
-                                        : "eh-chat__message--customer"
-                                }`}
+                                className={`eh-chat__message ${item.sender_type === "admin"
+                                    ? "eh-chat__message--admin"
+                                    : "eh-chat__message--customer"
+                                    }`}
                             >
                                 <span className="eh-chat__sender">
                                     {item.sender_type === "admin"
@@ -201,13 +241,12 @@ export default function ChatWidget() {
                                 <p>{item.message}</p>
 
                                 <time dateTime={item.created_at}>
-                                    {new Date(item.created_at).toLocaleTimeString(
-                                        [],
-                                        {
-                                            hour: "2-digit",
-                                            minute: "2-digit",
-                                        }
-                                    )}
+                                    {new Date(
+                                        item.created_at
+                                    ).toLocaleTimeString([], {
+                                        hour: "2-digit",
+                                        minute: "2-digit",
+                                    })}
                                 </time>
                             </div>
                         ))}
@@ -221,25 +260,24 @@ export default function ChatWidget() {
                         </p>
                     )}
 
-                    <form
-                        className="eh-chat__form"
-                        onSubmit={handleSubmit}
-                    >
+                    <form className="eh-chat__form" onSubmit={handleSubmit}>
                         <textarea
                             value={message}
-                            onChange={(event) => setMessage(event.target.value)}
+                            onChange={(event) =>
+                                setMessage(event.target.value)
+                            }
                             placeholder="Type your message..."
                             aria-label="Your message"
                             maxLength={4000}
                             rows={2}
-                            disabled={sending || !conversationId}
+                            disabled={sending || initializing}
                         />
 
                         <button
                             type="submit"
                             disabled={
                                 sending ||
-                                !conversationId ||
+                                initializing ||
                                 !message.trim()
                             }
                         >
@@ -255,11 +293,12 @@ export default function ChatWidget() {
 
             <button
                 type="button"
-                className={`eh-chat__launcher ${
-                    isOpen ? "eh-chat__launcher--open" : ""
-                }`}
+                className={`eh-chat__launcher ${isOpen ? "eh-chat__launcher--open" : ""
+                    }`}
                 onClick={() => setIsOpen((open) => !open)}
-                aria-label={isOpen ? "Close customer chat" : "Open customer chat"}
+                aria-label={
+                    isOpen ? "Close customer chat" : "Open customer chat"
+                }
                 aria-expanded={isOpen}
             >
                 {isOpen ? (

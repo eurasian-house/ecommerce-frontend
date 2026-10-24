@@ -54,6 +54,52 @@ async function request(path, options = {}) {
     return result;
 }
 
+export async function findExistingConversation() {
+    const savedId = localStorage.getItem(CONVERSATION_KEY);
+
+    // First, try the previously saved conversation.
+    if (savedId) {
+        try {
+            await getChatMessages(savedId);
+            return savedId;
+        } catch (error) {
+            if (error.status !== 404) throw error;
+
+            localStorage.removeItem(CONVERSATION_KEY);
+        }
+    }
+
+    // Look for an existing conversation using the visitor token
+    // or the logged-in customer's account.
+    const result = await request("/api/chat/conversations/current");
+
+    const conversation = result.conversation;
+
+    if (!conversation) return null;
+
+    localStorage.setItem(CONVERSATION_KEY, conversation.id);
+
+    return conversation.id;
+}
+
+
+export async function sendFirstChatMessage(message, { name, email } = {}) {
+    const result = await request("/api/chat/conversations/first-message", {
+        method: "POST",
+        body: JSON.stringify({
+            visitorToken: getVisitorToken(),
+            message,
+            name,
+            email,
+        }),
+    });
+
+    localStorage.setItem(CONVERSATION_KEY, result.conversation.id);
+
+    return result;
+}
+
+
 export async function getOrCreateConversation({ name, email } = {}) {
     const visitorToken = getVisitorToken();
     let conversationId = localStorage.getItem(CONVERSATION_KEY);

@@ -91,6 +91,14 @@
     right: 0
 }
 
+@media (max-width: 768px) {
+
+    .sliding-arrow {
+        display: none!important;
+    }
+
+}
+
 @media (max-width: 991.98px) {
 
     .category-card {
@@ -108,7 +116,8 @@
     .category-title {
         font-size: var(--fs-xs);
     }
-        .hero-arrow-left,
+
+    .hero-arrow-left,
     .hero-arrow-right {
         display: none;
     }

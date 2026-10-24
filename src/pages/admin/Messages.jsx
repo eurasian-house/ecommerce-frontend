@@ -1,59 +1,9 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { supabase } from "../../lib/supabase";
+import "../../styles/components/Messages.css";
+
 
 const API_URL = (import.meta.env.VITE_API_URL || "").replace(/\/+$/, "");
-
-const palette = {
-  page: "#FAF8F5",
-  surface: "#FFFFFF",
-  cream: "#F3EEE5",
-  border: "#E8E1D6",
-  text: "#292820",
-  muted: "#898579",
-  accent: "#71664F",
-  accentDark: "#504735",
-  customerBubble: "#F3F0EA",
-  adminBubble: "#EAE4D8",
-  green: "#52745A",
-  danger: "#A34E42",
-};
-
-const styles = {
-  page: {
-    minHeight: "100vh",
-    background: palette.page,
-    color: palette.text,
-    padding: "28px",
-  },
-  card: {
-    background: palette.surface,
-    border: `1px solid ${palette.border}`,
-    borderRadius: "16px",
-    overflow: "hidden",
-  },
-  input: {
-    background: palette.page,
-    border: `1px solid ${palette.border}`,
-    borderRadius: "10px",
-    padding: "11px 14px",
-    fontSize: "13px",
-    color: palette.text,
-    outline: "none",
-    width: "100%",
-  },
-  iconButton: {
-    border: `1px solid ${palette.border}`,
-    background: palette.surface,
-    color: palette.text,
-    borderRadius: "10px",
-    width: "38px",
-    height: "38px",
-    display: "inline-flex",
-    alignItems: "center",
-    justifyContent: "center",
-    cursor: "pointer",
-  },
-};
 
 function formatTime(value) {
   if (!value) return "";
@@ -62,26 +12,49 @@ function formatTime(value) {
 
   if (Number.isNaN(date.getTime())) return "";
 
-  const today = new Date();
-  const isToday = date.toDateString() === today.toDateString();
+  const now = new Date();
 
-  const yesterday = new Date();
-  yesterday.setDate(today.getDate() - 1);
+  const startOfToday = new Date(
+    now.getFullYear(),
+    now.getMonth(),
+    now.getDate()
+  );
 
-  if (isToday) {
+  const startOfDate = new Date(
+    date.getFullYear(),
+    date.getMonth(),
+    date.getDate()
+  );
+
+  const daysAgo = Math.floor(
+    (startOfToday.getTime() - startOfDate.getTime()) /
+    86400000
+  );
+
+  if (daysAgo === 0) {
     return date.toLocaleTimeString([], {
       hour: "2-digit",
       minute: "2-digit",
     });
   }
 
-  if (date.toDateString() === yesterday.toDateString()) {
+  if (daysAgo === 1) {
     return "Yesterday";
   }
 
+  if (daysAgo < 7 && daysAgo > 1) {
+    return date.toLocaleDateString([], {
+      weekday: "long",
+    });
+  }
+
   return date.toLocaleDateString([], {
-    day: "numeric",
+    day: "2-digit",
     month: "short",
+    year:
+      date.getFullYear() === now.getFullYear()
+        ? undefined
+        : "numeric",
   });
 }
 
@@ -137,6 +110,7 @@ const Messages = () => {
   const [messagesLoading, setMessagesLoading] = useState(false);
   const [sending, setSending] = useState(false);
   const [error, setError] = useState("");
+  const [mobileChatOpen, setMobileChatOpen] = useState(false);
 
   const [enablingNotifications, setEnablingNotifications] = useState(false);
   const [notificationStatus, setNotificationStatus] = useState("");
@@ -149,29 +123,6 @@ const Messages = () => {
     0
   );
 
-  const markConversationRead = useCallback(async (conversationId) => {
-    if (!conversationId) return;
-
-    try {
-      await chatRequest(
-        `/api/chat/admin/conversations/${conversationId}/read`,
-        {
-          method: "POST",
-          body: JSON.stringify({}),
-        }
-      );
-
-      setConversations((current) =>
-        current.map((conversation) =>
-          conversation.id === conversationId
-            ? { ...conversation, admin_unread_count: 0 }
-            : conversation
-        )
-      );
-    } catch (err) {
-      console.error("Could not mark conversation as read:", err);
-    }
-  }, []);
 
   const activeConversation = conversations.find(
     (conversation) => conversation.id === activeConversationId
@@ -205,6 +156,35 @@ const Messages = () => {
       setLoading(false);
     }
   }, []);
+
+  const markConversationRead = useCallback(async (conversationId) => {
+    if (!conversationId) return;
+
+    try {
+      await chatRequest(
+        `/api/chat/admin/conversations/${conversationId}/read`,
+        {
+          method: "POST",
+          body: JSON.stringify({}),
+        }
+      );
+
+      // Update the UI immediately after the server confirms success.
+      setConversations((current) =>
+        current.map((conversation) =>
+          conversation.id === conversationId
+            ? { ...conversation, admin_unread_count: 0 }
+            : conversation
+        )
+      );
+
+      // Reload the authoritative count from the database.
+      await loadConversations();
+    } catch (err) {
+      console.error("Mark conversation as read failed:", err);
+      setError(`Could not mark messages as read: ${err.message}`);
+    }
+  }, [loadConversations]);
 
   useEffect(() => {
     loadConversations(true);
@@ -244,7 +224,6 @@ const Messages = () => {
   useEffect(() => {
     if (!activeConversationId) {
       setMessages([]);
-      markConversationRead(activeConversationId);
       return;
     }
 
@@ -258,7 +237,13 @@ const Messages = () => {
 
     setMessages([]);
     setMessagesLoading(true);
-    refresh();
+
+    async function openConversation() {
+      await markConversationRead(activeConversationId);
+      await refresh();
+    }
+
+    openConversation();
 
     const interval = window.setInterval(() => {
       if (document.visibilityState === "visible" && !cancelled) {
@@ -470,286 +455,147 @@ const Messages = () => {
 
 
   return (
-    <div style={styles.page}>
+    <div className="messages-page">
       <div className="container-fluid p-0">
-
-        {/* Page heading */}
-        <div className="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
-          <div>
-            <div
-              className="text-uppercase mb-2"
-              style={{
-                fontSize: "10px",
-                letterSpacing: "2px",
-                color: palette.accent,
-                fontWeight: 700,
-              }}
-            >
+        <header className="messages-heading d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+          <div className="messages-heading__intro">
+            <div className="messages-eyebrow mb-2">
               EURASIAN HOUSE · SUPPORT
             </div>
 
-            <h2
-              className="mb-2"
-              style={{
-                fontSize: "clamp(24px, 3vw, 30px)",
-                fontWeight: 650,
-                letterSpacing: "-0.8px",
-                color: palette.text,
-              }}
-            >
+            <h2 className="messages-heading__title mb-2">
               Customer conversations
             </h2>
 
-            <p
-              className="mb-0"
-              style={{ fontSize: "13px", color: palette.muted }}
-            >
+            <p className="messages-heading__description mb-0">
               A personal touch, one conversation at a time.
             </p>
           </div>
 
-          <div
-            className="d-flex align-items-center gap-3"
-            style={{
-              background: palette.surface,
-              border: `1px solid ${palette.border}`,
-              borderRadius: "12px",
-              padding: "12px 16px",
-            }}
-          >
-            <div
-              style={{
-                width: "9px",
-                height: "9px",
-                borderRadius: "50%",
-                background: palette.green,
-              }}
-            />
+          <div className="messages-overview">
+            <div className="messages-overview__indicator" />
 
-            <div>
-              <div
-                style={{
-                  fontSize: "20px",
-                  fontWeight: 650,
-                  lineHeight: 1.2,
-                }}
-              >
+            <div className="messages-overview__content">
+              <div className="messages-overview__count">
                 {openCount}
               </div>
 
-              <button
-                type="button"
-                onClick={enableNotifications}
-                disabled={enablingNotifications}
-                className="d-inline-flex align-items-center gap-2"
-                style={{
-                  border: 0,
-                  borderRadius: "10px",
-                  padding: "12px 16px",
-                  background: "#504735",
-                  color: "#FFFFFF",
-                  fontSize: "12px",
-                  fontWeight: 600,
-                  cursor: enablingNotifications ? "wait" : "pointer",
-                  opacity: enablingNotifications ? 0.7 : 1,
-                }}
-              >
-                <i className="bi bi-bell" />
-                {enablingNotifications
-                  ? "Enabling..."
-                  : "Enable notifications"}
-              </button>
-
-              <div
-                style={{
-                  fontSize: "10px",
-                  color: palette.muted,
-                }}
-              >
+              <div className="messages-overview__label">
                 Open conversations
               </div>
+
               <div
-                style={{
-                  marginTop: "6px",
-                  fontSize: "11px",
-                  color: totalUnread > 0 ? palette.danger : palette.muted,
-                  fontWeight: totalUnread > 0 ? 700 : 400,
-                }}
+                className={`messages-overview__unread ${totalUnread > 0 ? "has-unread" : ""
+                  }`}
               >
-                {totalUnread} unread message{totalUnread === 1 ? "" : "s"}
+                {totalUnread} unread message
+                {totalUnread === 1 ? "" : "s"}
               </div>
             </div>
-          </div>
-        </div>
 
+            <button
+              type="button"
+              onClick={enableNotifications}
+              disabled={enablingNotifications}
+              className="messages-button messages-button--primary messages-notification-button"
+            >
+              <i className="bi bi-bell" />
+              {enablingNotifications
+                ? "Enabling..."
+                : "Enable notifications"}
+            </button>
+          </div>
+        </header>
 
         {notificationStatus && (
           <p
             role="status"
-            style={{
-              marginTop: "12px",
-              fontSize: "12px",
-              color: notificationStatus.startsWith("Notifications enabled")
-                ? "#52745A"
-                : "#A34E42",
-            }}
+            className={`messages-notification-status ${notificationStatus.startsWith("Notifications enabled")
+              ? "is-success"
+              : "is-error"
+              }`}
           >
             {notificationStatus}
           </p>
         )}
 
-
         {error && (
           <div
             role="alert"
-            className="d-flex justify-content-between align-items-center gap-3 mb-3"
-            style={{
-              padding: "12px 15px",
-              background: "#F8EAE6",
-              color: palette.danger,
-              border: "1px solid #EBD1C9",
-              borderRadius: "10px",
-              fontSize: "13px",
-            }}
+            className="messages-alert d-flex justify-content-between align-items-center gap-3 mb-3"
           >
             <span>{error}</span>
+
             <button
               type="button"
               onClick={() => setError("")}
-              style={{
-                border: 0,
-                background: "transparent",
-                color: "inherit",
-                fontSize: "20px",
-              }}
+              className="messages-alert__close"
+              aria-label="Dismiss error"
             >
               &times;
             </button>
           </div>
         )}
 
-        {/* Inbox layout */}
-        <div
-          className="row g-3"
-          style={{ minHeight: "650px" }}
-        >
+        <div className="row g-3 messages-layout">
           {/* Conversation sidebar */}
-          <div className="col-12 col-lg-4 col-xl-4">
-            <div
-              style={{
-                ...styles.card,
-                height: "100%",
-                minHeight: "500px",
-                display: "flex",
-                flexDirection: "column",
-              }}
-            >
-              <div
-                className="d-flex justify-content-between align-items-center"
-                style={{
-                  padding: "20px 20px 16px",
-                  borderBottom: `1px solid ${palette.border}`,
-                }}
-              >
+          <div
+            className={`col-12 col-lg-4 col-xl-4 messages-inbox-column ${mobileChatOpen ? "mobile-hidden" : ""
+              }`}
+          >
+            <section className="messages-panel messages-inbox">
+              <header className="messages-panel__header d-flex justify-content-between align-items-center">
                 <div>
-                  <h5
-                    className="mb-1"
-                    style={{
-                      fontSize: "15px",
-                      fontWeight: 650,
-                    }}
-                  >
+                  <h5 className="messages-panel__title mb-1">
                     Inbox
                   </h5>
-                  <div
-                    style={{
-                      fontSize: "11px",
-                      color: palette.muted,
-                    }}
-                  >
+
+                  <div className="messages-muted messages-panel__subtitle">
                     {conversations.length} conversations
                   </div>
                 </div>
 
-                <button
+                {/* <button
                   type="button"
                   title="Refresh inbox"
+                  aria-label="Refresh inbox"
                   onClick={() => loadConversations(true)}
-                  style={styles.iconButton}
+                  className="messages-icon-button"
                 >
                   <i className="bi bi-arrow-clockwise" />
-                </button>
+                </button> */}
+              </header>
+
+              <div className="messages-search">
+                <i className="bi bi-search messages-search__icon" />
+
+                <input
+                  type="search"
+                  value={search}
+                  onChange={(event) => setSearch(event.target.value)}
+                  placeholder="Search name, email or ID..."
+                  aria-label="Search conversations"
+                  className="messages-input messages-search__input"
+                />
               </div>
 
-              <div style={{ padding: "14px 14px 10px" }}>
-                <div style={{ position: "relative" }}>
-                  <i
-                    className="bi bi-search"
-                    style={{
-                      position: "absolute",
-                      left: "13px",
-                      top: "50%",
-                      transform: "translateY(-50%)",
-                      color: palette.muted,
-                      fontSize: "13px",
-                    }}
-                  />
-
-                  <input
-                    type="search"
-                    value={search}
-                    onChange={(event) =>
-                      setSearch(event.target.value)
-                    }
-                    placeholder="Search name, email or ID..."
-                    aria-label="Search conversations"
-                    style={{
-                      ...styles.input,
-                      paddingLeft: "36px",
-                    }}
-                  />
-                </div>
-              </div>
-
-              <div style={{ flex: 1, overflowY: "auto" }}>
+              <div className="messages-conversation-list">
                 {loading ? (
-                  <div
-                    className="text-center py-5"
-                    style={{
-                      fontSize: "13px",
-                      color: palette.muted,
-                    }}
-                  >
+                  <div className="messages-empty messages-loading">
+                    <span className="messages-spinner" />
                     Loading conversations...
                   </div>
                 ) : filteredConversations.length === 0 ? (
-                  <div
-                    className="text-center px-4 py-5"
-                    style={{ color: palette.muted }}
-                  >
-                    <i
-                      className="bi bi-chat-square-text"
-                      style={{
-                        fontSize: "30px",
-                        color: palette.accent,
-                      }}
-                    />
-                    <p
-                      className="mt-3 mb-1"
-                      style={{
-                        color: palette.text,
-                        fontSize: "13px",
-                        fontWeight: 600,
-                      }}
-                    >
+                  <div className="messages-empty">
+                    <i className="bi bi-chat-square-text messages-empty__icon" />
+
+                    <p className="messages-empty__title mt-3 mb-1">
                       {search
                         ? "No matching conversations"
                         : "Your inbox is peaceful"}
                     </p>
-                    <p
-                      className="mb-0"
-                      style={{ fontSize: "12px" }}
-                    >
+
+                    <p className="messages-empty__description mb-0">
                       {search
                         ? "Try another search."
                         : "Customer messages will appear here."}
@@ -761,160 +607,71 @@ const Messages = () => {
                       conversation.id === activeConversationId;
 
                     const customerName =
-                      conversation.customer_name ||
-                      "Anonymous visitor";
+                      conversation.customer_name || "Anonymous visitor";
 
                     return (
                       <button
                         type="button"
                         key={conversation.id}
                         onClick={() => {
-                          setActiveConversationId(
-                            conversation.id
-                          );
+                          setActiveConversationId(conversation.id);
                           setError("");
+                          setMobileChatOpen(true);
                         }}
-                        className="w-100 text-start"
-                        style={{
-                          display: "flex",
-                          gap: "12px",
-                          padding: "16px",
-                          border: 0,
-                          borderBottom: `1px solid ${palette.border}`,
-                          borderLeft: selected
-                            ? `3px solid ${palette.accent}`
-                            : "3px solid transparent",
-                          background: selected
-                            ? palette.cream
-                            : palette.surface,
-                          cursor: "pointer",
-                          transition: "background .15s ease",
-                        }}
+                        className={`messages-conversation ${selected ? "is-selected" : ""
+                          }`}
+                        aria-current={selected ? "true" : undefined}
                       >
-                        <div
-                          style={{
-                            flexShrink: 0,
-                            width: "42px",
-                            height: "42px",
-                            borderRadius: "50%",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            background: selected
-                              ? palette.accent
-                              : palette.cream,
-                            color: selected
-                              ? "#FFFFFF"
-                              : palette.accentDark,
-                            fontSize: "13px",
-                            fontWeight: 650,
-                          }}
-                        >
+                        <div className="messages-avatar">
                           {initials(customerName)}
                         </div>
 
-                        <div
-                          style={{
-                            flex: 1,
-                            minWidth: 0,
-                          }}
-                        >
-                          <div
-                            className="d-flex justify-content-between align-items-center gap-2"
-                            style={{ marginBottom: "5px" }}
-                          >
-                            <span
-                              className="text-truncate"
-                              style={{
-                                fontSize: "13px",
-                                fontWeight: selected
-                                  ? 700
-                                  : 600,
-                                color: palette.text,
-                              }}
-                            >
+                        <div className="messages-conversation__content">
+                          <div className="messages-conversation__top">
+                            <span className="messages-conversation__name">
                               {customerName}
                             </span>
 
-                            <span
-                              style={{
-                                flexShrink: 0,
-                                fontSize: "10px",
-                                color: palette.muted,
-                              }}
-                            >
-                              {formatTime(
-                                conversation.last_message_at
-                              )}
+                            <span className="messages-timestamp">
+                              {formatTime(conversation.last_message_at)}
                             </span>
+
                             {Number(conversation.admin_unread_count) > 0 && (
                               <span
                                 title={`${conversation.admin_unread_count} unread messages`}
-                                style={{
-                                  flexShrink: 0,
-                                  minWidth: "21px",
-                                  height: "21px",
-                                  padding: "0 6px",
-                                  borderRadius: "20px",
-                                  background: palette.accentDark,
-                                  color: "#FFFFFF",
-                                  display: "inline-flex",
-                                  alignItems: "center",
-                                  justifyContent: "center",
-                                  fontSize: "10px",
-                                  fontWeight: 700,
-                                }}
+                                className="messages-unread-badge"
                               >
                                 {conversation.admin_unread_count}
                               </span>
                             )}
                           </div>
 
+                          {/* <div className="messages-conversation__email">
+                            {conversation.customer_email || "Guest customer"}
+                          </div> */}
                           <div
-                            className="text-truncate"
-                            style={{
-                              fontSize: "11px",
-                              color: palette.muted,
-                              marginBottom: "8px",
-                            }}
+                            className="messages-conversation__email messages-conversation__preview"
+                            title={conversation.last_message || ""}
                           >
-                            {conversation.customer_email ||
-                              "Guest customer"}
+                            {conversation.last_message || "No messages yet"}
                           </div>
 
-                          <div className="d-flex justify-content-between align-items-center gap-2">
+                          {/* <div className="messages-conversation__bottom">
                             <span
-                              style={{
-                                fontSize: "10px",
-                                color:
-                                  conversation.status ===
-                                    "open"
-                                    ? palette.green
-                                    : palette.muted,
-                                background:
-                                  conversation.status ===
-                                    "open"
-                                    ? "#EDF2EB"
-                                    : "#F0EFEC",
-                                borderRadius: "20px",
-                                padding: "4px 8px",
-                              }}
+                              className={`messages-status ${conversation.status === "open"
+                                ? "is-open"
+                                : "is-closed"
+                                }`}
                             >
-                              {conversation.status ===
-                                "open"
+                              {conversation.status === "open"
                                 ? "Open"
                                 : "Closed"}
                             </span>
 
-                            <span
-                              style={{
-                                fontSize: "9px",
-                                color: palette.muted,
-                              }}
-                            >
+                            <span className="messages-conversation__id">
                               ID · {conversation.id.slice(0, 8)}
                             </span>
-                          </div>
+                          </div> */}
                         </div>
                       </button>
                     );
@@ -922,130 +679,57 @@ const Messages = () => {
                 )}
               </div>
 
-              <div
-                style={{
-                  padding: "12px 16px",
-                  background: palette.page,
-                  borderTop: `1px solid ${palette.border}`,
-                  color: palette.muted,
-                  fontSize: "10px",
-                }}
-              >
+              <footer className="messages-panel__footer">
                 <i className="bi bi-shield-check me-2" />
                 Private customer conversations
-              </div>
-            </div>
+              </footer>
+            </section>
           </div>
 
           {/* Active conversation */}
-          <div className="col-12 col-lg-8 col-xl-8">
-            <div
-              style={{
-                ...styles.card,
-                height: "100%",
-                minHeight: "500px",
-                display: "flex",
-                flexDirection: "column",
-              }}
-            >
+          <div
+            className={`col-12 col-lg-8 col-xl-8 messages-chat-column ${mobileChatOpen ? "mobile-chat-active" : "mobile-hidden"
+              }`}
+          >
+            <section className="messages-panel messages-chat">
               {!activeConversation ? (
-                <div
-                  className="d-flex flex-column justify-content-center align-items-center text-center p-4"
-                  style={{ flex: 1, minHeight: "500px" }}
-                >
-                  <div
-                    style={{
-                      width: "70px",
-                      height: "70px",
-                      borderRadius: "50%",
-                      background: palette.cream,
-                      color: palette.accent,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      fontSize: "28px",
-                      marginBottom: "20px",
-                    }}
-                  >
+                <div className="messages-welcome">
+                  <div className="messages-welcome__icon">
                     <i className="bi bi-chat-left-text" />
                   </div>
 
-                  <h5
-                    style={{
-                      fontWeight: 650,
-                      fontSize: "17px",
-                    }}
-                  >
+                  <h5 className="messages-welcome__title">
                     Every conversation matters
                   </h5>
 
-                  <p
-                    style={{
-                      color: palette.muted,
-                      fontSize: "13px",
-                      maxWidth: "300px",
-                      lineHeight: 1.7,
-                    }}
-                  >
-                    Select a customer from your inbox to read
-                    their messages and reply personally.
+                  <p className="messages-welcome__description">
+                    Select a customer from your inbox to read their messages
+                    and reply personally.
                   </p>
                 </div>
               ) : (
                 <>
-                  {/* Conversation header */}
-                  <div
-                    className="d-flex align-items-center justify-content-between gap-3"
-                    style={{
-                      padding: "18px 22px",
-                      borderBottom: `1px solid ${palette.border}`,
-                      background: palette.surface,
-                    }}
-                  >
-                    <div
-                      className="d-flex align-items-center gap-3"
-                      style={{ minWidth: 0 }}
+                  <header className="messages-chat__header">
+                    <button
+                      type="button"
+                      className="messages-back-button"
+                      onClick={() => setMobileChatOpen(false)}
+                      aria-label="Back to inbox"
                     >
-                      <div
-                        style={{
-                          flexShrink: 0,
-                          width: "46px",
-                          height: "46px",
-                          borderRadius: "50%",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          background: palette.cream,
-                          color: palette.accentDark,
-                          fontSize: "14px",
-                          fontWeight: 700,
-                        }}
-                      >
-                        {initials(
-                          activeConversation.customer_name ||
-                          "Guest"
-                        )}
+                      <i className="bi bi-arrow-left" />
+                    </button>
+                    <div className="messages-chat__customer">
+                      <div className="messages-avatar messages-avatar--large">
+                        {initials(activeConversation.customer_name || "Guest")}
                       </div>
 
-                      <div style={{ minWidth: 0 }}>
-                        <h5
-                          className="mb-1 text-truncate"
-                          style={{
-                            fontSize: "14px",
-                            fontWeight: 700,
-                          }}
-                        >
+                      <div className="messages-chat__customer-info">
+                        <h5 className="messages-chat__customer-name mb-1">
                           {activeConversation.customer_name ||
                             "Anonymous visitor"}
                         </h5>
 
-                        <div
-                          className="text-truncate"
-                          style={{
-                            color: palette.muted,
-                            fontSize: "11px",
-                          }}
-                        >
+                        <div className="messages-chat__customer-email">
                           {activeConversation.customer_email ||
                             "No email provided"}
                         </div>
@@ -1053,144 +737,59 @@ const Messages = () => {
                     </div>
 
                     <span
-                      style={{
-                        flexShrink: 0,
-                        background:
-                          activeConversation.status === "open"
-                            ? "#EDF2EB"
-                            : "#F0EFEC",
-                        color:
-                          activeConversation.status === "open"
-                            ? palette.green
-                            : palette.muted,
-                        padding: "7px 11px",
-                        borderRadius: "20px",
-                        fontSize: "10px",
-                        fontWeight: 600,
-                      }}
+                      className={`messages-status messages-status--large ${activeConversation.status === "open"
+                        ? "is-open"
+                        : "is-closed"
+                        }`}
                     >
                       {activeConversation.status === "open"
                         ? "● Open"
                         : "Closed"}
                     </span>
-                  </div>
+                  </header>
 
-                  {/* Message history */}
-                  <div
-                    style={{
-                      flex: 1,
-                      minHeight: "350px",
-                      maxHeight: "calc(100vh - 370px)",
-                      overflowY: "auto",
-                      padding: "24px",
-                      background: "#FDFCF9",
-                    }}
-                  >
-                    <div className="text-center mb-4">
-                      <span
-                        style={{
-                          display: "inline-block",
-                          padding: "7px 12px",
-                          borderRadius: "20px",
-                          background: palette.cream,
-                          color: palette.muted,
-                          fontSize: "10px",
-                        }}
-                      >
+                  <div className="messages-history">
+                    <div className="messages-history__start">
+                      <span>
                         Conversation started{" "}
-                        {formatTime(
-                          activeConversation.created_at
-                        )}
+                        {formatTime(activeConversation.created_at)}
                       </span>
                     </div>
 
                     {messagesLoading && messages.length === 0 && (
-                      <div
-                        className="text-center py-4"
-                        style={{
-                          fontSize: "12px",
-                          color: palette.muted,
-                        }}
-                      >
+                      <div className="messages-empty messages-loading">
+                        <span className="messages-spinner" />
                         Loading messages...
                       </div>
                     )}
 
-                    {!messagesLoading &&
-                      messages.length === 0 && (
-                        <div
-                          className="text-center py-5"
-                          style={{
-                            color: palette.muted,
-                            fontSize: "12px",
-                          }}
-                        >
-                          No messages in this conversation.
-                        </div>
-                      )}
+                    {!messagesLoading && messages.length === 0 && (
+                      <div className="messages-empty">
+                        No messages in this conversation.
+                      </div>
+                    )}
 
                     {messages.map((item) => {
-                      const isAdmin =
-                        item.sender_type === "admin";
+                      const isAdmin = item.sender_type === "admin";
 
                       return (
                         <div
                           key={item.id}
-                          className={`d-flex mb-4 ${isAdmin
-                            ? "justify-content-end"
-                            : "justify-content-start"
+                          className={`messages-message ${isAdmin ? "is-admin" : "is-customer"
                             }`}
                         >
-                          <div
-                            style={{
-                              maxWidth: "min(82%, 480px)",
-                            }}
-                          >
-                            <div
-                              style={{
-                                fontSize: "10px",
-                                color: palette.muted,
-                                marginBottom: "6px",
-                                textAlign: isAdmin
-                                  ? "right"
-                                  : "left",
-                              }}
-                            >
+                          <div className="messages-message__body">
+                            <div className="messages-message__sender">
                               {isAdmin
                                 ? "You · Eurasian House"
-                                : activeConversation.customer_name ||
-                                "Customer"}
+                                : activeConversation.customer_name || "Customer"}
                             </div>
 
-                            <div
-                              style={{
-                                padding: "13px 16px",
-                                borderRadius: isAdmin
-                                  ? "15px 15px 4px 15px"
-                                  : "15px 15px 15px 4px",
-                                background: isAdmin
-                                  ? palette.adminBubble
-                                  : palette.customerBubble,
-                                color: palette.text,
-                                fontSize: "13px",
-                                lineHeight: 1.7,
-                                whiteSpace: "pre-wrap",
-                                overflowWrap: "anywhere",
-                              }}
-                            >
+                            <div className="messages-bubble">
                               {item.message}
                             </div>
 
-                            <div
-                              style={{
-                                fontSize: "10px",
-                                color: palette.muted,
-                                marginTop: "6px",
-                                textAlign: isAdmin
-                                  ? "right"
-                                  : "left",
-                              }}
-                            >
+                            <div className="messages-message__time">
                               {formatTime(item.created_at)}
                             </div>
                           </div>
@@ -1199,104 +798,48 @@ const Messages = () => {
                     })}
                   </div>
 
-                  {/* Reply composer */}
-                  <div
-                    style={{
-                      padding: "16px 20px 12px",
-                      borderTop: `1px solid ${palette.border}`,
-                      background: palette.surface,
-                    }}
-                  >
+                  <div className="messages-composer">
                     {activeConversation.status === "closed" ? (
-                      <div
-                        className="text-center py-3"
-                        style={{
-                          fontSize: "12px",
-                          color: palette.muted,
-                        }}
-                      >
+                      <div className="messages-composer__closed">
                         This conversation is closed.
                       </div>
                     ) : (
                       <form onSubmit={handleReply}>
                         <textarea
                           value={reply}
-                          onChange={(event) =>
-                            setReply(event.target.value)
-                          }
+                          onChange={(event) => setReply(event.target.value)}
                           placeholder="Write a thoughtful reply..."
                           maxLength={4000}
                           rows={3}
                           aria-label="Write your reply"
-                          style={{
-                            ...styles.input,
-                            resize: "vertical",
-                            minHeight: "80px",
-                            lineHeight: 1.6,
-                            background: "#FDFCF9",
-                          }}
+                          className="messages-input messages-reply-input"
                         />
 
-                        <div className="d-flex justify-content-between align-items-center gap-3 mt-3">
-                          <span
-                            style={{
-                              color: palette.muted,
-                              fontSize: "10px",
-                            }}
-                          >
+                        <div className="messages-composer__footer">
+                          <span className="messages-composer__hint">
                             <i className="bi bi-chat-dots me-1" />
                             Text-only support
                           </span>
 
                           <button
                             type="submit"
-                            disabled={
-                              sending || !reply.trim()
-                            }
-                            className="d-inline-flex align-items-center gap-2"
-                            style={{
-                              border: 0,
-                              borderRadius: "9px",
-                              padding: "11px 19px",
-                              background: palette.accentDark,
-                              color: "#FFFFFF",
-                              fontSize: "12px",
-                              fontWeight: 600,
-                              cursor:
-                                sending || !reply.trim()
-                                  ? "not-allowed"
-                                  : "pointer",
-                              opacity:
-                                sending || !reply.trim()
-                                  ? 0.55
-                                  : 1,
-                            }}
+                            disabled={sending || !reply.trim()}
+                            className="messages-button messages-button--primary"
                           >
                             <i className="bi bi-send" />
-                            {sending
-                              ? "Sending..."
-                              : "Send reply"}
+                            {sending ? "Sending..." : "Send reply"}
                           </button>
                         </div>
                       </form>
                     )}
                   </div>
 
-                  <div
-                    style={{
-                      textAlign: "center",
-                      padding: "8px",
-                      background: palette.page,
-                      color: palette.muted,
-                      borderTop: `1px solid ${palette.border}`,
-                      fontSize: "9px",
-                    }}
-                  >
+                  <footer className="messages-chat__footer">
                     EURASIAN HOUSE · CUSTOMER CARE
-                  </div>
+                  </footer>
                 </>
               )}
-            </div>
+            </section>
           </div>
         </div>
       </div>
