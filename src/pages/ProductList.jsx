@@ -53,7 +53,12 @@ function ProductCardSkeleton() {
   );
 }
 
-export default function ProductList({ colorFilter }) {
+// export default function ProductList({ colorFilter }) {
+export default function ProductList({
+  colorFilter,
+  initialMainCategory = "",
+  seo = null,
+}) {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -114,7 +119,10 @@ export default function ProductList({ colorFilter }) {
     const params = new URLSearchParams(location.search);
 
     setSearch(params.get("search") || "");
-    setMainCategory(params.get("mainCategory") || "");
+    // setMainCategory(params.get("mainCategory") || "");
+    setMainCategory(
+      params.get("mainCategory") || initialMainCategory
+    );
     setSubCategory(params.get("subCategory") || "");
     setShape(params.get("shape") || "");
     setQuality(params.get("quality") || "");
@@ -129,7 +137,8 @@ export default function ProductList({ colorFilter }) {
      * This allows the product-fetch effect to run.
      */
     setFiltersInitialized(true);
-  }, [location.search]);
+    // }, [location.search]);
+  }, [location.search, initialMainCategory]);
 
   /*
    * ---------------------------------------------
@@ -1136,9 +1145,19 @@ export default function ProductList({ colorFilter }) {
   return (
     <>
       <SEO
-        title="Shop All Rugs | Eurasian House"
-        description="Browse our collection of handmade rugs including Persian, Kilim, Tibetan, Jute, Dhurrie and more."
-        canonical="https://www.eurasianrugs.com/products"
+        title={seo?.title || "Shop All Rugs | Eurasian House"}
+        description={
+          seo?.description ||
+          "Browse our collection of handmade rugs including Persian, Kilim, Tibetan, Jute, Dhurrie and more."
+        }
+        canonical={
+          seo?.canonical ||
+          "https://www.eurasianrugs.com/products"
+        }
+        keywords={
+          seo?.keywords ||
+          "handmade rugs, Persian rugs, Kilim rugs, Tibetan rugs, Jute rugs"
+        }
       />
 
       <div className="container mt-4">

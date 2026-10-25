@@ -107,6 +107,27 @@ export default function App() {
                 <Route path="/" element={<Products />} />
                 <Route path="/custom-rugs" element={<CustomRugs />} />
                 <Route path="/products" element={<ProductList />} />
+
+                {/* SEO category pages */}
+                <Route
+                  path="/products/hand-knotted-rugs"
+                  element={
+                    <ProductList
+                      initialMainCategory="Hand Knotted Rugs"
+                      seo={{
+                        title: "Hand Knotted Rugs | Eurasian House",
+                        description:
+                          "Explore hand-knotted rugs at Eurasian House. Discover handcrafted rugs featuring timeless patterns, beautiful colors, and skilled craftsmanship.",
+                        canonical:
+                          "https://www.eurasianrugs.com/products/hand-knotted-rugs",
+                        keywords:
+                          "hand knotted rugs, hand knotted carpets, handmade wool rugs, hand knotted rugs online",
+                      }}
+                    />
+                  }
+                />
+
+                {/* Keep product detail route after explicit category routes */}
                 <Route path="/products/:slug" element={<ProductDetail />} />
                 <Route path="/blogs" element={<Blogs />} />
                 <Route path="/us" element={<Us />} />
