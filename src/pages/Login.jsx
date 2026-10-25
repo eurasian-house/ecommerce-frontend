@@ -4,6 +4,7 @@ import { useNavigate, useLocation, Link } from "react-router-dom";
 import SEO from "../components/SEO";
 import { toast } from "react-toastify";
 import { supabase } from "../lib/supabase";
+import EurasianLogo from "../components/EurasianLogo";
 import "../styles/pages/Auth.css";
 
 export default function Login() {
@@ -191,13 +192,7 @@ export default function Login() {
                   <div className="auth-header">
 
                     <div className="auth-icon">
-
-                      <img
-                        src="/logobw.png"
-                        alt="Eurasian House"
-                        className="auth-logo auth-logo-light"
-                      />
-
+                      <EurasianLogo className="navbar-logo" animated={true} />
                     </div>
 
                     <h2 className="auth-title">
@@ -335,8 +330,8 @@ export default function Login() {
                           >
                             <i
                               className={`bi ${showPassword
-                                  ? "bi-eye-slash"
-                                  : "bi-eye"
+                                ? "bi-eye-slash"
+                                : "bi-eye"
                                 }`}
                             ></i>
                           </button>

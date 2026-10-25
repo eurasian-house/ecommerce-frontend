@@ -9,7 +9,6 @@
 .cart-empty-description { margin: 0 auto 1.25rem; color: var(--text-secondary); font-size: .9rem; line-height: 1.65; }
 
 .cart-header { margin-bottom: 2rem; text-align: center; }
-.cart-subtitle { display: block; margin-bottom: .35rem; color: var(--color-primary); font-size: .68rem; font-weight: var(--fw-semibold); letter-spacing: .2em; }
 .cart-title { margin-bottom: .4rem; color: var(--text-primary); font-size: clamp(1.75rem, 4vw, 2.8rem); letter-spacing: -.035em; }
 .cart-description { margin: auto; color: var(--text-secondary); font-size: .86rem; line-height: 1.55; }
 
@@ -40,10 +39,6 @@
 .cart-summary-label { display: block; margin-bottom: .2rem; color: var(--text-muted); font-size: .65rem; font-weight: var(--fw-semibold); letter-spacing: .14em; }
 .cart-total { margin: 0; color: var(--text-primary); font-size: 1.7rem; font-weight: var(--fw-bold); }
 .cart-summary-actions { display: flex; flex-wrap: wrap; gap: .5rem; }
-.cart-summary-actions .app-btn-primary,
-.cart-summary-actions .app-btn-secondary { min-height: 38px; padding: .45rem .85rem; border-radius: var(--radius-sm); font-size: .76rem; }
-.checkout { color: #fff !important; height:2rem; }
-.clear { color: #000000 !important; height:2rem; }
 
 /* Tablet and mobile: image left, information/actions right, title underneath.  */
 @media (max-width: 991.98px) {

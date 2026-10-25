@@ -24,6 +24,8 @@ import WholesaleLeads from "./pages/admin/WholesaleLeads";
 
 import PayPalCheckout from "./pages/PayPalCheckout";
 
+import CustomRugs from "./pages/CustomRugs";
+
 const ProductDetail = lazy(() => import("./pages/ProductDetail"));
 const Blogs = lazy(() => import("./pages/Blogs"));
 const Us = lazy(() => import("./pages/Us"));
@@ -103,6 +105,7 @@ export default function App() {
               {/* MAIN WEBSITE */}
               <Route element={<Layout />}>
                 <Route path="/" element={<Products />} />
+                <Route path="/custom-rugs" element={<CustomRugs />} />
                 <Route path="/products" element={<ProductList />} />
                 <Route path="/products/:slug" element={<ProductDetail />} />
                 <Route path="/blogs" element={<Blogs />} />

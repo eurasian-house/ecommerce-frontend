@@ -4,6 +4,62 @@ import { supabase } from "../lib/supabase";
 import confetti from "canvas-confetti";
 import "../styles/pages/OrderSuccess.css";
 
+function OrderSuccessSkeleton() {
+  return (
+    <div
+      className="order-success-page order-success-skeleton"
+      aria-busy="true"
+      aria-label="Loading order confirmation"
+    >
+      <div className="container">
+        <div className="order-success-card">
+          <div className="order-skeleton-line order-skeleton-icon" />
+
+          <div className="order-skeleton-line order-skeleton-subtitle" />
+          <div className="order-skeleton-line order-skeleton-title" />
+          <div className="order-skeleton-line order-skeleton-description" />
+          <div className="order-skeleton-line order-skeleton-description order-skeleton-description-short" />
+
+          <section className="order-details">
+            {[1, 2, 3, 4, 5].map((item) => (
+              <div className="order-detail-row" key={item}>
+                <div className="order-skeleton-line order-skeleton-label" />
+                <div className="order-skeleton-line order-skeleton-value" />
+              </div>
+            ))}
+          </section>
+
+          <section className="order-next-steps">
+            <div className="order-skeleton-line order-skeleton-section-title" />
+
+            {[1, 2, 3, 4].map((item) => (
+              <div className="order-step" key={item}>
+                <div className="order-skeleton-line order-skeleton-step-icon" />
+                <div className="order-skeleton-line order-skeleton-step-text" />
+              </div>
+            ))}
+          </section>
+
+          <div className="order-skeleton-note">
+            <div className="order-skeleton-line order-skeleton-note-icon" />
+            <div className="order-skeleton-note-content">
+              <div className="order-skeleton-line order-skeleton-note-text" />
+              <div className="order-skeleton-line order-skeleton-note-text order-skeleton-note-text-short" />
+            </div>
+          </div>
+
+          <div className="order-actions">
+            <div className="order-skeleton-line order-skeleton-button" />
+            <div className="order-skeleton-line order-skeleton-button" />
+          </div>
+
+          <div className="order-skeleton-line order-skeleton-footer" />
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function OrderSuccess() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -70,17 +126,7 @@ export default function OrderSuccess() {
   }, [order]);
 
   if (loading) {
-    return (
-      <div className="order-loading">
-
-        <div className="spinner-border" role="status"></div>
-
-        <p className="mt-3">
-          Loading your order...
-        </p>
-
-      </div>
-    );
+    return <OrderSuccessSkeleton />;
   }
 
   if (!order) {
@@ -283,19 +329,19 @@ export default function OrderSuccess() {
 
           </div>
 
-          {/* Buttons */}
+          {/* Buttons  */}
 
           <div className="order-actions">
 
             <button
-              className="app-btn-secondary"
+              className="btn-secondary"
               onClick={() => navigate("/")}
             >
               Continue Shopping
             </button>
 
             <button
-              className="app-btn-primary"
+              className="btn-primary"
               onClick={() => navigate("/account")}
             >
               Track My Order

@@ -1,0 +1,1743 @@
+/* =========================================
+   CUSTOM RUGS — PAGE FOUNDATION
+========================================= */
+
+.custom-rugs-page {
+    overflow: clip;
+    background: var(--bg-primary, var(--bg));
+    color: var(--text-primary, var(--text));
+}
+
+.custom-rugs-page *,
+.custom-rugs-page *::before,
+.custom-rugs-page *::after {
+    box-sizing: border-box;
+}
+
+.custom-rugs-page a {
+    text-decoration: none;
+}
+
+/* =========================================
+   HERO
+========================================= */
+
+.custom-rugs-hero {
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-height: min(760px, 88svh);
+    min-height: clamp(590px, 82svh, 850px);
+    overflow: hidden;
+    isolation: isolate;
+    background:
+        radial-gradient(ellipse at 76% 45%,
+            rgba(166, 130, 91, 0.23),
+            transparent 48%),
+        linear-gradient(115deg,
+            var(--bg-primary, #f7f4ee) 0%,
+            var(--surface, #e8dfd1) 100%);
+}
+
+.custom-rugs-hero__media,
+.custom-rugs-hero__overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.custom-rugs-hero__media {
+    z-index: -2;
+    overflow: hidden;
+}
+
+.custom-rugs-hero__image,
+.custom-rugs-hero__video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    animation: custom-rugs-hero-image-in 1.2s ease both;
+}
+
+.custom-rugs-hero__overlay {
+    z-index: -1;
+    background:
+        linear-gradient(90deg,
+            rgba(24, 22, 19, 0.84) 0%,
+            rgba(24, 22, 19, 0.66) 43%,
+            rgba(24, 22, 19, 0.18) 100%);
+}
+
+.custom-rugs-hero__content {
+    width: min(100%, 1440px);
+    margin: 0 auto;
+    padding: clamp(4rem, 8vw, 8rem) clamp(1.25rem, 7vw, 7rem);
+    color: #fff;
+    animation: custom-rugs-content-in 0.9s 0.12s ease both;
+}
+
+.custom-rugs-hero__eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-bottom: 1.7rem;
+    color: rgba(255, 255, 255, 0.83);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+}
+
+.custom-rugs-hero__eyebrow-line {
+    display: inline-block;
+    width: 34px;
+    height: 1px;
+    background: #d4b38a;
+}
+
+.custom-rugs-hero__title {
+    max-width: 850px;
+    margin: 0;
+    font-family: var(--font-heading, inherit);
+    font-size: clamp(3rem, 7.1vw, 6.9rem);
+    font-weight: 500;
+    letter-spacing: -0.065em;
+    line-height: 0.99;
+    text-wrap: balance;
+}
+
+.custom-rugs-hero__title span {
+    color: #d9b990;
+    font-family: var(--font-heading, inherit);
+    font-style: italic;
+    font-weight: 400;
+}
+
+.custom-rugs-hero__description {
+    max-width: 510px;
+    margin: 1.7rem 0 0;
+    color: rgba(255, 255, 255, 0.83);
+    font-size: clamp(0.95rem, 1.3vw, 1.08rem);
+    line-height: 1.9;
+}
+
+.custom-rugs-hero__actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.85rem;
+    margin-top: 2rem;
+}
+
+.custom-rugs-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    min-height: 49px;
+    padding: 0.85rem 1.25rem;
+    border: 1px solid transparent;
+    border-radius: var(--radius-md, 8px);
+    font-size: 0.83rem;
+    font-weight: 600;
+    text-align: center;
+    transition:
+        color var(--transition, 0.25s ease),
+        background-color var(--transition, 0.25s ease),
+        border-color var(--transition, 0.25s ease),
+        transform var(--transition, 0.25s ease),
+        box-shadow var(--transition, 0.25s ease);
+}
+
+.custom-rugs-btn i {
+    font-size: 0.95rem;
+    transition: transform 0.25s ease;
+}
+
+.custom-rugs-btn:hover {
+    transform: translateY(-2px);
+}
+
+.custom-rugs-btn:hover i {
+    transform: translate(2px, -2px);
+}
+
+.custom-rugs-btn--light {
+    background: #f7f2e9;
+    color: #28231e;
+}
+
+.custom-rugs-btn--light:hover {
+    background: #fff;
+    color: #28231e;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.13);
+}
+
+.custom-rugs-btn--outline {
+    border-color: rgba(255, 255, 255, 0.45);
+    background: rgba(255, 255, 255, 0.04);
+    color: #fff;
+    backdrop-filter: blur(8px);
+}
+
+.custom-rugs-btn--outline:hover {
+    border-color: #fff;
+    background: rgba(255, 255, 255, 0.12);
+    color: #fff;
+}
+
+.custom-rugs-btn--dark {
+    background: var(--text-primary, #27231e);
+    color: var(--bg-primary, #fff);
+}
+
+.custom-rugs-btn--dark:hover {
+    background: var(--color-primary, #8d6d4c);
+    color: #fff;
+}
+
+.custom-rugs-hero__trust {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1.2rem;
+    margin-top: 3rem;
+}
+
+.custom-rugs-hero__trust-item {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    color: rgba(255, 255, 255, 0.84);
+    font-size: 0.78rem;
+}
+
+.custom-rugs-hero__trust-item i {
+    color: #d9b990;
+    font-size: 1rem;
+}
+
+.custom-rugs-hero__trust-divider {
+    width: 1px;
+    height: 22px;
+    background: rgba(255, 255, 255, 0.32);
+}
+
+.custom-rugs-hero__scroll {
+    position: absolute;
+    right: clamp(1.25rem, 4vw, 4rem);
+    bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 0.59rem;
+    letter-spacing: 0.13em;
+    writing-mode: vertical-rl;
+    transition: color 0.25s ease;
+}
+
+.custom-rugs-hero__scroll i {
+    font-size: 1rem;
+    animation: custom-rugs-scroll-bounce 1.8s ease-in-out infinite;
+}
+
+.custom-rugs-hero__scroll:hover {
+    color: #fff;
+}
+
+.custom-rugs-hero__index {
+    position: absolute;
+    bottom: 2rem;
+    left: clamp(1.25rem, 7vw, 7rem);
+    color: rgba(255, 255, 255, 0.56);
+    font-size: 0.58rem;
+    letter-spacing: 0.15em;
+}
+
+/* =========================================
+   CUSTOMIZATION SECTION
+========================================= */
+
+.custom-rugs-options {
+    padding: clamp(4rem, 8vw, 7.5rem) 0;
+    background: var(--bg-primary, var(--bg));
+}
+
+.custom-rugs-section-heading {
+    max-width: 720px;
+    margin: 0 auto clamp(2.5rem, 5vw, 4rem);
+    text-align: center;
+}
+
+.custom-rugs-section-heading h2 {
+    margin: 0;
+    color: var(--text-primary, var(--text));
+    font-family: var(--font-heading, inherit);
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    font-weight: 500;
+    letter-spacing: -0.055em;
+    line-height: 1.06;
+}
+
+.custom-rugs-section-heading h2 span {
+    color: var(--color-primary, var(--color-accent));
+    font-style: italic;
+    font-weight: 400;
+}
+
+.custom-rugs-section-heading p {
+    max-width: 560px;
+    margin: 1.25rem auto 0;
+    color: var(--text-secondary, var(--text-muted));
+    font-size: 0.98rem;
+    line-height: 1.9;
+}
+
+/* =========================================
+   CUSTOMIZATION CARDS
+========================================= */
+
+.custom-rugs-options__grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.1rem;
+}
+
+.custom-rugs-option-card {
+    min-width: 0;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    border-radius: var(--card-radius, 14px);
+    background: var(--surface);
+    box-shadow: var(--shadow-xs);
+    animation: custom-rugs-card-in 0.65s ease both;
+    animation-delay: calc(var(--card-index, 0) * 55ms);
+    transition:
+        transform 0.35s ease,
+        border-color 0.35s ease,
+        box-shadow 0.35s ease;
+}
+
+.custom-rugs-option-card:hover {
+    transform: translateY(-6px);
+    border-color: var(--color-primary, var(--color-accent));
+    box-shadow: var(--shadow-md);
+}
+
+.custom-rugs-option-card__media {
+    position: relative;
+    display: grid;
+    aspect-ratio: 1.12 / 1;
+    overflow: hidden;
+    place-items: center;
+    background:
+        radial-gradient(circle at 50% 45%,
+            rgba(180, 151, 115, 0.2),
+            transparent 65%),
+        var(--surface-muted, #eee8df);
+}
+
+.custom-rugs-option-card__media>img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.7s cubic-bezier(0.2, 0.65, 0.3, 1);
+}
+
+.custom-rugs-option-card:hover .custom-rugs-option-card__media>img {
+    transform: scale(1.055);
+}
+
+.custom-rugs-option-card__placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    width: 100%;
+    height: 100%;
+    color: var(--color-primary, var(--color-accent));
+}
+
+.custom-rugs-option-card__placeholder i {
+    display: grid;
+    width: 74px;
+    height: 74px;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    background: var(--surface);
+    font-size: 1.8rem;
+    place-items: center;
+    transition:
+        transform 0.4s ease,
+        box-shadow 0.4s ease;
+}
+
+.custom-rugs-option-card:hover .custom-rugs-option-card__placeholder i {
+    transform: translateY(-4px) rotate(-5deg);
+    box-shadow: var(--shadow-sm);
+}
+
+.custom-rugs-option-card__placeholder span {
+    color: var(--text-muted);
+    font-size: 0.55rem;
+    font-weight: 600;
+    letter-spacing: 0.13em;
+}
+
+.custom-rugs-option-card__number {
+    position: absolute;
+    top: 0.8rem;
+    left: 0.8rem;
+    display: grid;
+    width: 33px;
+    height: 33px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 50%;
+    background: rgba(28, 26, 23, 0.48);
+    color: #fff;
+    font-size: 0.65rem;
+    backdrop-filter: blur(8px);
+    place-items: center;
+}
+
+.custom-rugs-option-card__icon {
+    position: absolute;
+    right: 0.8rem;
+    bottom: 0.8rem;
+    display: grid;
+    width: 38px;
+    height: 38px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 50%;
+    background: rgba(28, 26, 23, 0.52);
+    color: #fff;
+    backdrop-filter: blur(8px);
+    place-items: center;
+}
+
+.custom-rugs-option-card__body {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    min-height: 240px;
+    padding: 1.2rem;
+}
+
+.custom-rugs-option-card__subtitle {
+    color: var(--color-primary, var(--color-accent));
+    font-size: 0.62rem;
+    font-weight: var(--fw-semibold, 600);
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+}
+
+.custom-rugs-option-card__body h3 {
+    margin: 0.6rem 0 0;
+    color: var(--text-primary, var(--text));
+    font-family: var(--font-heading, inherit);
+    font-size: clamp(1.15rem, 1.6vw, 1.45rem);
+    font-weight: 500;
+    letter-spacing: -0.025em;
+}
+
+.custom-rugs-option-card__body p {
+    margin: 0.7rem 0 1.25rem;
+    color: var(--text-secondary, var(--text-muted));
+    font-size: 0.83rem;
+    line-height: 1.8;
+}
+
+.custom-rugs-option-card__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    margin-top: auto;
+    color: var(--text-primary, var(--text));
+    font-size: 0.77rem;
+    font-weight: var(--fw-semibold, 600);
+}
+
+.custom-rugs-option-card__link i {
+    color: var(--color-primary, var(--color-accent));
+    transition: transform 0.25s ease;
+}
+
+.custom-rugs-option-card__link:hover {
+    color: var(--color-primary, var(--color-accent));
+}
+
+.custom-rugs-option-card__link:hover i {
+    transform: translate(3px, -3px);
+}
+
+/* =========================================
+   CUSTOMIZATION FOOTER CTA
+========================================= */
+
+.custom-rugs-options__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    margin-top: 2.5rem;
+    padding: 1.75rem 2rem;
+    border: 1px solid var(--border);
+    border-radius: var(--card-radius, 14px);
+    background: var(--surface-muted, var(--surface));
+}
+
+.custom-rugs-options__footer-label {
+    color: var(--color-primary, var(--color-accent));
+    font-size: 0.62rem;
+    font-weight: var(--fw-semibold, 600);
+    letter-spacing: 0.13em;
+}
+
+.custom-rugs-options__footer p {
+    margin: 0.6rem 0 0;
+    color: var(--text-primary, var(--text));
+    font-family: var(--font-heading, inherit);
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    line-height: 1.6;
+}
+
+/* =========================================
+   ANIMATIONS
+========================================= */
+
+@keyframes custom-rugs-hero-image-in {
+    from {
+        opacity: 0;
+        transform: scale(1.035);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes custom-rugs-content-in {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes custom-rugs-card-in {
+    from {
+        opacity: 0;
+        transform: translateY(18px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes custom-rugs-scroll-bounce {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(5px);
+    }
+}
+
+/* =========================================
+   DARK THEME
+========================================= */
+
+[data-theme="dark"] .custom-rugs-option-card__media {
+    background:
+        radial-gradient(circle at 50% 45%,
+            rgba(196, 164, 126, 0.12),
+            transparent 65%),
+        var(--surface-muted, var(--surface));
+}
+
+[data-theme="dark"] .custom-rugs-option-card__placeholder i {
+    background: var(--surface);
+}
+
+[data-theme="dark"] .custom-rugs-options__footer {
+    background: var(--surface-muted, var(--surface));
+}
+
+
+/* =========================================
+   CRAFTSMANSHIP IN MOTION
+========================================= */
+
+.custom-craft {
+    padding: clamp(4rem, 8vw, 7rem) 0;
+    background: var(--surface, var(--bg-primary));
+}
+
+.custom-craft__grid {
+    display: grid;
+    grid-template-columns: 0.85fr 1.15fr;
+    align-items: center;
+    gap: clamp(2rem, 6vw, 5rem);
+}
+
+.custom-craft__content h2,
+.custom-design__intro h2,
+.custom-personal__content h2,
+.custom-faq__intro h2 {
+    margin: 0;
+    color: var(--text-primary, var(--text));
+    font-family: var(--font-heading, inherit);
+    font-size: clamp(2.4rem, 4.5vw, 4rem);
+    font-weight: 500;
+    letter-spacing: -0.055em;
+    line-height: 1.08;
+}
+
+.custom-craft__content h2 span,
+.custom-design__intro h2 span,
+.custom-personal__content h2 span,
+.custom-faq__intro h2 span {
+    color: var(--color-primary, var(--color-accent));
+    font-style: italic;
+}
+
+.custom-craft__content>p,
+.custom-design__intro>p,
+.custom-personal__content>p,
+.custom-faq__intro>p {
+    margin: 1.25rem 0;
+    color: var(--text-secondary, var(--text-muted));
+    font-size: 0.94rem;
+    line-height: 1.9;
+}
+
+.custom-craft__facts {
+    display: grid;
+    gap: 0.85rem;
+    margin: 1.6rem 0 2rem;
+}
+
+.custom-craft__facts>div {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--text-primary, var(--text));
+    font-size: 0.86rem;
+}
+
+.custom-craft__facts i {
+    display: grid;
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    color: var(--color-primary, var(--color-accent));
+    place-items: center;
+}
+
+.custom-craft__visual {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 4 / 4.5;
+    border-radius: var(--card-radius, 14px);
+    background: var(--surface-muted, var(--bg-primary));
+    box-shadow: var(--shadow-md);
+}
+
+.custom-craft__visual>video,
+.custom-craft__placeholder,
+.custom-craft__placeholder>img {
+    width: 100%;
+    height: 100%;
+}
+
+.custom-craft__visual>video,
+.custom-craft__placeholder>img {
+    display: block;
+    object-fit: cover;
+}
+
+.custom-craft__placeholder {
+    position: relative;
+}
+
+.custom-craft__placeholder-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    background: rgba(25, 22, 18, 0.3);
+    color: #fff;
+    text-align: center;
+}
+
+.custom-craft__placeholder-overlay i {
+    font-size: 2.5rem;
+}
+
+.custom-craft__placeholder-overlay span {
+    font-size: 0.8rem;
+}
+
+.custom-craft__caption {
+    position: absolute;
+    right: 1rem;
+    bottom: 1rem;
+    left: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 0.8rem 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: var(--radius-md, 8px);
+    background: rgba(20, 18, 15, 0.65);
+    color: #fff;
+    font-size: 0.78rem;
+    backdrop-filter: blur(12px);
+}
+
+.custom-craft__caption i {
+    color: #d9b990;
+}
+
+/* =========================================
+   DESIGN YOUR OWN
+========================================= */
+
+.custom-design {
+    padding: clamp(4rem, 8vw, 7rem) 0;
+    background: var(--bg-primary, var(--bg));
+}
+
+.custom-design__grid {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    align-items: start;
+    gap: clamp(2rem, 6vw, 5rem);
+}
+
+.custom-design__intro {
+    position: sticky;
+    top: 2rem;
+}
+
+.custom-design__note {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.8rem;
+    margin-top: 1.7rem;
+    padding: 1rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md, 10px);
+    background: var(--surface);
+    color: var(--text-secondary, var(--text-muted));
+    font-size: 0.82rem;
+    line-height: 1.7;
+}
+
+.custom-design__note i {
+    color: var(--color-primary, var(--color-accent));
+    font-size: 1.15rem;
+}
+
+.custom-design__builder {
+    padding: clamp(1rem, 3vw, 2rem);
+    border: 1px solid var(--border);
+    border-radius: var(--card-radius, 14px);
+    background: var(--surface);
+    box-shadow: var(--shadow-sm);
+}
+
+.custom-design__builder-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-muted);
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.custom-design__choices {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+    margin: 1.25rem 0;
+}
+
+.custom-design__choice {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    min-width: 0;
+    min-height: 64px;
+    padding: 0.7rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md, 9px);
+    background: var(--bg-primary, var(--bg));
+    color: var(--text-primary, var(--text));
+    font-family: inherit;
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-align: left;
+    cursor: pointer;
+    transition:
+        border-color 0.25s ease,
+        background 0.25s ease,
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.custom-design__choice:hover {
+    transform: translateY(-2px);
+    border-color: var(--color-primary, var(--color-accent));
+}
+
+.custom-design__choice.is-selected {
+    border-color: var(--color-primary, var(--color-accent));
+    background: var(--surface-muted, var(--bg-primary));
+    box-shadow: inset 0 0 0 1px var(--color-primary, var(--color-accent));
+}
+
+.custom-design__choice-icon {
+    display: grid;
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm, 7px);
+    color: var(--color-primary, var(--color-accent));
+    font-size: 1rem;
+    place-items: center;
+}
+
+.custom-design__choice-check {
+    margin-left: auto;
+    color: var(--text-muted);
+    font-size: 1rem;
+}
+
+.custom-design__choice.is-selected .custom-design__choice-check {
+    color: var(--color-primary, var(--color-accent));
+}
+
+.custom-design__builder-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+}
+
+.custom-design__builder-footer p {
+    flex: 1;
+    min-width: 160px;
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 0.77rem;
+    line-height: 1.7;
+}
+
+/* =========================================
+   PERSONALIZED RUGS
+========================================= */
+
+.custom-personal {
+    padding: clamp(4rem, 8vw, 7rem) 0;
+    background: var(--surface, var(--bg-primary));
+}
+
+.custom-personal__card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    border-radius: var(--card-radius, 14px);
+    background: var(--bg-primary, var(--bg));
+    box-shadow: var(--shadow-sm);
+}
+
+.custom-personal__visual {
+    position: relative;
+    min-height: 420px;
+    overflow: hidden;
+    background: var(--surface-muted, var(--surface));
+}
+
+.custom-personal__visual>img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: 420px;
+    object-fit: cover;
+    transition: transform 0.7s ease;
+}
+
+.custom-personal__card:hover .custom-personal__visual>img {
+    transform: scale(1.035);
+}
+
+.custom-personal__placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    min-height: 420px;
+    color: var(--color-primary, var(--color-accent));
+}
+
+.custom-personal__placeholder i {
+    font-size: 4rem;
+}
+
+.custom-personal__placeholder span {
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+}
+
+.custom-personal__stamp {
+    position: absolute;
+    right: 1rem;
+    bottom: 1rem;
+    left: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 0.9rem 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: var(--radius-md, 8px);
+    background: rgba(25, 22, 18, 0.65);
+    color: #fff;
+    font-size: 0.8rem;
+    backdrop-filter: blur(10px);
+}
+
+.custom-personal__stamp i {
+    color: #e5c8a6;
+}
+
+.custom-personal__content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding: clamp(1.5rem, 5vw, 4rem);
+}
+
+.custom-personal__occasions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.8rem;
+    margin: 0.5rem 0 1.8rem;
+}
+
+.custom-personal__occasions span {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    color: var(--text-secondary, var(--text-muted));
+    font-size: 0.78rem;
+}
+
+.custom-personal__occasions i {
+    color: var(--color-primary, var(--color-accent));
+}
+
+/* =========================================
+   OUR PROCESS
+========================================= */
+
+.custom-process {
+    padding: clamp(4rem, 8vw, 7rem) 0;
+    background: var(--bg-primary, var(--bg));
+}
+
+.custom-process__grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.2rem;
+}
+
+.custom-process__step {
+    position: relative;
+    padding: 1.4rem;
+    border: 1px solid var(--border);
+    border-radius: var(--card-radius, 12px);
+    background: var(--surface);
+    animation: custom-rugs-card-in 0.6s ease both;
+    animation-delay: calc(var(--step-index, 0) * 100ms);
+    transition:
+        transform 0.3s ease,
+        border-color 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.custom-process__step:hover {
+    transform: translateY(-5px);
+    border-color: var(--color-primary, var(--color-accent));
+    box-shadow: var(--shadow-sm);
+}
+
+.custom-process__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.6rem;
+}
+
+.custom-process__number {
+    color: var(--text-muted);
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+}
+
+.custom-process__icon {
+    display: grid;
+    width: 48px;
+    height: 48px;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    color: var(--color-primary, var(--color-accent));
+    font-size: 1.25rem;
+    place-items: center;
+}
+
+.custom-process__step h3 {
+    margin: 0;
+    color: var(--text-primary, var(--text));
+    font-family: var(--font-heading, inherit);
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+.custom-process__step p {
+    margin: 0.8rem 0 0;
+    color: var(--text-secondary, var(--text-muted));
+    font-size: 0.82rem;
+    line-height: 1.8;
+}
+
+.custom-process__connector {
+    position: absolute;
+    top: 2.35rem;
+    right: -1rem;
+    z-index: 2;
+    color: var(--color-primary, var(--color-accent));
+    font-size: 0.9rem;
+}
+
+/* =========================================
+   CUSTOM GALLERY
+========================================= */
+
+.custom-gallery {
+    padding: clamp(4rem, 8vw, 7rem) 0;
+    background: var(--surface, var(--bg-primary));
+}
+
+.custom-gallery__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+.custom-gallery__item {
+    position: relative;
+    min-width: 0;
+    overflow: hidden;
+    aspect-ratio: 1 / 1.08;
+    border-radius: var(--card-radius, 12px);
+    background: var(--surface-muted, var(--bg-primary));
+    animation: custom-rugs-card-in 0.6s ease both;
+    animation-delay: calc(var(--gallery-index, 0) * 70ms);
+}
+
+.custom-gallery__item>img,
+.custom-gallery__item>video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.65s ease;
+}
+
+.custom-gallery__item:hover>img {
+    transform: scale(1.05);
+}
+
+.custom-gallery__caption {
+    position: absolute;
+    right: 0.75rem;
+    bottom: 0.75rem;
+    left: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.85rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: var(--radius-md, 8px);
+    background: rgba(24, 22, 19, 0.65);
+    color: #fff;
+    font-size: 0.78rem;
+    backdrop-filter: blur(10px);
+    pointer-events: none;
+}
+
+.custom-gallery__caption i {
+    color: #e5c8a6;
+}
+
+.custom-gallery__empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 4rem 1rem;
+    border: 1px dashed var(--border);
+    border-radius: var(--card-radius, 12px);
+    color: var(--text-secondary, var(--text-muted));
+    text-align: center;
+}
+
+.custom-gallery__empty>i {
+    margin-bottom: 1rem;
+    color: var(--color-primary, var(--color-accent));
+    font-size: 2rem;
+}
+
+.custom-gallery__empty h3 {
+    color: var(--text-primary, var(--text));
+    font-size: 1.2rem;
+}
+
+.custom-gallery__empty p {
+    max-width: 420px;
+    margin: 0;
+    font-size: 0.85rem;
+    line-height: 1.8;
+}
+
+/* =========================================
+   FAQ
+========================================= */
+
+.custom-faq {
+    padding: clamp(4rem, 8vw, 7rem) 0;
+    background: var(--bg-primary, var(--bg));
+}
+
+.custom-faq__layout {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    align-items: start;
+    gap: clamp(2rem, 7vw, 6rem);
+}
+
+.custom-faq__intro {
+    position: sticky;
+    top: 2rem;
+}
+
+.custom-faq__contact-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-top: 0.5rem;
+    color: var(--color-primary, var(--color-accent));
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.custom-faq__list {
+    border-top: 1px solid var(--border);
+}
+
+.custom-faq__item {
+    border-bottom: 1px solid var(--border);
+}
+
+.custom-faq__item h3 {
+    margin: 0;
+}
+
+.custom-faq__question {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.25rem;
+    width: 100%;
+    padding: 1.25rem 0;
+    border: 0;
+    background: transparent;
+    color: var(--text-primary, var(--text));
+    font-family: inherit;
+    font-size: 0.94rem;
+    font-weight: 600;
+    text-align: left;
+    cursor: pointer;
+}
+
+.custom-faq__question i {
+    display: grid;
+    flex-shrink: 0;
+    width: 30px;
+    height: 30px;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    color: var(--color-primary, var(--color-accent));
+    font-size: 0.9rem;
+    place-items: center;
+    transition: transform 0.25s ease;
+}
+
+.custom-faq__item.is-open .custom-faq__question i {
+    transform: rotate(180deg);
+}
+
+.custom-faq__question:focus-visible {
+    outline: 2px solid var(--color-primary, var(--color-accent));
+    outline-offset: 3px;
+}
+
+.custom-faq__answer {
+    padding: 0 2.5rem 1.2rem 0;
+    animation: custom-rugs-content-in 0.25s ease both;
+}
+
+.custom-faq__answer p {
+    margin: 0;
+    color: var(--text-secondary, var(--text-muted));
+    font-size: 0.86rem;
+    line-height: 1.9;
+}
+
+.custom-faq__answer[hidden] {
+    display: none;
+}
+
+/* =========================================
+   FINAL CONTACT CTA
+========================================= */
+
+.custom-contact {
+    padding: clamp(3rem, 7vw, 6rem) 0;
+    background: var(--surface, var(--bg-primary));
+}
+
+.custom-contact__card {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    padding: clamp(2.5rem, 7vw, 6rem) 1.25rem;
+    border-radius: var(--card-radius, 16px);
+    background:
+        radial-gradient(
+            ellipse at 15% 15%,
+            rgba(195, 159, 119, 0.18),
+            transparent 40%
+        ),
+        #29251f;
+    color: #fff;
+    text-align: center;
+}
+
+.custom-contact__card h2 {
+    position: relative;
+    margin: 0;
+    color: #fff;
+    font-family: var(--font-heading, inherit);
+    font-size: clamp(2.8rem, 6vw, 5rem);
+    font-weight: 500;
+    letter-spacing: -0.06em;
+    line-height: 1.04;
+}
+
+.custom-contact__card h2 span {
+    color: #d9b990;
+    font-style: italic;
+    font-weight: 400;
+}
+
+.custom-contact__card>p {
+    max-width: 570px;
+    margin: 1.3rem auto 0;
+    color: rgba(255, 255, 255, 0.76);
+    font-size: 0.94rem;
+    line-height: 1.9;
+}
+
+.custom-contact__actions {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 2rem;
+}
+
+.custom-contact__actions .custom-rugs-btn--outline {
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.custom-contact__footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55rem;
+    margin-top: 2.5rem;
+    color: rgba(255, 255, 255, 0.58);
+    font-size: 0.72rem;
+}
+
+.custom-contact__footer i {
+    color: #d9b990;
+}
+
+.custom-contact__decoration {
+    position: absolute;
+    top: -150px;
+    right: -120px;
+    z-index: -1;
+    width: 380px;
+    height: 380px;
+    border: 1px solid rgba(217, 185, 144, 0.15);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.custom-contact__decoration span {
+    position: absolute;
+    inset: 25px;
+    border: 1px solid rgba(217, 185, 144, 0.12);
+    border-radius: 50%;
+}
+
+.custom-contact__decoration span:nth-child(2) {
+    inset: 55px;
+}
+
+.custom-contact__decoration span:nth-child(3) {
+    inset: 85px;
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 991px) {
+
+    .custom-craft__grid,
+    .custom-design__grid,
+    .custom-faq__layout {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+    }
+
+    .custom-design__intro,
+    .custom-faq__intro {
+        position: static;
+    }
+
+    .custom-craft__visual {
+        aspect-ratio: 16 / 10;
+    }
+
+    .custom-process__grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .custom-process__connector {
+        display: none;
+    }
+
+    .custom-personal__visual,
+    .custom-personal__visual>img,
+    .custom-personal__placeholder {
+        min-height: 350px;
+    }
+}
+
+@media (max-width: 767px) {
+    .custom-gallery__grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.7rem;
+    }
+
+    .custom-gallery__caption {
+        right: 0.5rem;
+        bottom: 0.5rem;
+        left: 0.5rem;
+        padding: 0.65rem;
+        font-size: 0.68rem;
+    }
+
+    .custom-personal__card {
+        grid-template-columns: 1fr;
+    }
+
+    .custom-personal__visual,
+    .custom-personal__visual>img,
+    .custom-personal__placeholder {
+        min-height: 300px;
+    }
+
+    .custom-personal__content {
+        padding: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .custom-design__choices {
+        grid-template-columns: 1fr;
+    }
+
+    .custom-design__builder-footer {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .custom-design__builder-footer .custom-rugs-btn {
+        width: 100%;
+    }
+
+    .custom-process__grid {
+        grid-template-columns: 1fr;
+        gap: 0.8rem;
+    }
+
+    .custom-process__step {
+        padding: 1.15rem;
+    }
+
+    .custom-process__top {
+        margin-bottom: 1rem;
+    }
+
+    .custom-personal__occasions {
+        gap: 0.75rem 0.5rem;
+    }
+
+    .custom-personal__occasions span {
+        font-size: 0.72rem;
+    }
+
+    .custom-contact__actions {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .custom-contact__actions .custom-rugs-btn {
+        width: 100%;
+    }
+}
+
+/* =========================================
+   REDUCED MOTION
+========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .custom-craft__visual,
+    .custom-design__choice,
+    .custom-personal__visual>img,
+    .custom-process__step,
+    .custom-gallery__item,
+    .custom-gallery__item>img,
+    .custom-faq__answer {
+        animation: none !important;
+        transition: none !important;
+    }
+
+    .custom-design__choice:hover,
+    .custom-process__step:hover {
+        transform: none;
+    }
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (min-width: 1500px) {
+    .custom-rugs-options__grid {
+        gap: 1.4rem;
+    }
+
+    .custom-rugs-option-card__body {
+        padding: 1.5rem;
+    }
+}
+
+@media (max-width: 1100px) {
+    .custom-rugs-options__grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1rem;
+    }
+
+    .custom-rugs-option-card__body {
+        min-height: 215px;
+    }
+
+    .custom-rugs-hero__title {
+        font-size: clamp(3.4rem, 8vw, 6rem);
+    }
+}
+
+@media (max-width: 768px) {
+    .custom-rugs-hero {
+        min-height: 680px;
+        min-height: min(760px, 88svh);
+    }
+
+    .custom-rugs-hero__overlay {
+        background: linear-gradient(90deg,
+                rgba(24, 22, 19, 0.82),
+                rgba(24, 22, 19, 0.47));
+    }
+
+    .custom-rugs-hero__content {
+        padding: 5rem 1.5rem;
+    }
+
+    .custom-rugs-hero__title {
+        font-size: clamp(3rem, 10vw, 5rem);
+    }
+
+    .custom-rugs-hero__description {
+        max-width: 440px;
+        font-size: 0.94rem;
+    }
+
+    .custom-rugs-hero__scroll {
+        right: 1rem;
+        bottom: 1.5rem;
+    }
+
+    .custom-rugs-hero__index {
+        bottom: 1.5rem;
+        left: 1.5rem;
+    }
+
+    .custom-rugs-options__footer {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 1.25rem;
+        padding: 1.4rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .custom-rugs-hero {
+        min-height: 650px;
+        min-height: 85svh;
+    }
+
+    .custom-rugs-hero__content {
+        padding: 4rem 1.15rem;
+    }
+
+    .custom-rugs-hero__eyebrow {
+        gap: 0.55rem;
+        font-size: 0.55rem;
+        letter-spacing: 0.12em;
+    }
+
+    .custom-rugs-hero__eyebrow-line {
+        width: 22px;
+    }
+
+    .custom-rugs-hero__title {
+        font-size: clamp(2.75rem, 12vw, 4rem);
+    }
+
+    .custom-rugs-hero__description {
+        margin-top: 1.3rem;
+        font-size: 0.9rem;
+        line-height: 1.8;
+    }
+
+    .custom-rugs-hero__actions {
+        align-items: stretch;
+        flex-direction: column;
+        gap: 0.7rem;
+        margin-top: 1.5rem;
+    }
+
+    .custom-rugs-btn {
+        width: 100%;
+        min-height: 47px;
+    }
+
+    .custom-rugs-hero__trust {
+        gap: 0.8rem;
+        margin-top: 2rem;
+    }
+
+    .custom-rugs-hero__trust-item {
+        gap: 0.4rem;
+        font-size: 0.68rem;
+    }
+
+    .custom-rugs-hero__trust-divider {
+        height: 18px;
+    }
+
+    .custom-rugs-hero__scroll {
+        display: none;
+    }
+
+    .custom-rugs-hero__index {
+        font-size: 0.5rem;
+    }
+
+    .custom-rugs-options {
+        padding: 4rem 0;
+    }
+
+    .custom-rugs-section-heading {
+        margin-bottom: 2rem;
+    }
+
+    .custom-rugs-section-heading p {
+        font-size: 0.88rem;
+        line-height: 1.8;
+    }
+
+    .custom-rugs-options__grid {
+        gap: 0.7rem;
+    }
+
+    .custom-rugs-option-card {
+        border-radius: var(--radius-md, 10px);
+    }
+
+    .custom-rugs-option-card__media {
+        aspect-ratio: 0.95 / 1;
+    }
+
+    .custom-rugs-option-card__number {
+        top: 0.5rem;
+        left: 0.5rem;
+        width: 27px;
+        height: 27px;
+        font-size: 0.57rem;
+    }
+
+    .custom-rugs-option-card__icon {
+        right: 0.5rem;
+        bottom: 0.5rem;
+        width: 31px;
+        height: 31px;
+    }
+
+    .custom-rugs-option-card__placeholder {
+        gap: 0.65rem;
+    }
+
+    .custom-rugs-option-card__placeholder i {
+        width: 48px;
+        height: 48px;
+        font-size: 1.25rem;
+    }
+
+    .custom-rugs-option-card__placeholder span {
+        font-size: 0.43rem;
+        letter-spacing: 0.07em;
+    }
+
+    .custom-rugs-option-card__body {
+        min-height: 245px;
+        padding: 0.8rem;
+    }
+
+    .custom-rugs-option-card__subtitle {
+        font-size: 0.51rem;
+        letter-spacing: 0.04em;
+        line-height: 1.5;
+    }
+
+    .custom-rugs-option-card__body h3 {
+        margin-top: 0.45rem;
+        font-size: 1.03rem;
+        line-height: 1.25;
+    }
+
+    .custom-rugs-option-card__body p {
+        margin: 0.55rem 0 1rem;
+        font-size: 0.75rem;
+        line-height: 1.65;
+    }
+
+    .custom-rugs-option-card__link {
+        gap: 0.35rem;
+        align-items: flex-start;
+        font-size: 0.68rem;
+        line-height: 1.5;
+    }
+
+    .custom-rugs-options__footer {
+        margin-top: 1.5rem;
+        padding: 1.1rem;
+    }
+
+    .custom-rugs-options__footer-label {
+        font-size: 0.56rem;
+        letter-spacing: 0.09em;
+    }
+
+    .custom-rugs-options__footer p {
+        font-size: 1rem;
+    }
+}
+
+/* =========================================
+   ACCESSIBILITY
+========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .custom-rugs-hero__image,
+    .custom-rugs-hero__video,
+    .custom-rugs-hero__content,
+    .custom-rugs-option-card,
+    .custom-rugs-hero__scroll i {
+        animation: none !important;
+    }
+
+    .custom-rugs-option-card,
+    .custom-rugs-option-card__media>img,
+    .custom-rugs-btn,
+    .custom-rugs-btn i {
+        transition: none !important;
+    }
+
+    .custom-rugs-option-card:hover {
+        transform: none;
+    }
+}

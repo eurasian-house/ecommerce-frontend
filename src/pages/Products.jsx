@@ -17,6 +17,7 @@ import Colors from "../components/Colors";
 import ProductCard from "../components/ProductCard";
 import Inspiration from "../components/Inspiration";
 
+import CustomRugsPreview from "../components/CustomRugsPreview";
 import WhyChooseUs from "../components/WhyChooseUs";
 import ShopWithConfidence from "../components/ShopWithConfidence";
 import CustomerInspiration from "../components/CustomerInspiration";
@@ -264,6 +265,9 @@ export default function Products() {
         </LazySection>
         <LazySection minHeight={350}>
           <OurPromise />
+        </LazySection>
+        <LazySection minHeight={350}>
+          <CustomRugsPreview />
         </LazySection>
         <LazySection minHeight={350}>
           <BrandStory />

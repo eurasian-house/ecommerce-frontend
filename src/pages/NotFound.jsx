@@ -56,9 +56,8 @@ export default function NotFound() {
 
                             <Link
                                 to="/"
-                                className="btn not-found-btn-primary"
+                                className="btn-primary"
                             >
-
                                 <FaHome />
 
                                 Home
@@ -67,7 +66,7 @@ export default function NotFound() {
 
                             <Link
                                 to="/products"
-                                className="btn not-found-btn-secondary"
+                                className="btn-secondary"
                             >
 
                                 <FaShoppingBag />

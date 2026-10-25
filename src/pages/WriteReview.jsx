@@ -11,6 +11,65 @@ import { useNavigate } from "react-router-dom";
 import "../styles/pages/WriteReview.css";
 
 
+
+function WriteReviewSkeleton() {
+    return (
+        <div
+            className="write-review-page write-review-skeleton"
+            aria-busy="true"
+            aria-label="Loading review form"
+        >
+            <div className="container">
+                <div className="write-review-container">
+                    <header className="write-review-header">
+                        <div className="review-skeleton-line review-skeleton-heading" />
+                        <div className="review-skeleton-line review-skeleton-subtitle" />
+                    </header>
+
+                    <section className="write-review-card">
+                        <div className="review-skeleton-product">
+                            <div className="review-skeleton-image" />
+                            <div className="review-skeleton-product-content">
+                                <div className="review-skeleton-line review-skeleton-product-title" />
+                                <div className="review-skeleton-chip-row">
+                                    <div className="review-skeleton-line review-skeleton-chip" />
+                                    <div className="review-skeleton-line review-skeleton-chip" />
+                                </div>
+                                <div className="review-skeleton-line review-skeleton-verified" />
+                            </div>
+                        </div>
+                    </section>
+
+                    <section className="write-review-card">
+                        <div className="review-skeleton-line review-skeleton-heading" />
+
+                        <div className="review-skeleton-line review-skeleton-label" />
+                        <div className="review-skeleton-stars">
+                            {[1, 2, 3, 4, 5].map((star) => (
+                                <div className="review-skeleton-star" key={star} />
+                            ))}
+                        </div>
+
+                        <div className="review-skeleton-line review-skeleton-label" />
+                        <div className="review-skeleton-input" />
+
+                        <div className="review-skeleton-line review-skeleton-label" />
+                        <div className="review-skeleton-textarea" />
+
+                        <div className="review-skeleton-line review-skeleton-label" />
+                        <div className="review-skeleton-upload" />
+
+                        <div className="review-submit">
+                            <div className="review-skeleton-line review-skeleton-button" />
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    );
+}
+
+
 export default function WriteReview() {
     const { orderItemId } = useParams();
     const { user } = useAuth();
@@ -107,13 +166,9 @@ export default function WriteReview() {
         }
     }
 
-    if (loading) return <div className="container py-5"><div className="placeholder-glow">
-
-        <span className="placeholder col-8 mb-4"></span>
-
-        <span className="placeholder col-12"></span>
-
-    </div></div>;
+    if (loading) {
+        return <WriteReviewSkeleton />;
+    }
 
     const previewImage = image
         ? URL.createObjectURL(image)
@@ -146,7 +201,7 @@ export default function WriteReview() {
 
                     </div>
 
-                    {/* Product */}
+                    {/* Product  */}
 
                     <section className="write-review-card">
 
@@ -394,7 +449,7 @@ export default function WriteReview() {
                         <div className="review-submit">
 
                             <button
-                                className="app-btn-primary review-btn"
+                                className="btn-primary"
                                 onClick={handleSubmit}
                                 disabled={saving}
                             >

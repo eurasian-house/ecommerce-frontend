@@ -84,8 +84,8 @@
     position: relative;
     z-index: 1;
     display: flex;
-    width: 27px;
-    height: 27px;
+    width: 30px;
+    height: 30px;
     transition: transform 250ms ease;
 }
 
@@ -772,8 +772,13 @@
     }
 
     .eh-chat__launcher {
-        width: 58px;
-        height: 58px;
+        width: 44px;
+        height: 44px;
+    }
+    .eh-chat__launcher-icon{
+        width: 25px;
+        height: 25px;
+
     }
 
     .eh-chat--open {

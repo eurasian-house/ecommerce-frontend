@@ -3,6 +3,7 @@ import { supabase } from "../lib/supabase";
 import { useNavigate, Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import SEO from "../components/SEO";
+import EurasianLogo from "../components/EurasianLogo";
 import "../styles/pages/Auth.css";
 
 export default function ResetPassword() {
@@ -174,13 +175,7 @@ export default function ResetPassword() {
                   <div className="auth-header">
 
                     <div className="auth-icon">
-
-                      <img
-                        src="/logobw.png"
-                        alt="Eurasian House"
-                        className="auth-logo auth-logo-light"
-                      />
-
+                      <EurasianLogo className="navbar-logo" animated={true} />
                     </div>
 
                     <h2 className="auth-title">

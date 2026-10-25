@@ -361,18 +361,6 @@
     margin-bottom: 2rem;
 }
 
-.app-btn-primary,
-.app-btn-secondary {
-    padding: .46rem .6rem;
-    font-size: .86rem;
-    border-radius: 12px;
-    width: 45%;
-}
-
-.app-btn-primary {
-    color: #fff !important;
-}
-
 /* ==========================================================
    FOOTER
 ========================================================== */
@@ -391,6 +379,227 @@
 .order-footer strong {
 
     color: var(--text);
+}
+
+
+/* ================================
+   Order Success Skeleton
+================================ */
+
+.order-success-skeleton .order-success-card {
+    animation: orderSkeletonEnter 0.4s ease both;
+}
+
+.order-skeleton-line {
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+    background: var(--skeleton-base, #e9e7e2);
+    border-radius: var(--radius-md, 8px);
+}
+
+.order-skeleton-line::after {
+    position: absolute;
+    inset: 0;
+    content: "";
+    transform: translateX(-100%);
+    background: linear-gradient(90deg,
+            transparent,
+            var(--skeleton-highlight, rgba(255, 255, 255, 0.65)),
+            transparent);
+    animation: orderSkeletonShimmer 1.5s ease-in-out infinite;
+}
+
+.order-skeleton-icon {
+    width: 76px;
+    height: 76px;
+    margin: 0 auto 28px;
+    border-radius: 50%;
+}
+
+.order-skeleton-subtitle {
+    width: 120px;
+    height: 12px;
+    margin: 0 auto 18px;
+}
+
+.order-skeleton-title {
+    width: min(440px, 90%);
+    height: 30px;
+    margin: 0 auto 18px;
+}
+
+.order-skeleton-description {
+    width: 90%;
+    max-width: 520px;
+    height: 12px;
+    margin: 0 auto 10px;
+}
+
+.order-skeleton-description-short {
+    width: 65%;
+    margin-bottom: 32px;
+}
+
+.order-success-skeleton .order-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.order-success-skeleton .order-detail-row {
+    min-height: 54px;
+    gap: 20px;
+}
+
+.order-skeleton-label {
+    width: 100px;
+    height: 13px;
+}
+
+.order-skeleton-value {
+    width: 150px;
+    max-width: 55%;
+    height: 13px;
+}
+
+.order-skeleton-section-title {
+    width: 190px;
+    height: 20px;
+    margin-bottom: 22px;
+}
+
+.order-success-skeleton .order-step {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 18px;
+}
+
+.order-skeleton-step-icon {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+}
+
+.order-skeleton-step-text {
+    width: 135px;
+    height: 13px;
+}
+
+.order-skeleton-note {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 18px;
+    margin-top: 24px;
+    border: 1px solid var(--border, #e5e2dc);
+    border-radius: var(--radius-lg, 12px);
+    background: var(--surface-muted, #f7f6f3);
+}
+
+.order-skeleton-note-icon {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+}
+
+.order-skeleton-note-content {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.order-skeleton-note-text {
+    width: 100%;
+    height: 12px;
+}
+
+.order-skeleton-note-text-short {
+    width: 72%;
+}
+
+.order-success-skeleton .order-actions {
+    display: flex;
+    gap: 14px;
+}
+
+.order-skeleton-button {
+    flex: 1;
+    height: 46px;
+    border-radius: var(--form-radius, 8px);
+}
+
+.order-skeleton-footer {
+    width: 75%;
+    max-width: 400px;
+    height: 12px;
+    margin: 28px auto 0;
+}
+
+@keyframes orderSkeletonShimmer {
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+@keyframes orderSkeletonEnter {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 576px) {
+    .order-skeleton-icon {
+        width: 64px;
+        height: 64px;
+    }
+
+    .order-skeleton-title {
+        height: 24px;
+    }
+
+    .order-success-skeleton .order-detail-row {
+        gap: 12px;
+    }
+
+    .order-skeleton-label {
+        width: 85px;
+    }
+
+    .order-skeleton-value {
+        width: 120px;
+    }
+
+    .order-skeleton-note {
+        padding: 14px;
+    }
+
+    .order-success-skeleton .order-actions {
+        flex-direction: column;
+    }
+
+    .order-skeleton-button {
+        flex: auto;
+        width: 100%;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .order-skeleton-line::after {
+        animation: none;
+    }
+
+    .order-success-skeleton .order-success-card {
+        animation: none;
+    }
 }
 
 /* ==========================================================
@@ -437,6 +646,7 @@
         font-size: .8rem;
         border-radius: 16px;
     }
+
     .order-step {
         padding: 0
     }
@@ -445,13 +655,14 @@
 
         font-size: 1.4rem;
     }
-    
-    .order-success-description{
+
+    .order-success-description {
         font-size: .8rem;
         line-height: 1.2;
-        
+
     }
-    .order-details{
+
+    .order-details {
         margin-bottom: 0;
         padding: 0 .8rem;
         font-size: .8rem;

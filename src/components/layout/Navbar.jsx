@@ -103,6 +103,17 @@ export default function Navbar() {
                 Products
               </NavLink>
             </li>
+            <li className="nav-item">
+              <NavLink
+                to="/custom-rugs"
+                onClick={closeNavbar}
+                className={({ isActive }) =>
+                  `nav-link hover-lift hover-lift--underline ${isActive ? "active fw-semibold" : ""}`
+                }
+              >
+                Custom Rugs
+              </NavLink>
+            </li>
 
             <li className="nav-item">
               <NavLink

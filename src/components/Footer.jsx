@@ -284,7 +284,7 @@ const Footer = () => {
 
                   <li>
                     <Link
-                      to="/products?mainCategory=Hand%20Knotted%20Rugs"
+                      to="/products?mainCategory=Hand+Knotted+Rugs"
                       className="footer-link"
                     >
                       Hand Knotted
@@ -293,7 +293,15 @@ const Footer = () => {
 
                   <li>
                     <Link
-                      to="/products?mainCategory=Persian%20Rugs"
+                      to="/products?mainCategory=Hand+Knotted+Kashmiri"
+                      className="footer-link"
+                    >
+                      Kashmiri Rugs
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to="/products?mainCategory=Hand+Knotted+Persian"
                       className="footer-link"
                     >
                       Persian Rugs
@@ -302,10 +310,18 @@ const Footer = () => {
 
                   <li>
                     <Link
-                      to="/products?mainCategory=Hand%20Tufted%20Rugs"
+                      to="/products?mainCategory=Hand+Tufted+Rugs"
                       className="footer-link"
                     >
                       Tufted Rugs
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to="/products?mainCategory=Leather+Rugs%2FPouffe"
+                      className="footer-link"
+                    >
+                      Leather Rugs
                     </Link>
                   </li>
 
@@ -320,7 +336,7 @@ const Footer = () => {
 
                   <li>
                     <Link
-                      to="/products?mainCategory=Tibetan%20Weave%20Rugs"
+                      to="/products?mainCategory=Hand+Knotted+Tibetan"
                       className="footer-link"
                     >
                       Tibetan Rugs
@@ -329,7 +345,7 @@ const Footer = () => {
 
                   <li>
                     <Link
-                      to="/products?mainCategory=Jute%20Rugs"
+                      to="/products?subCategory=Braided+Jute+Rugs"
                       className="footer-link"
                     >
                       Jute Rugs
@@ -338,7 +354,7 @@ const Footer = () => {
 
                   <li>
                     <Link
-                      to="/products?subCategory=Dhurrie"
+                      to="/products?mainCategory=Flatweave+Rugs%2FDhurries"
                       className="footer-link"
                     >
                       Dhurrie Rugs

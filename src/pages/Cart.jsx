@@ -70,10 +70,11 @@ export default function Cart() {
                         {/* HERO */}
 
                         <section className="cart-header">
-
-                            <span className="cart-subtitle">
-                                SHOPPING CART
-                            </span>
+                            <div className="discount-ornament">
+                                <span className="ornament-line" />
+                                <span className="ornament-text">SHOPPING CART</span>
+                                <span className="ornament-line" />
+                            </div>
 
                             <h1 className="cart-title">
                                 Your Selected Rugs
@@ -85,7 +86,7 @@ export default function Cart() {
 
                         </section>
 
-                        {/* CART ITEMS */}
+                        {/* CART ITEMS  */}
 
                         <div className="cart-list">
 
@@ -118,23 +119,23 @@ export default function Cart() {
 
                                         <div className="cart-details">
 
-                                          <div className="cart-meta">
+                                            <div className="cart-meta">
 
-                                            {item.selectedSize && (
-                                                <span>
-                                                    Size:
-                                                    <strong> {item.selectedSize.size}</strong>
-                                                </span>
-                                            )}
+                                                {item.selectedSize && (
+                                                    <span>
+                                                        Size:
+                                                        <strong> {item.selectedSize.size}</strong>
+                                                    </span>
+                                                )}
 
-                                            {item.selectedColor && (
-                                                <span>
-                                                    Color:
-                                                    <strong> {item.selectedColor.color_name || item.selectedColor.name}</strong>
-                                                </span>
-                                            )}
+                                                {item.selectedColor && (
+                                                    <span>
+                                                        Color:
+                                                        <strong> {item.selectedColor.color_name || item.selectedColor.name}</strong>
+                                                    </span>
+                                                )}
 
-                                          </div>
+                                            </div>
 
                                             <div className="cart-price">
                                                 ${Math.round(Number(item.price || item.selling_price))}
@@ -232,14 +233,14 @@ export default function Cart() {
                             <div className="cart-summary-actions">
 
                                 <button
-                                    className="app-btn-primary checkout"
+                                    className="btn-primary"
                                     onClick={handleCheckoutClick}
                                 >
                                     Proceed to Checkout
                                 </button>
 
                                 <button
-                                    className="app-btn-secondary clear"
+                                    className="btn-secondary"
                                     onClick={clearCart}
                                 >
                                     Clear Cart

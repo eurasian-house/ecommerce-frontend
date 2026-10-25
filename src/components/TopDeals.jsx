@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import { supabase } from "../lib/supabase";
 import ProductCard from "./ProductCard";
 import "../styles/components/SmallComponent.css";
+import { Link } from "react-router-dom";
 
 export default function TopDeals() {
     const [products, setProducts] = useState([]);
@@ -70,8 +71,9 @@ export default function TopDeals() {
                     </h2>
 
                     <p className="recent-added-description">
-                        Discover our <span className="top-10">Top</span> handcrafted rugs loved by
-                        customers worldwide.
+                        Discover our <span className="top-10"><Link
+                            to="/products?sort=top-deals"
+                        >All Top Deals</Link></span> handcrafted rugs loved by customers worldwide.
                     </p>
                 </div>
 

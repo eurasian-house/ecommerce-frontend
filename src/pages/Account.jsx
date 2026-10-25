@@ -23,6 +23,70 @@ import {
 } from "../lib/validation";
 
 
+function AccountSkeleton() {
+  return (
+    <div className="account-page" aria-busy="true" aria-label="Loading account">
+      <div className="container">
+        <div className="row g-3">
+          {/* Profile skeleton */}
+          <div className="col-xl-4 col-lg-5">
+            <div className="account-card account-profile-card account-skeleton">
+              <div className="account-skeleton-actions">
+                <span className="account-skeleton-line account-skeleton-button" />
+              </div>
+
+              <div className="account-skeleton-profile">
+                <span className="account-skeleton-circle" />
+                <span className="account-skeleton-line account-skeleton-name" />
+                <span className="account-skeleton-line account-skeleton-subtitle" />
+                <span className="account-skeleton-line account-skeleton-button" />
+              </div>
+
+              <div className="account-divider" />
+
+              {[1, 2, 3, 4, 5, 6, 7].map((item) => (
+                <div className="account-skeleton-field" key={item}>
+                  <span className="account-skeleton-line account-skeleton-label" />
+                  <span className="account-skeleton-line account-skeleton-input" />
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Orders skeleton */}
+          <div className="col-xl-8 col-lg-7 mt-4 mt-lg-0">
+            <div className="account-orders-card account-skeleton">
+              <div className="account-skeleton-orders-header">
+                <div>
+                  <span className="account-skeleton-line account-skeleton-subtitle" />
+                  <span className="account-skeleton-line account-skeleton-heading" />
+                </div>
+                <span className="account-skeleton-line account-skeleton-count" />
+              </div>
+
+              <div className="account-skeleton-orders-list">
+                {[1, 2, 3, 4].map((item) => (
+                  <div className="account-skeleton-order" key={item}>
+                    <div className="account-skeleton-order-content">
+                      <span className="account-skeleton-line account-skeleton-order-title" />
+                      <span className="account-skeleton-line account-skeleton-order-meta" />
+                      <span className="account-skeleton-line account-skeleton-order-meta" />
+                      <span className="account-skeleton-line account-skeleton-order-meta" />
+                    </div>
+                    <span className="account-skeleton-line account-skeleton-price" />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+
+
 export default function Account() {
   const [orders, setOrders] = useState([]);
   const [profile, setProfile] = useState(null);
@@ -256,7 +320,7 @@ export default function Account() {
 
 
   if (loading) {
-    return <div className="text-center mt-5">Loading...</div>;
+    return <AccountSkeleton />;
   }
 
   return (
@@ -279,7 +343,8 @@ export default function Account() {
                   {!editMode ? (
 
                     <button
-                      className="app-btn-secondary account-edit-btn"
+
+                      className="btn-secondary account-edit-btn"
                       onClick={() => {
                         setOriginalProfile({ ...profile });
                         setEditMode(true);
@@ -294,7 +359,7 @@ export default function Account() {
                     <div className="account-edit-actions">
 
                       <button
-                        className="app-btn-primary"
+                        className="btn-primary"
                         onClick={handleSave}
                         disabled={saving}
                       >
@@ -316,7 +381,7 @@ export default function Account() {
                       </button>
 
                       <button
-                        className="app-btn-secondary"
+                        className="btn-secondary"
                         onClick={() => {
                           setProfile(originalProfile);
                           setEditMode(false);
