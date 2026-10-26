@@ -22,7 +22,47 @@ export default async function handler(req, res) {
             { path: "/products", priority: "0.9", freq: "daily" },
             // SEO category pages
             {
+                path: "/products/hand-tufted-rugs",
+                priority: "0.9",
+                freq: "weekly",
+            },
+            {
+                path: "/products/hand-loom-rugs",
+                priority: "0.9",
+                freq: "weekly",
+            },
+            {
                 path: "/products/hand-knotted-rugs",
+                priority: "0.9",
+                freq: "weekly",
+            },
+            {
+                path: "/products/flatweave-rugs-dhurries",
+                priority: "0.9",
+                freq: "weekly",
+            },
+            {
+                path: "/products/leather-rugs-pouffe",
+                priority: "0.9",
+                freq: "weekly",
+            },
+            {
+                path: "/products/hand-knotted-persian-rugs",
+                priority: "0.9",
+                freq: "weekly",
+            },
+            {
+                path: "/products/hand-knotted-tibetan-rugs",
+                priority: "0.9",
+                freq: "weekly",
+            },
+            {
+                path: "/products/hand-knotted-kashmiri-rugs",
+                priority: "0.9",
+                freq: "weekly",
+            },
+            {
+                path: "/products/indo-gabbeh-rugs",
                 priority: "0.9",
                 freq: "weekly",
             },
