@@ -20,6 +20,12 @@ export default async function handler(req, res) {
         const pages = [
             { path: "/", priority: "1.0", freq: "daily" },
             { path: "/products", priority: "0.9", freq: "daily" },
+            // SEO category pages
+            {
+                path: "/products/hand-knotted-rugs",
+                priority: "0.9",
+                freq: "weekly",
+            },
             { path: "/wholesale", priority: "0.9", freq: "weekly" },
             { path: "/wholesale-contact", priority: "0.8", freq: "monthly" },
             { path: "/us", priority: "0.8", freq: "monthly" },
