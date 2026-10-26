@@ -76,6 +76,11 @@ export default async function handler(req, res) {
             { path: "/refund-policy", priority: "0.4", freq: "yearly" },
             { path: "/shipping-policy", priority: "0.4", freq: "yearly" },
             { path: "/cancellation-policy", priority: "0.4", freq: "yearly" },
+            // Additional public SEO pages
+            { path: "/blogs", priority: "0.8", freq: "weekly" },
+            { path: "/custom-rugs", priority: "0.8", freq: "monthly" },
+            { path: "/payment-policy", priority: "0.5", freq: "yearly" },
+            { path: "/packaging-policy", priority: "0.5", freq: "yearly" },
         ];
 
         let xml = `<?xml version="1.0" encoding="UTF-8"?>`;
