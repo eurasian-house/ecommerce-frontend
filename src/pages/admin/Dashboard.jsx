@@ -424,17 +424,41 @@ const Dashboard = () => {
 
       journeys.forEach((session) => {
         const name = session[field]?.trim() || "Unknown";
-        if (!groups[name]) groups[name] = [];
-        groups[name].push(session);
+        const visitorId = session.visitor_id || session.session_id;
+
+        if (!groups[name]) groups[name] = {};
+
+        // Keep only the latest session for each visitor in this location.
+        const previous = groups[name][visitorId];
+
+        if (
+          !previous ||
+          new Date(session.last_seen_at) > new Date(previous.last_seen_at)
+        ) {
+          groups[name][visitorId] = session;
+        }
       });
 
       return Object.entries(groups)
-        .map(([name, visitors]) => ({ name, visitors, count: visitors.length }))
+        .map(([name, visitorMap]) => {
+          const visitors = Object.values(visitorMap);
+
+          return {
+            name,
+            visitors,
+            count: visitors.length,
+          };
+        })
         .sort((a, b) => b.count - a.count);
     };
+    const uniqueVisitorCount = new Set(
+      journeys.map((session) => session.visitor_id || session.session_id)
+    ).size;
+
 
     return {
       journeys,
+      uniqueVisitorCount,
       cities: makeLocationRows("city"),
       countries: makeLocationRows("country"),
     };
@@ -489,6 +513,9 @@ const Dashboard = () => {
                         Last activity: {visitor.last_seen_at
                           ? new Date(visitor.last_seen_at).toLocaleString()
                           : "Unknown"}
+                      </span>
+                      <span>
+                        City: {visitor.city || "Unknown"}
                       </span>
                     </div>
                   ))}
@@ -936,7 +963,9 @@ const Dashboard = () => {
               <p>Expand a visitor to inspect pages, time spent, and shopping actions.</p>
             </div>
             <span className="eh-journey-count">
-              {journeyData.journeys.length} sessions
+              {journeyData.journeys.length} Visits by{" "}
+              {journeyData.uniqueVisitorCount}{" "}
+              {journeyData.uniqueVisitorCount === 1 ? "Visitor" : "Visitors"}
             </span>
           </div>
 
