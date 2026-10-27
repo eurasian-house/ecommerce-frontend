@@ -1113,17 +1113,11 @@ const Dashboard = () => {
                                   "Product details not recorded"}
                               </span>
                               <small>
-                                {event.event_data?.size && (
-                                  <>Size: {event.event_data.size} · </>
-                                )}
-                                {event.event_data?.color && (
-                                  <>Color: {event.event_data.color} · </>
-                                )}
                                 {event.event_data?.quantity != null && (
                                   <>Quantity: {event.event_data.quantity} · </>
                                 )}
-                                {event.event_data?.unitPrice != null && (
-                                  <>Unit price: USD {event.event_data.unitPrice} · </>
+                                {event.event_data?.size && (
+                                  <>Size: {event.event_data.size} · </>
                                 )}
                                 {event.event_data?.value != null && (
                                   <>Total: {event.event_data.currency || "USD"} {event.event_data.value}</>
