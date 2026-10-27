@@ -1,174 +1,258 @@
-import { NavLink, Outlet } from "react-router-dom";
-import { useState } from "react";
+import { NavLink, Outlet, useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
+import "../../styles/pages/admin/AdminLayout.css";
+
+const navGroups = [
+  {
+    title: "OVERVIEW",
+    items: [
+      {
+        to: "/admin/dashboard",
+        icon: "bi-grid-1x2",
+        label: "Dashboard",
+      },
+    ],
+  },
+  {
+    title: "STORE MANAGEMENT",
+    items: [
+      {
+        to: "/admin/add-product",
+        icon: "bi-plus-circle",
+        label: "Add Product",
+      },
+      {
+        to: "/admin/products",
+        icon: "bi-tags",
+        label: "Products",
+      },
+      {
+        to: "/admin/orders",
+        icon: "bi-bag-check",
+        label: "Orders",
+      },
+      {
+        to: "/admin/wholesale-leads",
+        icon: "bi-building",
+        label: "Wholesale Leads",
+      },
+    ],
+  },
+  {
+    title: "CUSTOMER ENGAGEMENT",
+    items: [
+      {
+        to: "/admin/messages",
+        icon: "bi-chat-left-text",
+        label: "Messages",
+      },
+      {
+        to: "/admin/questions",
+        icon: "bi-chat-square-quote",
+        label: "QnA",
+      },
+      {
+        to: "/admin/reviews",
+        icon: "bi-star",
+        label: "Reviews",
+      },
+    ],
+  },
+  {
+    title: "BUSINESS",
+    items: [
+      {
+        to: "/admin/marketing",
+        icon: "bi-megaphone",
+        label: "Marketing",
+      },
+      {
+        to: "/admin/finances",
+        icon: "bi-wallet2",
+        label: "Finances",
+      },
+    ],
+  },
+];
 
 export default function AdminLayout() {
-
   const [showMenu, setShowMenu] = useState(false);
+  const location = useLocation();
 
-  const navItems = [
-    { to: "/admin/dashboard", icon: "bi-grid-1x2-fill", label: "Dashboard" },
-    { to: "/admin/add-product", icon: "bi-plus-circle-dotted", label: "Add Product" },
-    { to: "/admin/products", icon: "bi-tags", label: "Products" },
-    { to: "/admin/orders", icon: "bi-cart-check", label: "Orders" },
-    { to: "/admin/messages", icon: "bi-chat-left-dots", label: "Messages" },
-    { to: "/admin/marketing", icon: "bi-megaphone", label: "Marketing" },
-    { to: "/admin/finances", icon: "bi-wallet2", label: "Finances" },
-    { to: "/admin/questions", icon: "bi-chat-left-text", label: "QnA" },
-    { to: "/admin/reviews", icon: "bi bi-star-fill", label: "Reviews" },
-    { to: "/admin/wholesale-leads", icon: "bi bi-building me-2", label: "Wholesale Leads" }
+  useEffect(() => {
+    setShowMenu(false);
+  }, [location.pathname]);
 
-  ];
+  useEffect(() => {
+    if (!showMenu) return;
+
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") {
+        setShowMenu(false);
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "";
+    };
+
+  }, [showMenu]);
+
+  const renderNavigation = (mobile = false) => (
+    <nav className="eh-admin-nav" aria-label="Admin navigation">
+      {navGroups.map((group) => (
+        <div className="eh-admin-nav-group" key={group.title}>
+          <div className="eh-admin-nav-heading">{group.title}</div>
+
+          {group.items.map((item) => (
+            <NavLink
+              key={item.to}
+              to={item.to}
+              end={item.to === "/admin/dashboard"}
+              onClick={() => {
+                if (mobile) setShowMenu(false);
+              }}
+              className={({ isActive }) =>
+                `eh-admin-nav-link${isActive ? " is-active" : ""}`
+              }
+            >
+              <i
+                className={`bi ${item.icon} eh-admin-nav-icon`}
+                aria-hidden="true"
+              />
+
+              <span>{item.label}</span>
+
+              {item.to === "/admin/dashboard" && (
+                <span className="eh-admin-nav-indicator" />
+              )}
+            </NavLink>
+          ))}
+        </div>
+      ))}
+    </nav>
+
+  );
 
   return (
-    <div
-      style={{
-        display: "flex",
-        minHeight: "100vh",
-        background: "#FAF8F5",
-      }}
-    >
-      <div style={{ display: "flex", minHeight: "100vh", background: "#FAF8F5" }}>
-
-        {/* Sidebar */}
-        <div
-          className="d-none d-lg-block"
-          style={{
-            width: "240px",
-            background: "#FAF8F5",
-            borderRight: "1px solid #e5e5e5",
-            padding: "20px 16px"
-          }}
+    <div className="eh-admin-layout">
+      <aside className="eh-admin-sidebar">
+        <NavLink
+          to="/admin/dashboard"
+          className="eh-admin-brand"
+          aria-label="Eurasian House Admin Dashboard"
         >
-          <h3 style={{ fontWeight: 600, marginBottom: '20px', color: '#E60023' }}>Admin</h3>
+          <span className="eh-admin-brand-mark">E</span>
 
-          <nav className="d-flex flex-column gap-1">
-            {navItems.map((item) => (
-              <NavLink
-                key={item.to}
-                to={item.to}
-                className={({ isActive }) =>
-                  `nav-link d-flex align-items-center px-3 py-2 mb-1 rounded-4 ${isActive
-                    ? "bg-white fw-bold text-dark shadow-sm border"
-                    : "text-secondary fw-medium"
-                  }`
-                }
-                style={({ isActive }) => ({
-                  transition: "0.2s",
-                  background: isActive ? "#fff" : undefined
-                })}
-                onMouseEnter={(e) => {
-                  if (!e.currentTarget.classList.contains("bg-white")) {
-                    e.currentTarget.style.background = "#f3f3f3";
-                  }
-                }}
-                onMouseLeave={(e) => {
-                  if (!e.currentTarget.classList.contains("bg-white")) {
-                    e.currentTarget.style.background = "transparent";
-                  }
-                }}
-              >
-                <i className={`bi ${item.icon} me-3 fs-5`}></i>
-                <span>{item.label}</span>
-              </NavLink>
-            ))}
-          </nav>
-        </div>
+          <span className="eh-admin-brand-copy">
+            <strong>Eurasian House</strong>
+            <small>ADMINISTRATION</small>
+          </span>
+        </NavLink>
 
+        <div className="eh-admin-sidebar-divider" />
 
-        <button
-          className="btn btn-light d-lg-none position-fixed"
-          style={{
-            top: 15,
-            left: 15,
-            zIndex: 1050,
-            borderRadius: "12px",
-            boxShadow: "0 4px 12px rgba(0,0,0,.08)",
-          }}
-          onClick={() => setShowMenu(true)}
-        >
-          <i className="bi bi-list fs-3"></i>
-        </button>
+        {renderNavigation()}
 
-        {showMenu && (
-          <>
-            <div
-              onClick={() => setShowMenu(false)}
-              style={{
-                position: "fixed",
-                inset: 0,
-                background: "rgba(0,0,0,.35)",
-                zIndex: 1040,
-              }}
-            />
+        <div className="eh-admin-sidebar-bottom">
+          <div className="eh-admin-brand-note">
+            <span className="eh-admin-brand-note-icon">
+              <i className="bi bi-stars" aria-hidden="true" />
+            </span>
 
-            <div
-              style={{
-                position: "fixed",
-                top: 0,
-                left: 0,
-                width: 260,
-                height: "100%",
-                background: "#FAF8F5",
-                padding: "20px 16px",
-                zIndex: 1050,
-                overflowY: "auto",
-                boxShadow: "4px 0 20px rgba(0,0,0,.15)",
-              }}
-            >
-              <div className="d-flex justify-content-between align-items-center mb-4">
-                <h3
-                  style={{
-                    color: "#E60023",
-                    fontWeight: 600,
-                    margin: 0,
-                  }}
-                >
-                  Admin
-                </h3>
-
-                <button
-                  className="btn btn-sm"
-                  onClick={() => setShowMenu(false)}
-                >
-                  <i className="bi bi-x-lg fs-4"></i>
-                </button>
-              </div>
-
-              <nav className="d-flex flex-column gap-1">
-                {navItems.map((item) => (
-                  <NavLink
-                    key={item.to}
-                    to={item.to}
-                    onClick={() => setShowMenu(false)}
-                    className={({ isActive }) =>
-                      `nav-link d-flex align-items-center px-3 py-2 mb-1 rounded-4 ${isActive
-                        ? "bg-white fw-bold text-dark shadow-sm border"
-                        : "text-secondary fw-medium"
-                      }`
-                    }
-                  >
-                    <i className={`bi ${item.icon} me-3 fs-5`}></i>
-                    {item.label}
-                  </NavLink>
-                ))}
-              </nav>
+            <div>
+              <strong>Made with care</strong>
+              <span>Manage your store in one place.</span>
             </div>
-          </>
-        )}
+          </div>
 
+          <div className="eh-admin-sidebar-version">
+            EURASIAN HOUSE <span>•</span> ADMIN
+          </div>
+        </div>
+      </aside>
 
+      <div className="eh-admin-workspace">
+        <header className="eh-admin-mobile-header">
+          <button
+            type="button"
+            className="eh-admin-menu-toggle"
+            onClick={() => setShowMenu(true)}
+            aria-label="Open admin navigation"
+            aria-expanded={showMenu}
+          >
+            <i className="bi bi-list" aria-hidden="true" />
+          </button>
 
-        {/* Content */}
+          <NavLink to="/admin/dashboard" className="eh-admin-mobile-brand">
+            <span className="eh-admin-brand-mark">E</span>
+            <span>Eurasian House</span>
+          </NavLink>
+
+          <span className="eh-admin-mobile-label">ADMIN</span>
+        </header>
+
+        <main className="eh-admin-content" id="admin-main-content">
+          <Outlet />
+        </main>
+      </div>
+
+      {showMenu && (
         <div
-          style={{
-            flex: 1,
-            padding: window.innerWidth < 992 ? "70px 15px 20px" : "30px",
+          className="eh-admin-mobile-overlay"
+          onMouseDown={(event) => {
+            if (event.target === event.currentTarget) {
+              setShowMenu(false);
+            }
           }}
         >
-          <Outlet />
-        </div>
+          <aside
+            className="eh-admin-mobile-drawer"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Admin navigation menu"
+          >
+            <div className="eh-admin-drawer-header">
+              <NavLink
+                to="/admin/dashboard"
+                className="eh-admin-brand"
+                onClick={() => setShowMenu(false)}
+              >
+                <span className="eh-admin-brand-mark">E</span>
 
-      </div>
+                <span className="eh-admin-brand-copy">
+                  <strong>Eurasian House</strong>
+                  <small>ADMINISTRATION</small>
+                </span>
+              </NavLink>
+
+              <button
+                type="button"
+                className="eh-admin-menu-toggle eh-admin-close"
+                onClick={() => setShowMenu(false)}
+                aria-label="Close admin navigation"
+                autoFocus
+              >
+                <i className="bi bi-x-lg" aria-hidden="true" />
+              </button>
+            </div>
+
+            <div className="eh-admin-sidebar-divider" />
+
+            {renderNavigation(true)}
+
+            <div className="eh-admin-drawer-footer">
+              <i className="bi bi-shield-check" aria-hidden="true" />
+              Secure admin workspace
+            </div>
+          </aside>
+        </div>
+      )}
     </div>
+
   );
 }

@@ -1,21 +1,101 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
-import { initGA, trackPageView } from "../lib/analytics";
+import {
+  initGA,
+  trackPageView,
+  trackVisitorEvent,
+} from "../lib/analytics";
 
 export default function Analytics() {
   const location = useLocation();
+  const previousPage = useRef(null);
+  const pageEnteredAt = useRef(Date.now());
+
+  const path =
+    location.pathname +
+    location.search +
+    location.hash;
 
   useEffect(() => {
     initGA();
   }, []);
 
   useEffect(() => {
-    trackPageView(
-      location.pathname +
-        location.search +
-        location.hash
+    // Do not record admin navigation as customer activity.
+    if (
+      location.pathname === "/admin" ||
+      location.pathname.startsWith("/admin/")
+    ) {
+      previousPage.current = null;
+      pageEnteredAt.current = Date.now();
+      return;
+    }
+
+    const now = Date.now();
+    const previous = previousPage.current;
+
+    if (previous && previous.path !== path) {
+      trackVisitorEvent(
+        "page_exit",
+        {
+          timeSpentSeconds: Math.max(
+            0,
+            Math.round((now - pageEnteredAt.current) / 1000)
+          ),
+        },
+        previous.path
+      );
+    }
+
+    trackPageView(path);
+
+    // Track only when the page path changes.
+    if (!previous || previous.path !== path) {
+      trackVisitorEvent(
+        "page_view",
+        {},
+        location.pathname + location.search
+      );
+
+      previousPage.current = { path };
+      pageEnteredAt.current = now;
+    }
+  }, [path, location.pathname]);
+
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "hidden") {
+        const previous = previousPage.current;
+
+        if (previous) {
+          trackVisitorEvent(
+            "page_exit",
+            {
+              timeSpentSeconds: Math.max(
+                0,
+                Math.round(
+                  (Date.now() - pageEnteredAt.current) / 1000
+                )
+              ),
+            },
+            previous.path
+          );
+        }
+      }
+    };
+
+    document.addEventListener(
+      "visibilitychange",
+      handleVisibilityChange
     );
-  }, [location]);
+
+    return () => {
+      document.removeEventListener(
+        "visibilitychange",
+        handleVisibilityChange
+      );
+    };
+  }, []);
 
   return null;
 }
