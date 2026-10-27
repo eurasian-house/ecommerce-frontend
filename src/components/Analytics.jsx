@@ -68,18 +68,20 @@ export default function Analytics() {
         const previous = previousPage.current;
 
         if (previous) {
+          const elapsedSeconds = Math.max(
+            0,
+            Math.round((Date.now() - pageEnteredAt.current) / 1000)
+          );
+
           trackVisitorEvent(
             "page_exit",
-            {
-              timeSpentSeconds: Math.max(
-                0,
-                Math.round(
-                  (Date.now() - pageEnteredAt.current) / 1000
-                )
-              ),
-            },
+            { timeSpentSeconds: elapsedSeconds },
             previous.path
           );
+
+          // Prevent the same page from being counted repeatedly
+          // when the tab becomes hidden multiple times.
+          pageEnteredAt.current = Date.now();
         }
       }
     };
