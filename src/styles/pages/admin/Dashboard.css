@@ -1348,6 +1348,48 @@
     }
 }
 
+.eh-full-visitor-id {
+    display: block;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    word-break: break-all;
+    white-space: normal;
+    color: var(--text-primary);
+    font-size: 0.75rem;
+    line-height: 1.6;
+}
+
+.eh-journey-identity strong {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+
+
+.eh-journey-list {
+    max-height: 620px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding-right: 5px;
+    scrollbar-width: thin;
+}
+
+.eh-journey-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.eh-journey-list::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 999px;
+}
+
+@media (max-width: 600px) {
+    .eh-journey-list {
+        max-height: 650px;
+        overflow-y: auto;
+    }
+}
+
+
 @media (prefers-reduced-motion: reduce) {
 
     .eh-journey-item,

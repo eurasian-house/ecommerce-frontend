@@ -217,25 +217,37 @@ export const trackVisitorEvent = (
 // Ecommerce item helpers
 // -----------------------------
 
-const getItem = (product) => ({
-  item_id: product.sku || String(product.id),
-  item_name: product.title,
-  item_category: product.main_category,
-  item_variant: [
-    product.selectedSize?.size,
-    product.selectedColor?.color_name,
-  ]
-    .filter(Boolean)
-    .join(" / "),
-  price: Math.round(Number(product.selling_price)),
-  quantity: product.quantity || 1,
-});
+
+const getItem = (product) => {
+  // const unitPrice = Number(product.selling_price ?? product.price ?? 0);
+  const unitPrice = Number(
+    product.price ?? product.selling_price ?? 0
+  );
+  const quantity = Number(product.quantity || 1);
+
+  return {
+    item_id: product.sku || String(product.id),
+    item_name: product.title,
+    item_category: product.main_category,
+    item_variant: [
+      product.selectedSize?.size ||
+      product.selectedSize?.label ||
+      product.size,
+      product.selectedColor?.color_name,
+    ]
+      .filter(Boolean)
+      .join(" / "),
+    price: unitPrice,
+    quantity,
+  };
+};
+
 
 const getCartValue = (cart = []) =>
   cart.reduce(
     (sum, item) =>
       sum +
-      Number(item.selling_price || 0) *
+      Number(item.price ?? item.selling_price ?? 0) *
       Number(item.quantity || 1),
     0
   );
@@ -263,6 +275,7 @@ export const trackProductView = (product) => {
   });
 };
 
+
 export const trackAddToCart = (product) => {
   const item = getItem(product);
   const value = item.price * item.quantity;
@@ -275,13 +288,16 @@ export const trackAddToCart = (product) => {
 
   trackVisitorEvent("add_to_cart", {
     productId: String(product.id),
-    sku: product.sku || null,
-    title: product.title,
+    sku: item.item_id,
+    title: item.item_name,
+    size: item.item_variant || null,
+    unitPrice: item.price,
     quantity: item.quantity,
     value,
     currency: "USD",
   });
 };
+
 
 export const trackRemoveFromCart = (product) => {
   const item = getItem(product);
