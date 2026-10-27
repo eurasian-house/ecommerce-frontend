@@ -419,6 +419,33 @@ const Dashboard = () => {
           new Date(b.last_seen_at) - new Date(a.last_seen_at)
       );
 
+    const firstVisitByVisitor = {};
+
+    journeys.forEach((visit) => {
+      const id = visit.visitor_id || visit.session_id;
+      const startedAt = new Date(visit.started_at).getTime();
+
+      if (
+        !firstVisitByVisitor[id] ||
+        startedAt < firstVisitByVisitor[id]
+      ) {
+        firstVisitByVisitor[id] = startedAt;
+      }
+    });
+
+    const journeysWithStatus = journeys.map((visit) => {
+      const id = visit.visitor_id || visit.session_id;
+      const firstVisit = firstVisitByVisitor[id];
+      const startedAt = new Date(visit.started_at).getTime();
+
+      return {
+        ...visit,
+        visitor_type:
+          startedAt === firstVisit ? "new" : "returning",
+      };
+    });
+
+
     const makeLocationRows = (field) => {
       const groups = {};
 
@@ -457,8 +484,10 @@ const Dashboard = () => {
 
 
     return {
-      journeys,
-      uniqueVisitorCount,
+      journeys: journeysWithStatus,
+      uniqueVisitorCount: new Set(
+        journeys.map((visit) => visit.visitor_id || visit.session_id)
+      ).size,
       cities: makeLocationRows("city"),
       countries: makeLocationRows("country"),
     };
@@ -1084,12 +1113,21 @@ const Dashboard = () => {
                                   "Product details not recorded"}
                               </span>
                               <small>
-                                {event.event_data?.quantity != null
-                                  ? `Quantity: ${event.event_data.quantity} · `
-                                  : ""}
-                                {event.event_data?.value != null
-                                  ? `${event.event_data.currency || "USD"} ${event.event_data.value}`
-                                  : ""}
+                                {event.event_data?.size && (
+                                  <>Size: {event.event_data.size} · </>
+                                )}
+                                {event.event_data?.color && (
+                                  <>Color: {event.event_data.color} · </>
+                                )}
+                                {event.event_data?.quantity != null && (
+                                  <>Quantity: {event.event_data.quantity} · </>
+                                )}
+                                {event.event_data?.unitPrice != null && (
+                                  <>Unit price: USD {event.event_data.unitPrice} · </>
+                                )}
+                                {event.event_data?.value != null && (
+                                  <>Total: {event.event_data.currency || "USD"} {event.event_data.value}</>
+                                )}
                               </small>
                             </div>
                             <time>
